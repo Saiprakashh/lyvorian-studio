@@ -1185,13 +1185,15 @@
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       body: JSON.stringify({
-        _subject: '[' + picked + '] for Lyvorian Studio' + (name ? ' — from ' + name : ''),
-        _template: 'table',
+        _subject: '💡 New ' + picked + ' — Lyvorian Studio site' + (name ? ' (from ' + name + ')' : ''),
+        _template: 'box',
         _captcha: 'false',
-        type: picked,
-        name: name || '(anonymous)',
-        email: email || '(not shared)',
-        message: msg
+        _replyto: email || undefined,
+        'Idea type': picked,
+        'From': name || 'Anonymous visitor',
+        'Reply-to email': email || 'Not shared',
+        'Their message': msg,
+        'Submitted from': 'lyvorianstudio.co.in'
       })
     }).then(function(r){ return r.json(); }).then(function(d){
       if (d.success === 'true' || d.success === true){
