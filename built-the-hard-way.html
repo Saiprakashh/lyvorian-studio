@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Built the hard way — the Finance Tracker story | Lyvorian Studio</title>
+<meta name="description" content="How one person built Finance Tracker by hand — including the performance hunt that halved the app's CPU use on a real phone."/>
+<meta name="theme-color" content="#f2e8d5"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://lyvorianstudio.co.in/built-the-hard-way.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="Built the hard way — the Finance Tracker story"/>
+<meta property="og:description" content="The performance hunt that halved the app's CPU use on a real phone — and why we build one product at a time."/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
+<link rel="preload" href="assets/fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/WorkSans-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/Fraunces-var.woff2') format('woff2')}
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/WorkSans-var.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/JetBrainsMono-var.woff2') format('woff2')}
+  :root{
+    --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
+    --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
+    --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
+    --gold:#a97a1f; --gold-bright:#c98f22;
+  }
+  @media(prefers-color-scheme:dark){
+    :root{--bg:#191410;--bg2:#211a13;--panel:#251e15;
+      --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
+      --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;
+      --gold:#c98f22;--gold-bright:#e6b354}
+  }
+  :root[data-theme="light"]{--bg:#f2e8d5;--bg2:#ecdfc4;--panel:#faf3e3;
+    --line:rgba(120,86,32,.18);--line-bright:rgba(120,86,32,.42);
+    --text:#2a2013;--muted:#6b5a3e;--muted2:#8c7a5c;--gold:#a97a1f;--gold-bright:#c98f22}
+  :root[data-theme="dark"]{--bg:#191410;--bg2:#211a13;--panel:#251e15;
+    --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
+    --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;--gold:#c98f22;--gold-bright:#e6b354}
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(ellipse 65% 40% at 15% -5%, rgba(169,122,31,.10), transparent 60%),var(--bg);
+    color:var(--text);font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 20px 80px}
+  .wrap{max-width:680px;margin:0 auto}
+  header{padding:56px 0 40px;text-align:center}
+  .mark{width:52px;height:52px;border-radius:13px;margin-bottom:20px;
+    border:1px solid var(--line);box-shadow:0 10px 26px -12px rgba(42,32,19,.35)}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.4px;
+    text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:'Fraunces',serif;font-weight:540;font-size:clamp(30px,6vw,44px);
+    margin:0;letter-spacing:-1px;line-height:1.15}
+  .sub{color:var(--muted2);font-size:14px;margin-top:16px}
+  h2{font-family:'Fraunces',serif;font-weight:560;font-size:23px;margin:44px 0 12px;letter-spacing:-.3px}
+  p{color:var(--muted);margin:0 0 18px}
+  strong{color:var(--text)}
+  em{color:var(--text)}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0}
+  @media(max-width:600px){.stat-row{grid-template-columns:1fr}}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+  .stat .big{font-family:'Fraunces',serif;font-weight:600;font-size:26px;color:var(--gold);display:block}
+  .stat .lbl{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.2px;
+    text-transform:uppercase;color:var(--muted2);margin-top:6px;display:block}
+  blockquote{font-family:'Fraunces',serif;font-style:italic;font-size:20px;line-height:1.6;
+    color:var(--text);border-left:3px solid var(--gold);margin:30px 0;padding:6px 0 6px 22px}
+  .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:34px;color:var(--muted2);
+    text-decoration:none;font-size:14px;transition:color .2s}
+  .home-link:hover{color:var(--gold)}
+  footer{text-align:center;color:var(--muted2);font-size:13px;margin-top:44px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="mark" src="assets/icon-beige-512.png" alt="Lyvorian Studio"/>
+    <div class="kicker">A story from the workbench</div>
+    <h1>Built the hard way</h1>
+    <div class="sub">How Finance Tracker earned its speed — one honest fix at a time</div>
+  </header>
+
+  <p>Lyvorian Studio's whole philosophy fits in one sentence: <strong>one person, one product at a
+  time, finished carefully enough that it doesn't need an excuse.</strong> That sounds nice on a
+  landing page. Here's what it actually looks like in practice.</p>
+
+  <h2>The app felt heavy — so we measured instead of guessing</h2>
+  <p>During Android testing, Finance Tracker felt warm in the hand. Not broken — just working
+  harder than a budgeting app has any right to. The easy path is to shrug: it's a web-based app in
+  a native shell, they're always like that. The hard path is to profile it on a real phone and find
+  out exactly where every cycle goes. We took the hard path.</p>
+
+  <h2>Finding #1 — the invisible blur that ate half the CPU</h2>
+  <p>The app's header and bottom navigation both used a fashionable frosted-glass blur effect. Both
+  sat on backgrounds that were already 95%+ opaque — meaning the blur was <em>completely
+  invisible</em>. But the GPU didn't know that: because both bars float over scrolling content, it
+  dutifully re-blurred everything behind them on every single frame.</p>
+  <p>Removing two lines of decorative CSS — a blur nobody could see — cut the app's CPU use on a
+  real Galaxy S10+ roughly in half:</p>
+  <div class="stat-row">
+    <div class="stat"><span class="big">143% → 76%</span><span class="lbl">App CPU use</span></div>
+    <div class="stat"><span class="big">24% → 7%</span><span class="lbl">GPU driver thread</span></div>
+    <div class="stat"><span class="big">50% → 18%</span><span class="lbl">Janky frames</span></div>
+  </div>
+
+  <h2>Finding #2 — the beautiful chart nobody needed</h2>
+  <p>The login screen had a live animated candlestick chart. It looked great in screenshots. It also
+  redrew itself continuously — allocating a fresh gradient for every candle on every frame — and
+  burned roughly <strong>60% of a CPU core while doing absolutely nothing useful</strong>. Left
+  idle, it once racked up 8½ minutes of CPU time in a 14-minute stretch and froze the app
+  entirely.</p>
+  <p>It also sent the wrong message. Finance Tracker is for <em>all</em> of your money — salary,
+  groceries, bills, goals — not a trading terminal. So the chart didn't get optimised. It got
+  deleted, and the login screen got lighter, calmer, and more honest about what the app is.</p>
+
+  <blockquote>Shipping less, deliberately, is still the fastest performance optimisation ever
+  invented.</blockquote>
+
+  <h2>Why this is the whole brand</h2>
+  <p>Neither fix required genius. They required <em>looking</em> — profiling on a real device,
+  reading the numbers, and being willing to delete something pretty. That's what "built by hand"
+  means here: not artisanal mystique, just a builder who uses the product daily and refuses to ship
+  something that quietly wastes your battery.</p>
+  <p>Finance Tracker is live on the web today and heading to the Google Play Store. Product № 2
+  starts when it's done right — and not a day before.</p>
+
+  <a class="home-link" href="index.html">&larr; Back to Lyvorian Studio</a>
+  <footer>&copy; 2026 Lyvorian Studio. All rights reserved.</footer>
+</div>
+<script>
+(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
+</body>
+</html>
