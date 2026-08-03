@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Lyvorian Studio — Software, built by hand</title>
-<meta name="description" content="Lyvorian Studio is an independent software studio building Finance Tracker and what comes after it."/>
+<meta name="description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, and what comes after them."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -13,14 +13,14 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Lyvorian Studio"/>
 <meta property="og:title" content="Lyvorian Studio — Software, built by hand"/>
-<meta property="og:description" content="Lyvorian Studio is an independent software studio building Finance Tracker and what comes after it."/>
+<meta property="og:description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, and what comes after them."/>
 <meta property="og:url" content="https://lyvorianstudio.co.in/"/>
 <meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Lyvorian Studio — Software, built by hand"/>
-<meta name="twitter:description" content="Lyvorian Studio is an independent software studio building Finance Tracker and what comes after it."/>
+<meta name="twitter:description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, and what comes after them."/>
 <meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
 
 <script type="application/ld+json">
@@ -42,10 +42,19 @@
       "@type": "SoftwareApplication",
       "name": "Finance Tracker",
       "applicationCategory": "FinanceApplication",
-      "operatingSystem": "Web, Android",
+      "operatingSystem": "Web",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
       "publisher": {"@id": "https://lyvorianstudio.co.in/#org"},
       "description": "Expenses, income, budgets, goals, and bills in one clean app — with bill scanning, UPI auto-detect, and a Pro tier."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "HabitAroha",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Android",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
+      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"},
+      "description": "A calm, offline-first habit tracker — streaks, gentle reminders, and habit data encrypted on the device."
     }
   ]
 }
@@ -75,6 +84,8 @@
     --gold-bright:#c98f22;
     --gold-dim:#8a6a2e;
     --maroon:#8a3838;
+    --ok:#3f8055;
+    --ok-dot:#5da271;
     --hdr:rgba(242,232,213,.75);
     --r:16px;
   }
@@ -84,6 +95,7 @@
       --line:rgba(201,143,34,.16); --line-bright:rgba(201,143,34,.4);
       --text:#f0e7d6; --muted:#b3a488; --muted2:#8c7a5c;
       --gold:#c98f22; --gold-bright:#e6b354; --gold-dim:#8a6a2e;
+      --ok:#8fe09f; --ok-dot:#8fe09f;
       --hdr:rgba(25,20,16,.78);
     }
   }
@@ -92,6 +104,7 @@
     --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
     --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
     --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
+    --ok:#3f8055; --ok-dot:#5da271;
     --hdr:rgba(242,232,213,.75);
   }
   :root[data-theme="dark"]{
@@ -99,6 +112,7 @@
     --line:rgba(201,143,34,.16); --line-bright:rgba(201,143,34,.4);
     --text:#f0e7d6; --muted:#b3a488; --muted2:#8c7a5c;
     --gold:#c98f22; --gold-bright:#e6b354; --gold-dim:#8a6a2e;
+    --ok:#8fe09f; --ok-dot:#8fe09f;
     --hdr:rgba(25,20,16,.78);
   }
   *{box-sizing:border-box}
@@ -157,8 +171,6 @@
     box-shadow:0 0 0 1px var(--line),0 6px 18px -8px rgba(42,32,19,.4);
     transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s}
   .word:hover .mark-img{transform:scale(1.08) rotate(-6deg);box-shadow:0 0 0 1px var(--line-bright),0 10px 24px -8px rgba(169,122,31,.5)}
-  .status-pill{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:7px 14px 7px 12px;border-radius:100px}
-  .status-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:#8fe09f;box-shadow:0 0 6px #8fe09f;animation:pulse 2.4s ease-in-out infinite;flex-shrink:0}
   nav{display:flex;gap:32px;align-items:center}
   nav a{position:relative;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;padding-bottom:2px}
   nav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold-bright);transition:width .25s cubic-bezier(.16,.8,.28,1)}
@@ -247,6 +259,7 @@
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   .grid-single{grid-template-columns:1fr;max-width:420px;margin:0 auto}
   .grid-2{grid-template-columns:repeat(2,1fr);max-width:880px;margin:0 auto}
+  .grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
   .card-head{display:flex;align-items:center;gap:14px}
   .card-head .card-title{margin:0}
   .card{
@@ -271,13 +284,24 @@
   .card-title{font-family:'Fraunces',serif;font-weight:560;font-size:21px;margin:0;color:var(--text)}
   .card-desc{color:var(--muted);font-size:14.5px;line-height:1.65;flex:1}
   .card-status{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px}
-  .status-live{color:#8fe09f}
-  .status-live::before{content:'';width:6px;height:6px;border-radius:50%;background:#8fe09f;box-shadow:0 0 6px #8fe09f;animation:pulse 2s ease-in-out infinite}
+  .status-live{color:var(--ok)}
+  .status-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot);animation:pulse 2s ease-in-out infinite}
+
+  /* per-platform availability badges */
+  .plat-row{display:flex;flex-wrap:wrap;gap:8px}
+  .plat{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:100px;
+    border:1px solid var(--line-bright);white-space:nowrap}
+  .plat::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .plat-live{color:var(--ok);border-color:var(--ok-dot)}
+  .plat-live::before{background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot);animation:pulse 2s ease-in-out infinite}
+  .plat-wip{color:var(--gold);border-style:dashed;border-color:var(--gold-dim)}
+  .plat-wip::before{background:var(--gold-bright);opacity:.75}
   .card-arrow{position:absolute;top:30px;right:30px;color:var(--gold-dim);opacity:0;transform:translate(-6px,6px);transition:opacity .3s,transform .3s}
   .card.live:hover .card-arrow{opacity:1;transform:translate(0,0);color:var(--gold-bright)}
 
-  /* teaser card — the next product, on the drawing board */
-  .card.tease{cursor:default;border-style:dashed;border-color:var(--line-bright);
+  /* not-yet-shipped cards — one on the bench, one on the drawing board */
+  .card.soon,.card.tease{cursor:default;border-style:dashed;border-color:var(--line-bright);
     background:
       linear-gradient(var(--panel) 0 0) padding-box,
       var(--panel);
@@ -285,7 +309,9 @@
       linear-gradient(rgba(169,122,31,.05) 1px,transparent 1px),
       linear-gradient(90deg,rgba(169,122,31,.05) 1px,transparent 1px);
     background-size:22px 22px}
-  .card.tease:hover{transform:translateY(-4px)}
+  .card.soon:hover,.card.tease:hover{transform:translateY(-4px)}
+  .card.soon:hover{border-color:var(--gold-dim)}
+  .card.soon:hover .card-icon{transform:scale(1.1) rotate(-6deg)}
   .tease-stamp{position:absolute;top:22px;right:24px;font-family:'JetBrains Mono',monospace;
     font-size:11px;letter-spacing:1.5px;color:var(--gold);border:1px dashed var(--gold-dim);
     padding:4px 10px;border-radius:7px;transform:rotate(6deg);opacity:.75}
@@ -300,8 +326,8 @@
   .redact::after{content:'';position:absolute;inset:0;
     background:linear-gradient(100deg,transparent 20%,rgba(250,243,227,.55),transparent 80%);
     transform:translateX(-100%);animation:redactShine 3.2s ease-in-out infinite}
-  .redact-a{width:132px}
-  .redact-b{width:84px;animation-delay:.2s}
+  .redact-a{width:118px}
+  .redact-b{width:76px;animation-delay:.2s}
   .redact-b::after{animation-delay:.35s}
   @keyframes redactShine{0%,55%{transform:translateX(-100%)}85%,100%{transform:translateX(100%)}}
   .tease-hint{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.6px;
@@ -525,6 +551,36 @@
   .btn-send:hover{transform:translateY(-3px);box-shadow:0 16px 38px -10px rgba(169,122,31,.7)}
   .btn-send svg{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
   .btn-send:hover svg{transform:translateX(3px) rotate(-12deg)}
+  /* contact popover — shows the address instead of firing a mail client */
+  .contact-pop{position:fixed;top:0;left:0;z-index:300;width:max-content;max-width:calc(100vw - 24px);
+    background:
+      linear-gradient(160deg,rgba(201,151,58,.10),transparent 42%),
+      var(--panel);
+    border:1px solid var(--line-bright);border-radius:15px;padding:14px;
+    box-shadow:0 24px 54px -20px rgba(42,32,19,.5);
+    display:flex;flex-direction:column;gap:9px;
+    opacity:0;transform:translateY(-6px) scale(.97);pointer-events:none;transform-origin:top center;
+    transition:opacity .22s cubic-bezier(.16,.8,.28,1),transform .22s cubic-bezier(.16,.8,.28,1)}
+  .contact-pop.flip{transform:translateY(6px) scale(.97);transform-origin:bottom center}
+  .contact-pop.show{opacity:1;transform:none;pointer-events:auto}
+  .contact-tail{position:absolute;width:11px;height:11px;background:var(--panel);
+    border-left:1px solid var(--line-bright);border-top:1px solid var(--line-bright);
+    top:-6px;left:var(--tail-x,50%);margin-left:-6px;transform:rotate(45deg);border-radius:2px 0 0 0}
+  .contact-pop.flip .contact-tail{top:auto;bottom:-6px;transform:rotate(225deg)}
+  .contact-pop-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.7px;
+    text-transform:uppercase;color:var(--muted2);padding:0 3px}
+  .contact-mail{display:flex;align-items:center;gap:10px;text-decoration:none;
+    font-family:'JetBrains Mono',monospace;font-size:clamp(12px,3.3vw,13.5px);color:var(--gold-bright);
+    padding:11px 13px;border-radius:11px;background:rgba(201,151,58,.09);
+    border:1px solid transparent;
+    transition:background .22s,border-color .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
+  .contact-mail:hover,.contact-mail:focus-visible{background:rgba(201,151,58,.17);border-color:var(--gold-dim);transform:translateX(2px);outline:none}
+  .cm-icon{flex-shrink:0;opacity:.75}
+  .cm-text{white-space:nowrap}
+  .cm-arw{flex-shrink:0;margin-left:6px;opacity:0;transform:translateX(-4px);
+    transition:opacity .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
+  .contact-mail:hover .cm-arw,.contact-mail:focus-visible .cm-arw{opacity:1;transform:none}
+
   .idea-toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);z-index:320;
     background:var(--text);color:var(--bg);font-family:'Work Sans',system-ui,sans-serif;font-size:14px;font-weight:500;
     padding:13px 22px;border-radius:100px;box-shadow:0 18px 44px -14px rgba(42,32,19,.5);
@@ -561,7 +617,6 @@
     .grid{grid-template-columns:1fr}
     .value-grid{grid-template-columns:1fr}
     nav{display:none}
-    .status-pill{display:none}
     .hero{padding:96px 0 76px}
     .orbit-svg{width:620px;opacity:.32}
     .ticker span{font-size:11px;padding:13px 16px}
@@ -592,13 +647,12 @@
         <span class="wtext">Lyvorian Studio</span>
       </a>
       </div>
-      <span class="status-pill">Finance Tracker — Live</span>
     </div>
     <nav>
       <a href="#work">Products</a>
       <a href="#story">About</a>
       <a href="#ideas">Share ideas</a>
-      <a href="mailto:support@lyvorianstudio.co.in">Contact</a>
+      <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
       <svg class="sun" width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.4" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13M12.95 12.95l-1.13-1.13M4.18 4.18L3.05 3.05" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -680,7 +734,7 @@
       <div class="value-card reveal reveal-3">
         <span class="value-num">03</span>
         <h3 class="value-title">One product at a time</h3>
-        <p class="value-desc">Finance Tracker gets full attention until it's done right. The next product waits its turn — no half-built lineup.</p>
+        <p class="value-desc">Finance Tracker had full attention until it was live. HabitAroha only started once it had earned its turn — no half-built lineup, ever.</p>
       </div>
     </div>
   </div>
@@ -691,9 +745,9 @@
     <div class="sec-head reveal">
       <div class="sec-eyebrow">Products</div>
       <h2 class="sec-title">What we build</h2>
-      <p class="sec-sub">One product shipped and growing — more on the way.</p>
+      <p class="sec-sub">One live and growing, one on the bench, one still on the drawing board.</p>
     </div>
-    <div class="grid grid-2">
+    <div class="grid grid-3">
       <a href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener" class="card live reveal" id="ftCard">
         <svg class="card-arrow" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div class="card-head">
@@ -701,11 +755,27 @@
           <h3 class="card-title">Finance Tracker</h3>
         </div>
         <p class="card-desc">Expenses, income, budgets, goals, and bills in one clean app — with bill scanning, UPI auto-detect, and a Pro tier for the people who want more.</p>
-        <span class="card-status status-live">Live now</span>
+        <div class="plat-row">
+          <span class="plat plat-live">Web — live now</span>
+          <span class="plat plat-wip">Android — coming soon</span>
+        </div>
       </a>
 
-      <div class="card tease reveal reveal-1" aria-label="Second product — not yet announced">
+      <div class="card soon reveal reveal-1" aria-label="HabitAroha — in testing">
         <span class="tease-stamp">№ 2</span>
+        <div class="card-head">
+          <div class="card-icon"><img src="assets/habitaroha-icon.png" alt="" width="44" height="44" loading="lazy"/></div>
+          <h3 class="card-title">HabitAroha</h3>
+        </div>
+        <p class="card-desc">A calm, offline-first habit tracker — streaks, gentle reminders, and progress you actually keep. Habit data is encrypted on your device and never leaves it unless you switch backup on.</p>
+        <div class="tease-progress"><i></i></div>
+        <div class="plat-row">
+          <span class="plat plat-wip">Android — in testing</span>
+        </div>
+      </div>
+
+      <div class="card tease reveal reveal-2" aria-label="Third product — not yet announced">
+        <span class="tease-stamp">№ 3</span>
         <div class="card-head">
           <div class="card-icon tease-icon"><span id="teaseGlyph">?</span></div>
           <div class="tease-name">
@@ -716,7 +786,7 @@
         </div>
         <p class="card-desc tease-typeline"><span class="type-prefix">&gt;_</span> <span id="teaseType"></span><span class="type-caret"></span></p>
         <div class="tease-progress"><i></i></div>
-        <span class="card-status status-think">In the lab — starts when Finance Tracker is done right</span>
+        <span class="card-status status-think">In the lab — starts when the first two are done right</span>
       </div>
     </div>
 
@@ -753,10 +823,17 @@
         </div>
       </div>
       <div class="roadmap-item">
+        <span class="roadmap-dot next"></span>
+        <div>
+          <h3 class="roadmap-title">HabitAroha — Android<span class="roadmap-tag">In testing</span></h3>
+          <p class="roadmap-desc">V1 is built and running on real devices. Going through a full test pass before the Play Store listing goes up.</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
         <span class="roadmap-dot later"></span>
         <div>
           <h3 class="roadmap-title">The next product<span class="roadmap-tag">Waiting its turn</span></h3>
-          <p class="roadmap-desc">Starts only when Finance Tracker is done right. That's the rule.</p>
+          <p class="roadmap-desc">Starts only when the two on the bench are done right. That's the rule.</p>
         </div>
       </div>
     </div>
@@ -865,7 +942,7 @@
     <div class="foot-links">
       <a href="built-the-hard-way.html">The story</a>
       <a href="privacy.html">Privacy</a>
-      <a href="mailto:support@lyvorianstudio.co.in">Contact</a>
+      <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
     </div>
     <span style="color:var(--muted2);font-size:13px">© 2026 Lyvorian Studio. All rights reserved.</span>
   </div>
@@ -919,6 +996,16 @@
 
 <div class="cursor-ring" id="cursorRing"></div>
 <div class="cursor-dot" id="cursorDot"></div>
+
+<div class="contact-pop" id="contactPop" role="dialog" aria-label="Contact the studio" aria-hidden="true">
+  <span class="contact-tail"></span>
+  <div class="contact-pop-label">Email the studio</div>
+  <a class="contact-mail" href="mailto:support@lyvorianstudio.co.in">
+    <svg class="cm-icon" width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.4" y="3.2" width="13.2" height="9.6" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2.2 4.6L8 8.7l5.8-4.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="cm-text">support@lyvorianstudio.co.in</span>
+    <svg class="cm-arw" width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
 
 <div class="idea-toast" id="ideaToast" role="status">
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12l7.5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1101,7 +1188,7 @@
   });
 })();
 
-// Product № 2 teaser — typewriter line + cycling glyph
+// Product № 3 teaser — typewriter line + cycling glyph
 (function(){
   var typeEl = document.getElementById('teaseType');
   var glyphEl = document.getElementById('teaseGlyph');
@@ -1208,6 +1295,63 @@
       btn.firstChild.textContent = 'Send it over ';
     });
   });
+})();
+
+// Contact links — reveal the address instead of launching a mail client
+(function(){
+  var pop = document.getElementById('contactPop');
+  var triggers = document.querySelectorAll('[data-contact]');
+  if (!pop || !triggers.length) return; // no JS enhancement: the mailto still works
+  var openBy = null;
+
+  function place(trigger){
+    var r = trigger.getBoundingClientRect();
+    var pw = pop.offsetWidth, ph = pop.offsetHeight;
+    var left = r.left + r.width/2 - pw/2;
+    left = Math.max(12, Math.min(left, window.innerWidth - pw - 12));
+    var top = r.bottom + 11;
+    var flip = top + ph > window.innerHeight - 12;
+    if (flip) top = Math.max(12, r.top - ph - 11);
+    pop.classList.toggle('flip', flip);
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+    // point the tail at the trigger, kept inside the popover's rounded corners
+    var tailX = r.left + r.width/2 - left;
+    pop.style.setProperty('--tail-x', Math.max(16, Math.min(tailX, pw - 16)) + 'px');
+  }
+  function open(trigger){
+    pop.classList.add('show');       // measurable before positioning
+    place(trigger);
+    pop.setAttribute('aria-hidden','false');
+    trigger.setAttribute('aria-expanded','true');
+    openBy = trigger;
+  }
+  function close(){
+    if (!openBy) return;
+    pop.classList.remove('show');
+    pop.setAttribute('aria-hidden','true');
+    openBy.setAttribute('aria-expanded','false');
+    openBy = null;
+  }
+
+  [].forEach.call(triggers, function(t){
+    t.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      if (openBy === t){ close(); return; }
+      close();
+      open(t);
+    });
+  });
+
+  document.addEventListener('click', function(e){
+    if (openBy && !pop.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && openBy){ var t = openBy; close(); t.focus(); }
+  });
+  window.addEventListener('resize', close);
+  window.addEventListener('scroll', function(){ if (openBy) place(openBy); }, {passive:true});
 })();
 
 // Click sparkle burst — bright gold particles + spinning stars
