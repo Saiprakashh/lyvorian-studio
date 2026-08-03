@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>HabitAroha — a calm, offline-first habit tracker | Lyvorian Studio</title>
+<meta name="description" content="HabitAroha is a calm, private habit tracker. Works completely offline, keeps your data encrypted on your own device, and never makes you feel bad about a missed day. In testing, Play Store next."/>
+<meta name="theme-color" content="#f2e8d5"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://lyvorianstudio.co.in/habitaroha.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Lyvorian Studio"/>
+<meta property="og:title" content="HabitAroha — build calm, consistent habits"/>
+<meta property="og:description" content="Works offline. Your data stays encrypted on your device. Rest days never count as missed."/>
+<meta property="og:url" content="https://lyvorianstudio.co.in/habitaroha.html"/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="HabitAroha — build calm, consistent habits"/>
+<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "HabitAroha",
+  "url": "https://lyvorianstudio.co.in/habitaroha.html",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Android",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
+  "publisher": {"@type": "Organization", "name": "Lyvorian Studio", "url": "https://lyvorianstudio.co.in/"},
+  "description": "A calm, offline-first habit tracker — streaks, gentle reminders, and habit data encrypted on the device."
+}
+</script>
+
+<link rel="preload" href="assets/fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/WorkSans-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/Fraunces-var.woff2') format('woff2')}
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/WorkSans-var.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/JetBrainsMono-var.woff2') format('woff2')}
+  :root{
+    --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
+    --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
+    --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
+    --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
+    --ok:#3f8055; --ok-dot:#5da271;
+  }
+  @media(prefers-color-scheme:dark){
+    :root{--bg:#191410;--bg2:#211a13;--panel:#251e15;
+      --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
+      --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;
+      --gold:#c98f22;--gold-bright:#e6b354;--gold-dim:#8a6a2e;
+      --ok:#8fe09f;--ok-dot:#8fe09f}
+  }
+  :root[data-theme="light"]{--bg:#f2e8d5;--bg2:#ecdfc4;--panel:#faf3e3;
+    --line:rgba(120,86,32,.18);--line-bright:rgba(120,86,32,.42);
+    --text:#2a2013;--muted:#6b5a3e;--muted2:#8c7a5c;
+    --gold:#a97a1f;--gold-bright:#c98f22;--gold-dim:#8a6a2e;--ok:#3f8055;--ok-dot:#5da271}
+  :root[data-theme="dark"]{--bg:#191410;--bg2:#211a13;--panel:#251e15;
+    --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
+    --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;
+    --gold:#c98f22;--gold-bright:#e6b354;--gold-dim:#8a6a2e;--ok:#8fe09f;--ok-dot:#8fe09f}
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(ellipse 65% 40% at 15% -5%, rgba(169,122,31,.10), transparent 60%),var(--bg);
+    color:var(--text);font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 20px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{padding:56px 0 8px;text-align:center}
+  .pmark{width:76px;height:76px;border-radius:19px;margin-bottom:22px;
+    box-shadow:0 14px 32px -14px rgba(42,32,19,.5)}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.4px;
+    text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:'Fraunces',serif;font-weight:540;font-size:clamp(32px,6.5vw,46px);
+    margin:0;letter-spacing:-1px;line-height:1.15}
+  .tagline{color:var(--muted);font-size:17px;margin:16px auto 0;max-width:520px}
+  h2{font-family:'Fraunces',serif;font-weight:560;font-size:23px;margin:48px 0 14px;letter-spacing:-.3px}
+  p{color:var(--muted);margin:0 0 18px}
+  strong{color:var(--text)}
+
+  .plat-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 0}
+  .plat{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:100px;
+    border:1px solid var(--line-bright);white-space:nowrap}
+  .plat::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .plat-wip{color:var(--gold);border-style:dashed;border-color:var(--gold-dim)}
+  .plat-wip::before{background:var(--gold-bright);opacity:.75}
+
+  .notice{margin:30px auto 0;max-width:520px;background:var(--panel);
+    border:1px dashed var(--line-bright);border-radius:13px;padding:15px 18px;
+    color:var(--muted);font-size:14.5px;line-height:1.65}
+  .notice b{color:var(--text)}
+
+  .feat{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+  @media(max-width:600px){.feat{grid-template-columns:1fr}}
+  .feat li{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
+  .feat b{display:block;font-family:'Fraunces',serif;font-weight:560;font-size:16px;
+    color:var(--text);margin-bottom:4px}
+  .feat span{color:var(--muted);font-size:14.5px;line-height:1.6}
+
+  .privacy-list{list-style:none;padding:0;margin:0 0 18px}
+  .privacy-list li{position:relative;padding-left:26px;color:var(--muted);margin-bottom:9px}
+  .privacy-list li::before{content:'';position:absolute;left:6px;top:11px;width:6px;height:6px;
+    border-radius:50%;background:var(--gold);opacity:.7}
+
+  .langs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+  .lang{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
+    color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:5px 13px}
+
+  a.inline{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line-bright)}
+  a.inline:hover{color:var(--gold-bright)}
+  .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:40px;color:var(--muted2);
+    text-decoration:none;font-size:14px;transition:color .2s}
+  .home-link:hover{color:var(--gold)}
+  footer{text-align:center;color:var(--muted2);font-size:13px;margin-top:44px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="pmark" src="assets/habitaroha-icon.png" alt="" width="76" height="76"/>
+    <div class="kicker">Product № 2</div>
+    <h1>HabitAroha</h1>
+    <p class="tagline">Build calm, consistent habits. Works offline. Your data stays yours.</p>
+    <div class="plat-row">
+      <span class="plat plat-wip">Android — in testing</span>
+    </div>
+    <div class="notice">
+      <b>Not released yet.</b> V1 is built and running on real devices, going through a full test
+      pass before the Play Store listing goes up. There's nothing to download today.
+    </div>
+  </header>
+
+  <p>HabitAroha is a habit tracker for people who want steady progress rather than noisy streak
+  pressure. It works completely offline, keeps your data encrypted on your own device, and never
+  asks you to feel bad about a missed day.</p>
+
+  <h2>What it does</h2>
+  <ul class="feat">
+    <li><b>Eight habit types</b><span>Check-ins, counts, timed sessions, measurements, checklists, and habits you want to reduce.</span></li>
+    <li><b>Schedules that fit</b><span>Daily, weekly, times-per-week, every-few-days, or your own custom dates.</span></li>
+    <li><b>See it clearly</b><span>Month, week and year calendar views, plus a monthly grid with frozen headers.</span></li>
+    <li><b>Insights you can act on</b><span>Your strongest weekday, when in the day you finish, and a consistency heatmap.</span></li>
+    <li><b>Kind by design</b><span>Planned rest days never count as missed, and vacation mode protects your streaks.</span></li>
+    <li><b>Reminders that respect you</b><span>Per-habit times, morning summary, evening review, and quiet hours.</span></li>
+  </ul>
+
+  <h2>Your data, genuinely yours</h2>
+  <ul class="privacy-list">
+    <li>Encrypted on your device with AES-256</li>
+    <li>Encrypted backups you can restore with a recovery key</li>
+    <li>Optional backup to your own Google Drive — off unless you turn it on</li>
+    <li>Export to CSV, Excel, PDF or a shareable progress image</li>
+    <li>Download everything you have stored, any time</li>
+    <li>PIN and biometric lock</li>
+  </ul>
+
+  <h2>What it costs</h2>
+  <p>The <strong>free plan</strong> covers up to seven active habits with every tracking feature,
+  exports and backups included — supported by a small banner ad below your habit list, never on a
+  private note, a running timer or a sign-in screen. <strong>Founder Pro</strong> lifts the habit
+  limit, removes advertisements, and supports a small independent studio.</p>
+
+  <h2>Languages</h2>
+  <div class="langs">
+    <span class="lang">English</span>
+    <span class="lang">हिन्दी</span>
+    <span class="lang">తెలుగు</span>
+  </div>
+
+  <h2>How it's built</h2>
+  <p>One Flutter codebase, written by hand by the same person who builds
+  <a class="inline" href="finance-tracker.html">Finance Tracker</a>. It only started once Finance
+  Tracker was live — that's the rule the studio works to, and it's explained in
+  <a class="inline" href="built-the-hard-way.html">Built the hard way</a>.</p>
+
+  <a class="home-link" href="index.html">&larr; Back to Lyvorian Studio</a>
+  <footer>&copy; 2026 Lyvorian Studio. All rights reserved.</footer>
+</div>
+<script>
+(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
+</body>
+</html>

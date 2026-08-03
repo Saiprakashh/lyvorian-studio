@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Finance Tracker — expenses, budgets, goals and bills | Lyvorian Studio</title>
+<meta name="description" content="Finance Tracker keeps expenses, income, budgets, goals and bills in one clean app — with bill scanning and UPI auto-detect. Live on the web, Android coming soon."/>
+<meta name="theme-color" content="#f2e8d5"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://lyvorianstudio.co.in/finance-tracker.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Lyvorian Studio"/>
+<meta property="og:title" content="Finance Tracker — all of your money, in one clean app"/>
+<meta property="og:description" content="Expenses, income, budgets, goals and bills in one place — with bill scanning and UPI auto-detect. Live on the web."/>
+<meta property="og:url" content="https://lyvorianstudio.co.in/finance-tracker.html"/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Finance Tracker — all of your money, in one clean app"/>
+<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Finance Tracker",
+  "url": "https://lyvorianstudio.co.in/finance-tracker.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
+  "publisher": {"@type": "Organization", "name": "Lyvorian Studio", "url": "https://lyvorianstudio.co.in/"},
+  "description": "Expenses, income, budgets, goals, and bills in one clean app — with bill scanning, UPI auto-detect, and a Pro tier."
+}
+</script>
+
+<link rel="preload" href="assets/fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/WorkSans-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/Fraunces-var.woff2') format('woff2')}
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/WorkSans-var.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300 700;font-display:swap;
+    src:url('assets/fonts/JetBrainsMono-var.woff2') format('woff2')}
+  :root{
+    --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
+    --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
+    --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
+    --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
+    --ok:#3f8055; --ok-dot:#5da271;
+  }
+  @media(prefers-color-scheme:dark){
+    :root{--bg:#191410;--bg2:#211a13;--panel:#251e15;
+      --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
+      --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;
+      --gold:#c98f22;--gold-bright:#e6b354;--gold-dim:#8a6a2e;
+      --ok:#8fe09f;--ok-dot:#8fe09f}
+  }
+  :root[data-theme="light"]{--bg:#f2e8d5;--bg2:#ecdfc4;--panel:#faf3e3;
+    --line:rgba(120,86,32,.18);--line-bright:rgba(120,86,32,.42);
+    --text:#2a2013;--muted:#6b5a3e;--muted2:#8c7a5c;
+    --gold:#a97a1f;--gold-bright:#c98f22;--gold-dim:#8a6a2e;--ok:#3f8055;--ok-dot:#5da271}
+  :root[data-theme="dark"]{--bg:#191410;--bg2:#211a13;--panel:#251e15;
+    --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
+    --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;
+    --gold:#c98f22;--gold-bright:#e6b354;--gold-dim:#8a6a2e;--ok:#8fe09f;--ok-dot:#8fe09f}
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(ellipse 65% 40% at 15% -5%, rgba(169,122,31,.10), transparent 60%),var(--bg);
+    color:var(--text);font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 20px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{padding:56px 0 8px;text-align:center}
+  .pmark{width:76px;height:76px;border-radius:19px;margin-bottom:22px;
+    box-shadow:0 14px 32px -12px rgba(120,60,240,.45)}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.4px;
+    text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:'Fraunces',serif;font-weight:540;font-size:clamp(32px,6.5vw,46px);
+    margin:0;letter-spacing:-1px;line-height:1.15}
+  .tagline{color:var(--muted);font-size:17px;margin:16px auto 0;max-width:520px}
+  h2{font-family:'Fraunces',serif;font-weight:560;font-size:23px;margin:48px 0 14px;letter-spacing:-.3px}
+  p{color:var(--muted);margin:0 0 18px}
+  strong{color:var(--text)}
+
+  .plat-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 0}
+  .plat{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:100px;
+    border:1px solid var(--line-bright);white-space:nowrap}
+  .plat::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .plat-live{color:var(--ok);border-color:var(--ok-dot)}
+  .plat-live::before{background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot)}
+  .plat-wip{color:var(--gold);border-style:dashed;border-color:var(--gold-dim)}
+  .plat-wip::before{background:var(--gold-bright);opacity:.75}
+
+  .cta{display:inline-flex;align-items:center;gap:9px;margin-top:28px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:#241a06;
+    font-weight:600;font-size:15px;text-decoration:none;padding:14px 26px;border-radius:100px;
+    box-shadow:0 14px 34px -12px rgba(169,122,31,.6);
+    transition:transform .3s cubic-bezier(.16,.8,.28,1),box-shadow .3s}
+  .cta:hover{transform:translateY(-3px);box-shadow:0 20px 42px -12px rgba(169,122,31,.7)}
+  .cta svg{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+  .cta:hover svg{transform:translateX(3px)}
+
+  .feat{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+  @media(max-width:600px){.feat{grid-template-columns:1fr}}
+  .feat li{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
+  .feat b{display:block;font-family:'Fraunces',serif;font-weight:560;font-size:16px;
+    color:var(--text);margin-bottom:4px}
+  .feat span{color:var(--muted);font-size:14.5px;line-height:1.6}
+
+  .shots{display:flex;gap:14px;overflow-x:auto;padding:4px 0 16px;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .shot{flex:0 0 auto;width:172px;scroll-snap-align:start;text-align:center}
+  .shot img{width:100%;height:auto;display:block;border-radius:14px;
+    border:1px solid var(--line);box-shadow:0 14px 32px -16px rgba(42,32,19,.45)}
+  .shot span{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
+    letter-spacing:1.4px;text-transform:uppercase;color:var(--muted2);margin-top:10px}
+
+  a.inline{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line-bright)}
+  a.inline:hover{color:var(--gold-bright)}
+  .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:40px;color:var(--muted2);
+    text-decoration:none;font-size:14px;transition:color .2s}
+  .home-link:hover{color:var(--gold)}
+  footer{text-align:center;color:var(--muted2);font-size:13px;margin-top:44px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="pmark" src="assets/finance-tracker-icon.png" alt="" width="76" height="76"/>
+    <div class="kicker">Product № 1</div>
+    <h1>Finance Tracker</h1>
+    <p class="tagline">All of your money in one clean app — salary, groceries, bills, goals. Not a
+    trading terminal, not a spreadsheet with extra steps.</p>
+    <div class="plat-row">
+      <span class="plat plat-live">Web — live now</span>
+      <span class="plat plat-wip">Android — coming soon</span>
+    </div>
+    <a class="cta" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">
+      Open Finance Tracker
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </header>
+
+  <h2>What it does</h2>
+  <ul class="feat">
+    <li><b>Expenses &amp; income</b><span>Every transaction categorised, so you can see where the month actually went.</span></li>
+    <li><b>Budgets</b><span>Set what a category should cost and watch it against what it really costs.</span></li>
+    <li><b>Goals</b><span>Savings targets with progress you can see, not just a number in your head.</span></li>
+    <li><b>Bills</b><span>Upcoming bills and reminders, so nothing arrives as a surprise.</span></li>
+    <li><b>Bill scanning</b><span>Point it at a bill instead of typing the whole thing in by hand.</span></li>
+    <li><b>UPI auto-detect</b><span>UPI payments recognised and filed without manual entry.</span></li>
+  </ul>
+
+  <h2>Screens</h2>
+  <div class="shots">
+    <div class="shot"><img src="assets/shot-dashboard.webp" alt="Finance Tracker dashboard — net worth, budgets and spending at a glance" loading="lazy" width="560" height="1037"/><span>Dashboard</span></div>
+    <div class="shot"><img src="assets/shot-expenses.webp" alt="Finance Tracker expenses screen — categorised spending" loading="lazy" width="560" height="1037"/><span>Expenses</span></div>
+    <div class="shot"><img src="assets/shot-goals.webp" alt="Finance Tracker goals screen — savings goals with progress" loading="lazy" width="560" height="1037"/><span>Goals</span></div>
+    <div class="shot"><img src="assets/shot-charts.webp" alt="Finance Tracker charts screen — spending analytics and trends" loading="lazy" width="560" height="1037"/><span>Charts</span></div>
+    <div class="shot"><img src="assets/shot-bills.webp" alt="Finance Tracker bills screen — upcoming bills and reminders" loading="lazy" width="560" height="1037"/><span>Bills</span></div>
+  </div>
+
+  <h2>What it costs</h2>
+  <p>Free to use. A <strong>Pro tier</strong> exists for the people who want more — no funding round
+  to chase, no growth hacks, so the app doesn't need to squeeze you to survive.</p>
+
+  <h2>How it's built</h2>
+  <p>By one person, by hand, and measured on a real phone rather than assumed. The performance hunt
+  that halved the app's CPU use — and the pretty feature that got deleted instead of optimised — is
+  written up in <a class="inline" href="built-the-hard-way.html">Built the hard way</a>.</p>
+
+  <a class="home-link" href="index.html">&larr; Back to Lyvorian Studio</a>
+  <footer>&copy; 2026 Lyvorian Studio. All rights reserved.</footer>
+</div>
+<script>
+(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();
+</script>
+</body>
+</html>
