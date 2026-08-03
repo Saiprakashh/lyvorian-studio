@@ -1,0 +1,182 @@
+/* site.css — shared chrome for every Lyvorian Studio page.
+   Loaded before each page's own <style>, so page rules still win. */
+
+:root{
+  --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
+  --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
+  --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
+  --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
+  --maroon:#8a3838; --ok:#3f8055; --ok-dot:#5da271;
+  --hdr:rgba(242,232,213,.75);
+  --r:16px;
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme]){
+    --bg:#191410; --bg2:#211a13; --panel:#251e15;
+    --line:rgba(201,143,34,.16); --line-bright:rgba(201,143,34,.4);
+    --text:#f0e7d6; --muted:#b3a488; --muted2:#8c7a5c;
+    --gold:#c98f22; --gold-bright:#e6b354; --gold-dim:#8a6a2e;
+    --ok:#8fe09f; --ok-dot:#8fe09f;
+    --hdr:rgba(25,20,16,.78);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
+  --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
+  --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
+  --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
+  --ok:#3f8055; --ok-dot:#5da271;
+  --hdr:rgba(242,232,213,.75);
+}
+:root[data-theme="dark"]{
+  --bg:#191410; --bg2:#211a13; --panel:#251e15;
+  --line:rgba(201,143,34,.16); --line-bright:rgba(201,143,34,.4);
+  --text:#f0e7d6; --muted:#b3a488; --muted2:#8c7a5c;
+  --gold:#c98f22; --gold-bright:#e6b354; --gold-dim:#8a6a2e;
+  --ok:#8fe09f; --ok-dot:#8fe09f;
+  --hdr:rgba(25,20,16,.78);
+}
+
+/* ── skip link ─────────────────────────────── */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:400;
+  background:var(--panel);color:var(--gold);border:1px solid var(--gold-dim);
+  border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;text-decoration:none}
+.skip-link:focus{left:14px;top:14px}
+
+/* ── keyboard focus, site-wide ─────────────── */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
+select:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--gold-bright);outline-offset:3px;border-radius:4px}
+.card:focus-visible,.btn-preview:focus-visible,.hero-btn:focus-visible,
+.cta:focus-visible,.shot:focus-visible{outline:2px solid var(--gold-bright);outline-offset:4px}
+
+/* ── shared header (secondary pages) ───────── */
+/* header.site-hdr beats a page's bare `header{}` rule on specificity,
+   whatever the source order */
+header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
+  background:var(--hdr);border-bottom:1px solid var(--line);
+  padding:0;text-align:left}
+.site-hdr .hdr-inner{max-width:1120px;margin:0 auto;padding:15px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px}
+.site-hdr .word{font-family:'Fraunces',serif;font-weight:540;font-size:19px;letter-spacing:.3px;
+  color:var(--text);text-decoration:none;display:flex;align-items:center;gap:11px}
+.site-hdr .mark-img{width:32px;height:32px;border-radius:9px;flex-shrink:0;object-fit:cover;
+  box-shadow:0 0 0 1px var(--line),0 6px 18px -8px rgba(42,32,19,.4);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.site-hdr .word:hover .mark-img{transform:scale(1.08) rotate(-6deg)}
+/* not scoped to .site-hdr — the homepage header uses this too */
+.hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.site-hdr nav{display:flex;gap:26px;align-items:center}
+.site-hdr nav a{position:relative;color:var(--muted);text-decoration:none;font-size:14px;
+  font-weight:500;transition:color .2s;padding-bottom:2px}
+.site-hdr nav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
+  background:var(--gold-bright);transition:width .25s cubic-bezier(.16,.8,.28,1)}
+.site-hdr nav a:hover{color:var(--gold-bright)}
+.site-hdr nav a:hover::after{width:100%}
+.site-hdr nav a[aria-current="page"]{color:var(--gold)}
+.site-hdr nav a[aria-current="page"]::after{width:100%;background:var(--gold-dim)}
+
+/* ── nav + mobile menu (all pages) ─────────── */
+.nav-toggle{display:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+  background:transparent;color:var(--muted);cursor:pointer;align-items:center;justify-content:center;
+  transition:color .25s,border-color .25s}
+.nav-toggle:hover{color:var(--gold);border-color:var(--gold-dim)}
+.nav-toggle .bars{display:block}.nav-toggle .ex{display:none}
+.nav-toggle[aria-expanded="true"] .bars{display:none}
+.nav-toggle[aria-expanded="true"] .ex{display:block}
+
+.mobile-menu{position:fixed;left:12px;right:12px;z-index:250;
+  background:var(--panel);border:1px solid var(--line-bright);border-radius:16px;
+  box-shadow:0 26px 60px -22px rgba(42,32,19,.5);padding:10px;
+  display:flex;flex-direction:column;
+  opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;
+  transition:opacity .24s cubic-bezier(.16,.8,.28,1),transform .24s cubic-bezier(.16,.8,.28,1)}
+.mobile-menu.show{opacity:1;transform:none;pointer-events:auto}
+.mobile-menu a{color:var(--text);text-decoration:none;font-size:16px;font-weight:500;
+  padding:13px 15px;border-radius:11px;transition:background .2s,color .2s}
+.mobile-menu a:hover,.mobile-menu a:focus-visible{background:rgba(201,151,58,.12);color:var(--gold-bright)}
+.mobile-menu .mm-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.7px;
+  text-transform:uppercase;color:var(--muted2);padding:9px 15px 4px}
+
+@media(max-width:820px){
+  .nav-toggle{display:flex}
+  .site-hdr nav{display:none}
+}
+@media(min-width:821px){
+  .mobile-menu{display:none}
+}
+
+/* ── theme toggle ──────────────────────────── */
+.theme-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:transparent;
+  color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:color .25s,border-color .25s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.theme-toggle:hover{color:var(--gold);border-color:var(--gold-dim);transform:rotate(20deg)}
+.theme-toggle .moon{display:none}
+:root[data-theme="dark"] .theme-toggle .sun{display:none}
+:root[data-theme="dark"] .theme-toggle .moon{display:block}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme]) .theme-toggle .sun{display:none}
+  :root:not([data-theme]) .theme-toggle .moon{display:block}
+}
+
+/* ── contact popover ───────────────────────── */
+.contact-pop{position:fixed;top:0;left:0;z-index:300;width:max-content;max-width:calc(100vw - 24px);
+  background:
+    linear-gradient(160deg,rgba(201,151,58,.10),transparent 42%),
+    var(--panel);
+  border:1px solid var(--line-bright);border-radius:15px;padding:14px;
+  box-shadow:0 24px 54px -20px rgba(42,32,19,.5);
+  display:flex;flex-direction:column;gap:9px;
+  opacity:0;transform:translateY(-6px) scale(.97);pointer-events:none;transform-origin:top center;
+  transition:opacity .22s cubic-bezier(.16,.8,.28,1),transform .22s cubic-bezier(.16,.8,.28,1)}
+.contact-pop.flip{transform:translateY(6px) scale(.97);transform-origin:bottom center}
+.contact-pop.show{opacity:1;transform:none;pointer-events:auto}
+.contact-tail{position:absolute;width:11px;height:11px;background:var(--panel);
+  border-left:1px solid var(--line-bright);border-top:1px solid var(--line-bright);
+  top:-6px;left:var(--tail-x,50%);margin-left:-6px;transform:rotate(45deg);border-radius:2px 0 0 0}
+.contact-pop.flip .contact-tail{top:auto;bottom:-6px;transform:rotate(225deg)}
+.contact-pop-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.7px;
+  text-transform:uppercase;color:var(--muted2);padding:0 3px}
+.contact-mail{display:flex;align-items:center;gap:10px;text-decoration:none;
+  font-family:'JetBrains Mono',monospace;font-size:clamp(12px,3.3vw,13.5px);color:var(--gold-bright);
+  padding:11px 13px;border-radius:11px;background:rgba(201,151,58,.09);
+  border:1px solid transparent;
+  transition:background .22s,border-color .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
+.contact-mail:hover,.contact-mail:focus-visible{background:rgba(201,151,58,.17);border-color:var(--gold-dim);transform:translateX(2px)}
+.cm-icon{flex-shrink:0;opacity:.75}
+.cm-text{white-space:nowrap}
+.cm-arw{flex-shrink:0;margin-left:6px;opacity:0;transform:translateX(-4px);
+  transition:opacity .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
+.contact-mail:hover .cm-arw,.contact-mail:focus-visible .cm-arw{opacity:1;transform:none}
+
+/* ── reveal on scroll ──────────────────────── */
+.reveal{opacity:0;transform:translateY(26px);
+  transition:opacity .8s cubic-bezier(.16,.8,.28,1),transform .8s cubic-bezier(.16,.8,.28,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-1{transition-delay:.06s}.reveal-2{transition-delay:.14s}.reveal-3{transition-delay:.22s}
+
+/* ── print ─────────────────────────────────── */
+@media print{
+  :root{--bg:#fff;--bg2:#fff;--panel:#fff;--text:#000;--muted:#333;--muted2:#555;
+    --gold:#6b5416;--gold-bright:#6b5416;--gold-dim:#8a8a8a;
+    --line:#ccc;--line-bright:#999;--hdr:#fff}
+  body{background:#fff!important;color:#000!important;font-size:11pt}
+  .site-hdr,header,nav,.nav-toggle,.theme-toggle,.mobile-menu,.contact-pop,.skip-link,
+  .to-top,.grain,.cursor-dot,.scroll-progress,.ticker-wrap,.aurora,.orbit-svg,
+  .home-link,.btn,.cta,.card-cta,.btn-preview,.gallery,.lightbox,#ideas{display:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  a{color:#000;text-decoration:underline}
+  /* spell out link targets, since a printed page can't be clicked */
+  main a[href^="http"]::after,.wrap a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;color:#555}
+  h1,h2,h3{page-break-after:avoid}
+  li,.entry,.feat li{page-break-inside:avoid}
+  img{max-width:100%!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  /* global catch-all so every page loading this sheet is covered, not just the shared chrome */
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+  .theme-toggle:hover{transform:none}
+}

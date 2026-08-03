@@ -1,0 +1,355 @@
+/* home.js — homepage-only behaviour. Shared behaviour lives in site.js. */
+// Scroll progress bar + back-to-top visibility
+(function(){
+  var bar = document.getElementById('scrollProgress');
+  var toTop = document.getElementById('toTop');
+  function onScroll(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (scrolled / max) * 100 : 0;
+    bar.style.width = pct + '%';
+    if (scrolled > 480) toTop.classList.add('show'); else toTop.classList.remove('show');
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  toTop.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+  onScroll();
+})();
+
+// Cursor glow
+(function(){
+  var glow = document.getElementById('glow');
+  if (window.matchMedia('(hover: hover)').matches) {
+    window.addEventListener('mousemove', function(e){
+      glow.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
+    }, {passive:true});
+  }
+})();
+
+// Scroll reveal
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(el){el.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.15});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+// Story quote — word-by-word blur-in on scroll
+(function(){
+  var text = 'Lyvorian Studio isn’t a company yet — it’s one person building one product at a time, all the way through, before starting the next. No funding round. No growth hacks. Just software finished carefully enough that it doesn’t need an excuse.';
+  var el = document.getElementById('storyQuote');
+  var words = text.split(' ');
+  el.innerHTML = words.map(function(w,i){
+    return '<span class="word" style="transition-delay:' + (i*22) + 'ms">' + w + '</span>';
+  }).join(' ');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.4});
+    io.observe(el);
+  } else { el.classList.add('in'); }
+})();
+
+// Floating embers in hero
+(function(){
+  var host = document.getElementById('embers');
+  var n = window.innerWidth < 820 ? 8 : 16;
+  for (var i=0;i<n;i++){
+    var e = document.createElement('div');
+    e.className = 'ember';
+    var size = 2 + Math.random()*3;
+    e.style.width = size+'px'; e.style.height = size+'px';
+    e.style.left = (10+Math.random()*80)+'%';
+    e.style.bottom = (0+Math.random()*30)+'%';
+    e.style.setProperty('--drift', (Math.random()*60-30)+'px');
+    e.style.animation = 'rise ' + (6+Math.random()*5) + 's ease-in ' + (Math.random()*6) + 's infinite';
+    host.appendChild(e);
+  }
+})();
+
+// Card 3D tilt
+(function(){
+  var card = document.getElementById('ftCard');
+  if (!card || !window.matchMedia('(hover: hover)').matches) return;
+  card.addEventListener('mousemove', function(e){
+    var r = card.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width - .5;
+    var y = (e.clientY - r.top) / r.height - .5;
+    card.style.transform = 'perspective(700px) rotateY(' + (x*7) + 'deg) rotateX(' + (-y*7) + 'deg) translateY(-4px)';
+  });
+  card.addEventListener('mouseleave', function(){
+    card.style.transform = 'perspective(700px) rotateY(0) rotateX(0) translateY(0)';
+  });
+})();
+
+// Logo 3D tilt (follows cursor)
+(function(){
+  var wrap = document.querySelector('.logo-3d');
+  var logo = document.getElementById('logoWord');
+  if (!wrap || !logo || !window.matchMedia('(hover: hover)').matches) return;
+  wrap.addEventListener('mousemove', function(e){
+    var r = wrap.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width - .5;
+    var y = (e.clientY - r.top) / r.height - .5;
+    logo.style.transform = 'rotateY(' + (x*26) + 'deg) rotateX(' + (-y*22) + 'deg) translateZ(6px)';
+  });
+  wrap.addEventListener('mouseleave', function(){
+    logo.style.transform = 'rotateY(0) rotateX(0) translateZ(0)';
+  });
+})();
+
+// App gallery ("Preview the app") + lightbox. One gallery per app —
+// future apps just need a button[data-gallery] and a matching .gallery element.
+(function(){
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbCaption = document.getElementById('lbCaption');
+  var openGallery = null, items = [], idx = 0;
+
+  function setOverflow(){ document.body.style.overflow = (openGallery || lb.classList.contains('open')) ? 'hidden' : ''; }
+
+  function show(i){
+    idx = (i + items.length) % items.length;
+    lbImg.src = items[idx].src;
+    lbImg.alt = items[idx].alt;
+    lbCaption.textContent = items[idx].label + ' — ' + (idx+1) + ' / ' + items.length;
+  }
+  function openLb(i){ show(i); lb.classList.add('open'); setOverflow(); }
+  function closeLb(){ lb.classList.remove('open'); setOverflow(); }
+
+  document.querySelectorAll('.btn-preview[data-gallery]').forEach(function(btn){
+    var gal = document.getElementById('gallery-' + btn.getAttribute('data-gallery'));
+    if (!gal) return;
+    var shots = Array.prototype.slice.call(gal.querySelectorAll('.shot'));
+    var galItems = shots.map(function(s){
+      var img = s.querySelector('img');
+      return {src: img.getAttribute('src'), alt: img.getAttribute('alt'), label: s.getAttribute('data-label') || ''};
+    });
+    btn.addEventListener('click', function(){
+      openGallery = gal; items = galItems;
+      gal.classList.add('open'); setOverflow();
+    });
+    shots.forEach(function(s, i){
+      s.addEventListener('click', function(){ openLb(i); });
+      s.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(i); } });
+    });
+    gal.querySelector('.gallery-close').addEventListener('click', function(){
+      gal.classList.remove('open'); openGallery = null; setOverflow();
+    });
+    gal.addEventListener('click', function(e){
+      if (e.target === gal || e.target.classList.contains('gallery-inner')) {
+        gal.classList.remove('open'); openGallery = null; setOverflow();
+      }
+    });
+  });
+
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.getElementById('lbPrev').addEventListener('click', function(e){ e.stopPropagation(); show(idx-1); });
+  document.getElementById('lbNext').addEventListener('click', function(e){ e.stopPropagation(); show(idx+1); });
+  lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function(e){
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') closeLb();
+      else if (e.key === 'ArrowLeft') show(idx-1);
+      else if (e.key === 'ArrowRight') show(idx+1);
+    } else if (openGallery && e.key === 'Escape') {
+      openGallery.classList.remove('open'); openGallery = null; setOverflow();
+    }
+  });
+})();
+
+// Product № 3 teaser — typewriter line + cycling glyph
+(function(){
+  var typeEl = document.getElementById('teaseType');
+  var glyphEl = document.getElementById('teaseGlyph');
+  if (!typeEl) return;
+  var phrases = [
+    'sketching ideas…',
+    'asking what people are missing…',
+    'stress-testing the concept…',
+    'brewing quietly…'
+  ];
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    typeEl.textContent = phrases[3];
+    return;
+  }
+  var pi = 0, ci = 0, deleting = false;
+  (function tick(){
+    var full = phrases[pi];
+    if (!deleting){
+      ci++;
+      typeEl.textContent = full.slice(0, ci);
+      if (ci === full.length){ deleting = true; setTimeout(tick, 2000); return; }
+      setTimeout(tick, 55 + Math.random()*50);
+    } else {
+      ci--;
+      typeEl.textContent = full.slice(0, ci);
+      if (ci === 0){ deleting = false; pi = (pi+1) % phrases.length; setTimeout(tick, 420); return; }
+      setTimeout(tick, 26);
+    }
+  })();
+  var glyphs = ['?','✦','◇','△'];
+  var gi = 0;
+  setInterval(function(){
+    glyphEl.classList.add('swap');
+    setTimeout(function(){
+      gi = (gi+1) % glyphs.length;
+      glyphEl.textContent = glyphs[gi];
+      glyphEl.classList.remove('swap');
+    }, 300);
+  }, 3400);
+})();
+
+// Ideas box — chip select, live char count, mailto draft + toast
+(function(){
+  var form = document.getElementById('ideasForm');
+  if (!form) return;
+  var picked = 'App idea';
+  var msgEl = document.getElementById('ideaMsg');
+  var countEl = document.getElementById('charCount');
+  var toast = document.getElementById('ideaToast');
+  var toastTimer = null;
+  document.getElementById('ideaTypes').addEventListener('click', function(e){
+    var btn = e.target.closest('.idea-type');
+    if (!btn) return;
+    document.querySelectorAll('.idea-type').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    picked = btn.getAttribute('data-type');
+  });
+  msgEl.addEventListener('input', function(){
+    var n = msgEl.value.length;
+    countEl.textContent = n + ' / 1200';
+    countEl.classList.toggle('warm', n > 1050);
+  });
+  function showToast(text, ok){
+    toast.querySelector('svg').style.display = ok ? '' : 'none';
+    toast.childNodes[toast.childNodes.length-1].textContent = ' ' + text;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 4800);
+  }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = msgEl.value.trim();
+    if (!msg) return;
+    if (document.getElementById('ideaHoney').value) return; // bot
+    var name = document.getElementById('ideaName').value.trim();
+    var email = document.getElementById('ideaEmail').value.trim();
+    var btn = document.getElementById('sendBtn');
+    btn.disabled = true;
+    btn.firstChild.textContent = 'Sending… ';
+    fetch('https://formsubmit.co/ajax/support@lyvorianstudio.co.in', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
+        _subject: '💡 New ' + picked + ' — Lyvorian Studio site' + (name ? ' (from ' + name + ')' : ''),
+        _template: 'box',
+        _captcha: 'false',
+        _replyto: email || undefined,
+        'Idea type': picked,
+        'From': name || 'Anonymous visitor',
+        'Reply-to email': email || 'Not shared',
+        'Their message': msg,
+        'Submitted from': 'lyvorianstudio.co.in'
+      })
+    }).then(function(r){ return r.json(); }).then(function(d){
+      if (d.success === 'true' || d.success === true){
+        showToast('Sent straight to the studio — thank you!', true);
+        form.reset();
+        countEl.textContent = '0 / 1200';
+      } else { throw new Error(); }
+    }).catch(function(){
+      showToast('Could not send right now — please email support@lyvorianstudio.co.in', false);
+    }).finally(function(){
+      btn.disabled = false;
+      btn.firstChild.textContent = 'Send it over ';
+    });
+  });
+})();
+
+// Click sparkle burst — bright gold particles + spinning stars
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var STAR = '<svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0l2.4 7.6L20 10l-7.6 2.4L10 20l-2.4-7.6L0 10l7.6-2.4z"/></svg>';
+  document.addEventListener('click', function(e){
+    var x = e.clientX, y = e.clientY;
+    if (x === 0 && y === 0) return; // keyboard-triggered click
+    // radiating dots
+    for (var i = 0; i < 10; i++){
+      var s = document.createElement('div');
+      s.className = 'sparkle';
+      var ang = (Math.PI * 2 / 10) * i + Math.random() * .6;
+      var dist = 34 + Math.random() * 42;
+      s.style.left = x + 'px'; s.style.top = y + 'px';
+      s.style.setProperty('--sx', Math.cos(ang) * dist + 'px');
+      s.style.setProperty('--sy', Math.sin(ang) * dist + 'px');
+      var dur = .5 + Math.random() * .3;
+      s.style.animation = 'sparkleFly ' + dur + 's cubic-bezier(.16,.8,.28,1) forwards';
+      document.body.appendChild(s);
+      setTimeout(function(el){ return function(){ el.remove(); }; }(s), dur * 1000 + 60);
+    }
+    // spinning stars
+    for (var j = 0; j < 3; j++){
+      var st = document.createElement('div');
+      st.className = 'sparkle-star';
+      st.innerHTML = STAR;
+      st.style.left = (x + (Math.random() * 36 - 18)) + 'px';
+      st.style.top = (y + (Math.random() * 36 - 18)) + 'px';
+      var sdur = .55 + Math.random() * .25;
+      st.style.animation = 'starPop ' + sdur + 's ease-out ' + (j * .06) + 's both';
+      document.body.appendChild(st);
+      setTimeout(function(el){ return function(){ el.remove(); }; }(st), sdur * 1000 + 260);
+    }
+  }, {passive:true});
+})();
+
+// Custom cursor — dot follows instantly, ring trails with easing
+(function(){
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var dot = document.getElementById('cursorDot');
+  var ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+  document.body.classList.add('custom-cursor');
+  var mx = -100, my = -100, rx = -100, ry = -100, visible = false;
+  window.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    if (!visible){ rx = mx; ry = my; visible = true; dot.style.opacity = ring.style.opacity = ''; }
+    dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
+  }, {passive:true});
+  document.addEventListener('mouseleave', function(){ visible = false; dot.style.opacity = ring.style.opacity = '0'; });
+  (function loop(){
+    rx += (mx - rx) * .16;
+    ry += (my - ry) * .16;
+    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  })();
+  // grow ring over interactive elements
+  var hoverSel = 'a, button, .shot';
+  document.addEventListener('mouseover', function(e){
+    if (e.target.closest(hoverSel)) ring.classList.add('hovering');
+  });
+  document.addEventListener('mouseout', function(e){
+    if (e.target.closest(hoverSel)) ring.classList.remove('hovering');
+  });
+  document.addEventListener('mousedown', function(){ ring.classList.add('pressing'); });
+  document.addEventListener('mouseup', function(){ ring.classList.remove('pressing'); });
+})();
+
+// Track clicks on the Finance Tracker CTAs as events
+(function(){
+  document.querySelectorAll('a[href^="https://app.lyvorianstudio.co.in"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.goatcounter && window.goatcounter.count)
+        window.goatcounter.count({path:'try-finance-tracker', title:'CTA click', event:true});
+    });
+  });
+})();

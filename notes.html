@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Studio notes — what's happening at the workbench | Lyvorian Studio</title>
+<meta name="description" content="A running log of what's actually being built at Lyvorian Studio — releases, milestones and the small decisions in between."/>
+<meta name="theme-color" content="#f2e8d5"/>
+<link rel="manifest" href="site.webmanifest"/>
+<link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
+<script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
+<link rel="preload" href="assets/fonts/JetBrainsMono-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css?v=20260803"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://lyvorianstudio.co.in/notes.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Lyvorian Studio"/>
+<meta property="og:title" content="Studio notes — Lyvorian Studio"/>
+<meta property="og:description" content="A running log of what's actually being built — releases, milestones and the small decisions in between."/>
+<meta property="og:url" content="https://lyvorianstudio.co.in/notes.html"/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-notes.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Studio notes — Lyvorian Studio"/>
+<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-notes.jpg"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Lyvorian Studio", "item": "https://lyvorianstudio.co.in/"},
+    {"@type": "ListItem", "position": 2, "name": "Studio notes", "item": "https://lyvorianstudio.co.in/notes.html"}
+  ]
+}
+</script>
+
+<link rel="preload" href="assets/fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/WorkSans-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;
+    src:url('assets/fonts/Fraunces-var.woff2') format('woff2')}
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:100 900;font-display:swap;
+    src:url('assets/fonts/WorkSans-var.woff2') format('woff2')}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 800;font-display:swap;
+    src:url('assets/fonts/JetBrainsMono-var.woff2') format('woff2')}
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(ellipse 65% 40% at 15% -5%, rgba(169,122,31,.10), transparent 60%),var(--bg);
+    color:var(--text);font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px}
+  .page-head{padding:56px 0 8px;text-align:center}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.4px;
+    text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:'Fraunces',serif;font-weight:540;font-size:clamp(30px,6vw,42px);
+    margin:0;letter-spacing:-1px;line-height:1.15}
+  .sub{color:var(--muted);font-size:16px;margin:16px auto 0;max-width:480px}
+
+  .log{margin:46px 0 0}
+  .log-year{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;
+    text-transform:uppercase;color:var(--muted2);padding:0 0 12px;
+    border-bottom:1px solid var(--line);margin-bottom:6px}
+  .entry{display:flex;gap:20px;align-items:baseline;padding:16px 4px;
+    border-bottom:1px solid var(--line)}
+  .entry:last-child{border-bottom:none}
+  .entry time{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.8px;
+    color:var(--gold);flex-shrink:0;width:74px;padding-top:2px}
+  .entry .body{color:var(--muted);font-size:15.5px;line-height:1.65}
+  .entry .body b{display:block;color:var(--text);font-weight:600;margin-bottom:2px}
+  @media(max-width:520px){
+    .entry{flex-direction:column;gap:4px}
+    .entry time{width:auto}
+  }
+
+  a.inline{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line-bright)}
+  a.inline:hover{color:var(--gold-bright)}
+  .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:40px;color:var(--muted2);
+    text-decoration:none;font-size:14px;transition:color .2s}
+  .home-link:hover{color:var(--gold)}
+  footer{text-align:center;color:var(--muted2);font-size:13px;margin-top:44px}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="word">
+      <img src="assets/icon-beige-512.png" alt="" class="mark-img" width="32" height="32"/>
+      <span>Lyvorian Studio</span>
+    </a>
+    <nav>
+      <a href="index.html#work">Products</a>
+      <a href="index.html#story">About</a>
+      <a href="notes.html" aria-current="page">Notes</a>
+      <a href="index.html#ideas">Share ideas</a>
+      <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
+    </nav>
+    <div class="hdr-right">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><svg class="bars" width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ex" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><svg class="sun" width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.4" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13M12.95 12.95l-1.13-1.13M4.18 4.18L3.05 3.05" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><svg class="moon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.8 9.6A6 6 0 016.4 2.2a6 6 0 107.4 7.4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="main" tabindex="-1">
+  <div class="page-head">
+    <div class="kicker">Studio notes</div>
+    <h1>At the workbench</h1>
+    <p class="sub">What's actually being built, in the order it happened. No roadmap theatre — just
+    the log.</p>
+  </div>
+
+  <div class="log">
+    <div class="log-year">2026</div>
+
+    <div class="entry reveal">
+      <time datetime="2026-08">Aug 2026</time>
+      <div class="body">
+        <b>HabitAroha announced as product № 2</b>
+        The site now shows what's been quietly in build: a calm, offline-first habit tracker, V1
+        complete and running on real devices. <a class="inline" href="habitaroha.html">See the
+        page</a>.
+      </div>
+    </div>
+
+    <div class="entry reveal">
+      <time datetime="2026-08">Aug 2026</time>
+      <div class="body">
+        <b>HabitAroha entered device testing</b>
+        A full test pass on real hardware before the Play Store listing goes up. Nothing ships until
+        it holds up on a phone that isn't the development machine.
+      </div>
+    </div>
+
+    <div class="entry reveal">
+      <time datetime="2026-07">Jul 2026</time>
+      <div class="body">
+        <b>Finance Tracker Android in final polish</b>
+        Play Store submission prep underway. The web app stays live and unaffected —
+        <a class="inline" href="finance-tracker.html">Finance Tracker</a>.
+      </div>
+    </div>
+
+    <div class="entry reveal">
+      <time datetime="2026-07">Jul 2026</time>
+      <div class="body">
+        <b>Play Console developer account created and verified</b>
+        The paperwork nobody writes about, done.
+      </div>
+    </div>
+
+    <div class="entry reveal">
+      <time datetime="2026-07">Jul 2026</time>
+      <div class="body">
+        <b>Finance Tracker moved to faster hosting</b>
+        Same app, quicker to load, fewer cold starts.
+      </div>
+    </div>
+
+    <div class="entry reveal">
+      <time datetime="2026-07">Jul 2026</time>
+      <div class="body">
+        <b>lyvorianstudio.co.in went live</b>
+        The studio has a front door.
+      </div>
+    </div>
+  </div>
+
+  <a class="home-link" href="index.html">&larr; Back to Lyvorian Studio</a>
+  <footer>&copy; 2026 Lyvorian Studio. All rights reserved.</footer>
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-label">Lyvorian Studio</div>
+  <a href="index.html#work">Products</a>
+  <a href="index.html#story">About</a>
+  <a href="notes.html" aria-current="page">Notes</a>
+  <a href="index.html#ideas">Share ideas</a>
+  <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
+</div>
+
+<div class="contact-pop" id="contactPop" role="dialog" aria-label="Contact the studio" aria-hidden="true">
+  <span class="contact-tail"></span>
+  <div class="contact-pop-label">Email the studio</div>
+  <a class="contact-mail" href="mailto:support@lyvorianstudio.co.in">
+    <svg class="cm-icon" width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.4" y="3.2" width="13.2" height="9.6" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2.2 4.6L8 8.7l5.8-4.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="cm-text">support@lyvorianstudio.co.in</span>
+    <svg class="cm-arw" width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
+
+<script src="assets/site.js?v=20260803" defer></script>
+</body>
+</html>

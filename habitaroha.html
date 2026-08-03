@@ -6,6 +6,11 @@
 <title>HabitAroha — a calm, offline-first habit tracker | Lyvorian Studio</title>
 <meta name="description" content="HabitAroha is a calm, private habit tracker. Works completely offline, keeps your data encrypted on your own device, and never makes you feel bad about a missed day. In testing, Play Store next."/>
 <meta name="theme-color" content="#f2e8d5"/>
+<link rel="manifest" href="site.webmanifest"/>
+<link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
+<script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
+<link rel="preload" href="assets/fonts/JetBrainsMono-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css?v=20260803"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/habitaroha.html"/>
 <meta property="og:type" content="website"/>
@@ -13,10 +18,12 @@
 <meta property="og:title" content="HabitAroha — build calm, consistent habits"/>
 <meta property="og:description" content="Works offline. Your data stays encrypted on your device. Rest days never count as missed."/>
 <meta property="og:url" content="https://lyvorianstudio.co.in/habitaroha.html"/>
-<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-habitaroha.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="HabitAroha — build calm, consistent habits"/>
-<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-image.png"/>
+<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-habitaroha.jpg"/>
 
 <script type="application/ld+json">
 {
@@ -26,49 +33,39 @@
   "url": "https://lyvorianstudio.co.in/habitaroha.html",
   "applicationCategory": "HealthApplication",
   "operatingSystem": "Android",
+  "image": "https://lyvorianstudio.co.in/assets/og-habitaroha.jpg",
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
   "publisher": {"@type": "Organization", "name": "Lyvorian Studio", "url": "https://lyvorianstudio.co.in/"},
   "description": "A calm, offline-first habit tracker — streaks, gentle reminders, and habit data encrypted on the device."
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Lyvorian Studio", "item": "https://lyvorianstudio.co.in/"},
+    {"@type": "ListItem", "position": 2, "name": "HabitAroha", "item": "https://lyvorianstudio.co.in/habitaroha.html"}
+  ]
+}
+</script>
+
 <link rel="preload" href="assets/fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/WorkSans-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  @font-face{font-family:'Fraunces';font-style:normal;font-weight:300 700;font-display:swap;
+  @font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;
     src:url('assets/fonts/Fraunces-var.woff2') format('woff2')}
-  @font-face{font-family:'Work Sans';font-style:normal;font-weight:300 700;font-display:swap;
+  @font-face{font-family:'Work Sans';font-style:normal;font-weight:100 900;font-display:swap;
     src:url('assets/fonts/WorkSans-var.woff2') format('woff2')}
-  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:300 700;font-display:swap;
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 800;font-display:swap;
     src:url('assets/fonts/JetBrainsMono-var.woff2') format('woff2')}
-  :root{
-    --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
-    --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
-    --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
-    --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
-    --ok:#3f8055; --ok-dot:#5da271;
-  }
-  @media(prefers-color-scheme:dark){
-    :root{--bg:#191410;--bg2:#211a13;--panel:#251e15;
-      --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
-      --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;
-      --gold:#c98f22;--gold-bright:#e6b354;--gold-dim:#8a6a2e;
-      --ok:#8fe09f;--ok-dot:#8fe09f}
-  }
-  :root[data-theme="light"]{--bg:#f2e8d5;--bg2:#ecdfc4;--panel:#faf3e3;
-    --line:rgba(120,86,32,.18);--line-bright:rgba(120,86,32,.42);
-    --text:#2a2013;--muted:#6b5a3e;--muted2:#8c7a5c;
-    --gold:#a97a1f;--gold-bright:#c98f22;--gold-dim:#8a6a2e;--ok:#3f8055;--ok-dot:#5da271}
-  :root[data-theme="dark"]{--bg:#191410;--bg2:#211a13;--panel:#251e15;
-    --line:rgba(201,143,34,.16);--line-bright:rgba(201,143,34,.4);
-    --text:#f0e7d6;--muted:#b3a488;--muted2:#8c7a5c;
-    --gold:#c98f22;--gold-bright:#e6b354;--gold-dim:#8a6a2e;--ok:#8fe09f;--ok-dot:#8fe09f}
   *{box-sizing:border-box}
   body{margin:0;background:
       radial-gradient(ellipse 65% 40% at 15% -5%, rgba(169,122,31,.10), transparent 60%),var(--bg);
     color:var(--text);font-family:'Work Sans',system-ui,-apple-system,sans-serif;
-    font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 20px 80px}
-  .wrap{max-width:760px;margin:0 auto}
+    font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
   header{padding:56px 0 8px;text-align:center}
   .pmark{width:76px;height:76px;border-radius:19px;margin-bottom:22px;
     box-shadow:0 14px 32px -14px rgba(42,32,19,.5)}
@@ -119,7 +116,27 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="word">
+      <img src="assets/icon-beige-512.png" alt="" class="mark-img" width="32" height="32"/>
+      <span>Lyvorian Studio</span>
+    </a>
+    <nav>
+      <a href="index.html#work">Products</a>
+      <a href="index.html#story">About</a>
+      <a href="notes.html">Notes</a>
+      <a href="index.html#ideas">Share ideas</a>
+      <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
+    </nav>
+    <div class="hdr-right">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><svg class="bars" width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ex" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><svg class="sun" width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.4" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13M12.95 12.95l-1.13-1.13M4.18 4.18L3.05 3.05" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><svg class="moon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.8 9.6A6 6 0 016.4 2.2a6 6 0 107.4 7.4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="wrap" id="main" tabindex="-1">
   <header>
     <img class="pmark" src="assets/habitaroha-icon.png" alt="" width="76" height="76"/>
     <div class="kicker">Product № 2</div>
@@ -167,8 +184,8 @@
   <h2>Languages</h2>
   <div class="langs">
     <span class="lang">English</span>
-    <span class="lang">हिन्दी</span>
-    <span class="lang">తెలుగు</span>
+    <span class="lang" lang="hi">हिन्दी</span>
+    <span class="lang" lang="te">తెలుగు</span>
   </div>
 
   <h2>How it's built</h2>
@@ -180,8 +197,26 @@
   <a class="home-link" href="index.html">&larr; Back to Lyvorian Studio</a>
   <footer>&copy; 2026 Lyvorian Studio. All rights reserved.</footer>
 </div>
-<script>
-(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();
-</script>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-label">Lyvorian Studio</div>
+  <a href="index.html#work">Products</a>
+  <a href="index.html#story">About</a>
+  <a href="notes.html">Notes</a>
+  <a href="index.html#ideas">Share ideas</a>
+  <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
+</div>
+
+<div class="contact-pop" id="contactPop" role="dialog" aria-label="Contact the studio" aria-hidden="true">
+  <span class="contact-tail"></span>
+  <div class="contact-pop-label">Email the studio</div>
+  <a class="contact-mail" href="mailto:support@lyvorianstudio.co.in">
+    <svg class="cm-icon" width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.4" y="3.2" width="13.2" height="9.6" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2.2 4.6L8 8.7l5.8-4.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="cm-text">support@lyvorianstudio.co.in</span>
+    <svg class="cm-arw" width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
+
+<script src="assets/site.js?v=20260803" defer></script>
 </body>
 </html>
