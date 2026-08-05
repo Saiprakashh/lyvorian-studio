@@ -543,7 +543,7 @@
 (function(){
   var mark = document.querySelector('.orbit-mark');
   if (!mark || !window.matchMedia('(hover:hover)').matches) return;
-  var RADIUS = 115, lit = false, queued = false, mx = 0, my = 0;
+  var RADIUS = 155, lit = false, queued = false, mx = 0, my = 0;
 
   function test(){
     queued = false;

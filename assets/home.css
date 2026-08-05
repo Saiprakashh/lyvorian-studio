@@ -683,14 +683,16 @@
   @media(max-width:820px){ .orbit-dots{width:620px} }
 
   /* ── studio mark at the centre of the orbit ──
-     Bare mark on transparency - no plate, no border. Sits between the rings
-     and the hero text, and lifts on hover. Existing gold only. */
+     Sized to the innermost ring: r=120 in an 800 viewBox drawn at a fixed
+     840px, so the ring is 252px across and the mark's ink spans it exactly.
+     Held very low so it reads as a watermark under the panel, lifting only
+     as the cursor comes near. */
   .orbit-mark{position:absolute;top:38%;left:50%;
-    width:clamp(96px,11vw,150px);height:auto;
+    height:252px;width:auto;
     transform:translate(-50%,-50%);
-    z-index:1;opacity:.16;pointer-events:none;
+    z-index:1;opacity:.075;pointer-events:none;
     filter:drop-shadow(0 0 0 rgba(240,203,126,0));
-    transition:opacity .28s ease,filter .28s ease}
-  .orbit-mark.lit{opacity:.42;
-    filter:drop-shadow(0 0 14px rgba(240,203,126,.45))}
-  @media(max-width:820px){ .orbit-mark{opacity:.13} }
+    transition:opacity .3s ease,filter .3s ease}
+  .orbit-mark.lit{opacity:.2;
+    filter:drop-shadow(0 0 20px rgba(240,203,126,.3))}
+  @media(max-width:820px){ .orbit-mark{opacity:.06} }
