@@ -535,3 +535,29 @@
     if (b) apply(b.dataset.filter);
   });
 })();
+
+/* Studio mark at the orbit centre brightens as the cursor nears it.
+   The universe panel is stacked above the mark, so :hover on the image can
+   never fire - proximity is measured instead, and the mark stays click-through
+   so it never intercepts the orbit nodes or the panel's own controls. */
+(function(){
+  var mark = document.querySelector('.orbit-mark');
+  if (!mark || !window.matchMedia('(hover:hover)').matches) return;
+  var RADIUS = 115, lit = false, queued = false, mx = 0, my = 0;
+
+  function test(){
+    queued = false;
+    var r = mark.getBoundingClientRect();
+    if (!r.width) return;
+    var dx = mx - (r.left + r.width / 2), dy = my - (r.top + r.height / 2);
+    var near = Math.sqrt(dx * dx + dy * dy) < RADIUS;
+    if (near !== lit){ lit = near; mark.classList.toggle('lit', near); }
+  }
+  addEventListener('pointermove', function(e){
+    mx = e.clientX; my = e.clientY;
+    if (!queued){ queued = true; requestAnimationFrame(test); }
+  }, {passive:true});
+  addEventListener('scroll', function(){
+    if (!queued){ queued = true; requestAnimationFrame(test); }
+  }, {passive:true});
+})();
