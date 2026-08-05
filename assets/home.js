@@ -353,3 +353,57 @@
     });
   });
 })();
+
+// Product Universe - one readout serves hover, focus and tap, so the same
+// information reaches mouse, keyboard and touch without a hover-only tooltip.
+(function(){
+  var nodes = document.querySelectorAll('.orb-node');
+  var out = document.getElementById('orbReadout');
+  if (!nodes.length || !out) return;
+  var IDLE = out.textContent;
+  var pinned = null;
+
+  function show(n){ out.textContent = n.getAttribute('data-desc'); out.classList.add('on'); }
+  function clear(){
+    if (pinned) return;               // a pinned node keeps its text visible
+    out.textContent = IDLE; out.classList.remove('on');
+  }
+  function unpin(){
+    if (!pinned) return;
+    pinned.setAttribute('aria-expanded','false');
+    pinned = null; clear();
+  }
+  function pin(n){
+    if (pinned === n){ unpin(); return; }
+    unpin();
+    pinned = n; n.setAttribute('aria-expanded','true'); show(n);
+  }
+
+  [].forEach.call(nodes, function(n){
+    n.setAttribute('aria-controls','orbReadout');
+    n.addEventListener('mouseenter', function(){ if (!pinned) show(n); });
+    n.addEventListener('mouseleave', clear);
+    n.addEventListener('focus',      function(){ if (!pinned) show(n); });
+    n.addEventListener('blur',       clear);
+    n.addEventListener('click',      function(){ pin(n); });   // Enter/Space fire click on <button>
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && pinned){ var t = pinned; unpin(); t.focus(); }
+  });
+  document.addEventListener('click', function(e){
+    if (pinned && !e.target.closest('.orb-node')) unpin();
+  });
+})();
+
+// Header gains a compact state once the page is scrolled.
+(function(){
+  var hdr = document.querySelector('header');
+  if (!hdr) return;
+  var tick = false;
+  function apply(){ hdr.classList.toggle('compact', window.scrollY > 40); tick = false; }
+  window.addEventListener('scroll', function(){
+    if (!tick){ tick = true; window.requestAnimationFrame(apply); }
+  }, {passive:true});
+  apply();
+})();
