@@ -9,8 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="preload" href="assets/fonts/JetBrainsMono-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/site.css?v=20260805olkjihgfedc"/>
+<link rel="stylesheet" href="assets/site.css?v=20260806f"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/habitaroha.html"/>
 <meta property="og:type" content="website"/>
@@ -51,35 +50,34 @@
 }
 </script>
 
-<link rel="preload" href="assets/fonts/Fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/WorkSans-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Geist-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  @font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;
-    src:url('assets/fonts/Fraunces-var.woff2') format('woff2')}
-  @font-face{font-family:'Work Sans';font-style:normal;font-weight:100 900;font-display:swap;
-    src:url('assets/fonts/WorkSans-var.woff2') format('woff2')}
-  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 800;font-display:swap;
-    src:url('assets/fonts/JetBrainsMono-var.woff2') format('woff2')}
+  @font-face{font-family:'Geist';font-style:normal;font-weight:100 900;
+    font-display:swap;src:url('assets/fonts/Geist-var.woff2') format('woff2')}
+  /* Fallback metric-matched to Geist (upm 1000, hhea 1005/-295, x-height .530)
+     so the swap to the real font causes no reflow. */
+  @font-face{font-family:'Geist Fallback';src:local('Segoe UI'),local('Arial');
+    size-adjust:106%;ascent-override:100.5%;descent-override:29.5%;line-gap-override:0%}
   *{box-sizing:border-box}
   body{margin:0;background:
       radial-gradient(ellipse 65% 40% at 15% -5%, rgba(169,122,31,.10), transparent 60%),var(--bg);
-    color:var(--text);font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    color:var(--text);font-family:var(--font-interface);
     font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 0 80px}
   .wrap{max-width:760px;margin:0 auto;padding:0 20px}
   header{padding:56px 0 8px;text-align:center}
   .pmark{width:76px;height:76px;border-radius:19px;margin-bottom:22px;
     box-shadow:0 14px 32px -14px rgba(42,32,19,.5)}
-  .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2.4px;
+  .kicker{font-family:var(--font-interface);font-size:11px;letter-spacing:2.4px;
     text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-  h1{font-family:'Fraunces',serif;font-weight:540;font-size:clamp(32px,6.5vw,46px);
+  h1{font-family:var(--font-display);font-weight:540;font-size:clamp(32px,6.5vw,46px);
     margin:0;letter-spacing:-1px;line-height:1.15}
   .tagline{color:var(--muted);font-size:17px;margin:16px auto 0;max-width:520px}
-  h2{font-family:'Fraunces',serif;font-weight:560;font-size:23px;margin:48px 0 14px;letter-spacing:-.3px}
+  h2{font-family:var(--font-display);font-weight:560;font-size:23px;margin:48px 0 14px;letter-spacing:-.3px}
   p{color:var(--muted);margin:0 0 18px}
   strong{color:var(--text)}
 
   .plat-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 0}
-  .plat{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;
+  .plat{font-family:var(--font-interface);font-size:10px;letter-spacing:1.1px;text-transform:uppercase;
     display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:100px;
     border:1px solid var(--line-bright);white-space:nowrap}
   .plat::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
@@ -94,7 +92,7 @@
   .feat{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
   @media(max-width:600px){.feat{grid-template-columns:1fr}}
   .feat li{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
-  .feat b{display:block;font-family:'Fraunces',serif;font-weight:560;font-size:16px;
+  .feat b{display:block;font-family:var(--font-display);font-weight:560;font-size:16px;
     color:var(--text);margin-bottom:4px}
   .feat span{color:var(--muted);font-size:14.5px;line-height:1.6}
 
@@ -106,7 +104,7 @@
   .qualifier{font-size:14.5px;color:var(--muted2);border-left:2px solid var(--line-bright);
     padding-left:16px;margin:0 0 18px}
   .langs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
-  .lang{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
+  .lang{font-family:var(--font-interface);font-size:11px;letter-spacing:1px;
     color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:5px 13px}
 
   a.inline{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line-bright)}
@@ -228,6 +226,6 @@
   </a>
 </div>
 
-<script src="assets/site.js?v=20260805olkjihgfedc" defer></script>
+<script src="assets/site.js?v=20260806f" defer></script>
 </body>
 </html>

@@ -9,6 +9,46 @@
   --maroon:#8a3838; --ok:#3f8055; --ok-dot:#5da271;
   --hdr:rgba(242,232,213,.75);
   --r:16px;
+
+  /* ── typography ─────────────────────────────────────────
+     One family: Geist, a contemporary grotesque built for software UI.
+     Hierarchy comes from weight and tracking rather than size, so the page
+     stays compact and quiet. Display and interface both resolve to Geist;
+     the two names are kept so intent stays readable at each call site.
+     Tokens use the `font` shorthand (weight size/line-height family), so any
+     font-style must be declared AFTER the token or the shorthand resets it. */
+  --font-display:'Geist','Geist Fallback','Segoe UI',Arial,sans-serif;
+  --font-interface:'Geist','Geist Fallback','Segoe UI',Arial,sans-serif;
+
+  /* display */
+  --t-hero:600 clamp(2rem,4.2vw,3.25rem)/1.08 var(--font-display);
+  --ls-hero:-.032em;
+  --t-h2:600 clamp(1.5rem,2.5vw,2rem)/1.18 var(--font-display);
+  --ls-h2:-.026em;
+  --t-h3:600 1.25rem/1.3 var(--font-display);
+  --ls-h3:-.021em;
+  --t-quote:450 clamp(1.125rem,1.8vw,1.375rem)/1.55 var(--font-display);
+  --ls-quote:-.014em;
+
+  /* interface */
+  --t-card-title:600 1.1875rem/1.32 var(--font-interface);
+  --ls-card-title:-.018em;
+  --t-body-lg:400 1.0625rem/1.62 var(--font-interface);
+  --ls-body-lg:-.006em;
+  --t-body:400 .9375rem/1.65 var(--font-interface);
+  --ls-body:-.002em;
+  --t-body-sm:400 .875rem/1.6 var(--font-interface);
+  --ls-body-sm:0em;
+  --t-eyebrow:600 .6875rem/1.5 var(--font-interface);
+  --ls-eyebrow:.12em;
+  --t-button:550 .875rem/1 var(--font-interface);
+  --ls-button:-.006em;
+  --t-form-label:550 .8125rem/1.4 var(--font-interface);
+  --ls-form-label:.01em;
+  --t-status:600 .6875rem/1 var(--font-interface);
+  --ls-status:.05em;
+  --t-caption:450 .8125rem/1.5 var(--font-interface);
+  --ls-caption:0em;
 }
 @media(prefers-color-scheme:dark){
   :root:not([data-theme]){
@@ -37,10 +77,17 @@
   --hdr:rgba(25,20,16,.78);
 }
 
+
+/* ── base typography, all pages ────────────── */
+html{-webkit-text-size-adjust:100%}
+body{font:var(--t-body);letter-spacing:var(--ls-body);
+  font-optical-sizing:auto;text-rendering:optimizeLegibility}
+
 /* ── skip link ─────────────────────────────── */
 .skip-link{position:absolute;left:-9999px;top:0;z-index:400;
   background:var(--panel);color:var(--gold);border:1px solid var(--gold-dim);
-  border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;text-decoration:none}
+  border-radius:10px;padding:11px 18px;text-decoration:none;
+  font:var(--t-button);letter-spacing:var(--ls-button)}
 .skip-link:focus{left:14px;top:14px}
 
 /* ── keyboard focus, site-wide ─────────────── */
@@ -58,7 +105,7 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
   padding:0;text-align:left}
 .site-hdr .hdr-inner{max-width:1120px;margin:0 auto;padding:15px 24px;
   display:flex;align-items:center;justify-content:space-between;gap:16px}
-.site-hdr .word{font-family:'Fraunces',serif;font-weight:540;font-size:19px;letter-spacing:.3px;
+.site-hdr .word{font:600 1.125rem/1.2 var(--font-display);letter-spacing:-.028em;
   color:var(--text);text-decoration:none;display:flex;align-items:center;gap:11px}
 .site-hdr .mark-img{width:32px;height:32px;border-radius:9px;flex-shrink:0;object-fit:cover;
   box-shadow:0 0 0 1px var(--line),0 6px 18px -8px rgba(42,32,19,.4);
@@ -67,8 +114,9 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
 /* not scoped to .site-hdr — the homepage header uses this too */
 .hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .site-hdr nav{display:flex;gap:26px;align-items:center}
-.site-hdr nav a{position:relative;color:var(--muted);text-decoration:none;font-size:14px;
-  font-weight:500;transition:color .2s;padding-bottom:2px}
+.site-hdr nav a{position:relative;color:var(--muted);text-decoration:none;
+  font:500 .875rem/1 var(--font-interface);letter-spacing:-.004em;
+  transition:color .2s;padding-bottom:2px}
 .site-hdr nav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
   background:var(--gold-bright);transition:width .25s cubic-bezier(.16,.8,.28,1)}
 .site-hdr nav a:hover{color:var(--gold-bright)}
@@ -92,11 +140,12 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
   opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;
   transition:opacity .24s cubic-bezier(.16,.8,.28,1),transform .24s cubic-bezier(.16,.8,.28,1)}
 .mobile-menu.show{opacity:1;transform:none;pointer-events:auto}
-.mobile-menu a{color:var(--text);text-decoration:none;font-size:16px;font-weight:500;
-  padding:13px 15px;border-radius:11px;transition:background .2s,color .2s}
+.mobile-menu a{color:var(--text);text-decoration:none;
+  font:550 clamp(1.25rem,4.6vw,1.4375rem)/1.3 var(--font-interface);letter-spacing:-.024em;
+  padding:11px 15px;border-radius:11px;transition:background .2s,color .2s}
 .mobile-menu a:hover,.mobile-menu a:focus-visible{background:rgba(201,151,58,.12);color:var(--gold-bright)}
-.mobile-menu .mm-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.7px;
-  text-transform:uppercase;color:var(--muted2);padding:9px 15px 4px}
+.mobile-menu .mm-label{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
+  text-transform:uppercase;color:var(--muted2);padding:14px 15px 5px}
 
 @media(max-width:820px){
   .nav-toggle{display:flex}
@@ -135,10 +184,11 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
   border-left:1px solid var(--line-bright);border-top:1px solid var(--line-bright);
   top:-6px;left:var(--tail-x,50%);margin-left:-6px;transform:rotate(45deg);border-radius:2px 0 0 0}
 .contact-pop.flip .contact-tail{top:auto;bottom:-6px;transform:rotate(225deg)}
-.contact-pop-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.7px;
+.contact-pop-label{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
   text-transform:uppercase;color:var(--muted2);padding:0 3px}
 .contact-mail{display:flex;align-items:center;gap:10px;text-decoration:none;
-  font-family:'JetBrains Mono',monospace;font-size:clamp(12px,3.3vw,13.5px);color:var(--gold-bright);
+  font:500 clamp(.875rem,3.2vw,.9375rem)/1.4 var(--font-interface);letter-spacing:-.004em;
+  color:var(--gold-bright);
   padding:11px 13px;border-radius:11px;background:rgba(201,151,58,.09);
   border:1px solid transparent;
   transition:background .22s,border-color .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
