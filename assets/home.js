@@ -499,6 +499,9 @@
   });
 
   syncCat();
+  // start deterministically rather than trusting the markup's initial classes
+  // to stay in sync with the progress indicator
+  go(1);
 })();
 
 // Product filters — client-side, no reload, state carried by aria-pressed too.

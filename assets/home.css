@@ -16,7 +16,6 @@
     position:relative;
   }
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-  .mono{font-family:'JetBrains Mono',monospace}
 
   /* ── grain texture overlay ──────────────── */
   .grain{position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.05;mix-blend-mode:overlay}
@@ -194,8 +193,6 @@
     .uni-cta{width:100%;justify-content:center}
   }
 
-  .hero-cta{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s cubic-bezier(.16,.8,.28,1) .92s forwards}
-
   .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 27px;border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .25s cubic-bezier(.16,.8,.28,1),box-shadow .25s;position:relative;overflow:hidden}
   .btn svg{transition:transform .22s cubic-bezier(.34,1.56,.64,1)}
   .btn-gold:hover svg{transform:translateX(3px)}
@@ -231,84 +228,15 @@
   .sec-sub{color:var(--muted);font-size:16px;text-wrap:balance}
 
   /* ── Product card ───────────────────────── */
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .grid-single{grid-template-columns:1fr;max-width:420px;margin:0 auto}
-  .grid-2{grid-template-columns:repeat(2,1fr);max-width:880px;margin:0 auto}
-  .grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-  .card-head{display:flex;align-items:center;gap:14px}
-  .card-head .card-title{margin:0}
-  .card{
-    background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:34px;
-    text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:16px;
-    position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.16,.8,.28,1),border-color .3s,box-shadow .35s;
-    transform-style:preserve-3d;will-change:transform;
-  }
-  .card::before{content:'';position:absolute;inset:0;padding:1px;border-radius:var(--r);
-    background:linear-gradient(120deg,transparent 30%,rgba(240,203,126,.55),transparent 70%);
-    background-size:220% 220%;background-position:0% 0%;
-    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;
-    opacity:0;transition:opacity .4s,background-position 1.4s;pointer-events:none}
-  .card.live:hover{border-color:transparent;box-shadow:0 24px 60px -20px rgba(201,151,58,.35)}
-  .card.live:hover::before{opacity:1;background-position:100% 100%}
-  .card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:23px;
-    background:rgba(201,151,58,.15);color:var(--gold-bright);transition:transform .35s cubic-bezier(.34,1.56,.64,1);
-    overflow:hidden;box-shadow:0 8px 20px -8px rgba(120,60,240,.45)}
-  .card-icon img{width:100%;height:100%;display:block;border-radius:12px}
-  .card.live:hover .card-icon{transform:scale(1.1) rotate(-6deg)}
-  .card-title{font-family:'Fraunces',serif;font-weight:560;font-size:21px;margin:0;color:var(--text)}
-  .card-desc{color:var(--muted);font-size:14.5px;line-height:1.65;flex:1}
-  .card-status{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;display:inline-flex;align-items:center;gap:7px}
-  .status-live{color:var(--ok)}
-  .status-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot);animation:pulse 2s ease-in-out infinite}
 
   /* per-platform availability badges */
-  .plat-row{display:flex;flex-wrap:wrap;gap:8px}
-  .plat{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;
-    display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:100px;
-    border:1px solid var(--line-bright);white-space:nowrap}
-  .plat::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
-  .plat-live{color:var(--ok);border-color:var(--ok-dot)}
-  .plat-live::before{background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot);animation:pulse 2s ease-in-out infinite}
-  .plat-wip{color:var(--gold);border-style:dashed;border-color:var(--gold-dim)}
-  .plat-wip::before{background:var(--gold-bright);opacity:.75}
   /* whole card links to the product page; the CTA sits above it and wins the click */
   .card-stretch{position:absolute;inset:0;z-index:1;border-radius:var(--r)}
-  .card-cta{position:relative;z-index:2;align-self:flex-start;
-    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
-    background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:#241a06;
-    font-weight:600;font-size:14px;padding:11px 20px;border-radius:100px;
-    box-shadow:0 12px 28px -12px rgba(169,122,31,.6);
-    transition:transform .3s cubic-bezier(.16,.8,.28,1),box-shadow .3s}
-  .card-cta:hover{transform:translateY(-2px);box-shadow:0 16px 34px -12px rgba(169,122,31,.78)}
-  .card-cta svg{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
-  .card-cta:hover svg{transform:translateX(3px)}
-  .card-links{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:14px;
-    margin-top:2px;padding-top:14px;border-top:1px solid var(--line)}
-  .card-links a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.1px;
-    text-transform:uppercase;color:var(--muted2);text-decoration:none;transition:color .2s}
-  .card-links a:hover{color:var(--gold-bright)}
-  .card-arrow{position:absolute;top:30px;right:30px;color:var(--gold-dim);opacity:0;transform:translate(-6px,6px);transition:opacity .3s,transform .3s}
-  .card.live:hover .card-arrow{opacity:1;transform:translate(0,0);color:var(--gold-bright)}
 
   /* not-yet-shipped cards — one on the bench, one on the drawing board */
-  .card.soon,.card.tease{border-style:dashed;border-color:var(--line-bright);
-    background:
-      linear-gradient(var(--panel) 0 0) padding-box,
-      var(--panel);
-    background-image:
-      linear-gradient(rgba(169,122,31,.05) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(169,122,31,.05) 1px,transparent 1px);
-    background-size:22px 22px}
-  .card.tease{cursor:default}
-  .card.soon:hover,.card.tease:hover{transform:translateY(-4px)}
-  .card.soon:hover{border-color:var(--gold-dim);box-shadow:0 24px 60px -22px rgba(201,151,58,.3)}
-  .card.soon:hover .card-icon{transform:scale(1.1) rotate(-6deg)}
-  .card.soon:hover .card-arrow{opacity:1;transform:translate(0,0);color:var(--gold-bright)}
   .tease-stamp{position:absolute;top:22px;right:24px;font-family:'JetBrains Mono',monospace;
     font-size:11px;letter-spacing:1.5px;color:var(--gold);border:1px dashed var(--gold-dim);
-    padding:4px 10px;border-radius:7px;transform:rotate(6deg);opacity:.75}
-  .card.soon .tease-stamp{right:62px} /* clear the hover arrow */
+    padding:4px 10px;border-radius:7px;transform:rotate(6deg);opacity:.75} /* clear the hover arrow */
   .tease-icon{background:transparent;border:1.5px dashed var(--line-bright);box-shadow:none;color:var(--gold);flex-shrink:0}
   .tease-icon span{font-family:'Fraunces',serif;font-weight:560;font-size:22px;
     display:inline-block;transition:opacity .3s,transform .3s}
@@ -336,10 +264,8 @@
     background:linear-gradient(90deg,transparent,var(--gold),var(--gold-bright),var(--gold),transparent);
     animation:labSweep 2.4s cubic-bezier(.45,.05,.55,.95) infinite}
   @keyframes labSweep{0%{left:-34%}100%{left:100%}}
-  .status-think{color:var(--gold)}
 
   /* ── Preview button ─────────────────────── */
-  .preview-cta{display:flex;justify-content:center;margin-top:34px}
   .btn-preview{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:11px;
     font-size:14.5px;font-weight:600;color:var(--text);cursor:pointer;
     background:var(--panel);border:1px solid var(--line);
@@ -347,11 +273,6 @@
     box-shadow:0 10px 26px -14px rgba(42,32,19,.3);
     transition:transform .25s cubic-bezier(.16,.8,.28,1),border-color .25s,box-shadow .25s}
   .btn-preview:hover{transform:translateY(-3px);border-color:var(--gold-dim);box-shadow:0 16px 36px -14px rgba(169,122,31,.4)}
-  .btn-preview svg{color:var(--gold)}
-  .btn-preview .app-chip{width:22px;height:22px;border-radius:6px;display:block;
-    box-shadow:0 4px 12px -4px rgba(120,60,240,.55)}
-  .btn-preview .count-pill{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.8px;
-    background:rgba(169,122,31,.14);color:var(--gold);padding:3px 9px;border-radius:100px}
 
   /* ── Gallery modal (all screens) ────────── */
   .gallery{position:fixed;inset:0;z-index:290;overflow-y:auto;
@@ -483,56 +404,14 @@
   .story cite{font-style:normal;color:var(--gold);font-size:12px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase}
 
   /* ── Ideas / share thoughts ─────────────── */
-  .ideas-panel{max-width:940px;margin:0 auto;background:var(--panel);border:1px solid var(--line);
-    border-radius:26px;overflow:hidden;display:grid;grid-template-columns:1fr 1.15fr;position:relative;
-    box-shadow:0 34px 80px -36px rgba(42,32,19,.35)}
-  .ideas-panel::before{content:'';position:absolute;top:0;left:8%;right:8%;height:2px;
-    background:linear-gradient(90deg,transparent,var(--gold-bright),var(--gold),transparent);opacity:.7}
-  .ideas-pitch{padding:46px 40px;background:
-      radial-gradient(circle at 20% 15%, rgba(169,122,31,.12), transparent 55%),var(--bg2);
-    border-right:1px solid var(--line);display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden}
-  .ideas-pitch::after{content:'✦';position:absolute;bottom:-26px;right:-8px;font-size:130px;line-height:1;
-    color:var(--gold);opacity:.07;transform:rotate(-12deg);pointer-events:none}
-  .pitch-kicker{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.2px;
-    text-transform:uppercase;color:var(--gold)}
-  .ideas-pitch h3{font-family:'Fraunces',serif;font-weight:540;font-size:clamp(24px,3vw,30px);margin:0;line-height:1.25;letter-spacing:-.4px}
-  .ideas-pitch h3 em{font-style:italic;font-weight:440;
-    background:linear-gradient(120deg,var(--gold-bright),var(--gold));
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-  .ideas-pitch p{color:var(--muted);font-size:15px;line-height:1.75;margin:0}
-  .ideas-topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;position:relative}
-  .topic-chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
-    color:var(--gold);border:1px dashed var(--gold-dim);padding:6px 12px;border-radius:100px;opacity:.85;
-    transition:opacity .25s,transform .25s}
-  .topic-chip:hover{opacity:1;transform:translateY(-2px)}
-  .ideas-form{padding:46px 40px;display:flex;flex-direction:column;gap:18px}
   .f-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;
     text-transform:uppercase;color:var(--muted2);display:block;margin-bottom:8px}
-  .idea-types{display:flex;flex-wrap:wrap;gap:8px}
-  .idea-type{font-family:'Work Sans',system-ui,sans-serif;font-size:13.5px;font-weight:600;color:var(--muted);
-    background:transparent;border:1px solid var(--line);padding:9px 17px;border-radius:100px;cursor:pointer;
-    transition:all .25s cubic-bezier(.16,.8,.28,1)}
-  .idea-type:hover{border-color:var(--gold-dim);color:var(--text);transform:translateY(-2px)}
-  .idea-type.on{background:linear-gradient(160deg,var(--gold-bright),var(--gold));color:#1a1206;border-color:transparent;
-    box-shadow:0 8px 20px -8px rgba(169,122,31,.5);transform:translateY(-1px)}
   .field-wrap{position:relative}
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:600px){.two-col{grid-template-columns:1fr}}
-  .ideas-form textarea,.ideas-form input{width:100%;border:1px solid var(--line);border-radius:13px;
-    background:var(--bg);color:var(--text);font-family:'Work Sans',system-ui,sans-serif;font-size:15px;
-    padding:14px 17px;outline:none;resize:vertical;
-    transition:border-color .25s,box-shadow .25s,background .25s}
-  .ideas-form textarea{min-height:128px;line-height:1.65;padding-bottom:30px}
-  .ideas-form textarea:focus,.ideas-form input:focus{border-color:var(--gold-dim);background:var(--panel);
-    box-shadow:0 0 0 3.5px rgba(169,122,31,.15)}
-  .ideas-form textarea::placeholder,.ideas-form input::placeholder{color:var(--muted2);font-style:italic}
   .char-count{position:absolute;bottom:10px;right:14px;font-family:'JetBrains Mono',monospace;
     font-size:10px;letter-spacing:.6px;color:var(--muted2);pointer-events:none;
     transition:color .25s}
   .char-count.warm{color:var(--gold)}
-  .ideas-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-  .ideas-note{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted2);max-width:280px;line-height:1.5}
-  .ideas-note svg{flex-shrink:0;color:var(--gold)}
   .btn-send{display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:12px;border:none;cursor:pointer;
     font-family:'Work Sans',system-ui,sans-serif;font-size:15px;font-weight:600;color:#1a1206;
     background:linear-gradient(160deg,var(--gold-bright),var(--gold));
@@ -553,9 +432,6 @@
   .idea-toast.show{opacity:1;transform:translate(-50%,0)}
   .idea-toast svg{color:#8fe09f}
   @media(max-width:820px){
-    .ideas-panel{grid-template-columns:1fr}
-    .ideas-pitch{border-right:none;border-bottom:1px solid var(--line);padding:34px 26px}
-    .ideas-form{padding:34px 26px}
   }
 
   /* ── Studio notes ───────────────────────── */
@@ -584,7 +460,6 @@
   .foot-links a:hover{color:var(--gold)}
 
   @media(max-width:820px){
-    .grid{grid-template-columns:1fr}
     .value-grid{grid-template-columns:1fr}
     nav{display:none}
     .hero{padding:96px 0 76px}
@@ -714,9 +589,6 @@
   .pcard-head{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
   .pcard-icon{border-radius:13px;flex-shrink:0;transition:transform .22s cubic-bezier(.34,1.56,.64,1)}
   .pcard:hover .pcard-icon{transform:scale(1.06) rotate(-4deg)}
-  .pcard-icon-abstract{width:46px;height:46px;display:flex;align-items:center;justify-content:center;
-    border:1px dashed var(--line-bright);color:var(--gold-dim)}
-  .pcard-icon-abstract svg{width:24px;height:24px}
   .pcard-name{font-family:'Fraunces',serif;font-weight:560;font-size:24px;line-height:1.2;
     color:var(--text);margin:0 0 7px;letter-spacing:-.4px}
   .pcard-arrow{color:var(--gold-dim);opacity:0;transform:translateX(-4px);
@@ -731,8 +603,6 @@
   .pchip-live i{background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot)}
   .pchip-wip{color:var(--gold)}
   .pchip-wip i{background:var(--gold-bright)}
-  .pchip-idea{color:var(--muted2)}
-  .pchip-idea i{background:var(--muted2)}
 
   .pcard-benefit{color:var(--muted);font-size:14px;line-height:1.6;margin:0}
   .pcard-feats{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
