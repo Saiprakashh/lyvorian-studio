@@ -188,6 +188,11 @@
   .card-cta:hover{transform:translateY(-2px);box-shadow:0 16px 34px -12px rgba(169,122,31,.78)}
   .card-cta svg{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
   .card-cta:hover svg{transform:translateX(3px)}
+  .card-links{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:14px;
+    margin-top:2px;padding-top:14px;border-top:1px solid var(--line)}
+  .card-links a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.1px;
+    text-transform:uppercase;color:var(--muted2);text-decoration:none;transition:color .2s}
+  .card-links a:hover{color:var(--gold-bright)}
   .card-arrow{position:absolute;top:30px;right:30px;color:var(--gold-dim);opacity:0;transform:translate(-6px,6px);transition:opacity .3s,transform .3s}
   .card.live:hover .card-arrow{opacity:1;transform:translate(0,0);color:var(--gold-bright)}
 
