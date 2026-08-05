@@ -217,13 +217,15 @@
   var countEl = document.getElementById('charCount');
   var toast = document.getElementById('ideaToast');
   var toastTimer = null;
-  document.getElementById('ideaTypes').addEventListener('click', function(e){
-    var btn = e.target.closest('.idea-type');
-    if (!btn) return;
-    document.querySelectorAll('.idea-type').forEach(function(b){ b.classList.remove('on'); });
-    btn.classList.add('on');
-    picked = btn.getAttribute('data-type');
+  // category now comes from the radio cards in step 1
+  function currentCat(){
+    var r = form.querySelector('input[name="fbCat"]:checked');
+    return r ? r.value : 'General feedback';
+  }
+  form.addEventListener('change', function(e){
+    if (e.target.name === 'fbCat') picked = currentCat();
   });
+  picked = currentCat();
   msgEl.addEventListener('input', function(){
     var n = msgEl.value.length;
     countEl.textContent = n + ' / 1200';
@@ -241,7 +243,8 @@
     var msg = msgEl.value.trim();
     if (!msg) return;
     if (document.getElementById('ideaHoney').value) return; // bot
-    var name = document.getElementById('ideaName').value.trim();
+    var nameEl = document.getElementById('ideaName');
+    var name = nameEl ? nameEl.value.trim() : '';
     var email = document.getElementById('ideaEmail').value.trim();
     var btn = document.getElementById('sendBtn');
     btn.disabled = true;
@@ -263,8 +266,11 @@
     }).then(function(r){ return r.json(); }).then(function(d){
       if (d.success === 'true' || d.success === true){
         showToast('Sent straight to the studio — thank you!', true);
+        var done = document.getElementById('fbDone');
+        if (done){ form.hidden = true; done.hidden = false; done.focus(); }
         form.reset();
         countEl.textContent = '0 / 1200';
+        try { localStorage.removeItem('lyv-fb-draft'); } catch(_){}
       } else { throw new Error(); }
     }).catch(function(){
       showToast('Could not send right now — please email support@lyvorianstudio.co.in', false);
@@ -406,4 +412,91 @@
     if (!tick){ tick = true; window.requestAnimationFrame(apply); }
   }, {passive:true});
   apply();
+})();
+
+// Feedback flow — three steps, draft preserved, no data sent until submit.
+(function(){
+  var form = document.getElementById('ideasForm');
+  if (!form || !form.querySelector('.fb-step')) return;
+  var steps  = form.querySelectorAll('.fb-step');
+  var prog   = form.querySelectorAll('#fbProgress li');
+  var srStep = document.getElementById('fbSrStep');
+  var prompt = document.getElementById('fbPrompt');
+  var msgEl  = document.getElementById('ideaMsg');
+  var errEl  = document.getElementById('fbMsgErr');
+  var sendBtn= document.getElementById('sendBtn');
+  var DRAFT  = 'lyv-fb-draft';
+  var at = 1;
+
+  function chosen(){ return form.querySelector('input[name="fbCat"]:checked'); }
+
+  function go(n){
+    at = n;
+    steps.forEach(function(s){ s.classList.toggle('on', +s.dataset.step === n); });
+    prog.forEach(function(p){
+      var i = +p.dataset.step;
+      p.classList.toggle('on', i === n);
+      p.classList.toggle('done', i < n);
+      // state is carried by text too, never colour alone
+      p.setAttribute('aria-current', i === n ? 'step' : 'false');
+    });
+    srStep.textContent = 'Step ' + n + ' of 3: ' + ['choose a type','details','contact'][n-1];
+    var first = steps[n-1].querySelector('input,textarea,button');
+    if (first) first.focus({preventScroll:true});
+  }
+
+  function syncCat(){
+    var c = chosen(); if (!c) return;
+    if (prompt) prompt.textContent = c.dataset.prompt;
+    if (msgEl)  msgEl.placeholder  = c.dataset.prompt;
+    if (sendBtn) sendBtn.childNodes[0].textContent = c.dataset.submit + ' ';
+  }
+
+  form.addEventListener('change', function(e){ if (e.target.name === 'fbCat') syncCat(); });
+
+  form.addEventListener('click', function(e){
+    if (e.target.closest('.fb-next')){
+      if (at === 2 && msgEl.value.trim().length < 4){
+        errEl.hidden = false; msgEl.setAttribute('aria-invalid','true'); msgEl.focus();
+        return;
+      }
+      errEl.hidden = true; msgEl.removeAttribute('aria-invalid');
+      go(Math.min(3, at + 1));
+    }
+    if (e.target.closest('.fb-back')) go(Math.max(1, at - 1));   // values are never cleared
+  });
+
+  // draft survives a reload; written locally only, never transmitted
+  try {
+    var saved = JSON.parse(localStorage.getItem(DRAFT) || '{}');
+    if (saved.msg && msgEl){ msgEl.value = saved.msg; msgEl.dispatchEvent(new Event('input')); }
+    if (saved.cat){
+      var r = form.querySelector('input[name="fbCat"][value="' + saved.cat.replace(/"/g,'') + '"]');
+      if (r) r.checked = true;
+    }
+  } catch(_){}
+  form.addEventListener('input', function(){
+    try {
+      localStorage.setItem(DRAFT, JSON.stringify({
+        msg: msgEl ? msgEl.value : '', cat: chosen() ? chosen().value : ''
+      }));
+    } catch(_){}
+  });
+
+  var addName = document.getElementById('fbAddName');
+  if (addName) addName.addEventListener('click', function(){
+    var w = document.getElementById('fbNameWrap');
+    var open = !w.hidden;
+    w.hidden = open;
+    addName.setAttribute('aria-expanded', String(!open));
+    if (!open) w.querySelector('input').focus();
+  });
+
+  var again = document.getElementById('fbAgain');
+  if (again) again.addEventListener('click', function(){
+    document.getElementById('fbDone').hidden = true;
+    form.hidden = false; go(1);
+  });
+
+  syncCat();
 })();
