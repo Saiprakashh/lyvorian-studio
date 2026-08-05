@@ -766,3 +766,30 @@
     .pfilters{gap:7px}
     .pfilter{font-size:9.5px;padding:8px 13px}
   }
+
+  /* ── previous card treatments, on the new card shell ── */
+  .pcard.is-live:hover{border-color:transparent;
+    box-shadow:0 24px 60px -20px rgba(201,151,58,.35)}
+  .pcard.is-live::before{content:'';position:absolute;inset:0;border-radius:22px;padding:1px;
+    background:linear-gradient(135deg,var(--gold-bright),transparent 42%,transparent 58%,var(--gold));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    opacity:0;transition:opacity .3s;pointer-events:none}
+  .pcard.is-live:hover::before{opacity:1}
+
+  .pcard.is-wip,.pcard.is-idea{border-style:dashed;border-color:var(--line-bright);
+    background-image:
+      linear-gradient(rgba(169,122,31,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(169,122,31,.05) 1px,transparent 1px);
+    background-size:22px 22px}
+  .pcard.is-wip:hover,.pcard.is-idea:hover{border-color:var(--gold-dim)}
+  .pcard.is-idea{cursor:default}
+
+  .pcard .tease-stamp{top:18px;right:18px}
+  .pcard.is-wip .pcard-arrow,.pcard.is-idea .pcard-arrow{display:none}
+  .pcard .tease-progress{margin:2px 0}
+  .pcard .tease-icon{width:46px;height:46px;border-radius:13px;display:flex;
+    align-items:center;justify-content:center}
+  .pcard .tease-name{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .pcard .tease-typeline{min-height:44px}
+  @media(max-width:660px){ .pcard .tease-stamp{top:14px;right:14px} }
