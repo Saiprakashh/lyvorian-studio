@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>HabitAroha — a calm, offline-first habit tracker | Lyvorian Studio</title>
-<meta name="description" content="HabitAroha is a calm, private habit tracker. Works completely offline, keeps your data encrypted on your own device, and never makes you feel bad about a missed day. In testing, Play Store next."/>
+<meta name="description" content="HabitAroha is a calm, private habit tracker. Core habit tracking works fully offline, your habit content stays encrypted on your device, and a missed day is never treated as failure. In testing, Play Store next."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Lyvorian Studio"/>
 <meta property="og:title" content="HabitAroha — build calm, consistent habits"/>
-<meta property="og:description" content="Works offline. Your data stays encrypted on your device. Rest days never count as missed."/>
+<meta property="og:description" content="Core habit tracking works fully offline. Your habit content stays encrypted on your device. Rest days never count as missed."/>
 <meta property="og:url" content="https://lyvorianstudio.co.in/habitaroha.html"/>
 <meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-habitaroha.jpg"/>
 <meta property="og:image:width" content="1200"/>
@@ -103,6 +103,8 @@
   .privacy-list li::before{content:'';position:absolute;left:6px;top:11px;width:6px;height:6px;
     border-radius:50%;background:var(--gold);opacity:.7}
 
+  .qualifier{font-size:14.5px;color:var(--muted2);border-left:2px solid var(--line-bright);
+    padding-left:16px;margin:0 0 18px}
   .langs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
   .lang{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
     color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:5px 13px}
@@ -141,7 +143,7 @@
     <img class="pmark" src="assets/habitaroha-icon.png" alt="" width="76" height="76"/>
     <div class="kicker">Product № 2</div>
     <h1>HabitAroha</h1>
-    <p class="tagline">Build calm, consistent habits. Works offline. Your data stays yours.</p>
+    <p class="tagline">Build calm, consistent habits. Core tracking works fully offline, and your habit content stays on your device.</p>
     <div class="plat-row">
       <span class="plat plat-wip">Android — in testing</span>
     </div>
@@ -152,8 +154,12 @@
   </header>
 
   <p>HabitAroha is a habit tracker for people who want steady progress rather than noisy streak
-  pressure. It works completely offline, keeps your data encrypted on your own device, and never
-  asks you to feel bad about a missed day.</p>
+  pressure. Core habit tracking works fully offline and your habit content stays encrypted on your
+  device — it never asks you to feel bad about a missed day.</p>
+
+  <p class="qualifier">Internet is used only for optional services you choose to switch on, such as
+  sign-in or verification, Google Drive backup, purchases, advertising and opt-in analytics. Those
+  are described in the <a class="inline" href="privacy-habitaroha.html">privacy policy</a>.</p>
 
   <h2>What it does</h2>
   <ul class="feat">
@@ -194,9 +200,9 @@
   what is stored, what leaves your device, and what you can turn off.</p>
 
   <h2>How it's built</h2>
-  <p>One Flutter codebase, written by hand by the same person who builds
-  <a class="inline" href="finance-tracker.html">Finance Tracker</a>. It only started once Finance
-  Tracker was live — that's the rule the studio works to, and it's explained in
+  <p>Designed and built carefully by Lyvorian Studio, with the same focus on clarity, privacy and
+  reliability as <a class="inline" href="finance-tracker.html">Finance Tracker</a>. It only started
+  once Finance Tracker was live — that's the rule the studio works to, and it's explained in
   <a class="inline" href="built-the-hard-way.html">Built the hard way</a>.</p>
 
   <a class="home-link" href="index.html">&larr; Back to Lyvorian Studio</a>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Finance Tracker — expenses, budgets, goals and bills | Lyvorian Studio</title>
-<meta name="description" content="Finance Tracker keeps expenses, income, budgets, goals and bills in one clean app — with bill scanning and UPI auto-detect. Live on the web, Android coming soon."/>
+<meta name="description" content="Finance Tracker keeps expenses, income, budgets, goals and bills in one clean app — with bill scanning and confirmed UPI payment detection. Live on the web, Android coming soon."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Lyvorian Studio"/>
 <meta property="og:title" content="Finance Tracker — all of your money, in one clean app"/>
-<meta property="og:description" content="Expenses, income, budgets, goals and bills in one place — with bill scanning and UPI auto-detect. Live on the web."/>
+<meta property="og:description" content="Expenses, income, budgets, goals and bills in one place — with bill scanning and confirmed UPI payment detection. Live on the web."/>
 <meta property="og:url" content="https://lyvorianstudio.co.in/finance-tracker.html"/>
 <meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-finance-tracker.jpg"/>
 <meta property="og:image:width" content="1200"/>
@@ -36,7 +36,7 @@
   "image": "https://lyvorianstudio.co.in/assets/og-finance-tracker.jpg",
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
   "publisher": {"@type": "Organization", "name": "Lyvorian Studio", "url": "https://lyvorianstudio.co.in/"},
-  "description": "Expenses, income, budgets, goals, and bills in one clean app — with bill scanning, UPI auto-detect, and a Pro tier."
+  "description": "Expenses, income, budgets, goals and bills in one clean app — with bill scanning, confirmed UPI payment detection, an optional trading journal, and a Pro tier."
 }
 </script>
 
@@ -146,8 +146,8 @@
     <img class="pmark" src="assets/finance-tracker-icon.png" alt="" width="76" height="76"/>
     <div class="kicker">Product № 1</div>
     <h1>Finance Tracker</h1>
-    <p class="tagline">All of your money in one clean app — salary, groceries, bills, goals. Not a
-    trading terminal, not a spreadsheet with extra steps.</p>
+    <p class="tagline">All of your money in one clean app — salary, groceries, bills, goals, with an optional trading
+    journal when you need it.</p>
     <div class="plat-row">
       <span class="plat plat-live">Web — live now</span>
       <span class="plat plat-wip">Android — coming soon</span>
@@ -165,7 +165,9 @@
     <li><b>Goals</b><span>Savings targets with progress you can see, not just a number in your head.</span></li>
     <li><b>Bills</b><span>Upcoming bills and reminders, so nothing arrives as a surprise.</span></li>
     <li><b>Bill scanning</b><span>Point it at a bill instead of typing the whole thing in by hand.</span></li>
-    <li><b>UPI auto-detect</b><span>UPI payments recognised and filed without manual entry.</span></li>
+    <li><b>UPI payment detection</b><span>Detects eligible payment notifications on Android and asks you to confirm the expense before it is saved.</span></li>
+    <li><b>Insights</b><span>Charts, reports and comparisons that show where the month actually went.</span></li>
+    <li><b>Optional trading journal</b><span>Off by default. Turn it on for trade logs, capital, P&amp;L, win/loss statistics and equity curves — kept separate from everyday finance.</span></li>
   </ul>
 
   <h2>Screens</h2>
@@ -178,8 +180,21 @@
   </div>
 
   <h2>What it costs</h2>
-  <p>Free to use. A <strong>Pro tier</strong> exists for the people who want more — no funding round
-  to chase, no growth hacks, so the app doesn't need to squeeze you to survive.</p>
+  <p>Free to use. <strong>Pro</strong> is optional, and priced as it is in the app today:</p>
+  <ul class="feat" style="margin-bottom:18px">
+    <li><b>&#8377;99 / month</b><span>Billed monthly. Cancel any time.</span></li>
+    <li><b>&#8377;799 / year</b><span>Saves &#8377;389 against twelve monthly payments &mdash; about 33%.</span></li>
+  </ul>
+  <p>Pro unlocks additional features while the subscription is active; it is not a one-off purchase.
+  Web payments are handled by <strong>Razorpay</strong>, and refunds and cancellations follow the
+  provider used at purchase. Your recorded data is never deleted because a subscription ends &mdash;
+  you keep access to your records, and Pro-only features simply lock again.</p>
+
+  <h2>What Finance Tracker is not</h2>
+  <p>It is a record-keeping and planning tool. It is <strong>not financial, investment, tax,
+  accounting or trading advice</strong>. EMI calculations, currency conversions and projections are
+  estimates and should be independently verified. It is not a bank, and it does not connect to or
+  control your bank accounts.</p>
 
   <h2>How it's built</h2>
   <p>By one person, by hand, and measured on a real phone rather than assumed. The performance hunt

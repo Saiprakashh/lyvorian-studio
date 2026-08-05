@@ -96,8 +96,9 @@
     <h2>1. Information you provide</h2>
     <ul>
       <li><strong>Account details</strong> — a username and password (your password is stored only
-        as a securely hashed value, never in plain text). Optionally an email address, used only
-        for password reset.</li>
+        as a securely hashed value, never in plain text). <strong>An email address is required to
+        create an account.</strong> It is used to confirm your account, to reset your password, and
+        to deliver a data backup to you when you request one.</li>
       <li><strong>Financial data you enter</strong> — expenses, income, budgets, goals, bills,
         accounts, categories and notes that you choose to record. This is personal budgeting data;
         the app does not ask for or store bank account numbers, card numbers, or payment
@@ -111,6 +112,19 @@
         We only receive a subscription ID and payment status from Razorpay to activate Pro features
         on your account.</li>
     </ul>
+
+    <h2>Backups sent by email</h2>
+    <p>If you ask the app to email you a backup, it sends your records — expenses, income, trades,
+    budgets and settings — as a <strong>plain, unencrypted text attachment</strong> to the email
+    address on your account. This is deliberate so that you can read and restore it yourself, but it
+    has consequences you should know about:</p>
+    <ul>
+      <li>The email provider that delivers the message can technically access the attachment.</li>
+      <li>Your mailbox will normally keep a copy of the message and attachment until you delete it.</li>
+      <li>Anyone with access to that mailbox can read the file.</li>
+    </ul>
+    <p>If that is not acceptable for your data, use <strong>Settings → Data → Download backup</strong>
+    to save the file directly instead of emailing it.</p>
 
     <h2>2. Information collected automatically</h2>
     <ul>
