@@ -500,3 +500,35 @@
 
   syncCat();
 })();
+
+// Product filters — client-side, no reload, state carried by aria-pressed too.
+(function(){
+  var bar = document.querySelector('.pfilters');
+  var grid = document.getElementById('pGrid');
+  var count = document.getElementById('pCount');
+  if (!bar || !grid) return;
+  var cards = grid.querySelectorAll('.pcard');
+
+  function apply(key){
+    var shown = 0;
+    [].forEach.call(cards, function(c){
+      var match = key === 'all' || (' ' + c.dataset.status + ' ').indexOf(' ' + key + ' ') > -1;
+      c.hidden = !match;
+      if (match) shown++;
+    });
+    [].forEach.call(bar.querySelectorAll('.pfilter'), function(b){
+      var on = b.dataset.filter === key;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    var label = bar.querySelector('.pfilter.on').textContent.trim().toLowerCase();
+    count.textContent = key === 'all'
+      ? 'Showing all ' + shown + ' products'
+      : 'Showing ' + shown + ' ' + (shown === 1 ? 'product' : 'products') + ' in ' + label;
+  }
+
+  bar.addEventListener('click', function(e){
+    var b = e.target.closest('.pfilter');
+    if (b) apply(b.dataset.filter);
+  });
+})();

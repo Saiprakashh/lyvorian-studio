@@ -689,3 +689,80 @@
     .fb-progress li{font-size:9px;padding:5px 9px}
     .fb-intro,.fb-form{padding:24px 18px}
   }
+
+  /* ── Products grid ───────────────────────────
+     One reusable card; the grid takes any number of them. Existing vars only. */
+  .pfilters{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:0 0 14px}
+  .pfilter{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.2px;
+    text-transform:uppercase;color:var(--muted2);background:none;
+    border:1px solid var(--line);border-radius:100px;padding:9px 16px;min-height:38px;
+    cursor:pointer;transition:color .19s,border-color .19s}
+  .pfilter:hover{color:var(--text);border-color:var(--gold-dim)}
+  .pfilter.on{color:var(--text);border-color:var(--gold);background:var(--bg2)}
+  /* selection is carried by a mark as well as colour */
+  .pfilter.on::before{content:'✓ ';color:var(--gold)}
+  .pfilter-count{text-align:center;font-size:12.5px;color:var(--muted2);margin:0 0 30px}
+
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  .pcard{position:relative;display:flex;flex-direction:column;gap:14px;text-align:left;
+    padding:26px 24px;border:1px solid var(--line);border-radius:22px;
+    background:var(--panel);overflow:hidden;
+    transition:transform .22s cubic-bezier(.16,.8,.28,1),border-color .22s}
+  .pcard:hover{transform:translateY(-3px);border-color:var(--gold-dim)}
+  .pcard[hidden]{display:none}
+
+  .pcard-head{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
+  .pcard-icon{border-radius:13px;flex-shrink:0;transition:transform .22s cubic-bezier(.34,1.56,.64,1)}
+  .pcard:hover .pcard-icon{transform:scale(1.06) rotate(-4deg)}
+  .pcard-icon-abstract{width:46px;height:46px;display:flex;align-items:center;justify-content:center;
+    border:1px dashed var(--line-bright);color:var(--gold-dim)}
+  .pcard-icon-abstract svg{width:24px;height:24px}
+  .pcard-name{font-family:'Fraunces',serif;font-weight:560;font-size:19px;line-height:1.25;
+    color:var(--text);margin:0 0 6px;letter-spacing:-.2px}
+  .pcard-arrow{color:var(--gold-dim);opacity:0;transform:translateX(-4px);
+    transition:opacity .22s,transform .22s;align-self:start;margin-top:4px}
+  .pcard:hover .pcard-arrow{opacity:1;transform:none}
+
+  .pchip{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;
+    font-size:9px;letter-spacing:1.1px;text-transform:uppercase;
+    border:1px solid var(--line-bright);border-radius:100px;padding:4px 10px;color:var(--muted2)}
+  .pchip i{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+  .pchip-live{color:var(--ok);border-color:var(--ok-dot)}
+  .pchip-live i{background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot)}
+  .pchip-wip{color:var(--gold);border-color:var(--gold-dim);border-style:dashed}
+  .pchip-wip i{background:var(--gold-bright)}
+  .pchip-idea{color:var(--muted2);border-style:dashed}
+  .pchip-idea i{background:var(--muted2)}
+
+  .pcard-benefit{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0}
+  .pcard-feats{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
+  .pcard-feats li{position:relative;padding-left:19px;font-size:13.5px;color:var(--muted2);line-height:1.55}
+  .pcard-feats li::before{content:'';position:absolute;left:4px;top:8px;width:5px;height:5px;
+    border-radius:50%;background:var(--gold);opacity:.65}
+  .pcard-plat{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+  .pcard-plat span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.1px;
+    text-transform:uppercase;color:var(--muted2);border:1px solid var(--line);
+    border-radius:7px;padding:4px 8px}
+
+  .pcard-foot{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:relative;z-index:2}
+  .pcard-go{display:inline-flex;align-items:center;gap:8px;min-height:44px;
+    font-size:14px;font-weight:600;color:var(--gold);text-decoration:none;
+    transition:color .19s}
+  .pcard-go:hover{color:var(--gold-bright)}
+  .pcard-go svg{transition:transform .19s cubic-bezier(.34,1.56,.64,1)}
+  .pcard-go:hover svg{transform:translateX(3px)}
+  .pcard-2nd{background:none;border:1px solid var(--line);border-radius:10px;
+    color:var(--muted2);font-size:12.5px;padding:0 14px;min-height:44px;cursor:pointer;
+    transition:border-color .19s,color .19s}
+  .pcard-2nd:hover{border-color:var(--gold-dim);color:var(--text)}
+
+  @media(max-width:1000px){ .pgrid{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:660px){
+    .pgrid{grid-template-columns:1fr;gap:16px}
+    .pcard{padding:22px 20px}
+    .pcard-foot{flex-direction:column;align-items:stretch}
+    .pcard-go,.pcard-2nd{justify-content:center;text-align:center}
+    .pfilters{gap:7px}
+    .pfilter{font-size:9.5px;padding:8px 13px}
+  }
