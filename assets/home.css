@@ -112,16 +112,17 @@
      --line, --line-bright, --gold, --text, --muted2, --panel. No new colours. */
   .hero-values{list-style:none;margin:38px auto 0;padding:0;max-width:920px;
     display:grid;grid-template-columns:repeat(4,1fr);
-    border:1px solid var(--line);border-radius:20px;
+    border:1px solid var(--line-bright);border-radius:20px;
     background:linear-gradient(180deg,rgba(201,151,58,.045),transparent 70%);
     overflow:hidden;text-align:center;
     opacity:0;animation:fadeUp .8s cubic-bezier(.16,.8,.28,1) .88s forwards}
-  .hero-values li{padding:22px 18px 20px;display:flex;flex-direction:column;align-items:center;gap:7px;
+  .hero-values li{padding:22px 18px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;
     border-left:1px solid var(--line)}
   .hero-values li:first-child{border-left:none}
   .hv-icon{width:26px;height:26px;color:var(--gold);flex-shrink:0;margin-bottom:2px}
-  .hv-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.35}
-  .hv-sub{font-size:12.5px;color:var(--muted2);line-height:1.55;max-width:19ch}
+  .hv-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.6px;
+    text-transform:uppercase;color:var(--text);line-height:1.35}
+  .hv-sub{font-size:12.5px;color:var(--muted2);line-height:1.6;max-width:21ch}
 
   @media(max-width:900px){
     .hero-values{grid-template-columns:repeat(2,1fr);max-width:560px}
