@@ -683,12 +683,15 @@
   @media(max-width:820px){ .orbit-dots{width:620px} }
 
   /* ── studio mark at the centre of the orbit ──
-     Sized to the innermost ring: r=120 in an 800 viewBox drawn at a fixed
-     840px, so the ring is 252px across and the mark's ink spans it exactly.
+     Sized so the ink is INSCRIBED in the innermost ring (r=120 in an 800
+     viewBox drawn at a fixed 840px = 126px radius on screen). Matching the
+     mark's height to the 252px diameter puts its corners 161px out and the
+     glyph crosses the ring line; the furthest ink pixel sits 336/560 of the
+     height from centre, so 208px height keeps every pixel inside 126px.
      Held very low so it reads as a watermark under the panel, lifting only
      as the cursor comes near. */
   .orbit-mark{position:absolute;top:38%;left:50%;
-    height:252px;width:auto;
+    height:208px;width:auto;
     transform:translate(-50%,-50%);
     z-index:1;opacity:.075;pointer-events:none;
     filter:drop-shadow(0 0 0 rgba(240,203,126,0));
