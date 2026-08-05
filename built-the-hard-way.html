@@ -9,7 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260806f"/>
+<link rel="stylesheet" href="assets/site.css?v=20260806g"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/built-the-hard-way.html"/>
 <meta property="og:type" content="article"/>
@@ -61,27 +61,27 @@
   header{padding:56px 0 40px;text-align:center}
   .mark{width:52px;height:52px;border-radius:13px;margin-bottom:20px;
     border:1px solid var(--line);box-shadow:0 10px 26px -12px rgba(42,32,19,.35)}
-  .kicker{font-family:var(--font-interface);font-size:11px;letter-spacing:2.4px;
+  .kicker{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
     text-transform:uppercase;color:var(--gold);margin-bottom:14px}
   h1{font-family:var(--font-display);font-weight:540;font-size:clamp(30px,6vw,44px);
     margin:0;letter-spacing:-1px;line-height:1.15}
-  .sub{color:var(--muted2);font-size:14px;margin-top:16px}
-  h2{font-family:var(--font-display);font-weight:560;font-size:23px;margin:44px 0 12px;letter-spacing:-.3px}
+  .sub{color:var(--muted2);font:var(--t-body-sm);letter-spacing:var(--ls-body-sm);margin-top:16px}
+  h2{font:var(--t-h3);letter-spacing:var(--ls-h3);margin:44px 0 12px;letter-spacing:-.3px}
   p{color:var(--muted);margin:0 0 18px}
   strong{color:var(--text)}
   em{color:var(--text)}
   .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0}
   @media(max-width:600px){.stat-row{grid-template-columns:1fr}}
   .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
-  .stat .big{font-family:var(--font-display);font-weight:600;font-size:26px;color:var(--gold);display:block}
-  .stat .lbl{font-family:var(--font-interface);font-size:9.5px;letter-spacing:1.2px;
+  .stat .big{font:var(--t-h3);letter-spacing:var(--ls-h3);font-variant-numeric:tabular-nums;color:var(--gold);display:block}
+  .stat .lbl{font:var(--t-status);letter-spacing:var(--ls-status);
     text-transform:uppercase;color:var(--muted2);margin-top:6px;display:block}
   blockquote{font-family:var(--font-display);font-style:italic;font-size:20px;line-height:1.6;
     color:var(--text);border-left:3px solid var(--gold);margin:30px 0;padding:6px 0 6px 22px}
   .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:34px;color:var(--muted2);
     text-decoration:none;font-size:14px;transition:color .2s}
   .home-link:hover{color:var(--gold)}
-  footer{text-align:center;color:var(--muted2);font-size:13px;margin-top:44px}
+  footer{text-align:center;color:var(--muted2);font:var(--t-caption);letter-spacing:var(--ls-caption);margin-top:44px}
 </style>
 </head>
 <body>
@@ -181,6 +181,6 @@
   </a>
 </div>
 
-<script src="assets/site.js?v=20260806f" defer></script>
+<script src="assets/site.js?v=20260806g" defer></script>
 </body>
 </html>

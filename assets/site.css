@@ -80,8 +80,10 @@
 
 /* ── base typography, all pages ────────────── */
 html{-webkit-text-size-adjust:100%}
-body{font:var(--t-body);letter-spacing:var(--ls-body);
-  font-optical-sizing:auto;text-rendering:optimizeLegibility}
+body{font:var(--t-body);letter-spacing:var(--ls-body);text-rendering:optimizeLegibility}
+/* text-wrap:pretty is inherited, so pages that set it on a wrapper would
+   otherwise hand it down to their headings; balance is the right mode there. */
+h1,h2,h3{text-wrap:balance}
 
 /* ── skip link ─────────────────────────────── */
 .skip-link{position:absolute;left:-9999px;top:0;z-index:400;

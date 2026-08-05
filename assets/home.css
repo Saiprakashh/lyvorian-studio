@@ -99,7 +99,8 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
   h1{
-    margin:0 auto 26px;letter-spacing:var(--ls-hero);font:var(--t-hero);font-optical-sizing:auto;max-width:1050px;text-wrap:balance}
+    margin:0 auto 26px;letter-spacing:var(--ls-hero);font:var(--t-hero);
+    max-width:20ch;text-wrap:balance}
   h1 .line{display:block;overflow:hidden}
   h1 .line span{display:block;opacity:0;transform:translateY(100%);animation:lineUp .9s cubic-bezier(.16,.8,.28,1) forwards}
   h1 .line:nth-child(1) span{animation-delay:.35s}
@@ -224,7 +225,7 @@
   section{padding:96px 0}
   .sec-head{max-width:600px;margin:0 auto 60px;text-align:center}
   .sec-eyebrow{letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--gold);margin-bottom:14px;font:var(--t-eyebrow)}
-  .sec-title{margin:0 0 14px;text-wrap:balance;font:var(--t-h2);letter-spacing:var(--ls-h2);font-optical-sizing:auto}
+  .sec-title{margin:0 0 14px;text-wrap:balance;font:var(--t-h2);letter-spacing:var(--ls-h2)}
   .sec-sub{color:var(--muted);text-wrap:balance;font:var(--t-body-lg);letter-spacing:var(--ls-body-lg);max-width:62ch}
 
   /* ── Product card ───────────────────────── */
@@ -716,3 +717,17 @@
     /* 16px on the controls only - anything smaller makes iOS Safari zoom in */
     .fb-form textarea,.fb-form input{font-size:1rem}
   }
+
+  /* ── numerals ─────────────────────────────────────
+     Geist ships tnum. Anything whose digits change while you look at it, or
+     that sits in a column, gets fixed-width figures so it stops twitching. */
+  .char-count,.pfilter-count,.note-date,.tease-stamp,.value-num,
+  .fb-pnum,.fb-steps-list span,.ticker span,.roadmap-tag{
+    font-variant-numeric:tabular-nums}
+
+  /* ── paragraph wrapping ────────────────────────────
+     Headings already use balance; pretty is the body-copy equivalent and
+     stops a lone word stranding on the last line. */
+  .lede,.lede-sub,.sec-sub,.uni-sub,.orb-readout,.pcard-benefit,.pcard-feats li,
+  .fb-lead,.fb-cat-d,.fb-hint,.fb-done p,.value-desc,.roadmap-desc,.note-item{
+    text-wrap:pretty}

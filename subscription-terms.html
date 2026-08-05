@@ -9,7 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260806f"/>
+<link rel="stylesheet" href="assets/site.css?v=20260806g"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/subscription-terms.html"/>
 <meta name="robots" content="index,follow"/>
@@ -46,17 +46,17 @@
       var(--bg);
     color:var(--text);font-family:var(--font-interface);
     font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;padding:0 0 80px}
-  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+  .wrap{max-width:760px;text-wrap:pretty;margin:0 auto;padding:0 20px}
   .page-head{padding:56px 0 32px;text-align:center}
   .mark{width:64px;height:64px;border-radius:16px;margin-bottom:18px;
     box-shadow:0 12px 30px -14px rgba(42,32,19,.5)}
-  h1{font-family:var(--font-display);font-weight:540;font-size:clamp(28px,5vw,38px);margin:.2em 0 .15em;letter-spacing:-.5px}
-  .sub{color:var(--muted2);font-size:13.5px;font-family:var(--font-interface);letter-spacing:.8px}
+  h1{font:var(--t-h2);letter-spacing:var(--ls-h2);margin:.2em 0 .15em;letter-spacing:-.5px}
+  .sub{color:var(--muted2);font:var(--t-caption);letter-spacing:var(--ls-caption)}
   main{background:var(--panel);border:1px solid var(--line);border-radius:20px;
     padding:clamp(24px,5vw,44px);box-shadow:0 24px 60px -30px rgba(42,32,19,.25)}
-  h2{font-family:var(--font-display);font-weight:560;font-size:19px;margin:34px 0 10px;color:var(--text)}
+  h2{font:var(--t-h3);letter-spacing:var(--ls-h3);margin:34px 0 10px;color:var(--text)}
   h2:first-of-type{margin-top:0}
-  h3{font-family:var(--font-display);font-weight:560;font-size:16px;margin:22px 0 6px;color:var(--text)}
+  h3{font:600 1rem/1.35 var(--font-display);letter-spacing:-.014em;margin:22px 0 6px;color:var(--text)}
   p,li{color:var(--muted)}
   strong{color:var(--text)}
   a{color:var(--gold)}
@@ -66,7 +66,7 @@
   .short{background:rgba(201,151,58,.09);border:1px solid var(--line-bright);
     border-radius:14px;padding:18px 20px;margin:0 0 8px}
   .short p{margin:0;color:var(--text)}
-  .short .lbl{font-family:var(--font-interface);font-size:9px;letter-spacing:1.7px;
+  .short .lbl{font:var(--t-status);letter-spacing:var(--ls-status);
     text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
   .never{list-style:none;padding:0}
   .never li{position:relative;padding-left:26px}
@@ -74,7 +74,7 @@
   .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:26px;color:var(--muted2);
     text-decoration:none;font-size:14px;transition:color .2s}
   .home-link:hover{color:var(--gold)}
-  footer{text-align:center;color:var(--muted2);font-size:13px;margin-top:30px}
+  footer{text-align:center;color:var(--muted2);font:var(--t-caption);letter-spacing:var(--ls-caption);margin-top:30px}
 </style>
 </head>
 <body>
@@ -203,6 +203,6 @@
   </a>
 </div>
 
-<script src="assets/site.js?v=20260806f" defer></script>
+<script src="assets/site.js?v=20260806g" defer></script>
 </body>
 </html>

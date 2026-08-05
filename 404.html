@@ -9,7 +9,7 @@
 <link rel="manifest" href="/site.webmanifest"/>
 <link rel="apple-touch-icon" href="/assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="/assets/site.css?v=20260806f"/>
+<link rel="stylesheet" href="/assets/site.css?v=20260806g"/>
 <link rel="icon" type="image/png" href="/assets/favicon.png"/>
 <link rel="preload" href="/assets/fonts/Geist-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -27,8 +27,8 @@
     border:1px solid var(--line);box-shadow:0 12px 30px -14px rgba(42,32,19,.4);
     animation:float 4s ease-in-out infinite}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-  .code{font-family:var(--font-interface);font-size:13px;letter-spacing:3px;color:var(--gold);margin-bottom:10px}
-  h1{font-family:var(--font-display);font-weight:540;font-size:clamp(30px,6vw,46px);margin:0 0 14px;letter-spacing:-1px}
+  .code{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);color:var(--gold);margin-bottom:10px}
+  h1{font:var(--t-h2);letter-spacing:var(--ls-h2);margin:0 0 14px;letter-spacing:-1px}
   p{color:var(--muted);max-width:400px;margin:0 auto 34px;line-height:1.7}
   a.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:11px;
     font-size:15px;font-weight:600;text-decoration:none;color:#1a1206;
@@ -42,14 +42,14 @@
     .mark{animation:none}
   }
   .where{margin:34px auto 0;max-width:430px;text-align:left}
-  .where-label{font-family:var(--font-interface);font-size:9px;letter-spacing:1.8px;
+  .where-label{font:var(--t-status);letter-spacing:var(--ls-status);
     text-transform:uppercase;color:var(--muted2);text-align:center;margin-bottom:12px}
   .where a{display:flex;align-items:center;justify-content:space-between;gap:14px;
     text-decoration:none;color:var(--text);font-size:15px;padding:12px 16px;border-radius:11px;
     background:var(--panel);border:1px solid var(--line);margin-bottom:8px;
     transition:border-color .2s,transform .2s,color .2s}
   .where a:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateX(3px)}
-  .where a span{font-family:var(--font-interface);font-size:10px;letter-spacing:1.1px;
+  .where a span{font:var(--t-status);letter-spacing:var(--ls-status);
     text-transform:uppercase;color:var(--muted2)}
   .where a:hover span{color:var(--gold)}
   a:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}

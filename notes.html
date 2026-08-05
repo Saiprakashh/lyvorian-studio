@@ -9,7 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260806f"/>
+<link rel="stylesheet" href="assets/site.css?v=20260806g"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/notes.html"/>
 <meta property="og:type" content="website"/>
@@ -48,14 +48,14 @@
     font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:0 0 80px}
   .wrap{max-width:680px;margin:0 auto;padding:0 20px}
   .page-head{padding:56px 0 8px;text-align:center}
-  .kicker{font-family:var(--font-interface);font-size:11px;letter-spacing:2.4px;
+  .kicker{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
     text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-  h1{font-family:var(--font-display);font-weight:540;font-size:clamp(30px,6vw,42px);
+  h1{font:var(--t-h2);letter-spacing:var(--ls-h2);
     margin:0;letter-spacing:-1px;line-height:1.15}
-  .sub{color:var(--muted);font-size:16px;margin:16px auto 0;max-width:480px}
+  .sub{color:var(--muted);font:var(--t-body-lg);letter-spacing:var(--ls-body-lg);margin:16px auto 0;max-width:480px}
 
   .log{margin:46px 0 0}
-  .log-year{font-family:var(--font-interface);font-size:10px;letter-spacing:2px;
+  .log-year{font:var(--t-status);letter-spacing:var(--ls-status);font-variant-numeric:tabular-nums;
     text-transform:uppercase;color:var(--muted2);padding:0 0 12px;
     border-bottom:1px solid var(--line);margin-bottom:6px}
   .entry{display:flex;gap:20px;align-items:baseline;padding:16px 4px;
@@ -63,7 +63,7 @@
   .entry:last-child{border-bottom:none}
   .entry time{font-family:var(--font-interface);font-size:11px;letter-spacing:.8px;
     color:var(--gold);flex-shrink:0;width:74px;padding-top:2px}
-  .entry .body{color:var(--muted);font-size:15.5px;line-height:1.65}
+  .entry .body{color:var(--muted);font:var(--t-body);letter-spacing:var(--ls-body);text-wrap:pretty}
   .entry .body b{display:block;color:var(--text);font-weight:600;margin-bottom:2px}
   @media(max-width:520px){
     .entry{flex-direction:column;gap:4px}
@@ -75,7 +75,7 @@
   .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:40px;color:var(--muted2);
     text-decoration:none;font-size:14px;transition:color .2s}
   .home-link:hover{color:var(--gold)}
-  footer{text-align:center;color:var(--muted2);font-size:13px;margin-top:44px}
+  footer{text-align:center;color:var(--muted2);font:var(--t-caption);letter-spacing:var(--ls-caption);margin-top:44px}
 </style>
 </head>
 <body>
@@ -197,6 +197,6 @@
   </a>
 </div>
 
-<script src="assets/site.js?v=20260806f" defer></script>
+<script src="assets/site.js?v=20260806g" defer></script>
 </body>
 </html>
