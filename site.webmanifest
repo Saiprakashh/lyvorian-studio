@@ -1,4 +1,5 @@
 {
+  "id": "/",
   "name": "Lyvorian Studio",
   "short_name": "Lyvorian",
   "description": "An independent software studio — one product at a time, built by hand.",
@@ -15,10 +16,22 @@
       "purpose": "any"
     },
     {
-      "src": "/assets/favicon.png",
+      "src": "/assets/icon-beige-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

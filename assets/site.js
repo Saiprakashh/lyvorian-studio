@@ -117,4 +117,12 @@
       [].forEach.call(els, function(el){ io.observe(el); });
     }
   }
+
+  // ── service worker ─────────────────────────
+  // Makes the site a real installable PWA, so Android mints a proper
+  // current-SDK web app instead of a legacy shortcut APK that Play
+  // Protect flags as "built for an older version of Android".
+  if ('serviceWorker' in navigator && location.protocol === 'https:'){
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  }
 })();
