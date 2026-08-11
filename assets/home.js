@@ -131,9 +131,22 @@
     var shots = Array.prototype.slice.call(gal.querySelectorAll('.shot'));
     var galItems = shots.map(function(s){
       var img = s.querySelector('img');
-      return {src: img.getAttribute('src'), alt: img.getAttribute('alt'), label: s.getAttribute('data-label') || ''};
+      // screenshots carry data-src, not src: .gallery is position:fixed inset:0,
+      // so it always overlaps the viewport and loading="lazy" would never defer
+      // them — they'd download on every visit for a gallery most people never open
+      return {src: img.getAttribute('data-src') || img.getAttribute('src'),
+              alt: img.getAttribute('alt'), label: s.getAttribute('data-label') || ''};
     });
+    function hydrate(){
+      shots.forEach(function(s){
+        var img = s.querySelector('img');
+        if (!img.getAttribute('src') && img.getAttribute('data-src')){
+          img.setAttribute('src', img.getAttribute('data-src'));
+        }
+      });
+    }
     btn.addEventListener('click', function(){
+      hydrate();
       openGallery = gal; items = galItems;
       gal.classList.add('open'); setOverflow();
     });
