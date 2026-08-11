@@ -475,6 +475,23 @@
   go(1);
 })();
 
+// Box № 5 — the glyph cycles, so the undecided card has a pulse of its own.
+// Purely decorative: the card reads the same if this never runs.
+(function(){
+  var el = document.getElementById('teaseGlyph');
+  if (!el) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var glyphs = ['?', '✦', '◇', '△'], i = 0;
+  setInterval(function(){
+    el.classList.add('swap');                 // fade/rotate out
+    setTimeout(function(){
+      i = (i + 1) % glyphs.length;
+      el.textContent = glyphs[i];
+      el.classList.remove('swap');            // ...and back in on the new one
+    }, 300);
+  }, 3400);
+})();
+
 // Product filters — client-side, no reload, state carried by aria-pressed too.
 (function(){
   var bar = document.querySelector('.pfilters');
