@@ -345,15 +345,27 @@
   @media(max-width:820px){.lb-nav{width:40px;height:40px}.lb-prev{left:10px}.lb-next{right:10px}}
 
   /* ── Custom cursor ──────────────────────── */
-  .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:400;border-radius:50%;
-    transform:translate(-50%,-50%);display:none}
-  .cursor-dot{width:7px;height:7px;background:var(--gold-bright)}
-  .cursor-ring{width:36px;height:36px;border:1.5px solid var(--gold);opacity:.65;
-    transition:width .3s cubic-bezier(.16,.8,.28,1),height .3s cubic-bezier(.16,.8,.28,1),opacity .3s,background-color .3s}
-  .cursor-ring.hovering{width:54px;height:54px;opacity:.9;background:rgba(169,122,31,.08)}
-  .cursor-ring.pressing{width:26px;height:26px;opacity:1}
+  /* A small precise dot with a light ring trailing it. The ring leads on
+     interactive elements and the dot steps aside, so the two never sit on
+     top of each other. Restrained on purpose: thin stroke, low opacity. */
+  .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:400;
+    border-radius:50%;transform:translate(-50%,-50%);display:none}
+  .cursor-dot{width:5px;height:5px;background:var(--gold-bright);
+    box-shadow:0 0 6px rgba(201,143,34,.5);
+    transition:opacity .22s ease,width .22s ease,height .22s ease}
+  .cursor-ring{width:26px;height:26px;border:1px solid var(--gold-dim);opacity:.5;
+    transition:width .28s cubic-bezier(.16,.8,.28,1),height .28s cubic-bezier(.16,.8,.28,1),
+      opacity .28s,border-color .28s,background-color .28s}
+  .cursor-ring.hovering{width:40px;height:40px;opacity:.9;
+    border-color:var(--gold);background:rgba(201,143,34,.07)}
+  /* markup order is ring then dot, so this fades the dot out under a link */
+  .cursor-ring.hovering + .cursor-dot{opacity:0}
+  .cursor-ring.pressing{width:21px;height:21px;opacity:1;border-color:var(--gold-bright)}
   @media(hover:hover) and (pointer:fine){
     body.custom-cursor, body.custom-cursor a, body.custom-cursor button, body.custom-cursor .shot{cursor:none}
+    /* text fields keep a real caret - hiding it there costs usability for no
+       aesthetic gain, and you cannot see where you are typing */
+    body.custom-cursor input, body.custom-cursor textarea, body.custom-cursor select{cursor:auto}
     body.custom-cursor .cursor-dot, body.custom-cursor .cursor-ring{display:block}
   }
 
@@ -567,7 +579,8 @@
   .pfilter.on::before{content:'✓ ';color:var(--gold)}
   .pfilter-count{text-align:center;color:var(--muted2);margin:0 0 30px;font:var(--t-caption);letter-spacing:var(--ls-caption)}
 
-  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+  /* four products sit as a 2x2 block; three across left one card stranded */
+  .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:stretch}
   .pcard{position:relative;display:flex;flex-direction:column;gap:12px;text-align:left;
     padding:22px 20px;border:1px solid var(--line);border-radius:22px;
     background:var(--panel);overflow:hidden;
@@ -601,6 +614,12 @@
   .pcard-plat span{letter-spacing:var(--ls-status);
     text-transform:uppercase;color:var(--muted2);border:1px solid var(--line);
     border-radius:7px;padding:4px 8px;font:var(--t-status)}
+  /* a platform that is actually live reads green, with a dot so the state is
+     never carried by colour alone */
+  .pcard-plat span.plat-live{color:var(--ok);border-color:var(--ok-dot);
+    display:inline-flex;align-items:center;gap:6px}
+  .pcard-plat span.plat-live::before{content:'';width:5px;height:5px;border-radius:50%;
+    background:var(--ok-dot);flex-shrink:0}
 
   .pcard-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);
     display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:relative;z-index:2}
@@ -609,8 +628,11 @@
   .pcard-go:hover{color:var(--gold-bright)}
   .pcard-go svg{transition:transform .19s cubic-bezier(.34,1.56,.64,1)}
   .pcard-go:hover svg{transform:translateX(3px)}
+  /* inline-flex so this works as an <a> as well as a <button>: an anchor
+     would otherwise not centre its text in the 44px box */
   .pcard-2nd{background:none;border:1px solid var(--line);border-radius:10px;
-    color:var(--muted2);padding:0 14px;min-height:44px;cursor:pointer;
+    color:var(--muted2);padding:0 14px;min-height:44px;cursor:pointer;text-decoration:none;
+    display:inline-flex;align-items:center;justify-content:center;
     transition:border-color .19s,color .19s;font:500 .8125rem/1 var(--font-interface);letter-spacing:-.002em}
   .pcard-2nd:hover{border-color:var(--gold-dim);color:var(--text)}
 

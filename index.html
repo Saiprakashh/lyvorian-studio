@@ -196,9 +196,8 @@
         <button type="button" class="pfilter" data-filter="available" aria-pressed="false">Available</button>
         <button type="button" class="pfilter" data-filter="testing" aria-pressed="false">Testing</button>
         <button type="button" class="pfilter" data-filter="development" aria-pressed="false">In development</button>
-        <button type="button" class="pfilter" data-filter="research" aria-pressed="false">Research</button>
     </div>
-    <p class="pfilter-count" id="pCount" role="status" aria-live="polite">Showing all 3 products</p>
+    <p class="pfilter-count" id="pCount" role="status" aria-live="polite">Showing all 4 products</p>
 
     <div class="pgrid" id="pGrid">
 
@@ -219,7 +218,7 @@
           <li>Bill scanning and confirmed UPI detection</li>
           <li>Optional trading journal, off by default</li>
         </ul>
-        <p class="pcard-plat"><span>Web</span><span>Android in development</span></p>
+        <p class="pcard-plat"><span class="plat-live">Web — live</span><span>Android in development</span></p>
         <div class="pcard-foot">
           <a class="pcard-go" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">Open Finance Tracker <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <button type="button" class="btn-preview pcard-2nd" data-gallery="finance-tracker">Preview 5 screens</button>
@@ -251,23 +250,51 @@
         </div>
       </article>
 
-      <article class="pcard is-idea reveal reveal-2" data-status="research"
-               aria-label="Third product — not yet announced">
-        <a class="card-stretch" href="#roadmap" aria-label="Product roadmap"></a>
+      <article class="pcard is-wip reveal reveal-2" data-status="development">
         <span class="tease-stamp">№ 3</span>
         <header class="pcard-head">
-          <span class="pcard-icon tease-icon" aria-hidden="true"><span id="teaseGlyph">?</span></span>
-          <div class="tease-name">
-            <span class="redact redact-a"></span>
-            <span class="redact redact-b"></span>
-            <span class="tease-hint">Name undisclosed</span>
+          <img class="pcard-icon" src="assets/fylunor-icon.svg" alt="" width="46" height="46" loading="lazy"/>
+          <div>
+            <h3 class="pcard-name">Fylunor</h3>
+            <span class="pchip pchip-wip"><i aria-hidden="true"></i>In development</span>
           </div>
         </header>
-        <p class="pcard-benefit tease-typeline"><span class="type-prefix">&gt;_</span> <span id="teaseType"></span><span class="type-caret"></span></p>
+        <p class="pcard-benefit">A document workspace that keeps your files where they belong —
+        on your own device.</p>
+        <ul class="pcard-feats">
+          <li>Scanning, OCR and every PDF tool run locally</li>
+          <li>Backup goes to your own Google Drive</li>
+          <li>Editors, templates and folders in one place</li>
+        </ul>
         <div class="tease-progress"><i></i></div>
-        <p class="pcard-plat"><span>Nothing announced yet</span></p>
+        <p class="pcard-plat"><span>Web</span><span>Not yet released</span></p>
         <div class="pcard-foot">
           <a class="pcard-go" href="#roadmap">Follow the roadmap <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="pcard-2nd" href="privacy-fylunor.html">Privacy</a>
+        </div>
+      </article>
+
+      <article class="pcard is-wip reveal reveal-3" data-status="testing">
+        <span class="tease-stamp">№ 4</span>
+        <header class="pcard-head">
+          <img class="pcard-icon" src="assets/medhakeli-icon.webp" alt="" width="46" height="46" loading="lazy"/>
+          <div>
+            <h3 class="pcard-name">Medhakeli</h3>
+            <span class="pchip pchip-wip"><i aria-hidden="true"></i>In testing</span>
+          </div>
+        </header>
+        <p class="pcard-benefit">A learning game for children aged 2 to 9, built to work anywhere —
+        no account, no network.</p>
+        <ul class="pcard-feats">
+          <li>Works with no account and fully offline</li>
+          <li>Nothing your child makes leaves the device</li>
+          <li>Designed for pre-readers upward</li>
+        </ul>
+        <div class="tease-progress"><i></i></div>
+        <p class="pcard-plat"><span>Android</span><span>Not yet released</span></p>
+        <div class="pcard-foot">
+          <a class="pcard-go" href="#roadmap">Follow the roadmap <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="pcard-2nd" href="privacy-medhakeli.html">Privacy</a>
         </div>
       </article>
 
@@ -363,10 +390,17 @@
         </div>
       </div>
       <div class="roadmap-item">
+        <span class="roadmap-dot next"></span>
+        <div>
+          <h3 class="roadmap-title">Medhakeli — Android<span class="roadmap-tag">In testing</span></h3>
+          <p class="roadmap-desc">A learning game for children aged 2 to 9. Built and running offline; going through a full test pass before the Play Store listing.</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
         <span class="roadmap-dot later"></span>
         <div>
-          <h3 class="roadmap-title">The next product<span class="roadmap-tag">Waiting its turn</span></h3>
-          <p class="roadmap-desc">Starts only when the two on the bench are done right. That's the rule.</p>
+          <h3 class="roadmap-title">Fylunor — Web<span class="roadmap-tag">In development</span></h3>
+          <p class="roadmap-desc">A document workspace where scanning, OCR and every PDF tool run locally. Still being built.</p>
         </div>
       </div>
     </div>

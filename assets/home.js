@@ -179,48 +179,6 @@
   });
 })();
 
-// Product № 3 teaser — typewriter line + cycling glyph
-(function(){
-  var typeEl = document.getElementById('teaseType');
-  var glyphEl = document.getElementById('teaseGlyph');
-  if (!typeEl) return;
-  var phrases = [
-    'sketching ideas…',
-    'asking what people are missing…',
-    'stress-testing the concept…',
-    'brewing quietly…'
-  ];
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    typeEl.textContent = phrases[3];
-    return;
-  }
-  var pi = 0, ci = 0, deleting = false;
-  (function tick(){
-    var full = phrases[pi];
-    if (!deleting){
-      ci++;
-      typeEl.textContent = full.slice(0, ci);
-      if (ci === full.length){ deleting = true; setTimeout(tick, 2000); return; }
-      setTimeout(tick, 55 + Math.random()*50);
-    } else {
-      ci--;
-      typeEl.textContent = full.slice(0, ci);
-      if (ci === 0){ deleting = false; pi = (pi+1) % phrases.length; setTimeout(tick, 420); return; }
-      setTimeout(tick, 26);
-    }
-  })();
-  var glyphs = ['?','✦','◇','△'];
-  var gi = 0;
-  setInterval(function(){
-    glyphEl.classList.add('swap');
-    setTimeout(function(){
-      gi = (gi+1) % glyphs.length;
-      glyphEl.textContent = glyphs[gi];
-      glyphEl.classList.remove('swap');
-    }, 300);
-  }, 3400);
-})();
-
 // Ideas box — chip select, live char count, mailto draft + toast
 (function(){
   var form = document.getElementById('ideasForm');
@@ -346,13 +304,13 @@
   }, {passive:true});
   document.addEventListener('mouseleave', function(){ visible = false; dot.style.opacity = ring.style.opacity = '0'; });
   (function loop(){
-    rx += (mx - rx) * .16;
-    ry += (my - ry) * .16;
+    rx += (mx - rx) * .2;
+    ry += (my - ry) * .2;
     ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
     requestAnimationFrame(loop);
   })();
   // grow ring over interactive elements
-  var hoverSel = 'a, button, .shot';
+  var hoverSel = 'a, button, .shot, label, summary, [role="button"]';
   document.addEventListener('mouseover', function(e){
     if (e.target.closest(hoverSel)) ring.classList.add('hovering');
   });
@@ -537,7 +495,10 @@
       b.classList.toggle('on', on);
       b.setAttribute('aria-pressed', String(on));
     });
-    var label = bar.querySelector('.pfilter.on').textContent.trim().toLowerCase();
+    // the "In development" button already starts with "in", which produced
+    // "…products in in development"
+    var label = bar.querySelector('.pfilter.on').textContent.trim().toLowerCase()
+                   .replace(/^in\s+/, '');
     count.textContent = key === 'all'
       ? 'Showing all ' + shown + ' products'
       : 'Showing ' + shown + ' ' + (shown === 1 ? 'product' : 'products') + ' in ' + label;

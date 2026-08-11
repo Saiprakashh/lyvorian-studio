@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Fylunor">
+  <!-- One accent, as everywhere else: the fanned sheets are tints of the same
+       beige rather than five separate hues. -->
+  <rect width="96" height="96" rx="21" fill="#1B1713"/>
+  <rect x="1.4" y="1.4" width="93.2" height="93.2" rx="19.6" fill="none" stroke="#E8D5B0" stroke-width="2.2" opacity=".9"/>
+
+  <!-- Fanned sheets, back to front. Each extends below the tray line so the
+       tray drawn afterwards hides the bottoms. -->
+  <g class="sheet-rise sheet-rise-1" transform="rotate(-19 30 50)">
+    <rect x="19" y="31" width="19" height="46" rx="2.5" fill="#C3B191"/>
+    <g stroke="#6E5F47" stroke-width="1.4" stroke-linecap="round" opacity=".8">
+      <path d="M23 40h11M23 45h11M23 50h8"/>
+    </g>
+  </g>
+  <g class="sheet-rise sheet-rise-5" transform="rotate(19 66 50)">
+    <rect x="58" y="31" width="19" height="46" rx="2.5" fill="#CBB89A"/>
+    <g stroke="#6E5F47" stroke-width="1.4" stroke-linecap="round" opacity=".8">
+      <path d="M62 40h11M62 45h11M62 50h8"/>
+    </g>
+  </g>
+  <g class="sheet-rise sheet-rise-2" transform="rotate(-9 36 48)">
+    <rect x="26" y="25" width="21" height="50" rx="2.8" fill="#D6C6A4"/>
+    <g stroke="#6E5F47" stroke-width="1.2" opacity=".75">
+      <path d="M30 34h13M30 40h13M30 46h13M30 52h13M34 31v24M39 31v24"/>
+    </g>
+  </g>
+  <g class="sheet-rise sheet-rise-4" transform="rotate(9 60 48)">
+    <rect x="49" y="25" width="21" height="50" rx="2.8" fill="#D0BE9C"/>
+    <rect x="53" y="31" width="8" height="8" rx="1.6" fill="#8A7658" opacity=".85"/>
+    <g stroke="#6E5F47" stroke-width="1.3" stroke-linecap="round" opacity=".8">
+      <path d="M53 45h13M53 50h13M53 55h9"/>
+    </g>
+  </g>
+
+  <!-- Front sheet: logo block, text lines, image tile, folded corner -->
+  <g class="sheet-rise sheet-rise-3">
+    <path fill="#FBF7F0" d="M35 20a3 3 0 0 1 3-3h15l8 8v52H38a3 3 0 0 1-3-3z"/>
+    <path fill="#DED2BC" d="M53 17l8 8h-8z"/>
+    <rect x="39" y="24" width="9" height="9" rx="2" fill="#E8D5B0"/>
+    <g stroke="#C4B08C" stroke-width="1.6" stroke-linecap="round">
+      <path d="M51 27h6M51 31h6"/>
+    </g>
+    <g stroke="#C4B08C" stroke-width="1.7" stroke-linecap="round">
+      <path d="M39 39h18M39 44h18M39 49h12"/>
+    </g>
+    <rect x="39" y="54" width="18" height="13" rx="2" fill="#E8D5B0"/>
+    <circle cx="52" cy="58.5" r="1.8" fill="#FBF7F0"/>
+    <path d="M39 67v-3l4.5-4.5 3.5 3.5 2.5-2.5L57 66v1z" fill="#B79E75"/>
+  </g>
+
+  <!-- Tray -->
+  <path fill="#241F1A" d="M14 54q17 18 34 18t34-18v22a7 7 0 0 1-7 7H21a7 7 0 0 1-7-7z"/>
+  <path fill="none" stroke="#E8D5B0" stroke-width="1.8" stroke-linecap="round" d="M14 54q17 18 34 18t34-18"/>
+
+  <!-- What the tray holds: document, image, spreadsheet -->
+  <g fill="none" stroke="#E8D5B0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".75">
+    <path d="M29.5 73h5l2.5 2.5V82h-7.5z"/><path d="M31.5 77h3M31.5 79.5h3"/>
+    <rect x="43.5" y="73" width="9.5" height="9" rx="1.4"/><circle cx="46.5" cy="76" r="1"/><path d="M43.5 80.5l3-3 2.5 2.5 1.5-1.5 2.5 2.5"/>
+    <rect x="58" y="73" width="9.5" height="9" rx="1.4"/><path d="M58 76.5h9.5M58 79.5h9.5M62.5 73v9"/>
+  </g>
+
+  <!-- Progress line -->
+  <rect x="32" y="88.5" width="32" height="2.4" rx="1.2" fill="#574C40"/>
+  <rect class="mark-progress" x="32" y="88.5" width="17" height="2.4" rx="1.2" fill="#E8D5B0"/>
+  <circle cx="49" cy="89.7" r="2.6" fill="#FBF7F0"/>
+</svg>
