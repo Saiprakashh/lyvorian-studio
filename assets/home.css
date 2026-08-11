@@ -579,8 +579,8 @@
   .pfilter.on::before{content:'✓ ';color:var(--gold)}
   .pfilter-count{text-align:center;color:var(--muted2);margin:0 0 30px;font:var(--t-caption);letter-spacing:var(--ls-caption)}
 
-  /* four products sit as a 2x2 block; three across left one card stranded */
-  .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;align-items:stretch}
+  /* five products: 3 + 2. At two columns the fifth card would sit alone. */
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
   .pcard{position:relative;display:flex;flex-direction:column;gap:12px;text-align:left;
     padding:22px 20px;border:1px solid var(--line);border-radius:22px;
     background:var(--panel);overflow:hidden;
