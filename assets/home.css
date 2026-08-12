@@ -362,25 +362,42 @@
      Transform is owned entirely by JS (position + stretch), so no rule
      here may set it — width/height/radius carry the morph via these
      transitions instead. */
-  .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;
-    z-index:400;display:none;will-change:transform}
-  .cursor-dot{width:6px;height:6px;border-radius:50%;
-    background:var(--gold-bright);box-shadow:0 0 8px rgba(201,143,34,.55);
+  .cursor-dot,.cursor-ring,.cursor-label{position:fixed;top:0;left:0;
+    pointer-events:none;z-index:400;display:none;will-change:transform}
+  .cursor-dot{width:8px;height:8px;border-radius:50%;
+    background:var(--gold-bright);
+    box-shadow:0 0 14px rgba(240,203,126,.9),0 0 4px rgba(240,203,126,1);
     transition:opacity .18s ease}
-  .cursor-ring{width:30px;height:30px;border-radius:50%;
-    border:1px solid var(--gold-dim);opacity:.45;
+  .cursor-ring{width:40px;height:40px;border-radius:50%;
+    border:1.5px solid var(--gold);opacity:.75;
+    background:rgba(201,143,34,.07);
+    box-shadow:0 0 20px rgba(201,143,34,.28),inset 0 0 14px rgba(201,143,34,.10);
     transition:width .3s cubic-bezier(.16,.8,.28,1),
       height .3s cubic-bezier(.16,.8,.28,1),
       border-radius .3s cubic-bezier(.16,.8,.28,1),
-      opacity .25s ease,border-color .25s ease,background-color .25s ease}
-  /* locked onto something clickable */
-  .cursor-ring.snap{opacity:.95;border-color:var(--gold);background:rgba(201,143,34,.05)}
-  .cursor-ring.press{border-color:var(--gold-bright);background:rgba(201,143,34,.13)}
+      opacity .25s ease,border-color .25s ease,background-color .25s ease,
+      box-shadow .25s ease}
+  /* locked onto something clickable — brighter, fuller, unmistakable */
+  .cursor-ring.snap{opacity:1;border-color:var(--gold-bright);
+    background:rgba(201,143,34,.16);
+    box-shadow:0 0 30px rgba(201,143,34,.45),inset 0 0 18px rgba(201,143,34,.16)}
+  .cursor-ring.press{background:rgba(201,143,34,.3);
+    box-shadow:0 0 36px rgba(240,203,126,.55)}
   /* the dot would only clutter the middle of a snapped outline */
   .cursor-dot.quiet{opacity:0}
   /* stop nagging while the page is being read, not navigated */
-  .cursor-ring.idle{opacity:.15}
-  .cursor-dot.off,.cursor-ring.off{opacity:0}
+  .cursor-ring.idle{opacity:.3}
+  .cursor-dot.off,.cursor-ring.off,.cursor-label.off{opacity:0}
+
+  /* Says what the click will DO, not merely that it can be clicked.
+     Only appears where the answer is not obvious from the element itself. */
+  .cursor-label{z-index:401;
+    font:700 .625rem/1 var(--font-interface);letter-spacing:.12em;text-transform:uppercase;
+    color:#1a1206;background:var(--gold-bright);
+    padding:7px 11px;border-radius:100px;white-space:nowrap;
+    box-shadow:0 8px 22px -8px rgba(0,0,0,.6);
+    opacity:0;transition:opacity .16s ease}
+  .cursor-label.on{opacity:1}
 
   @media(hover:hover) and (pointer:fine){
     body.custom-cursor,body.custom-cursor a,body.custom-cursor button,
@@ -389,7 +406,8 @@
        aesthetic gain, and you cannot see where you are typing */
     body.custom-cursor input,body.custom-cursor textarea,body.custom-cursor select,
     body.custom-cursor [contenteditable="true"]{cursor:auto}
-    body.custom-cursor .cursor-dot,body.custom-cursor .cursor-ring{display:block}
+    body.custom-cursor .cursor-dot,body.custom-cursor .cursor-ring,
+    body.custom-cursor .cursor-label{display:block}
   }
 
   /* ── Roadmap ────────────────────────────── */

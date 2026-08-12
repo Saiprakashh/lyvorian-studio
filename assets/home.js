@@ -309,6 +309,13 @@
 
   document.body.classList.add('custom-cursor');
 
+  // built here rather than in the markup: it is purely a cursor affordance,
+  // so it should not exist for anyone this module never runs for
+  var label = document.createElement('span');
+  label.className = 'cursor-label';
+  label.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(label);
+
   var mx = -200, my = -200;          // pointer, exact
   var rx = mx, ry = my;              // ring, lagging
   var target = null, radius = '50%', morph = false;
@@ -316,6 +323,22 @@
 
   function put(el, x, y, extra){
     el.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)' + (extra || '');
+  }
+
+  // Only where the outcome is not already obvious from the element. Labelling
+  // every link would be noise; labelling the ones that open elsewhere, enlarge
+  // something or send data is genuinely useful.
+  function verbFor(el){
+    if (el.matches('.shot'))                      return 'View';
+    if (el.matches('.btn-preview,[data-gallery]')) return 'Preview';
+    if (el.matches('[type="submit"]'))            return 'Send';
+    if (el.matches('.fb-next'))                   return 'Continue';
+    if (el.matches('[data-contact]'))             return 'Email';
+    if (el.getAttribute('target') === '_blank')   return 'Open ↗';
+    var href = el.getAttribute('href') || '';
+    if (href.indexOf('mailto:') === 0)            return 'Email';
+    if (href && href.charAt(0) !== '#' && href.indexOf('.html') > -1) return 'Read';
+    return '';
   }
 
   // Sizing is a state change, not an animation, so it is applied here rather
@@ -339,6 +362,9 @@
     ring.classList.add('snap');
     dot.classList.add('quiet');
     if (morph) fit(b);
+    var verb = verbFor(el);
+    if (verb){ label.textContent = verb; label.classList.add('on'); }
+    else label.classList.remove('on');
   }
 
   function detach(){
@@ -347,20 +373,27 @@
     ring.classList.remove('snap');
     ring.style.width = ring.style.height = ring.style.borderRadius = '';
     dot.classList.remove('quiet');
+    label.classList.remove('on');
   }
 
   window.addEventListener('pointermove', function(e){
     mx = e.clientX; my = e.clientY;
     if (!awake){ awake = true; rx = mx; ry = my; dot.classList.remove('off'); ring.classList.remove('off'); }
     put(dot, mx, my);
+    // sits clear of the ring, and flips to the other side near the edges so it
+    // never runs off screen
+    var lw = label.offsetWidth || 70;
+    var lx = (mx + 26 + lw > innerWidth) ? mx - 26 - lw : mx + 26;
+    var ly = (my + 40 > innerHeight) ? my - 34 : my + 20;
+    label.style.transform = 'translate(' + lx + 'px,' + ly + 'px)';
     ring.classList.remove('idle');
     clearTimeout(idleTimer);
     idleTimer = setTimeout(function(){ ring.classList.add('idle'); }, 2200);
   }, {passive:true});
 
   document.addEventListener('mouseover', function(e){
-    if (e.target.closest(TEXT)){ detach(); dot.classList.add('off'); ring.classList.add('off'); return; }
-    dot.classList.remove('off'); ring.classList.remove('off');
+    if (e.target.closest(TEXT)){ detach(); dot.classList.add('off'); ring.classList.add('off'); label.classList.add('off'); return; }
+    dot.classList.remove('off'); ring.classList.remove('off'); label.classList.remove('off');
     var t = e.target.closest(HIT);
     if (t && t !== target) attach(t);
   });
@@ -370,7 +403,7 @@
     if (target && !(e.relatedTarget && target.contains(e.relatedTarget))) detach();
   });
   document.addEventListener('mouseleave', function(){
-    awake = false; dot.classList.add('off'); ring.classList.add('off');
+    awake = false; dot.classList.add('off'); ring.classList.add('off'); label.classList.add('off');
   });
   document.addEventListener('mousedown', function(){ pressing = true;  ring.classList.add('press'); });
   document.addEventListener('mouseup',   function(){ pressing = false; ring.classList.remove('press'); });
