@@ -210,6 +210,22 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
   .mobile-menu{display:none}
 }
 
+/* ── status chip text, light theme ────────────
+   The chips are 11px/600, so 4.5:1 applies. On the light page --gold
+   (#a97a1f) measures 3.15:1 and --ok (#3b7a4f) 4.23:1 — both short. Only the
+   TEXT is darkened here: the ring, the dot, and every other use of --gold and
+   --ok are left exactly as they were, and no token is redefined. The dark
+   theme already passes at 6.47:1, so it keeps the plain tokens below.
+   Two class names (0,2,0) so this wins over each page's own .plat-wip. */
+.plat.plat-wip{color:#856010}   /* 4.70:1 on --bg */
+.plat.plat-live{color:#357045}  /* 4.86:1 on --bg */
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .plat.plat-wip{color:var(--gold)}
+  :root:not([data-theme="light"]) .plat.plat-live{color:var(--ok)}
+}
+:root[data-theme="dark"] .plat.plat-wip{color:var(--gold)}
+:root[data-theme="dark"] .plat.plat-live{color:var(--ok)}
+
 /* ── "More from the studio" (product pages) ──
    Lives here rather than in each page's <style> so adding a fifth product
    means editing markup only, and every product page stays in step. */
