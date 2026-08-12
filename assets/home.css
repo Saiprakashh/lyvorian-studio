@@ -648,7 +648,10 @@
 
   .pcard-benefit{color:var(--muted);margin:0;font:400 .875rem/1.6 var(--font-interface);letter-spacing:0em}
   .pcard-feats{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
-  .pcard-feats li{position:relative;padding-left:18px;color:var(--muted2);font:400 .8125rem/1.55 var(--font-interface);letter-spacing:0em}
+  /* --muted, not --muted2: on the card surface muted2 measured 3.8:1 in light
+     and 4.0:1 in dark — both under the 4.5:1 AA floor, and already failing
+     before the glass layer existed. This reads 6.3 / 6.0. */
+  .pcard-feats li{position:relative;padding-left:18px;color:var(--muted);font:400 .8125rem/1.55 var(--font-interface);letter-spacing:0em}
   .pcard-feats li::before{content:'';position:absolute;left:4px;top:8px;width:5px;height:5px;
     border-radius:50%;background:var(--gold);opacity:.65}
   .pcard-plat{display:flex;flex-wrap:wrap;gap:8px;margin:0}
@@ -794,3 +797,88 @@
   .lede,.lede-sub,.sec-sub,.uni-sub,.orb-readout,.pcard-benefit,.pcard-feats li,
   .fb-lead,.fb-cat-d,.fb-hint,.fb-done p,.value-desc,.roadmap-desc,.note-item{
     text-wrap:pretty}
+
+  /* ══ GLASSMORPHISM LAYER ══════════════════════════════════════════
+     Surfaces become frosted panes. Three rules govern it:
+
+     1. Glass needs a backdrop. Blurring flat colour does nothing, so
+        body::before lays a fixed field of soft colour across the whole
+        page — previously only the hero had anything behind it.
+     2. Not everything is glass. The gold CTA, the text and the page
+        field stay opaque; if every layer is translucent nothing reads
+        as above anything else.
+     3. Every pane gets a lit top edge (inset highlight). That single
+        detail is what separates "pane of glass" from "see-through box".
+
+     Tokens live in site.css so both sheets and both themes share them. */
+
+  /* the field the glass refracts — fixed, so panes shift over it on scroll */
+  body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(58% 42% at 12% 6%,  rgba(201,143,34,.17), transparent 62%),
+      radial-gradient(48% 38% at 88% 20%, rgba(138,56,56,.14),  transparent 60%),
+      radial-gradient(52% 42% at 74% 72%, rgba(201,143,34,.12), transparent 62%),
+      radial-gradient(46% 36% at 22% 92%, rgba(138,56,56,.10),  transparent 60%)}
+
+  /* one recipe, applied to every pane */
+  .pcard,.value-card,.fb-panel,.btn-preview,.pcard-2nd,.pfilter,.to-top,
+  .roadmap-list,.notes-list{
+    background:var(--glass);
+    -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+    border:1px solid var(--glass-brd);
+    box-shadow:var(--glass-shd),inset 0 1px 0 var(--glass-hi)}
+
+  /* panes that sit on top of other panes need more body to separate */
+  .fb-panel,.pcard{background:var(--glass-strong)}
+
+  /* the specular sheen: a soft diagonal wipe across the top-left corner.
+     Kept under 8% — above that it stops looking like light and starts
+     looking like a grey overlay. */
+  .pcard::after,.value-card::after,.fb-panel::after{
+    content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 42%);
+    z-index:0}
+  .pcard > *,.value-card > *,.fb-panel > *{position:relative;z-index:1}
+  .value-card,.fb-panel{position:relative;overflow:hidden}
+
+  .pcard:hover,.value-card:hover{border-color:var(--gold-dim);
+    box-shadow:var(--glass-shd),inset 0 1px 0 var(--glass-hi),
+      0 0 34px -14px rgba(201,143,34,.45)}
+
+  /* chrome: heavier blur, because it overlaps live content while scrolling */
+  body > header,header.site-hdr,.mobile-menu,.contact-pop{
+    background:var(--glass);
+    -webkit-backdrop-filter:blur(22px) saturate(160%);
+    backdrop-filter:blur(22px) saturate(160%);
+    border-color:var(--glass-brd);
+    box-shadow:inset 0 1px 0 var(--glass-hi)}
+  .mobile-menu,.contact-pop{box-shadow:var(--glass-shd),inset 0 1px 0 var(--glass-hi)}
+  .contact-tail{background:var(--glass);border-color:var(--glass-brd)}
+
+  /* the primary action stays solid — a translucent CTA reads as disabled */
+  .btn-gold,.btn-send{backdrop-filter:none;-webkit-backdrop-filter:none}
+
+  /* the pill that is currently on should not look like the ones that are off */
+  .pfilter.on{background:var(--glass-strong);border-color:var(--gold-dim)}
+
+  /* Fallback: without backdrop-filter the fill alone is far too transparent
+     to read against, so those browsers get the original opaque panel. */
+  @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+    .pcard,.value-card,.fb-panel,.btn-preview,.pcard-2nd,.pfilter,.to-top,
+    .roadmap-list,.notes-list,body > header,header.site-hdr,.mobile-menu,.contact-pop{
+      background:var(--panel);border-color:var(--line)}
+  }
+
+  /* backdrop-filter on a dozen panes is costly on low-power machines, and
+     the effect is decorative — drop it where motion is already unwelcome */
+  @media(prefers-reduced-motion:reduce){
+    .pcard,.value-card,.fb-panel,.roadmap-list,.notes-list{
+      -webkit-backdrop-filter:none;backdrop-filter:none;background:var(--panel)}
+  }
+
+  @media(max-width:660px){
+    /* lighter blur on phones: the same radius costs much more per pixel */
+    .pcard,.value-card,.fb-panel{
+      -webkit-backdrop-filter:blur(12px) saturate(140%);
+      backdrop-filter:blur(12px) saturate(140%)}
+  }

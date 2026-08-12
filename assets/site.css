@@ -6,9 +6,27 @@
   --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
   --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
   --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
-  --maroon:#8a3838; --ok:#3f8055; --ok-dot:#5da271;
+  --maroon:#8a3838; --ok:#3b7a4f; --ok-dot:#5da271;
   --hdr:rgba(242,232,213,.75);
   --r:16px;
+
+  /* ── glass ─────────────────────────────────────────────────────────
+     Frosted surfaces only work when there is something behind them worth
+     refracting, so body::before lays down a fixed colour field (see
+     home.css). Four parts to each surface:
+       --glass      the translucent fill
+       --glass-brd  the edge, catching light
+       --glass-hi   a 1px inner highlight along the top — this is the
+                    detail that reads as "pane of glass" rather than
+                    "semi-transparent box"
+       --glass-shd  elevation, so panes sit above the field
+     saturate() in the blur keeps the gold underneath from going grey. */
+  --glass:rgba(255,252,245,.62);
+  --glass-brd:rgba(255,255,255,.75);
+  --glass-hi:rgba(255,255,255,.9);
+  --glass-shd:0 18px 44px -20px rgba(120,86,32,.3);
+  --glass-blur:blur(18px) saturate(150%);
+  --glass-strong:rgba(255,253,248,.78);
 
   /* ── typography ─────────────────────────────────────────
      One family: Geist, a contemporary grotesque built for software UI.
@@ -58,6 +76,14 @@
     --gold:#c98f22; --gold-bright:#e6b354; --gold-dim:#8a6a2e;
     --ok:#8fe09f; --ok-dot:#8fe09f;
     --hdr:rgba(25,20,16,.78);
+    /* on dark, glass is a LIGHT tint at low alpha — tinting it dark would
+       read as a hole in the page rather than a pane above it */
+    --glass:rgba(255,246,230,.055);
+    --glass-brd:rgba(255,240,214,.14);
+    --glass-hi:rgba(255,246,230,.2);
+    --glass-shd:0 20px 50px -24px rgba(0,0,0,.75);
+    --glass-blur:blur(18px) saturate(150%);
+    --glass-strong:rgba(255,246,230,.085);
   }
 }
 :root[data-theme="light"]{
@@ -65,10 +91,20 @@
   --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
   --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
   --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
-  --ok:#3f8055; --ok-dot:#5da271;
+  --ok:#3b7a4f; --ok-dot:#5da271;
   --hdr:rgba(242,232,213,.75);
+  --glass:rgba(255,252,245,.62);
+  --glass-brd:rgba(255,255,255,.75);
+  --glass-hi:rgba(255,255,255,.9);
+  --glass-shd:0 18px 44px -20px rgba(120,86,32,.3);
+  --glass-strong:rgba(255,253,248,.78);
 }
 :root[data-theme="dark"]{
+  --glass:rgba(255,246,230,.055);
+  --glass-brd:rgba(255,240,214,.14);
+  --glass-hi:rgba(255,246,230,.2);
+  --glass-shd:0 20px 50px -24px rgba(0,0,0,.75);
+  --glass-strong:rgba(255,246,230,.085);
   --bg:#191410; --bg2:#211a13; --panel:#251e15;
   --line:rgba(201,143,34,.16); --line-bright:rgba(201,143,34,.4);
   --text:#f0e7d6; --muted:#b3a488; --muted2:#8c7a5c;
