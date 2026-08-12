@@ -234,6 +234,22 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
 :root[data-theme="dark"] .site-hdr nav a[aria-current]{color:var(--gold)}
 :root[data-theme="dark"] .mobile-menu a[aria-current]{color:var(--gold)}
 
+/* Same defect, same treatment, three more places. Each page's own <style>
+   loads after this file, so these selectors are one step more specific than
+   the originals rather than relying on order: a.inline:any-link beats
+   a.inline, a.home-link beats .home-link, .log .entry time beats .entry time.
+   --muted2 misses in BOTH themes (3.42 light / 4.40 dark), so the back link
+   moves to --muted outright and needs no dark override. */
+a.inline:any-link{color:#856010}   /* 4.70:1, was --gold at 3.15:1 */
+a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
+.log .entry time{color:#856010}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) a.inline:any-link{color:var(--gold)}
+  :root:not([data-theme="light"]) .log .entry time{color:var(--gold)}
+}
+:root[data-theme="dark"] a.inline:any-link{color:var(--gold)}
+:root[data-theme="dark"] .log .entry time{color:var(--gold)}
+
 /* ── "More from the studio" (product pages) ──
    Lives here rather than in each page's <style> so adding a fifth product
    means editing markup only, and every product page stays in step. */
