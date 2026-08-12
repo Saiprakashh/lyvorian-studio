@@ -820,6 +820,13 @@
       radial-gradient(52% 42% at 74% 72%, rgba(201,143,34,.12), transparent 62%),
       radial-gradient(46% 36% at 22% 92%, rgba(138,56,56,.10),  transparent 60%)}
 
+  /* The roadmap and notes lists were never panels — plain flex columns with
+     divider rules, no radius and no padding — so giving them a glass fill
+     produced sharp-cornered boxes with the content jammed against the edge.
+     They need a pane's geometry before they can wear a pane's surface. */
+  .roadmap-list,.notes-list{border-radius:18px;padding:10px 26px}
+  @media(max-width:660px){ .roadmap-list,.notes-list{padding:8px 18px;border-radius:16px} }
+
   /* one recipe, applied to every pane */
   .pcard,.value-card,.fb-panel,.btn-preview,.pcard-2nd,.pfilter,.to-top,
   .roadmap-list,.notes-list{
