@@ -889,3 +889,12 @@
       -webkit-backdrop-filter:blur(12px) saturate(140%);
       backdrop-filter:blur(12px) saturate(140%)}
   }
+
+  /* ── homepage products: two featured, then out to the full page ──
+     The grid is two columns here, not three: with only the two furthest-along
+     products on show, a three-column track would leave a visible hole. */
+  #work .pgrid{grid-template-columns:repeat(2,1fr);max-width:820px;margin:0 auto}
+  .products-more{text-align:center;margin-top:30px}
+  .products-more p{color:var(--muted2);font:var(--t-caption);
+    letter-spacing:var(--ls-caption);margin:14px 0 0}
+  @media(max-width:660px){ #work .pgrid{grid-template-columns:1fr} }

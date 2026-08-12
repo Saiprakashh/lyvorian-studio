@@ -7,7 +7,7 @@
 <meta name="description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, and what comes after them."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260812h"/>
+<link rel="stylesheet" href="assets/site.css?v=20260812i"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -75,7 +75,7 @@
   @font-face{font-family:'Geist Fallback';src:local('Segoe UI'),local('Arial');
     size-adjust:106%;ascent-override:100.5%;descent-override:29.5%;line-gap-override:0%}
 </style>
-<link rel="stylesheet" href="assets/home.css?v=20260812h"/>
+<link rel="stylesheet" href="assets/home.css?v=20260812i"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -187,25 +187,16 @@
     <div class="sec-head reveal">
       <div class="sec-eyebrow">Our products</div>
       <h2 class="sec-title">Thoughtful tools, built for real life.</h2>
-      <p class="sec-sub">Explore products that are available now, currently being tested, or still
-      taking shape.</p>
+      <p class="sec-sub">The two furthest along. The full catalogue — including what is still
+      being built — lives on the products page.</p>
     </div>
-
-    <div class="pfilters reveal" role="group" aria-label="Filter products by stage">
-        <button type="button" class="pfilter on" data-filter="all" aria-pressed="true">All</button>
-        <button type="button" class="pfilter" data-filter="available" aria-pressed="false">Available</button>
-        <button type="button" class="pfilter" data-filter="testing" aria-pressed="false">Testing</button>
-        <button type="button" class="pfilter" data-filter="development" aria-pressed="false">In development</button>
-        <button type="button" class="pfilter" data-filter="research" aria-pressed="false">Research</button>
-    </div>
-    <p class="pfilter-count" id="pCount" role="status" aria-live="polite">Showing all 5 products</p>
 
     <div class="pgrid" id="pGrid">
 
       <article class="pcard is-live reveal" data-status="available development" id="ftCard">
         <a class="card-stretch" href="finance-tracker.html" aria-label="Finance Tracker — full details"></a>
         <header class="pcard-head">
-          <img class="pcard-icon" src="assets/finance-tracker-icon.webp?v=20260812h" alt="" width="46" height="46"/>
+          <img class="pcard-icon" src="assets/finance-tracker-icon.webp?v=20260812i" alt="" width="46" height="46"/>
           <div>
             <h3 class="pcard-name">Finance Tracker</h3>
             <span class="pchip pchip-live"><i aria-hidden="true"></i>Available</span>
@@ -251,73 +242,13 @@
         </div>
       </article>
 
-      <article class="pcard is-wip reveal reveal-2" data-status="development">
-        <span class="tease-stamp">№ 3</span>
-        <header class="pcard-head">
-          <img class="pcard-icon" src="assets/fylunor-icon.svg" alt="" width="46" height="46" loading="lazy"/>
-          <div>
-            <h3 class="pcard-name">Fylunor</h3>
-            <span class="pchip pchip-wip"><i aria-hidden="true"></i>In development</span>
-          </div>
-        </header>
-        <p class="pcard-benefit">A document workspace that keeps your files where they belong —
-        on your own device.</p>
-        <ul class="pcard-feats">
-          <li>Scanning, OCR and every PDF tool run locally</li>
-          <li>Backup goes to your own Google Drive</li>
-          <li>Editors, templates and folders in one place</li>
-        </ul>
-        <div class="tease-progress"><i></i></div>
-        <p class="pcard-plat"><span>Web</span><span>Not yet released</span></p>
-        <div class="pcard-foot">
-          <a class="pcard-go" href="#roadmap">Follow the roadmap <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="pcard-2nd" href="privacy-fylunor.html">Privacy</a>
-        </div>
-      </article>
+    </div>
 
-      <article class="pcard is-wip reveal reveal-3" data-status="testing">
-        <span class="tease-stamp">№ 4</span>
-        <header class="pcard-head">
-          <img class="pcard-icon" src="assets/medhakeli-icon.webp" alt="" width="46" height="46" loading="lazy"/>
-          <div>
-            <h3 class="pcard-name">Medhakeli</h3>
-            <span class="pchip pchip-wip"><i aria-hidden="true"></i>In testing</span>
-          </div>
-        </header>
-        <p class="pcard-benefit">A learning game for children aged 2 to 9, built to work anywhere —
-        no account, no network.</p>
-        <ul class="pcard-feats">
-          <li>Works with no account and fully offline</li>
-          <li>Nothing your child makes leaves the device</li>
-          <li>Designed for pre-readers upward</li>
-        </ul>
-        <div class="tease-progress"><i></i></div>
-        <p class="pcard-plat"><span>Android</span><span>Not yet released</span></p>
-        <div class="pcard-foot">
-          <a class="pcard-go" href="#roadmap">Follow the roadmap <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="pcard-2nd" href="privacy-medhakeli.html">Privacy</a>
-        </div>
-      </article>
-
-      <article class="pcard is-idea reveal reveal-3" data-status="research"
-               aria-label="Fifth product — not yet announced">
-        <span class="tease-stamp">№ 5</span>
-        <header class="pcard-head">
-          <span class="pcard-icon tease-icon" aria-hidden="true"><span id="teaseGlyph">?</span></span>
-          <div>
-            <h3 class="pcard-name">Not yet announced</h3>
-            <span class="pchip"><i aria-hidden="true"></i>Idea stage</span>
-          </div>
-        </header>
-        <p class="pcard-benefit">The fifth product has not been decided. Ideas are studied
-        carefully — and often set aside — long before anything gets built.</p>
-        <div class="tease-progress"><i></i></div>
-        <p class="pcard-plat"><span>Nothing announced yet</span></p>
-        <div class="pcard-foot">
-          <a class="pcard-go" href="#ideas">Suggest one <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </article>
-
+    <div class="products-more reveal">
+      <a class="btn btn-ghost" href="products.html">See all 5 products
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p>Fylunor, Medhakeli and what comes after them.</p>
     </div>
   </div>
 </section>
@@ -697,7 +628,7 @@
      Claim the code "lyvorianstudio" at goatcounter.com to activate; harmless until then. -->
 <script data-goatcounter="https://lyvorianstudio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-<script src="assets/site.js?v=20260812h" defer></script>
-<script src="assets/home.js?v=20260812h" defer></script>
+<script src="assets/site.js?v=20260812i" defer></script>
+<script src="assets/home.js?v=20260812i" defer></script>
 </body>
 </html>
