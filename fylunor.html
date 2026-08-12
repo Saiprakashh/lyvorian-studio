@@ -3,39 +3,37 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>HabitAroha — a calm, offline-first habit tracker | Lyvorian Studio</title>
-<meta name="description" content="HabitAroha is a calm, private habit tracker. Core habit tracking works fully offline, your habit content stays encrypted on your device, and a missed day is never treated as failure. In testing, Play Store next."/>
+<title>Fylunor — a document workspace that keeps your files on your device | Lyvorian Studio</title>
+<meta name="description" content="Fylunor is a document workspace. Scanning, OCR, compression, redaction and every PDF tool run locally on your device, and backup goes to your own Google Drive. In development."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
 <link rel="stylesheet" href="assets/site.css?v=20260812k"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
-<link rel="canonical" href="https://lyvorianstudio.co.in/habitaroha.html"/>
+<link rel="canonical" href="https://lyvorianstudio.co.in/fylunor.html"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Lyvorian Studio"/>
-<meta property="og:title" content="HabitAroha — build calm, consistent habits"/>
-<meta property="og:description" content="Core habit tracking works fully offline. Your habit content stays encrypted on your device. Rest days never count as missed."/>
-<meta property="og:url" content="https://lyvorianstudio.co.in/habitaroha.html"/>
-<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-habitaroha.jpg"/>
+<meta property="og:title" content="Fylunor — a document workspace that stays on your device"/>
+<meta property="og:description" content="Scanning, OCR, compression, redaction and every PDF tool run locally. Backup goes to your own Google Drive, never to us."/>
+<meta property="og:url" content="https://lyvorianstudio.co.in/fylunor.html"/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.jpg"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="HabitAroha — build calm, consistent habits"/>
-<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-habitaroha.jpg"/>
+<meta name="twitter:title" content="Fylunor — a document workspace that stays on your device"/>
+<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-image.jpg"/>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "HabitAroha",
-  "url": "https://lyvorianstudio.co.in/habitaroha.html",
-  "applicationCategory": "HealthApplication",
-  "operatingSystem": "Android",
-  "image": "https://lyvorianstudio.co.in/assets/og-habitaroha.jpg",
-  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
+  "name": "Fylunor",
+  "url": "https://lyvorianstudio.co.in/fylunor.html",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Web",
   "publisher": {"@type": "Organization", "name": "Lyvorian Studio", "url": "https://lyvorianstudio.co.in/"},
-  "description": "A calm, offline-first habit tracker — streaks, gentle reminders, and habit data encrypted on the device."
+  "description": "A document workspace where scanning, OCR, compression, redaction and every PDF tool run locally on your own device."
 }
 </script>
 
@@ -45,7 +43,8 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Lyvorian Studio", "item": "https://lyvorianstudio.co.in/"},
-    {"@type": "ListItem", "position": 2, "name": "HabitAroha", "item": "https://lyvorianstudio.co.in/habitaroha.html"}
+    {"@type": "ListItem", "position": 2, "name": "Products", "item": "https://lyvorianstudio.co.in/products.html"},
+    {"@type": "ListItem", "position": 3, "name": "Fylunor", "item": "https://lyvorianstudio.co.in/fylunor.html"}
   ]
 }
 </script>
@@ -72,10 +71,10 @@
     box-shadow:0 14px 32px -14px rgba(42,32,19,.5)}
   .kicker{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
     text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-  h1{font-family:var(--font-display);font-weight:540;font-size:clamp(32px,6.5vw,46px);
+  h1{font-family:var(--font-display);font-weight:500;font-size:clamp(32px,6.5vw,46px);
     margin:0;letter-spacing:-1px;line-height:1.15}
   .tagline{color:var(--muted);font:var(--t-body-lg);letter-spacing:var(--ls-body-lg);margin:16px auto 0;max-width:520px}
-  h2{font:var(--t-h3);letter-spacing:var(--ls-h3);margin:48px 0 14px;letter-spacing:-.3px}
+  h2{font:var(--t-h3);letter-spacing:var(--ls-h3);margin:48px 0 14px}
   p{color:var(--muted);margin:0 0 18px}
   strong{color:var(--text)}
 
@@ -95,7 +94,7 @@
   .feat{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
   @media(max-width:600px){.feat{grid-template-columns:1fr}}
   .feat li{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
-  .feat b{display:block;font-family:var(--font-display);font-weight:560;font-size:16px;
+  .feat b{display:block;font-family:var(--font-display);font-weight:500;font-size:16px;
     color:var(--text);margin-bottom:4px}
   .feat span{color:var(--muted);font:var(--t-body-sm);letter-spacing:var(--ls-body-sm)}
 
@@ -106,14 +105,11 @@
 
   .qualifier{font-size:14.5px;color:var(--muted2);border-left:2px solid var(--line-bright);
     padding-left:16px;margin:0 0 18px}
-  .langs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
-  .lang{font-family:var(--font-interface);font-size:11px;letter-spacing:1px;
-    color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:5px 13px}
 
   a.inline{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line-bright)}
   a.inline:hover{color:var(--gold-bright)}
   .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:40px;color:var(--muted2);
-    text-decoration:none;font-size:14px;transition:color .2s}
+    text-decoration:none;font-size:14px;min-height:44px;transition:color .2s}
   .home-link:hover{color:var(--gold)}
   footer{text-align:center;color:var(--muted2);font:var(--t-caption);letter-spacing:var(--ls-caption);margin-top:44px}
 </style>
@@ -141,72 +137,83 @@
 </header>
 <div class="wrap" id="main" tabindex="-1">
   <header>
-    <img class="pmark" src="assets/habitaroha-icon.webp" alt="" width="76" height="76"/>
-    <div class="kicker">Product № 2</div>
-    <h1>HabitAroha</h1>
-    <p class="tagline">Build calm, consistent habits. Core tracking works fully offline, and your habit content stays on your device.</p>
+    <img class="pmark" src="assets/fylunor-icon.svg" alt="" width="76" height="76"/>
+    <div class="kicker">Product № 3</div>
+    <h1>Fylunor</h1>
+    <p class="tagline">A document workspace that keeps your files where they belong — on your own
+    device.</p>
     <div class="plat-row">
-      <span class="plat plat-wip">Android — in testing</span>
+      <span class="plat plat-wip">Web — in development</span>
     </div>
     <div class="notice">
-      <b>Not released yet.</b> V1 is built and running on real devices, going through a full test
-      pass before the Play Store listing goes up. There's nothing to download today.
+      <b>Not released yet.</b> Fylunor is still being built. There is nothing to open or download
+      today — this page describes what it does, not what you can use.
     </div>
   </header>
 
-  <p>HabitAroha is a habit tracker for people who want steady progress rather than noisy streak
-  pressure. Core habit tracking works fully offline and your habit content stays encrypted on your
-  device — it never asks you to feel bad about a missed day.</p>
+  <p>Most document tools work by sending your file somewhere. You upload a PDF to compress it, or
+  to sign it, or to pull the text out of a scan — and your document is now on a server you do not
+  control. Fylunor is built the other way round: <strong>the work happens on your device</strong>.</p>
 
-  <p class="qualifier">Internet is used only for optional services you choose to switch on, such as
-  sign-in or verification, Google Drive backup, purchases, advertising and opt-in analytics. Those
-  are described in the <a class="inline" href="privacy-habitaroha.html">privacy policy</a>.</p>
+  <p>Scanning, text recognition, page cleanup, compression, redaction, password protection and
+  conversion all run inside the app. Some of those tools are several megabytes of code precisely so
+  that your files never have to leave.</p>
 
   <h2>What it does</h2>
   <ul class="feat">
-    <li><b>Eight habit types</b><span>Check-ins, counts, timed sessions, measurements, checklists, and habits you want to reduce.</span></li>
-    <li><b>Schedules that fit</b><span>Daily, weekly, times-per-week, every-few-days, or your own custom dates.</span></li>
-    <li><b>See it clearly</b><span>Month, week and year calendar views, plus a monthly grid with frozen headers.</span></li>
-    <li><b>Insights you can act on</b><span>Your strongest weekday, when in the day you finish, and a consistency heatmap.</span></li>
-    <li><b>Kind by design</b><span>Planned rest days never count as missed, and vacation mode protects your streaks.</span></li>
-    <li><b>Reminders that respect you</b><span>Per-habit times, morning summary, evening review, and quiet hours.</span></li>
+    <li><b>Scan and clean up</b><span>Capture a document, straighten it, and tidy the page without it ever being uploaded.</span></li>
+    <li><b>Read text from scans</b><span>Optical character recognition runs locally, so the page never leaves to be read.</span></li>
+    <li><b>A full PDF toolkit</b><span>Compress, convert, protect with a password, redact and sign — all on your device.</span></li>
+    <li><b>Editors for real work</b><span>Documents, spreadsheets, invoices and resumes, alongside your scans and images.</span></li>
+    <li><b>The Vault</b><span>Files encrypted on your device with AES-256-GCM, using a key derived from your passphrase.</span></li>
+    <li><b>Backup you own</b><span>Optional backup to your own Google Drive — off until you turn it on.</span></li>
   </ul>
 
-  <h2>Your data, genuinely yours</h2>
+  <h2>Where your documents actually are</h2>
+  <p>Everything you create or import — documents, spreadsheets, scans, PDFs, images, invoices,
+  resumes — is stored on your device, in the app's own storage. It is not sent to us, and
+  <strong>there is nowhere in our systems to put it</strong>.</p>
+
   <ul class="privacy-list">
-    <li>Encrypted on your device with AES-256</li>
-    <li>Encrypted backups you can restore with a recovery key</li>
-    <li>Optional backup to your own Google Drive — off unless you turn it on</li>
-    <li>Export to CSV, Excel, PDF or a shareable progress image</li>
-    <li>Download everything you have stored, any time</li>
-    <li>PIN and biometric lock</li>
+    <li>No file is uploaded to us to be processed</li>
+    <li>Backup, if you enable it, goes to your own Google Drive — not to a Lyvorian server</li>
+    <li>Fylunor asks Google for the narrowest Drive permission available: access only to files the app itself created</li>
+    <li>It cannot see, read or list anything else in your Drive, including files made with other apps</li>
+    <li>Signing in is optional — Fylunor works fully without it</li>
+    <li>No tracking, and no data selling</li>
   </ul>
 
-  <h2>What it costs</h2>
-  <p>The <strong>free plan</strong> covers up to seven active habits with every tracking feature,
-  exports and backups included — supported by a small banner ad below your habit list, never on a
-  private note, a running timer or a sign-in screen. <strong>Founder Pro</strong> lifts the habit
-  limit, removes advertisements, and supports a small independent studio.</p>
+  <h2>The Vault, and one consequence worth stating</h2>
+  <p>Files you put in the Vault are encrypted on your device with AES-256-GCM, using a key derived
+  from your passphrase. The key exists only in memory while the Vault is open, and the passphrase
+  itself is never stored anywhere — not by us, and not on your device.</p>
 
-  <h2>Languages</h2>
-  <div class="langs">
-    <span class="lang">English</span>
-    <span class="lang" lang="hi">हिन्दी</span>
-    <span class="lang" lang="te">తెలుగు</span>
-  </div>
+  <p class="qualifier">That has a consequence worth saying plainly: <strong>if you forget the
+  passphrase, nobody can recover those files</strong> — not you, and not us. Vault files are also
+  excluded from Drive backup entirely, and on Android the screen is protected from screenshots and
+  screen recording while the Vault is open.</p>
+
+  <h2>What it will cost</h2>
+  <p>Fylunor will have a free tier and a Pro subscription. Pricing is not settled yet, so there is
+  no number here to quote — when it is decided it will appear on this page and in the app before
+  anything is charged.</p>
 
   <h2>Privacy</h2>
-  <p>Your habits are encrypted on your own device and are not uploaded to us. The full
-  <a class="inline" href="privacy-habitaroha.html">HabitAroha privacy policy</a> spells out exactly
-  what is stored, what leaves your device, and what you can turn off.</p>
+  <p>Lyvorian runs exactly one small service for Fylunor, and all it can answer is whether an
+  account has an active Pro subscription. The full
+  <a class="inline" href="privacy-fylunor.html">Fylunor privacy policy</a> spells out what is
+  stored, what leaves your device, and what you can switch off — every claim in it checked against
+  the code rather than written from intention.</p>
 
   <h2>How it's built</h2>
-  <p>Designed and built carefully by Lyvorian Studio, with the same focus on clarity, privacy and
-  reliability as <a class="inline" href="finance-tracker.html">Finance Tracker</a>. It only started
-  once Finance Tracker was live — that's the rule the studio works to, and it's explained in
-  <a class="inline" href="built-the-hard-way.html">Built the hard way</a>.</p>
+  <p>Built by Lyvorian Studio with the same priorities as
+  <a class="inline" href="finance-tracker.html">Finance Tracker</a> and
+  <a class="inline" href="habitaroha.html">HabitAroha</a>: clarity, privacy, and finishing one
+  thing properly before starting the next. That rule is explained in
+  <a class="inline" href="built-the-hard-way.html">Built the hard way</a>, and where Fylunor sits
+  in the queue is on the <a class="inline" href="index.html#roadmap">roadmap</a>.</p>
 
-  <a class="home-link" href="index.html">&larr; Back to Lyvorian Studio</a>
+  <a class="home-link" href="products.html">&larr; All products</a>
   <footer>&copy; 2026 Lyvorian Studio. All rights reserved.</footer>
 </div>
 
