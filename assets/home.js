@@ -288,37 +288,118 @@
   }, {passive:true});
 })();
 
-// Custom cursor — dot follows instantly, ring trails with easing
+// Custom cursor — a precise dot, plus a ring that takes the shape of
+// whatever you are about to click. See the notes above .cursor-ring in
+// home.css for the reasoning; this file owns transform, CSS owns the rest.
 (function(){
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var dot = document.getElementById('cursorDot');
+  var dot  = document.getElementById('cursorDot');
   var ring = document.getElementById('cursorRing');
   if (!dot || !ring) return;
+
+  var HIT  = 'a,button,.shot,label,summary,[role="button"]';
+  var TEXT = 'input,textarea,select,[contenteditable="true"]';
+  // Beyond this, snapping to the element's own box would throw a ring most of
+  // the way across the screen — card-stretch links cover a whole card. Those
+  // still light up, they just keep the default ring size. The height cap is
+  // generous enough to include the tall gallery thumbnails (164x303), which
+  // are worth outlining; full cards are excluded on width alone (429).
+  var MAX_W = 340, MAX_H = 320;
+
   document.body.classList.add('custom-cursor');
-  var mx = -100, my = -100, rx = -100, ry = -100, visible = false;
-  window.addEventListener('mousemove', function(e){
+
+  var mx = -200, my = -200;          // pointer, exact
+  var rx = mx, ry = my;              // ring, lagging
+  var target = null, radius = '50%', morph = false;
+  var pressing = false, awake = false, idleTimer = null;
+
+  function put(el, x, y, extra){
+    el.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)' + (extra || '');
+  }
+
+  // Sizing is a state change, not an animation, so it is applied here rather
+  // than waited on in the frame loop: the outline is correct on the very first
+  // paint after hover, and it does not depend on rAF running at all.
+  function fit(b){
+    var w = Math.round(b.width + 10) + 'px';
+    if (ring.style.width === w) return;
+    ring.style.width = w;
+    ring.style.height = Math.round(b.height + 10) + 'px';
+    ring.style.borderRadius = radius;
+  }
+
+  function attach(el){
+    var b = el.getBoundingClientRect();
+    if (!b.width) return;
+    target = el;
+    morph  = b.width <= MAX_W && b.height <= MAX_H;
+    var br = getComputedStyle(el).borderRadius;
+    radius = (!br || br === '0px') ? '9px' : br;
+    ring.classList.add('snap');
+    dot.classList.add('quiet');
+    if (morph) fit(b);
+  }
+
+  function detach(){
+    if (!target) return;
+    target = null; morph = false; radius = '50%';
+    ring.classList.remove('snap');
+    ring.style.width = ring.style.height = ring.style.borderRadius = '';
+    dot.classList.remove('quiet');
+  }
+
+  window.addEventListener('pointermove', function(e){
     mx = e.clientX; my = e.clientY;
-    if (!visible){ rx = mx; ry = my; visible = true; dot.style.opacity = ring.style.opacity = ''; }
-    dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
+    if (!awake){ awake = true; rx = mx; ry = my; dot.classList.remove('off'); ring.classList.remove('off'); }
+    put(dot, mx, my);
+    ring.classList.remove('idle');
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){ ring.classList.add('idle'); }, 2200);
   }, {passive:true});
-  document.addEventListener('mouseleave', function(){ visible = false; dot.style.opacity = ring.style.opacity = '0'; });
-  (function loop(){
-    rx += (mx - rx) * .2;
-    ry += (my - ry) * .2;
-    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
-    requestAnimationFrame(loop);
-  })();
-  // grow ring over interactive elements
-  var hoverSel = 'a, button, .shot, label, summary, [role="button"]';
+
   document.addEventListener('mouseover', function(e){
-    if (e.target.closest(hoverSel)) ring.classList.add('hovering');
+    if (e.target.closest(TEXT)){ detach(); dot.classList.add('off'); ring.classList.add('off'); return; }
+    dot.classList.remove('off'); ring.classList.remove('off');
+    var t = e.target.closest(HIT);
+    if (t && t !== target) attach(t);
   });
+  // only let go once the pointer has really left the element, not merely
+  // crossed onto one of its children
   document.addEventListener('mouseout', function(e){
-    if (e.target.closest(hoverSel)) ring.classList.remove('hovering');
+    if (target && !(e.relatedTarget && target.contains(e.relatedTarget))) detach();
   });
-  document.addEventListener('mousedown', function(){ ring.classList.add('pressing'); });
-  document.addEventListener('mouseup', function(){ ring.classList.remove('pressing'); });
+  document.addEventListener('mouseleave', function(){
+    awake = false; dot.classList.add('off'); ring.classList.add('off');
+  });
+  document.addEventListener('mousedown', function(){ pressing = true;  ring.classList.add('press'); });
+  document.addEventListener('mouseup',   function(){ pressing = false; ring.classList.remove('press'); });
+
+  (function frame(){
+    if (target){
+      var b = target.getBoundingClientRect();
+      if (!b.width){ detach(); }                    // filtered out from under us
+      else {
+        if (morph) fit(b);                          // keeps up if it resizes
+        // settle onto the target's centre rather than chasing the pointer
+        rx += (b.left + b.width  / 2 - rx) * .24;
+        ry += (b.top  + b.height / 2 - ry) * .24;
+        put(ring, rx, ry, pressing ? ' scale(.97)' : '');
+      }
+    }
+    if (!target){
+      var vx = mx - rx, vy = my - ry;
+      rx += vx * .17; ry += vy * .17;
+      // squash and stretch straight off the lag vector: the further the ring
+      // is behind the pointer, the more it elongates along that line
+      var k = Math.min(Math.sqrt(vx * vx + vy * vy) / 260, .28);
+      put(ring, rx, ry,
+        ' rotate(' + (Math.atan2(vy, vx) * 180 / Math.PI).toFixed(1) + 'deg)' +
+        ' scale(' + (1 + k).toFixed(3) + ',' + (1 - k).toFixed(3) + ')' +
+        (pressing ? ' scale(.88)' : ''));
+    }
+    requestAnimationFrame(frame);
+  })();
 })();
 
 // Track clicks on the Finance Tracker CTAs as events
