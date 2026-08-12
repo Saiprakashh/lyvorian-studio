@@ -210,6 +210,31 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
   .mobile-menu{display:none}
 }
 
+/* ── "More from the studio" (product pages) ──
+   Lives here rather than in each page's <style> so adding a fifth product
+   means editing markup only, and every product page stays in step. */
+.more-products{margin:64px 0 0;padding:26px 0 0;border-top:1px solid var(--line)}
+/* --muted, not --muted2: at this size --muted2 measures 3.4:1 and misses AA */
+.more-products .mp-label{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
+  text-transform:uppercase;color:var(--muted);margin:0 0 16px}
+.mp-grid{list-style:none;padding:0;margin:0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:620px){.mp-grid{grid-template-columns:1fr}}
+.mp-grid a{display:flex;gap:13px;align-items:flex-start;height:100%;
+  text-decoration:none;color:inherit;background:var(--panel);
+  border:1px solid var(--line);border-radius:14px;padding:14px;
+  transition:border-color .22s,transform .22s cubic-bezier(.16,.8,.28,1),box-shadow .22s}
+.mp-grid a:hover{border-color:var(--gold-dim);transform:translateY(-2px);
+  box-shadow:0 14px 30px -18px rgba(42,32,19,.55)}
+.mp-grid img{width:38px;height:38px;border-radius:10px;flex-shrink:0}
+.mp-grid b{display:block;font-weight:600;color:var(--text);letter-spacing:-.012em}
+.mp-grid .mp-note{display:block;margin-top:3px;color:var(--muted);
+  font-size:13.5px;line-height:1.5}
+.mp-grid .mp-stat{display:block;margin-top:7px;font:var(--t-status);
+  letter-spacing:var(--ls-status);text-transform:uppercase;color:var(--muted)}
+.mp-grid .mp-stat.is-live{color:var(--ok)}
+@media(prefers-reduced-motion:reduce){.mp-grid a:hover{transform:none}}
+
 /* ── theme toggle ──────────────────────────── */
 .theme-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:transparent;
   color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;
