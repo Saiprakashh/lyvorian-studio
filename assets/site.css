@@ -35,17 +35,17 @@
      the two names are kept so intent stays readable at each call site.
      Tokens use the `font` shorthand (weight size/line-height family), so any
      font-style must be declared AFTER the token or the shorthand resets it. */
-  --font-display:'Geist','Geist Fallback','Segoe UI',Arial,sans-serif;
+  --font-display:'Newsreader','Georgia',serif;
   --font-interface:'Geist','Geist Fallback','Segoe UI',Arial,sans-serif;
 
   /* display */
-  --t-hero:600 clamp(2rem,4.2vw,3.25rem)/1.08 var(--font-display);
+  --t-hero:500 clamp(2rem,4.2vw,3.25rem)/1.08 var(--font-display);
   --ls-hero:-.032em;
-  --t-h2:600 clamp(1.5rem,2.5vw,2rem)/1.18 var(--font-display);
+  --t-h2:500 clamp(1.5rem,2.5vw,2rem)/1.18 var(--font-display);
   --ls-h2:-.026em;
-  --t-h3:600 1.25rem/1.3 var(--font-display);
+  --t-h3:500 1.25rem/1.3 var(--font-display);
   --ls-h3:-.021em;
-  --t-quote:450 clamp(1.125rem,1.8vw,1.375rem)/1.55 var(--font-display);
+  --t-quote:500 clamp(1.125rem,1.8vw,1.375rem)/1.55 var(--font-display);
   --ls-quote:-.014em;
 
   /* interface */
