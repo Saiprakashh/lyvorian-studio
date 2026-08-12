@@ -256,8 +256,6 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
    gallery's captions are also .shot span, but they sit on a dark overlay
    where --muted2 is correct and --muted would be unreadable. */
 .wrap .kicker,header .kicker{color:#856010}      /* 4.70:1, was 3.15:1 */
-.stat-row .stat .big{color:#856010}              /* 20px/500 is not large text */
-.stat-row .stat .lbl{color:var(--muted)}         /* --muted2 was 3.42:1 */
 .shots .shot span{color:var(--muted)}            /* strip captions, not the overlay's */
 .log .log-year{color:var(--muted)}               /* --muted2: 3.42 light, 4.40 dark */
 .wrap footer{color:var(--muted)}                 /* every page's copyright line */
@@ -265,11 +263,9 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
 @media(prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .wrap .kicker,
   :root:not([data-theme="light"]) header .kicker{color:var(--gold)}
-  :root:not([data-theme="light"]) .stat-row .stat .big{color:var(--gold)}
 }
 :root[data-theme="dark"] .wrap .kicker,
 :root[data-theme="dark"] header .kicker{color:var(--gold)}
-:root[data-theme="dark"] .stat-row .stat .big{color:var(--gold)}
 
 /* ── "More from the studio" (product pages) ──
    Lives here rather than in each page's <style> so adding a fifth product

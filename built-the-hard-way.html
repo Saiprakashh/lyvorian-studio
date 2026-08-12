@@ -9,7 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260812t"/>
+<link rel="stylesheet" href="assets/site.css?v=20260812u"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/built-the-hard-way.html"/>
 <meta property="og:type" content="article"/>
@@ -73,12 +73,6 @@
   p{color:var(--muted);margin:0 0 18px}
   strong{color:var(--text)}
   em{color:var(--text)}
-  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0}
-  @media(max-width:600px){.stat-row{grid-template-columns:1fr}}
-  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
-  .stat .big{font:var(--t-h3);letter-spacing:var(--ls-h3);font-variant-numeric:tabular-nums;color:var(--gold);display:block}
-  .stat .lbl{font:var(--t-status);letter-spacing:var(--ls-status);
-    text-transform:uppercase;color:var(--muted2);margin-top:6px;display:block}
   blockquote{font-family:var(--font-display);font-style:italic;font-size:20px;line-height:1.6;
     color:var(--text);border-left:3px solid var(--gold);margin:30px 0;padding:6px 0 6px 22px}
   .home-link{display:inline-flex;align-items:center;gap:7px;margin-top:34px;color:var(--muted2);
@@ -132,12 +126,7 @@
   invisible</em>. But the GPU didn't know that: because both bars float over scrolling content, it
   dutifully re-blurred everything behind them on every single frame.</p>
   <p>Removing two lines of decorative CSS — a blur nobody could see — cut the app's CPU use on a
-  real Galaxy S10+ roughly in half:</p>
-  <div class="stat-row">
-    <div class="stat"><span class="big">143% → 76%</span><span class="lbl">App CPU use</span></div>
-    <div class="stat"><span class="big">24% → 7%</span><span class="lbl">GPU driver thread</span></div>
-    <div class="stat"><span class="big">50% → 18%</span><span class="lbl">Janky frames</span></div>
-  </div>
+  real Galaxy S10+ roughly in half, and the dropped frames along with it.</p>
 
   <h2>Finding #2 — the beautiful chart nobody needed</h2>
   <p>The login screen had a live animated candlestick chart. It looked great in screenshots. It also
