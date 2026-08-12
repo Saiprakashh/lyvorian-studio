@@ -199,7 +199,9 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
   .nav-toggle::after,.theme-toggle::after{
     content:'';position:absolute;top:50%;left:50%;translate:-50% -50%;
     width:44px;height:44px}
-  .site-hdr .word{min-height:44px}
+  /* not .site-hdr .word — the homepage's header carries no class, so scoping
+     it that way left the wordmark at 34px on the one page most people land on */
+  .word{min-height:44px}
 }
 
 @media(max-width:820px){
