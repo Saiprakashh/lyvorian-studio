@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Products — everything Lyvorian Studio is building | Lyvorian Studio</title>
+<meta name="description" content="Every Lyvorian Studio product in one place — Finance Tracker, HabitAroha, Fylunor and Medhakeli — with what is available now, in testing, or still being built."/>
+<meta name="theme-color" content="#f2e8d5"/>
+<link rel="manifest" href="site.webmanifest"/>
+<link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
+<script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
+<link rel="stylesheet" href="assets/site.css?v=20260812h"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://lyvorianstudio.co.in/products.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Lyvorian Studio"/>
+<meta property="og:title" content="Products — Lyvorian Studio"/>
+<meta property="og:description" content="Every Lyvorian Studio product in one place, with what is available now, in testing, or still being built."/>
+<meta property="og:url" content="https://lyvorianstudio.co.in/products.html"/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Products — Lyvorian Studio"/>
+<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-image.jpg"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Lyvorian Studio", "item": "https://lyvorianstudio.co.in/"},
+        {"@type": "ListItem", "position": 2, "name": "Products", "item": "https://lyvorianstudio.co.in/products.html"}
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Lyvorian Studio products",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Finance Tracker", "url": "https://lyvorianstudio.co.in/finance-tracker.html"},
+        {"@type": "ListItem", "position": 2, "name": "HabitAroha", "url": "https://lyvorianstudio.co.in/habitaroha.html"},
+        {"@type": "ListItem", "position": 3, "name": "Fylunor", "url": "https://lyvorianstudio.co.in/privacy-fylunor.html"},
+        {"@type": "ListItem", "position": 4, "name": "Medhakeli", "url": "https://lyvorianstudio.co.in/privacy-medhakeli.html"}
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preload" href="assets/fonts/Geist-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:'Geist';font-style:normal;font-weight:100 900;
+    font-display:swap;src:url('assets/fonts/Geist-var.woff2') format('woff2')}
+  /* Fallback metric-matched to Geist (upm 1000, hhea 1005/-295, x-height .530)
+     so the swap to the real font causes no reflow. */
+  @font-face{font-family:'Geist Fallback';src:local('Segoe UI'),local('Arial');
+    size-adjust:106%;ascent-override:100.5%;descent-override:29.5%;line-gap-override:0%}
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--font-interface);-webkit-font-smoothing:antialiased;
+    padding:0 0 90px;overflow-x:hidden}
+  /* the field the glass refracts, same as the homepage */
+  body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(58% 42% at 12% 6%,  rgba(201,143,34,.17), transparent 62%),
+      radial-gradient(48% 38% at 88% 20%, rgba(138,56,56,.14),  transparent 60%),
+      radial-gradient(52% 42% at 74% 72%, rgba(201,143,34,.12), transparent 62%),
+      radial-gradient(46% 36% at 22% 92%, rgba(138,56,56,.10),  transparent 60%)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  .page-head{padding:58px 0 0;text-align:center;max-width:600px;margin:0 auto}
+  .kicker{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
+    text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font:var(--t-h2);letter-spacing:var(--ls-h2);margin:0;line-height:1.15}
+  .sub{color:var(--muted);font:var(--t-body-lg);letter-spacing:var(--ls-body-lg);
+    margin:16px auto 0;text-wrap:pretty}
+
+  /* ── filters ────────────────────────────────
+     They live here rather than on the homepage: filtering belongs where you
+     browse, not on a landing page. */
+  .pfilters{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:38px 0 10px}
+  /* min-height, not just padding: at 11px type the pills measured 31px tall,
+     under the 44px touch target minimum */
+  .pfilter{font:var(--t-status);letter-spacing:var(--ls-status);text-transform:uppercase;
+    color:var(--muted2);cursor:pointer;padding:0 18px;min-height:44px;
+    display:inline-flex;align-items:center;border-radius:100px;
+    background:var(--glass);border:1px solid var(--glass-brd);
+    -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 var(--glass-hi);
+    transition:color .2s,border-color .2s,background .2s,transform .2s}
+  .pfilter:hover{color:var(--text);border-color:var(--gold-dim);transform:translateY(-1px)}
+  .pfilter.on{color:var(--text);border-color:var(--gold-dim);background:var(--glass-strong)}
+  .pfilter .n{opacity:.55;margin-left:7px;font-variant-numeric:tabular-nums}
+  .pcount{text-align:center;font:var(--t-caption);letter-spacing:var(--ls-caption);
+    color:var(--muted2);margin:0 0 34px}
+
+  /* ── grid ───────────────────────────────── */
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+  .pcard{position:relative;display:flex;flex-direction:column;gap:12px;text-align:left;
+    padding:22px 20px;border-radius:22px;overflow:hidden;
+    background:var(--glass-strong);border:1px solid var(--glass-brd);
+    -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+    box-shadow:var(--glass-shd),inset 0 1px 0 var(--glass-hi);
+    transition:border-color .22s,box-shadow .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
+  .pcard::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 42%);z-index:0}
+  .pcard > *{position:relative;z-index:1}
+  .pcard:hover{transform:translateY(-4px);border-color:var(--gold-dim);
+    box-shadow:var(--glass-shd),inset 0 1px 0 var(--glass-hi),0 0 34px -14px rgba(201,143,34,.45)}
+  .pcard.is-wip,.pcard.is-idea{border-style:dashed}
+  .pcard.is-idea{cursor:default}
+  .card-stretch{position:absolute;inset:0;z-index:2;border-radius:inherit}
+  .pcard-foot a,.pcard-foot button{position:relative;z-index:3}
+
+  .pcard-head{display:flex;align-items:center;gap:13px}
+  .pcard-icon{width:46px;height:46px;border-radius:13px;flex-shrink:0;object-fit:cover;
+    box-shadow:0 0 0 1px var(--line)}
+  .tease-icon{background:transparent;border:1.5px dashed var(--line-bright);box-shadow:none;
+    color:var(--gold);display:flex;align-items:center;justify-content:center;
+    font:600 1.1875rem/1 var(--font-display)}
+  .pcard-name{font:var(--t-card-title);letter-spacing:var(--ls-card-title);margin:0 0 5px}
+  .pchip{display:inline-flex;align-items:center;gap:7px;font:var(--t-status);
+    letter-spacing:var(--ls-status);text-transform:uppercase;color:var(--muted2)}
+  .pchip i{width:6px;height:6px;border-radius:50%;background:var(--muted2);flex-shrink:0}
+  .pchip-live{color:var(--ok)} .pchip-live i{background:var(--ok-dot)}
+  .pchip-wip{color:var(--gold)} .pchip-wip i{background:var(--gold)}
+  .stamp{position:absolute;top:18px;right:18px;font:var(--t-status);
+    letter-spacing:var(--ls-status);color:var(--gold);border:1px dashed var(--gold-dim);
+    padding:4px 10px;border-radius:7px;transform:rotate(6deg);opacity:.75;z-index:3}
+
+  .pcard-benefit{color:var(--muted);font:400 .875rem/1.6 var(--font-interface);
+    margin:0;text-wrap:pretty}
+  .pcard-feats{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
+  .pcard-feats li{position:relative;padding-left:18px;color:var(--muted);
+    font:400 .8125rem/1.55 var(--font-interface);text-wrap:pretty}
+  .pcard-feats li::before{content:'';position:absolute;left:4px;top:8px;width:5px;height:5px;
+    border-radius:50%;background:var(--gold);opacity:.65}
+  .pcard-plat{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+  .pcard-plat span{font:var(--t-status);letter-spacing:var(--ls-status);text-transform:uppercase;
+    color:var(--muted2);border:1px solid var(--line);border-radius:7px;padding:4px 8px}
+  .pcard-plat span.plat-live{color:var(--ok);border-color:var(--ok-dot);
+    display:inline-flex;align-items:center;gap:6px}
+  .pcard-plat span.plat-live::before{content:'';width:5px;height:5px;border-radius:50%;
+    background:var(--ok-dot);flex-shrink:0}
+  .pcard-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    margin-top:auto;padding-top:6px}
+  .pcard-go{display:inline-flex;align-items:center;gap:8px;min-height:44px;
+    font:var(--t-button);letter-spacing:var(--ls-button);color:var(--gold);
+    text-decoration:none;transition:color .19s}
+  .pcard-go:hover{color:var(--gold-bright)}
+  .pcard-go svg{transition:transform .19s cubic-bezier(.34,1.56,.64,1)}
+  .pcard-go:hover svg{transform:translateX(3px)}
+  .pcard-2nd{background:none;border:1px solid var(--line);border-radius:10px;
+    color:var(--muted2);padding:0 14px;min-height:44px;cursor:pointer;text-decoration:none;
+    display:inline-flex;align-items:center;justify-content:center;
+    font:500 .8125rem/1 var(--font-interface);transition:border-color .19s,color .19s}
+  .pcard-2nd:hover{border-color:var(--gold-dim);color:var(--text)}
+  .tease-progress{height:3px;border-radius:3px;background:rgba(120,86,32,.15);
+    overflow:hidden;position:relative;margin:2px 0}
+  .tease-progress i{position:absolute;top:0;bottom:0;width:34%;border-radius:3px;
+    background:linear-gradient(90deg,transparent,var(--gold),var(--gold-bright),var(--gold),transparent);
+    animation:labSweep 2.4s cubic-bezier(.45,.05,.55,.95) infinite}
+  @keyframes labSweep{0%{left:-34%}100%{left:100%}}
+
+  /* ── entrance ───────────────────────────────
+     Fast and staggered, done inside half a second. A long intro on the page
+     people came to browse reads as slow, not premium. */
+  @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .pgrid.ready .pcard{animation:cardIn .42s cubic-bezier(.16,.8,.28,1) both}
+
+  /* ── FLIP ───────────────────────────────────
+     Filtering moves cards to their new positions instead of popping them
+     there. JS measures before/after, inverts the delta, then releases it. */
+  .pcard.flip{transition:transform .42s cubic-bezier(.16,.8,.28,1),opacity .3s ease}
+  .pcard.leaving{opacity:0;transform:scale(.94);pointer-events:none}
+  .pcard.entering{opacity:0;transform:scale(.94)}
+
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted2);
+    font:var(--t-body-sm);padding:40px 0}
+
+  .foot-note{text-align:center;margin-top:52px}
+  .home-link{display:inline-flex;align-items:center;gap:7px;color:var(--muted2);
+    text-decoration:none;font:var(--t-button);letter-spacing:var(--ls-button);
+    min-height:44px;padding:0 14px;transition:color .2s}
+  .home-link:hover{color:var(--gold)}
+
+  @media(max-width:1000px){ .pgrid{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:660px){
+    .pgrid{grid-template-columns:1fr;gap:16px}
+    .pcard{padding:20px 18px}
+    .page-head{padding-top:40px}
+    .pfilters{gap:7px;margin-top:30px}
+    .pfilter{padding:0 14px}
+    .pcard-foot{flex-direction:column;align-items:stretch}
+    .pcard-go,.pcard-2nd{justify-content:center;text-align:center}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .pgrid.ready .pcard{animation:none}
+    .pcard.flip{transition:none}
+    .tease-progress i{animation:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="word">
+      <img src="assets/icon-beige-512.png" alt="" class="mark-img" width="32" height="32"/>
+      <span>Lyvorian Studio</span>
+    </a>
+    <nav>
+      <a href="products.html" aria-current="page">Products</a>
+      <a href="index.html#story">About</a>
+      <a href="index.html#roadmap">Roadmap</a>
+      <a href="notes.html">Notes</a>
+      <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
+    </nav>
+    <div class="hdr-right">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><svg class="bars" width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ex" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><svg class="sun" width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.4" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13M12.95 12.95l-1.13-1.13M4.18 4.18L3.05 3.05" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><svg class="moon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.8 9.6A6 6 0 016.4 2.2a6 6 0 107.4 7.4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="main" tabindex="-1">
+  <div class="page-head">
+    <div class="kicker">Our products</div>
+    <h1>Everything Lyvorian is building.</h1>
+    <p class="sub">One primary build at a time — so each of these gets finished properly before
+    the next one starts.</p>
+  </div>
+
+  <div class="pfilters" role="group" aria-label="Filter products by stage">
+    <button type="button" class="pfilter on" data-filter="all" aria-pressed="true">All<span class="n">5</span></button>
+    <button type="button" class="pfilter" data-filter="available" aria-pressed="false">Available<span class="n">1</span></button>
+    <button type="button" class="pfilter" data-filter="testing" aria-pressed="false">Testing<span class="n">2</span></button>
+    <button type="button" class="pfilter" data-filter="development" aria-pressed="false">In development<span class="n">2</span></button>
+    <button type="button" class="pfilter" data-filter="research" aria-pressed="false">Research<span class="n">1</span></button>
+  </div>
+  <p class="pcount" id="pCount" role="status" aria-live="polite">Showing all 5 products</p>
+
+  <div class="pgrid" id="pGrid">
+
+    <article class="pcard" data-status="available development">
+      <a class="card-stretch" href="finance-tracker.html" aria-label="Finance Tracker — full details"></a>
+      <header class="pcard-head">
+        <img class="pcard-icon" src="assets/finance-tracker-icon.webp?v=20260812h" alt="" width="46" height="46"/>
+        <div>
+          <h2 class="pcard-name">Finance Tracker</h2>
+          <span class="pchip pchip-live"><i aria-hidden="true"></i>Available</span>
+        </div>
+      </header>
+      <p class="pcard-benefit">All of your money in one clean app — so you can see where the month
+      actually went.</p>
+      <ul class="pcard-feats">
+        <li>Expenses, income, budgets, goals and bills</li>
+        <li>Bill scanning and confirmed UPI detection</li>
+        <li>Optional trading journal, off by default</li>
+      </ul>
+      <p class="pcard-plat"><span class="plat-live">Web — live</span><span>Android in development</span></p>
+      <div class="pcard-foot">
+        <a class="pcard-go" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">Open the app <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="pcard-2nd" href="finance-tracker.html">Details</a>
+      </div>
+    </article>
+
+    <article class="pcard is-wip" data-status="testing">
+      <span class="stamp">№ 2</span>
+      <a class="card-stretch" href="habitaroha.html" aria-label="HabitAroha — full details"></a>
+      <header class="pcard-head">
+        <img class="pcard-icon" src="assets/habitaroha-icon.webp" alt="" width="46" height="46" loading="lazy"/>
+        <div>
+          <h2 class="pcard-name">HabitAroha</h2>
+          <span class="pchip pchip-wip"><i aria-hidden="true"></i>In testing</span>
+        </div>
+      </header>
+      <p class="pcard-benefit">A calm habit tracker for steady progress rather than streak
+      pressure.</p>
+      <ul class="pcard-feats">
+        <li>Eight habit types and flexible schedules</li>
+        <li>Core tracking works fully offline</li>
+        <li>Habit content encrypted on your device</li>
+      </ul>
+      <div class="tease-progress"><i></i></div>
+      <p class="pcard-plat"><span>Android</span><span>Not yet released</span></p>
+      <div class="pcard-foot">
+        <a class="pcard-go" href="habitaroha.html">View product <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="pcard-2nd" href="privacy-habitaroha.html">Privacy</a>
+      </div>
+    </article>
+
+    <article class="pcard is-wip" data-status="development">
+      <span class="stamp">№ 3</span>
+      <header class="pcard-head">
+        <img class="pcard-icon" src="assets/fylunor-icon.svg" alt="" width="46" height="46" loading="lazy"/>
+        <div>
+          <h2 class="pcard-name">Fylunor</h2>
+          <span class="pchip pchip-wip"><i aria-hidden="true"></i>In development</span>
+        </div>
+      </header>
+      <p class="pcard-benefit">A document workspace that keeps your files where they belong —
+      on your own device.</p>
+      <ul class="pcard-feats">
+        <li>Scanning, OCR and every PDF tool run locally</li>
+        <li>Backup goes to your own Google Drive</li>
+        <li>Editors, templates and folders in one place</li>
+      </ul>
+      <div class="tease-progress"><i></i></div>
+      <p class="pcard-plat"><span>Web</span><span>Not yet released</span></p>
+      <div class="pcard-foot">
+        <a class="pcard-go" href="index.html#roadmap">Follow the roadmap <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="pcard-2nd" href="privacy-fylunor.html">Privacy</a>
+      </div>
+    </article>
+
+    <article class="pcard is-wip" data-status="testing">
+      <span class="stamp">№ 4</span>
+      <header class="pcard-head">
+        <img class="pcard-icon" src="assets/medhakeli-icon.webp" alt="" width="46" height="46" loading="lazy"/>
+        <div>
+          <h2 class="pcard-name">Medhakeli</h2>
+          <span class="pchip pchip-wip"><i aria-hidden="true"></i>In testing</span>
+        </div>
+      </header>
+      <p class="pcard-benefit">A learning game for children aged 2 to 9, built to work anywhere —
+      no account, no network.</p>
+      <ul class="pcard-feats">
+        <li>Works with no account and fully offline</li>
+        <li>Nothing your child makes leaves the device</li>
+        <li>Designed for pre-readers upward</li>
+      </ul>
+      <div class="tease-progress"><i></i></div>
+      <p class="pcard-plat"><span>Android</span><span>Not yet released</span></p>
+      <div class="pcard-foot">
+        <a class="pcard-go" href="index.html#roadmap">Follow the roadmap <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="pcard-2nd" href="privacy-medhakeli.html">Privacy</a>
+      </div>
+    </article>
+
+    <article class="pcard is-idea" data-status="research" aria-label="Fifth product — not yet announced">
+      <span class="stamp">№ 5</span>
+      <header class="pcard-head">
+        <span class="pcard-icon tease-icon" aria-hidden="true"><span id="teaseGlyph">?</span></span>
+        <div>
+          <h2 class="pcard-name">Not yet announced</h2>
+          <span class="pchip"><i aria-hidden="true"></i>Idea stage</span>
+        </div>
+      </header>
+      <p class="pcard-benefit">The fifth product has not been decided. Ideas are studied
+      carefully — and often set aside — long before anything gets built.</p>
+      <p class="pcard-plat"><span>Nothing announced yet</span></p>
+      <div class="pcard-foot">
+        <a class="pcard-go" href="index.html#ideas">Suggest one <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="foot-note">
+    <a class="home-link" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to the studio
+    </a>
+  </div>
+</main>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-label">Lyvorian Studio</div>
+  <a href="products.html">Products</a>
+  <a href="index.html#story">About</a>
+  <a href="index.html#roadmap">Roadmap</a>
+  <a href="notes.html">Notes</a>
+  <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
+</div>
+
+<div class="contact-pop" id="contactPop" role="dialog" aria-label="Contact the studio" aria-hidden="true">
+  <span class="contact-tail"></span>
+  <div class="contact-pop-label">Email the studio</div>
+  <a class="contact-mail" href="mailto:support@lyvorianstudio.co.in">
+    <svg class="cm-icon" width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.4" y="3.2" width="13.2" height="9.6" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2.2 4.6L8 8.7l5.8-4.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="cm-text">support@lyvorianstudio.co.in</span>
+    <svg class="cm-arw" width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
+
+<script src="assets/site.js?v=20260812h" defer></script>
+<script>
+/* Products page behaviour: staggered entrance, then FLIP filtering.
+   Vanilla and self-contained — this page loads no other script. */
+(function(){
+  var grid  = document.getElementById('pGrid');
+  var bar   = document.querySelector('.pfilters');
+  var count = document.getElementById('pCount');
+  if (!grid || !bar) return;
+  var cards  = [].slice.call(grid.querySelectorAll('.pcard'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── entrance: 65ms apart, so five cards are all in inside half a second
+  cards.forEach(function(c, i){ c.style.animationDelay = (i * 65) + 'ms'; });
+  requestAnimationFrame(function(){ grid.classList.add('ready'); });
+
+  function matches(card, key){
+    return key === 'all' || (' ' + card.dataset.status + ' ').indexOf(' ' + key + ' ') > -1;
+  }
+
+  function apply(key){
+    // FLIP — First: where every visible card is right now
+    var first = {};
+    cards.forEach(function(c, i){
+      if (!c.hidden) first[i] = c.getBoundingClientRect();
+    });
+
+    var shown = 0;
+    cards.forEach(function(c){
+      var keep = matches(c, key);
+      c.hidden = !keep;
+      if (keep) shown++;
+    });
+
+    // Last + Invert + Play: measure the new layout, put each card back where
+    // it was with a transform, then release it on the next frame so the
+    // browser animates the gap rather than jumping.
+    if (!reduce){
+      cards.forEach(function(c, i){
+        if (c.hidden) return;
+        var last = c.getBoundingClientRect();
+        var prev = first[i];
+        if (prev){
+          var dx = prev.left - last.left, dy = prev.top - last.top;
+          if (dx || dy){
+            c.classList.remove('flip');
+            c.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+            requestAnimationFrame(function(){
+              c.classList.add('flip');
+              c.style.transform = '';
+            });
+          }
+        } else {
+          // newly revealed: fade up in place rather than sliding from nowhere
+          c.classList.add('entering');
+          requestAnimationFrame(function(){
+            c.classList.add('flip');
+            c.classList.remove('entering');
+          });
+        }
+      });
+    }
+
+    [].forEach.call(bar.querySelectorAll('.pfilter'), function(b){
+      var on = b.dataset.filter === key;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+
+    var label = bar.querySelector('.pfilter.on').firstChild.textContent.trim().toLowerCase()
+                   .replace(/^in\s+/, '');
+    count.textContent = key === 'all'
+      ? 'Showing all ' + shown + ' products'
+      : 'Showing ' + shown + ' ' + (shown === 1 ? 'product' : 'products') + ' in ' + label;
+  }
+
+  bar.addEventListener('click', function(e){
+    var b = e.target.closest('.pfilter');
+    if (b) apply(b.dataset.filter);
+  });
+
+  // the undecided card keeps a pulse of its own
+  var glyph = document.getElementById('teaseGlyph');
+  if (glyph && !reduce){
+    var g = ['?','✦','◇','△'], i = 0;
+    setInterval(function(){
+      glyph.style.transition = 'opacity .3s,transform .3s';
+      glyph.style.opacity = '0'; glyph.style.transform = 'rotate(90deg) scale(.6)';
+      setTimeout(function(){
+        i = (i + 1) % g.length; glyph.textContent = g[i];
+        glyph.style.opacity = '1'; glyph.style.transform = '';
+      }, 300);
+    }, 3400);
+  }
+})();
+</script>
+</body>
+</html>
