@@ -4,18 +4,18 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Finance Tracker — expenses, budgets, goals and bills | Lyvorian Studio</title>
-<meta name="description" content="Finance Tracker keeps expenses, income, budgets, goals and bills in one clean app — with bill scanning and confirmed UPI payment detection. Live on the web, Android coming soon."/>
+<meta name="description" content="Finance Tracker keeps expenses, income, budgets, goals and bills in one clean app — with bill scanning and confirmed UPI payment detection. On Google Play and on the web."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260812v"/>
+<link rel="stylesheet" href="assets/site.css?v=20260819a"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/finance-tracker.html"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Lyvorian Studio"/>
 <meta property="og:title" content="Finance Tracker — all of your money, in one clean app"/>
-<meta property="og:description" content="Expenses, income, budgets, goals and bills in one place — with bill scanning and confirmed UPI payment detection. Live on the web."/>
+<meta property="og:description" content="Expenses, income, budgets, goals and bills in one place — with bill scanning and confirmed UPI payment detection. Now on Google Play."/>
 <meta property="og:url" content="https://lyvorianstudio.co.in/finance-tracker.html"/>
 <meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-finance-tracker.jpg?v=20260812m"/>
 <meta property="og:image:width" content="1200"/>
@@ -31,7 +31,9 @@
   "name": "Finance Tracker",
   "url": "https://lyvorianstudio.co.in/finance-tracker.html",
   "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Web",
+  "operatingSystem": "Android, Web",
+  "installUrl": "https://play.google.com/store/apps/details?id=com.saikumarfinance.app",
+  "downloadUrl": "https://play.google.com/store/apps/details?id=com.saikumarfinance.app",
   "image": "https://lyvorianstudio.co.in/assets/og-finance-tracker.jpg?v=20260812m",
   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
   "publisher": {"@type": "Organization", "name": "Lyvorian Studio", "url": "https://lyvorianstudio.co.in/"},
@@ -88,6 +90,29 @@
   .plat-live::before{background:var(--ok-dot);box-shadow:0 0 6px var(--ok-dot)}
   .plat-wip{color:var(--gold);border-style:dashed;border-color:var(--gold-dim)}
   .plat-wip::before{background:var(--gold-bright);opacity:.75}
+
+  /* ── download row ─────────────────────────────
+     The Play badge is Google's artwork and must not be restyled, recoloured
+     or boxed in, so it sits unadorned and only the hover lift is ours. Its
+     PNG carries Google's required clear space inside the image, which is why
+     the row is centred on the badge's optical edge rather than its bounds. */
+  .dl-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+    gap:10px 18px;margin:30px 0 0}
+  .dl-badge{display:inline-flex;border-radius:12px;transition:transform .3s cubic-bezier(.16,.8,.28,1)}
+  .dl-badge img{display:block;height:58px;width:auto}
+  .dl-badge:hover{transform:translateY(-3px)}
+  .dl-badge:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
+  .dl-alt{display:inline-flex;align-items:center;gap:8px;
+    color:var(--text);text-decoration:none;font:var(--t-button);letter-spacing:var(--ls-button);
+    border:1px solid var(--line-bright);border-radius:100px;padding:13px 22px;min-height:44px;
+    transition:border-color .25s,color .25s,transform .3s cubic-bezier(.16,.8,.28,1)}
+  .dl-alt:hover{color:var(--gold-bright);border-color:var(--gold-dim);transform:translateY(-3px)}
+  .dl-alt svg{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+  .dl-alt:hover svg{transform:translateX(3px)}
+  .dl-note{margin:14px 0 0;color:var(--muted);font:var(--t-body-sm);letter-spacing:var(--ls-body-sm)}
+  @media(prefers-reduced-motion:reduce){
+    .dl-badge:hover,.dl-alt:hover{transform:none}
+  }
 
   .cta{display:inline-flex;align-items:center;gap:9px;margin-top:28px;
     background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:#241a06;
@@ -150,14 +175,32 @@
     <p class="tagline">All of your money in one clean app — salary, groceries, bills, goals, with an optional trading
     journal when you need it.</p>
     <div class="plat-row">
+      <span class="plat plat-live">Android — on Google Play</span>
       <span class="plat plat-live">Web — live now</span>
-      <span class="plat plat-wip">Android — coming soon</span>
     </div>
-    <a class="cta" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">
-      Open Finance Tracker
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
+    <div class="dl-row">
+      <a class="dl-badge" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app"
+         target="_blank" rel="noopener">
+        <img src="assets/google-play-badge.png" alt="Get Finance Tracker on Google Play"
+             width="646" height="250"/>
+      </a>
+      <a class="dl-alt" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">
+        Open the web app
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <p class="dl-note">Free to install, with an optional Pro subscription. One account covers
+    both the app and the web.</p>
   </header>
+
+  <h2>A look at it</h2>
+  <div class="shots">
+    <div class="shot"><img src="assets/shot-dashboard.webp" alt="Finance Tracker dashboard — net worth, budgets and spending at a glance" width="560" height="1037" loading="lazy" decoding="async"/><span>Dashboard</span></div>
+    <div class="shot"><img src="assets/shot-expenses.webp" alt="Finance Tracker expenses screen — categorised spending" width="560" height="1037" loading="lazy" decoding="async"/><span>Expenses</span></div>
+    <div class="shot"><img src="assets/shot-goals.webp" alt="Finance Tracker goals screen — savings goals with progress" width="560" height="1037" loading="lazy" decoding="async"/><span>Goals</span></div>
+    <div class="shot"><img src="assets/shot-charts.webp" alt="Finance Tracker charts screen — spending analytics and trends" width="560" height="1037" loading="lazy" decoding="async"/><span>Charts</span></div>
+    <div class="shot"><img src="assets/shot-bills.webp" alt="Finance Tracker bills screen — upcoming bills and reminders" width="560" height="1037" loading="lazy" decoding="async"/><span>Bills</span></div>
+  </div>
 
   <h2>What it does</h2>
   <ul class="feat">
@@ -170,15 +213,6 @@
     <li><b>Insights</b><span>Charts, reports and comparisons that show where the month actually went.</span></li>
     <li><b>Optional trading journal</b><span>Off by default. Turn it on for trade logs, capital, P&amp;L, win/loss statistics and equity curves — kept separate from everyday finance.</span></li>
   </ul>
-
-  <h2>Screens</h2>
-  <div class="shots">
-    <div class="shot"><img src="assets/shot-dashboard.webp" alt="Finance Tracker dashboard — net worth, budgets and spending at a glance" width="560" height="1037" loading="lazy" decoding="async"/><span>Dashboard</span></div>
-    <div class="shot"><img src="assets/shot-expenses.webp" alt="Finance Tracker expenses screen — categorised spending" width="560" height="1037" loading="lazy" decoding="async"/><span>Expenses</span></div>
-    <div class="shot"><img src="assets/shot-goals.webp" alt="Finance Tracker goals screen — savings goals with progress" width="560" height="1037" loading="lazy" decoding="async"/><span>Goals</span></div>
-    <div class="shot"><img src="assets/shot-charts.webp" alt="Finance Tracker charts screen — spending analytics and trends" width="560" height="1037" loading="lazy" decoding="async"/><span>Charts</span></div>
-    <div class="shot"><img src="assets/shot-bills.webp" alt="Finance Tracker bills screen — upcoming bills and reminders" width="560" height="1037" loading="lazy" decoding="async"/><span>Bills</span></div>
-  </div>
 
   <h2>What it costs</h2>
   <p>Free to use. <strong>Pro</strong> is optional, and priced as it is in the app today:</p>
@@ -213,8 +247,8 @@
 
   <h2>How it's built</h2>
   <p>By one person, by hand, and measured on a real phone rather than assumed. The performance hunt
-  that halved the app's CPU use — and the pretty feature that got deleted instead of optimised — is
-  written up in <a class="inline" href="built-the-hard-way.html">Built the hard way</a>.</p>
+  behind it — including the pretty feature that got deleted instead of optimised — is written up
+  in <a class="inline" href="built-the-hard-way.html">Built the hard way</a>.</p>
 
   <nav class="more-products" aria-labelledby="mp-h">
   <p class="mp-label" id="mp-h">More from the studio</p>
