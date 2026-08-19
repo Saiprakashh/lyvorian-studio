@@ -9,7 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260819d"/>
+<link rel="stylesheet" href="assets/site.css?v=20260819f"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/privacy-medhakeli.html"/>
 <meta name="robots" content="index,follow"/>
@@ -32,17 +32,27 @@
 }
 </script>
 
-<link rel="preload" href="assets/fonts/Geist-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/Newsreader-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Manrope-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/CormorantGaramond-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  @font-face{font-family:'Geist';font-style:normal;font-weight:100 900;
-    font-display:swap;src:url('assets/fonts/Geist-var.woff2') format('woff2')}
-  @font-face{font-family:'Newsreader';font-style:normal;font-weight:500;
-    font-display:swap;src:url('assets/fonts/Newsreader-display.woff2') format('woff2')}
-  /* Fallback metric-matched to Geist (upm 1000, hhea 1005/-295, x-height .530)
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
+    font-display:swap;src:url('assets/fonts/CormorantGaramond-var.woff2') format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  /* the rupee lives only in latin-ext, so it is its own file and is fetched
+     only by the pages that price something */
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
+    font-display:swap;src:url('assets/fonts/CormorantGaramond-var-ext.woff2') format('woff2');
+    unicode-range:U+20B9}
+  @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
+    font-display:swap;src:url('assets/fonts/Manrope-var.woff2') format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
+    font-display:swap;src:url('assets/fonts/Manrope-var-ext.woff2') format('woff2');
+    unicode-range:U+20B9}
+  /* Fallback metric-matched to Manrope (upm 2000, hhea 2132/-600, x-height .540)
      so the swap to the real font causes no reflow. */
-  @font-face{font-family:'Geist Fallback';src:local('Segoe UI'),local('Arial');
-    size-adjust:106%;ascent-override:100.5%;descent-override:29.5%;line-gap-override:0%}
+  @font-face{font-family:'Manrope Fallback';src:local('Segoe UI'),local('Arial');
+    size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
   *{box-sizing:border-box}
   body{margin:0;background:
       radial-gradient(ellipse 65% 40% at 15% -5%, rgba(169,122,31,.10), transparent 60%),
@@ -59,7 +69,7 @@
     padding:clamp(24px,5vw,44px);box-shadow:0 24px 60px -30px rgba(42,32,19,.25)}
   h2{font:var(--t-h3);letter-spacing:var(--ls-h3);margin:34px 0 10px;color:var(--text)}
   h2:first-of-type{margin-top:0}
-  h3{font:600 1rem/1.35 var(--font-display);letter-spacing:-.014em;margin:22px 0 6px;color:var(--text)}
+  h3{font:500 1.0625rem/1.35 var(--font-display);letter-spacing:-.004em;margin:22px 0 6px;color:var(--text)}
   p,li{color:var(--muted)}
   strong{color:var(--text)}
   a{color:var(--gold)}

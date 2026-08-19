@@ -29,26 +29,34 @@
   --glass-strong:rgba(255,253,248,.78);
 
   /* ── typography ─────────────────────────────────────────
-     One family: Geist, a contemporary grotesque built for software UI.
-     Hierarchy comes from weight and tracking rather than size, so the page
-     stays compact and quiet. Display and interface both resolve to Geist;
-     the two names are kept so intent stays readable at each call site.
+     Two families. Cormorant Garamond carries headlines and display text at
+     Regular and Medium; Manrope carries body, buttons and labels at Regular
+     through Bold. It is the same pairing the Finance Tracker app itself uses,
+     so the site and the product now read as one thing.
+
+     Cormorant is a Garamond: small x-height (.386 against Newsreader's .426)
+     and a delicate, high-contrast stroke. Two consequences are baked into the
+     tokens below — display sizes are ~10% larger than the sans-serif era
+     needed to hold the same optical weight, and the tight negative tracking
+     that suited a grotesque is relaxed almost to zero, because cramping a
+     Garamond closes its counters and muddies it.
+
      Tokens use the `font` shorthand (weight size/line-height family), so any
      font-style must be declared AFTER the token or the shorthand resets it. */
-  --font-display:'Newsreader','Georgia',serif;
-  --font-interface:'Geist','Geist Fallback','Segoe UI',Arial,sans-serif;
+  --font-display:'Cormorant Garamond','Georgia',serif;
+  --font-interface:'Manrope','Manrope Fallback','Segoe UI',Arial,sans-serif;
 
-  /* display */
-  --t-hero:500 clamp(2rem,4.2vw,3.25rem)/1.08 var(--font-display);
-  --ls-hero:-.032em;
-  --t-h2:500 clamp(1.5rem,2.5vw,2rem)/1.18 var(--font-display);
-  --ls-h2:-.026em;
-  --t-h3:500 1.25rem/1.3 var(--font-display);
-  --ls-h3:-.021em;
-  --t-quote:500 clamp(1.125rem,1.8vw,1.375rem)/1.55 var(--font-display);
-  --ls-quote:-.014em;
+  /* display — Cormorant Garamond, Regular 400 / Medium 500 */
+  --t-hero:500 clamp(2.25rem,4.7vw,3.6rem)/1.06 var(--font-display);
+  --ls-hero:-.012em;
+  --t-h2:500 clamp(1.65rem,2.8vw,2.2rem)/1.16 var(--font-display);
+  --ls-h2:-.008em;
+  --t-h3:500 1.375rem/1.28 var(--font-display);
+  --ls-h3:-.006em;
+  --t-quote:400 clamp(1.25rem,2vw,1.5rem)/1.5 var(--font-display);
+  --ls-quote:0em;
 
-  /* interface */
+  /* interface — Manrope, Regular 400 / Medium 500 / SemiBold 600 / Bold 700 */
   --t-card-title:600 1.1875rem/1.32 var(--font-interface);
   --ls-card-title:-.018em;
   --t-body-lg:400 1.0625rem/1.62 var(--font-interface);
@@ -59,13 +67,15 @@
   --ls-body-sm:0em;
   --t-eyebrow:600 .6875rem/1.5 var(--font-interface);
   --ls-eyebrow:.12em;
-  --t-button:550 .875rem/1 var(--font-interface);
+  /* 550 and 450 were valid on a 100-900 axis; Manrope is pinned 400-700 here,
+     so these snap to the nearest real weight rather than silently rounding */
+  --t-button:500 .875rem/1 var(--font-interface);
   --ls-button:-.006em;
-  --t-form-label:550 .8125rem/1.4 var(--font-interface);
+  --t-form-label:500 .8125rem/1.4 var(--font-interface);
   --ls-form-label:.01em;
   --t-status:600 .6875rem/1 var(--font-interface);
   --ls-status:.05em;
-  --t-caption:450 .8125rem/1.5 var(--font-interface);
+  --t-caption:400 .8125rem/1.5 var(--font-interface);
   --ls-caption:0em;
 }
 @media(prefers-color-scheme:dark){
@@ -143,7 +153,7 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
   padding:0;text-align:left}
 .site-hdr .hdr-inner{max-width:1120px;margin:0 auto;padding:15px 24px;
   display:flex;align-items:center;justify-content:space-between;gap:16px}
-.site-hdr .word{font:600 1.125rem/1.2 var(--font-display);letter-spacing:-.028em;
+.site-hdr .word{font:500 1.1875rem/1.2 var(--font-display);letter-spacing:-.01em;
   color:var(--text);text-decoration:none;display:flex;align-items:center;gap:11px}
 .site-hdr .mark-img{width:32px;height:32px;border-radius:9px;flex-shrink:0;object-fit:cover;
   box-shadow:0 0 0 1px var(--line),0 6px 18px -8px rgba(42,32,19,.4);
