@@ -9,7 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260819a"/>
+<link rel="stylesheet" href="assets/site.css?v=20260819d"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/products.html"/>
 <meta property="og:type" content="website"/>
@@ -114,6 +114,11 @@
   .pcard.is-wip,.pcard.is-idea{border-style:dashed}
   .pcard.is-idea{cursor:default}
   .card-stretch{position:absolute;inset:0;z-index:2;border-radius:inherit}
+  /* z-index on the FOOT, not just its children. `.pcard > *` above gives every
+     direct child z-index:1, which makes the foot its own stacking context —
+     so a z-index:3 on the links inside it could never rise past the
+     card-stretch overlay at 2, and every action link was swallowed by it. */
+  .pcard-foot{z-index:3}
   .pcard-foot a,.pcard-foot button{position:relative;z-index:3}
 
   .pcard-head{display:flex;align-items:center;gap:13px}
@@ -265,6 +270,7 @@
       <p class="pcard-plat"><span class="plat-live">Android — on Google Play</span><span class="plat-live">Web — live</span></p>
       <div class="pcard-foot">
         <a class="pcard-go" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">Open the app <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="pcard-2nd pcard-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.8 1.6a1 1 0 0 0-.5.9v11a1 1 0 0 0 .5.9l6.2-6.4zM10 7l2.9-3-8.4-4.6a1 1 0 0 0-.4-.1zM10 9l2.9 3-8.4 4.6a1 1 0 0 1-.4.1z" fill="currentColor"/><path d="M13.9 6.3l1.6.9a1 1 0 0 1 0 1.7l-1.6.9L11.3 8z" fill="currentColor"/></svg> Google Play</a>
         <a class="pcard-2nd" href="finance-tracker.html">Details</a>
       </div>
     </article>
