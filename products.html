@@ -9,7 +9,7 @@
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260819f"/>
+<link rel="stylesheet" href="assets/site.css?v=20260819g"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="canonical" href="https://lyvorianstudio.co.in/products.html"/>
 <meta property="og:type" content="website"/>
@@ -154,13 +154,30 @@
     font:400 .8125rem/1.55 var(--font-interface);text-wrap:pretty}
   .pcard-feats li::before{content:'';position:absolute;left:4px;top:8px;width:5px;height:5px;
     border-radius:50%;background:var(--gold);opacity:.65}
-  .pcard-plat{display:flex;flex-wrap:wrap;gap:8px;margin:0}
-  .pcard-plat span{font:var(--t-status);letter-spacing:var(--ls-status);text-transform:uppercase;
-    color:var(--muted2);border:1px solid var(--line);border-radius:7px;padding:4px 8px}
-  .pcard-plat span.plat-live{color:var(--ok);border-color:var(--ok-dot);
-    display:inline-flex;align-items:center;gap:6px}
-  .pcard-plat span.plat-live::before{content:'';width:5px;height:5px;border-radius:50%;
-    background:var(--ok-dot);flex-shrink:0}
+  /* -- platform row -----------------------------
+     One live-state pill and the real Play badge, matched to the same 40px
+     height so they read as a pair rather than two unrelated objects. The
+     badge is Google's artwork: no background, no filter, no recolour, and its
+     built-in clear space left intact -- only the hover lift is ours.
+     z-index sits on the ROW, not just the link: `.pcard > *` makes each direct
+     child its own stacking context, so a z-index on the anchor alone could
+     never rise past the .card-stretch overlay. */
+  .pcard-plat{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0;
+    position:relative;z-index:3}
+  .pcard-plat span{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 15px;
+    border-radius:11px;background:var(--glass);border:1px solid var(--glass-brd);
+    box-shadow:inset 0 1px 0 var(--glass-hi);
+    font:var(--t-status);letter-spacing:var(--ls-status);text-transform:uppercase;
+    color:var(--muted2);white-space:nowrap}
+  .pcard-plat span.plat-live{color:var(--ok);border-color:var(--ok-dot)}
+  .pcard-plat span.plat-live::before{content:'';width:6px;height:6px;border-radius:50%;
+    background:var(--ok-dot);box-shadow:0 0 7px var(--ok-dot);flex-shrink:0}
+  .plat-play{display:inline-flex;border-radius:9px;
+    transition:transform .25s cubic-bezier(.16,.8,.28,1)}
+  .plat-play img{display:block;height:40px;width:auto}
+  .plat-play:hover{transform:translateY(-2px)}
+  .plat-play:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+  @media(prefers-reduced-motion:reduce){.plat-play:hover{transform:none}}
   .pcard-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
     margin-top:auto;padding-top:6px}
   .pcard-go{display:inline-flex;align-items:center;gap:8px;min-height:44px;
@@ -277,10 +294,9 @@
         <li>Bill scanning and confirmed UPI detection</li>
         <li>Optional trading journal, off by default</li>
       </ul>
-      <p class="pcard-plat"><span class="plat-live">Android — on Google Play</span><span class="plat-live">Web — live</span></p>
+      <div class="pcard-plat"><span class="plat-live">Web &mdash; live</span><a class="plat-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app" target="_blank" rel="noopener"><img src="assets/google-play-badge.png" alt="Get Finance Tracker on Google Play" width="646" height="250"/></a></div>
       <div class="pcard-foot">
         <a class="pcard-go" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">Open the app <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="pcard-2nd pcard-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.8 1.6a1 1 0 0 0-.5.9v11a1 1 0 0 0 .5.9l6.2-6.4zM10 7l2.9-3-8.4-4.6a1 1 0 0 0-.4-.1zM10 9l2.9 3-8.4 4.6a1 1 0 0 1-.4.1z" fill="currentColor"/><path d="M13.9 6.3l1.6.9a1 1 0 0 1 0 1.7l-1.6.9L11.3 8z" fill="currentColor"/></svg> Google Play</a>
         <a class="pcard-2nd" href="finance-tracker.html">Details</a>
       </div>
     </article>
