@@ -7,7 +7,7 @@
 <meta name="description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, Fylunor and Medhakeli — private, practical software for everyday life."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260819g"/>
+<link rel="stylesheet" href="assets/site.css?v=20260819h"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -107,7 +107,7 @@
   @font-face{font-family:'Manrope Fallback';src:local('Segoe UI'),local('Arial');
     size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
 </style>
-<link rel="stylesheet" href="assets/home.css?v=20260819g"/>
+<link rel="stylesheet" href="assets/home.css?v=20260819h"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -147,7 +147,8 @@
 </header>
 
 
-<section class="hero" id="main" tabindex="-1">
+<main id="main" tabindex="-1">
+<section class="hero" aria-labelledby="heroTitle">
   <div class="aurora aurora-1"></div>
   <div class="aurora aurora-2"></div>
   <svg class="orbit-svg" viewBox="0 0 800 800" fill="none">
@@ -174,7 +175,7 @@
         <span class="eb-part">Est. 2026</span>
       </span>
     </div>
-    <h1>
+    <h1 id="heroTitle">
       <span class="line"><span>Private, practical software</span></span>
       <span class="line"><span>for <em>everyday</em> life.</span></span>
     </h1>
@@ -214,11 +215,11 @@
       </div>
     </section>
 
-<section id="work">
+<section id="work" aria-labelledby="workTitle">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="sec-eyebrow">Our products</div>
-      <h2 class="sec-title">Thoughtful tools, built for real life.</h2>
+      <h2 class="sec-title" id="workTitle">Thoughtful tools, built for real life.</h2>
       <p class="sec-sub">The two furthest along. The full catalogue — including what is still
       being built — lives on the products page.</p>
     </div>
@@ -294,11 +295,11 @@
   </div>
 </div>
 
-<section class="values">
+<section class="values" aria-labelledby="valuesTitle">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="sec-eyebrow">How we work</div>
-      <h2 class="sec-title">Three rules, no exceptions</h2>
+      <h2 class="sec-title" id="valuesTitle">Three rules, no exceptions</h2>
       <p class="sec-sub">The constraints that shape everything Lyvorian ships.</p>
     </div>
     <div class="value-grid">
@@ -323,7 +324,7 @@
 
 
 
-<section class="story" id="story">
+<section class="story" id="story" aria-label="The philosophy">
   <svg class="orbit-figure" viewBox="0 0 800 800" fill="none">
     <circle class="orbit orbit-a" cx="400" cy="400" r="260"/>
     <circle class="orbit orbit-b" cx="400" cy="400" r="190"/>
@@ -343,46 +344,46 @@
   </div>
 </section>
 
-<section id="roadmap">
+<section id="roadmap" aria-labelledby="roadmapTitle">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="sec-eyebrow">Roadmap</div>
-      <h2 class="sec-title">What's next</h2>
+      <h2 class="sec-title" id="roadmapTitle">What's next</h2>
       <p class="sec-sub">One primary build at a time — here's where the road goes.</p>
     </div>
     <div class="roadmap-list reveal">
       <div class="roadmap-item">
         <span class="roadmap-dot done"></span>
         <div>
-          <h3 class="roadmap-title">Finance Tracker — Web<span class="roadmap-tag">Shipped</span></h3>
+          <p class="roadmap-title">Finance Tracker — Web<span class="roadmap-tag"> Shipped</span></h3>
           <p class="roadmap-desc">Live and growing: expenses, income, budgets, goals, bills, scanning, and a Pro tier.</p>
         </div>
       </div>
       <div class="roadmap-item">
         <span class="roadmap-dot done"></span>
         <div>
-          <h3 class="roadmap-title">Finance Tracker — Android<span class="roadmap-tag">Shipped</span></h3>
+          <p class="roadmap-title">Finance Tracker — Android<span class="roadmap-tag"> Shipped</span></h3>
           <p class="roadmap-desc">Live on Google Play, with the same account and records as the web app.</p>
         </div>
       </div>
       <div class="roadmap-item">
         <span class="roadmap-dot next"></span>
         <div>
-          <h3 class="roadmap-title">HabitAroha — Android<span class="roadmap-tag">In testing</span></h3>
+          <p class="roadmap-title">HabitAroha — Android<span class="roadmap-tag"> In testing</span></h3>
           <p class="roadmap-desc">V1 is built and running on real devices. Going through a full test pass before the Play Store listing goes up.</p>
         </div>
       </div>
       <div class="roadmap-item">
         <span class="roadmap-dot next"></span>
         <div>
-          <h3 class="roadmap-title">Medhakeli — Android<span class="roadmap-tag">In testing</span></h3>
+          <p class="roadmap-title">Medhakeli — Android<span class="roadmap-tag"> In testing</span></h3>
           <p class="roadmap-desc">A learning game for children aged 2 to 9. Built and running offline; going through a full test pass before the Play Store listing.</p>
         </div>
       </div>
       <div class="roadmap-item">
         <span class="roadmap-dot later"></span>
         <div>
-          <h3 class="roadmap-title">Fylunor — Web<span class="roadmap-tag">In development</span></h3>
+          <p class="roadmap-title">Fylunor — Web<span class="roadmap-tag"> In development</span></h3>
           <p class="roadmap-desc">A document workspace where scanning, OCR and every PDF tool run locally. Still being built.</p>
         </div>
       </div>
@@ -392,11 +393,11 @@
 
 
 
-<section class="notes" id="notes">
+<section class="notes" id="notes" aria-labelledby="notesTitle">
   <div class="wrap">
     <div class="sec-head reveal" style="margin-bottom:34px">
       <div class="sec-eyebrow">Studio notes</div>
-      <h2 class="sec-title" style="font-size:clamp(22px,3vw,28px)">Recently, at the workbench</h2>
+      <h2 class="sec-title" id="notesTitle" style="font-size:clamp(22px,3vw,28px)">Recently, at the workbench</h2>
     </div>
     <div class="notes-list reveal">
       <div class="note-item"><span class="note-date">2026 · AUG</span><span>Finance Tracker is on Google Play — product № 1 now installable on Android as well as the web.</span></div>
@@ -413,11 +414,11 @@
   </div>
 </section>
 
-<section id="ideas">
+<section id="ideas" aria-labelledby="ideasTitle">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="sec-eyebrow">Shape what comes next</div>
-      <h2 class="sec-title">Your experience can help make Lyvorian better.</h2>
+      <h2 class="sec-title" id="ideasTitle">Your experience can help make Lyvorian better.</h2>
       <p class="sec-sub">Share a feature idea, report something that feels unclear, or suggest a
       product that could make everyday life easier.</p>
     </div>
@@ -561,8 +562,7 @@
     </div>
   </div>
 </section>
-
-
+</main>
 
 <footer>
   <div class="wrap foot-inner">
