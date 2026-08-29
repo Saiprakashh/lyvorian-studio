@@ -51,36 +51,31 @@
   --glass-strong:rgba(255,253,248,.78);
 
   /* ── typography ─────────────────────────────────────────
-     Three roles, and each one earns its place.
+     Two families. Cormorant Garamond carries headlines and display text at
+     Regular and Medium; Manrope carries body, buttons and labels at Regular
+     through Bold. It is the same pairing the Finance Tracker app itself uses,
+     so the site and the product now read as one thing.
 
-       display   Sora — a geometric grotesk with squared terminals. It reads
-                 engineered rather than friendly, which is the studio's claim.
-                 Deliberately NOT Geist (the shadcn/Vercel default look) and
-                 NOT Plus Jakarta Sans (already the voice of HabitAroha,
-                 Medhakeli and Vaanigo — the products, not the parent).
-       interface Manrope — the reading face. Body, buttons, labels, tables.
-       quote     Cormorant Garamond — editorial moments ONLY: pull quotes and
-                 the philosophy passages. A serif on every heading is what
-                 makes a software site read as a blog.
-
-     Sora x-height .534 sits beside Manrope's .540, so the two mix at the same
-     optical size with no compensation.
+     Cormorant is a Garamond: small x-height (.386 against Newsreader's .426)
+     and a delicate, high-contrast stroke. Two consequences are baked into the
+     tokens below — display sizes are ~10% larger than the sans-serif era
+     needed to hold the same optical weight, and the tight negative tracking
+     that suited a grotesque is relaxed almost to zero, because cramping a
+     Garamond closes its counters and muddies it.
 
      Tokens use the `font` shorthand (weight size/line-height family), so any
      font-style must be declared AFTER the token or the shorthand resets it. */
-  --font-display:'Sora','Manrope Fallback','Segoe UI',Arial,sans-serif;
+  --font-display:'Cormorant Garamond','Georgia',serif;
   --font-interface:'Manrope','Manrope Fallback','Segoe UI',Arial,sans-serif;
-  --font-quote:'Cormorant Garamond','Georgia',serif;
 
-  /* display — editorial scale. The hero is allowed to be genuinely large;
-     everything under it steps down hard so the page has one loud voice. */
-  --t-hero:600 clamp(2.5rem,5vw,4.5rem)/1.03 var(--font-display);
-  --ls-hero:-.035em;
-  --t-h2:600 clamp(1.85rem,3.4vw,2.75rem)/1.1 var(--font-display);
-  --ls-h2:-.028em;
-  --t-h3:600 1.3125rem/1.3 var(--font-display);
-  --ls-h3:-.014em;
-  --t-quote:400 clamp(1.375rem,2.2vw,1.75rem)/1.45 var(--font-quote);
+  /* display — Cormorant Garamond, Regular 400 / Medium 500 */
+  --t-hero:500 clamp(2.25rem,4.7vw,3.6rem)/1.06 var(--font-display);
+  --ls-hero:-.012em;
+  --t-h2:500 clamp(1.65rem,2.8vw,2.2rem)/1.16 var(--font-display);
+  --ls-h2:-.008em;
+  --t-h3:500 1.375rem/1.28 var(--font-display);
+  --ls-h3:-.006em;
+  --t-quote:400 clamp(1.25rem,2vw,1.5rem)/1.5 var(--font-display);
   --ls-quote:0em;
 
   /* interface — Manrope, Regular 400 / Medium 500 / SemiBold 600 / Bold 700 */
@@ -94,6 +89,8 @@
   --ls-body-sm:0em;
   --t-eyebrow:600 .6875rem/1.5 var(--font-interface);
   --ls-eyebrow:.12em;
+  /* 550 and 450 were valid on a 100-900 axis; Manrope is pinned 400-700 here,
+     so these snap to the nearest real weight rather than silently rounding */
   --t-button:500 .875rem/1 var(--font-interface);
   --ls-button:-.006em;
   --t-form-label:500 .8125rem/1.4 var(--font-interface);
@@ -480,6 +477,101 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
 /* ── editorial voice ─────────────────────────
    The serif is allowed here and nowhere else: pull quotes and the philosophy
    passages. Everything structural is set in the grotesk. */
-blockquote,.story blockquote,.uni-sub em,.pull-quote{
+blockquote,.story blockquote,.pull-quote{
   font:var(--t-quote);letter-spacing:var(--ls-quote);font-style:italic;
   color:var(--text);max-width:var(--measure-tight)}
+
+/* ══ Phase 5 — global shell ═══════════════════════════════════════════ */
+
+/* ── nav: one indicator that travels ─────────
+   A single rail slides between items rather than each link owning a border,
+   so the eye tracks one object instead of watching four things blink. It is
+   driven by custom properties set in site.js; with no JS it simply never
+   shows, and the per-link underline still marks the current page. */
+.site-hdr nav,header nav{position:relative}
+.nav-rail{position:absolute;left:0;top:50%;height:32px;width:var(--rail-w,0);
+  transform:translate(var(--rail-x,0),-50%);border-radius:var(--r-sm);
+  background:var(--glass-strong);border:1px solid var(--glass-brd);
+  opacity:0;pointer-events:none;z-index:0;
+  transition:transform var(--t-ui) var(--e-inout),width var(--t-ui) var(--e-inout),
+             opacity var(--t-quick) var(--e-out)}
+.nav-rail.on{opacity:1}
+nav a{position:relative;z-index:1}
+
+/* the header tightens on scroll — once, subtly, not on every pixel */
+header.site-hdr,body > header{transition:padding var(--t-panel) var(--e-inout),
+  background var(--t-panel) var(--e-inout)}
+.hdr-inner{transition:padding var(--t-panel) var(--e-inout)}
+.is-scrolled .hdr-inner{padding-top:10px;padding-bottom:10px}
+
+/* ── mobile menu as a sheet ──────────────────
+   Full-width, anchored to the bottom on phones so it opens under the thumb
+   rather than out of reach at the top. */
+.mobile-menu{gap:var(--sp-5);padding:var(--sp-5) var(--sp-5) var(--sp-6)}
+.mm-head{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-4);
+  padding-bottom:var(--sp-4);border-bottom:1px solid var(--line)}
+.mm-label{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
+  text-transform:uppercase;color:var(--muted2);padding:0}
+.mm-status{display:inline-flex;align-items:center;gap:7px;color:var(--muted);
+  font:var(--t-status);letter-spacing:var(--ls-status);text-transform:uppercase}
+.mm-status i{width:6px;height:6px;border-radius:50%;background:var(--ok-dot);
+  box-shadow:0 0 7px var(--ok-dot);flex-shrink:0}
+.mm-nav{display:flex;flex-direction:column}
+.mm-nav a{display:flex;flex-direction:column;gap:2px;padding:var(--sp-3) var(--sp-2);
+  border-radius:var(--r-md);text-decoration:none;color:var(--text)}
+.mm-nav a span{font:600 1.25rem/1.25 var(--font-interface);letter-spacing:-.02em}
+.mm-nav a em{font-style:normal;color:var(--muted2);
+  font:var(--t-body-sm);letter-spacing:var(--ls-body-sm)}
+.mm-cap{display:block;margin-bottom:var(--sp-2);color:var(--muted2);
+  font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);text-transform:uppercase}
+.mm-chips{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.mm-chips a{padding:9px 13px;border-radius:var(--r-pill);text-decoration:none;
+  color:var(--muted);border:1px solid var(--line);font:var(--t-body-sm)}
+.mm-mail{display:inline-flex;align-items:center;gap:9px;min-height:44px;
+  color:var(--muted);text-decoration:none;font:var(--t-body-sm)}
+@media (hover:hover) and (pointer:fine){
+  .mm-nav a:hover{background:var(--glass);color:var(--gold-bright)}
+  .mm-chips a:hover,.mm-mail:hover{color:var(--text);border-color:var(--gold-dim)}
+}
+
+/* ── footer ──────────────────────────────────
+   The wordmark is the ending, set in the display face and clipped to the
+   container so it reads as a printed mark rather than a heading. */
+.site-foot{margin-top:var(--sp-9);padding:var(--sp-8) 0 var(--sp-6);
+  border-top:1px solid var(--line)}
+.foot-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+  gap:var(--sp-7);align-items:start}
+.foot-line{margin:0 0 var(--sp-3);color:var(--text);max-width:26ch;
+  font:var(--t-body-lg);letter-spacing:var(--ls-body-lg)}
+.foot-mail{color:var(--gold);text-decoration:none;font:var(--t-body-sm);
+  border-bottom:1px solid var(--line-bright);padding-bottom:2px}
+.foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
+.foot-cols div{display:flex;flex-direction:column;gap:10px}
+.foot-cap{color:var(--muted2);font:var(--t-eyebrow);
+  letter-spacing:var(--ls-eyebrow);text-transform:uppercase;margin-bottom:2px}
+.foot-cols a{color:var(--muted);text-decoration:none;font:var(--t-body-sm);
+  width:fit-content}
+.foot-mark{margin:var(--sp-8) 0 var(--sp-5);color:var(--text);opacity:.07;
+  font-family:var(--font-display);font-weight:500;line-height:.82;
+  font-size:clamp(4rem,15.5vw,13rem);letter-spacing:-.04em;
+  text-align:center;user-select:none;overflow:hidden}
+.foot-base{display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-5);
+  align-items:center;justify-content:space-between;
+  padding-top:var(--sp-4);border-top:1px solid var(--line);
+  color:var(--muted2);font:var(--t-caption);letter-spacing:var(--ls-caption)}
+.foot-live{display:inline-flex;align-items:center;gap:7px;color:var(--ok)}
+.foot-live i{width:6px;height:6px;border-radius:50%;background:var(--ok-dot);
+  box-shadow:0 0 7px var(--ok-dot)}
+@media (hover:hover) and (pointer:fine){
+  .foot-cols a:hover,.foot-mail:hover{color:var(--gold-bright)}
+}
+@media(max-width:940px){
+  .foot-top{grid-template-columns:1fr;gap:var(--sp-6)}
+  .foot-cols{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .foot-cols{grid-template-columns:1fr;gap:var(--sp-5)}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-rail{transition:opacity var(--t-quick) linear}
+}

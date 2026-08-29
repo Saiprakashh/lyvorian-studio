@@ -118,6 +118,52 @@
     }
   }
 
+  // ── nav indicator ───────────────────────────
+  // One rail that travels between items. It parks on the current page's link
+  // and follows the pointer while the nav is hovered, then returns. Fine
+  // pointers only: on touch there is no hover to follow, and a rail that
+  // jumps on tap would read as a glitch.
+  (function(){
+    var nav = document.querySelector('.site-hdr nav, header nav');
+    if (!nav) return;
+    var rail = nav.querySelector('.nav-rail');
+    if (!rail) return;
+    var links = [].slice.call(nav.querySelectorAll('a'));
+    if (!links.length) return;
+
+    function park(el){
+      if (!el) { rail.classList.remove('on'); return; }
+      var n = nav.getBoundingClientRect(), b = el.getBoundingClientRect();
+      rail.style.setProperty('--rail-x', (b.left - n.left - 10) + 'px');
+      rail.style.setProperty('--rail-w', (b.width + 20) + 'px');
+      rail.classList.add('on');
+    }
+    var current = nav.querySelector('a[aria-current]');
+    var home = function(){ park(current); };
+
+    if (window.matchMedia('(pointer: fine)').matches){
+      links.forEach(function(a){ a.addEventListener('pointerenter', function(){ park(a); }); });
+      nav.addEventListener('pointerleave', home);
+    }
+    home();
+    addEventListener('resize', home, {passive:true});
+  })();
+
+  // ── header compaction ───────────────────────
+  // A single class flip past a threshold, with hysteresis, so a header does
+  // not oscillate when the user rests near the boundary.
+  (function(){
+    var root = document.documentElement, on = false, raf = 0;
+    function check(){
+      raf = 0;
+      var y = scrollY;
+      if (!on && y > 72){ on = true; root.classList.add('is-scrolled'); }
+      else if (on && y < 40){ on = false; root.classList.remove('is-scrolled'); }
+    }
+    addEventListener('scroll', function(){ if (!raf) raf = requestAnimationFrame(check); }, {passive:true});
+    check();
+  })();
+
   // ── service worker ─────────────────────────
   // Makes the site a real installable PWA, so Android mints a proper
   // current-SDK web app instead of a legacy shortcut APK that Play
