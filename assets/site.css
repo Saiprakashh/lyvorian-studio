@@ -3,12 +3,34 @@
 
 :root{
   --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
-  --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
+  --line:rgba(var(--shadow-rgb),.18); --line-bright:rgba(var(--shadow-rgb),.42);
   --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
   --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
   --maroon:#8a3838; --ok:#3b7a4f; --ok-dot:#5da271;
   --hdr:rgba(242,232,213,.75);
   --r:16px;
+
+  /* Decorative tints. Every gradient, glow and ember reads these rather than
+     a literal, so a theme can retune the whole decorative layer at once.
+     Stored as bare channels so they can be used inside rgba(). */
+  --tint-rgb:201,143,34;      /* the gold */
+  --tint-hi-rgb:240,203,126;  /* its highlight */
+  --tint-2-rgb:138,56,56;     /* the maroon counterpoint */
+  --shadow-rgb:42,32,19;
+
+  /* ── motion ──────────────────────────────────────────────
+     One scale, so nothing on the site invents its own timing. Values follow
+     the durations that read as responsive rather than decorative: UI motion
+     stays under 300ms, entrances ease out hard, and nothing uses ease-in,
+     which drags at the start of a movement. Only transform and opacity are
+     animated — anything touching layout costs a reflow per frame. */
+  --e-out:cubic-bezier(.23,1,.32,1);       /* entrances, feedback */
+  --e-inout:cubic-bezier(.77,0,.175,1);    /* movement across the screen */
+  --t-press:120ms;    /* button press */
+  --t-quick:180ms;    /* tooltips, chips */
+  --t-ui:240ms;       /* dropdowns, cards */
+  --t-panel:320ms;    /* panels and overlays */
+  --stagger:55ms;     /* between items in a list */
 
   /* ── glass ─────────────────────────────────────────────────────────
      Frosted surfaces only work when there is something behind them worth
@@ -24,7 +46,7 @@
   --glass:rgba(255,252,245,.62);
   --glass-brd:rgba(255,255,255,.75);
   --glass-hi:rgba(255,255,255,.9);
-  --glass-shd:0 18px 44px -20px rgba(120,86,32,.3);
+  --glass-shd:0 18px 44px -20px rgba(var(--shadow-rgb),.3);
   --glass-blur:blur(18px) saturate(150%);
   --glass-strong:rgba(255,253,248,.78);
 
@@ -80,25 +102,32 @@
 }
 @media(prefers-color-scheme:dark){
   :root:not([data-theme]){
-    --bg:#191410; --bg2:#211a13; --panel:#251e15;
-    --line:rgba(201,143,34,.16); --line-bright:rgba(201,143,34,.4);
-    --text:#f0e7d6; --muted:#b3a488; --muted2:#8c7a5c;
-    --gold:#c98f22; --gold-bright:#e6b354; --gold-dim:#8a6a2e;
+    --bg:#212327; --bg2:#2b2d31; --panel:#2b2d31;
+    --line:rgba(255,255,255,.09); --line-bright:rgba(255,255,255,.20);
+    --text:#f4f4f5; --muted:#a9adb5; --muted2:#989ea9;
+    /* no gold in dark: the accent is light, not warm. --gold* are kept as
+       names so every existing rule keeps working, remapped to neutrals. */
+    --gold:#e8e9ec; --gold-bright:#ffffff; --gold-dim:rgba(255,255,255,.34);
     --ok:#8fe09f; --ok-dot:#8fe09f;
-    --hdr:rgba(25,20,16,.78);
-    /* on dark, glass is a LIGHT tint at low alpha — tinting it dark would
-       read as a hole in the page rather than a pane above it */
-    --glass:rgba(255,246,230,.055);
-    --glass-brd:rgba(255,240,214,.14);
-    --glass-hi:rgba(255,246,230,.2);
-    --glass-shd:0 20px 50px -24px rgba(0,0,0,.75);
-    --glass-blur:blur(18px) saturate(150%);
-    --glass-strong:rgba(255,246,230,.085);
+    --hdr:rgba(33,35,39,.82);
+    /* charcoal has no warmth to reinforce: the decorative layer goes neutral,
+       with a faint cool counterpoint instead of the maroon */
+    --tint-rgb:255,255,255;
+    --tint-hi-rgb:255,255,255;
+    --tint-2-rgb:150,160,180;
+    --shadow-rgb:0,0,0;
+    /* glass on charcoal is a cool light tint, not a warm one */
+    --glass:rgba(255,255,255,.045);
+    --glass-brd:rgba(255,255,255,.10);
+    --glass-hi:rgba(255,255,255,.14);
+    --glass-shd:0 20px 50px -24px rgba(0,0,0,.8);
+    --glass-blur:blur(18px) saturate(120%);
+    --glass-strong:rgba(255,255,255,.07);
   }
 }
 :root[data-theme="light"]{
   --bg:#f2e8d5; --bg2:#ecdfc4; --panel:#faf3e3;
-  --line:rgba(120,86,32,.18); --line-bright:rgba(120,86,32,.42);
+  --line:rgba(var(--shadow-rgb),.18); --line-bright:rgba(var(--shadow-rgb),.42);
   --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
   --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
   --ok:#3b7a4f; --ok-dot:#5da271;
@@ -106,21 +135,31 @@
   --glass:rgba(255,252,245,.62);
   --glass-brd:rgba(255,255,255,.75);
   --glass-hi:rgba(255,255,255,.9);
-  --glass-shd:0 18px 44px -20px rgba(120,86,32,.3);
+  --glass-shd:0 18px 44px -20px rgba(var(--shadow-rgb),.3);
   --glass-strong:rgba(255,253,248,.78);
 }
 :root[data-theme="dark"]{
-  --glass:rgba(255,246,230,.055);
-  --glass-brd:rgba(255,240,214,.14);
-  --glass-hi:rgba(255,246,230,.2);
-  --glass-shd:0 20px 50px -24px rgba(0,0,0,.75);
-  --glass-strong:rgba(255,246,230,.085);
-  --bg:#191410; --bg2:#211a13; --panel:#251e15;
-  --line:rgba(201,143,34,.16); --line-bright:rgba(201,143,34,.4);
-  --text:#f0e7d6; --muted:#b3a488; --muted2:#8c7a5c;
-  --gold:#c98f22; --gold-bright:#e6b354; --gold-dim:#8a6a2e;
-  --ok:#8fe09f; --ok-dot:#8fe09f;
-  --hdr:rgba(25,20,16,.78);
+    --bg:#212327; --bg2:#2b2d31; --panel:#2b2d31;
+    --line:rgba(255,255,255,.09); --line-bright:rgba(255,255,255,.20);
+    --text:#f4f4f5; --muted:#a9adb5; --muted2:#989ea9;
+    /* no gold in dark: the accent is light, not warm. --gold* are kept as
+       names so every existing rule keeps working, remapped to neutrals. */
+    --gold:#e8e9ec; --gold-bright:#ffffff; --gold-dim:rgba(255,255,255,.34);
+    --ok:#8fe09f; --ok-dot:#8fe09f;
+    --hdr:rgba(33,35,39,.82);
+    /* charcoal has no warmth to reinforce: the decorative layer goes neutral,
+       with a faint cool counterpoint instead of the maroon */
+    --tint-rgb:255,255,255;
+    --tint-hi-rgb:255,255,255;
+    --tint-2-rgb:150,160,180;
+    --shadow-rgb:0,0,0;
+    /* glass on charcoal is a cool light tint, not a warm one */
+    --glass:rgba(255,255,255,.045);
+    --glass-brd:rgba(255,255,255,.10);
+    --glass-hi:rgba(255,255,255,.14);
+    --glass-shd:0 20px 50px -24px rgba(0,0,0,.8);
+    --glass-blur:blur(18px) saturate(120%);
+    --glass-strong:rgba(255,255,255,.07);
 }
 
 
@@ -156,7 +195,7 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
 .site-hdr .word{font:500 1.1875rem/1.2 var(--font-display);letter-spacing:-.01em;
   color:var(--text);text-decoration:none;display:flex;align-items:center;gap:11px}
 .site-hdr .mark-img{width:32px;height:32px;border-radius:9px;flex-shrink:0;object-fit:cover;
-  box-shadow:0 0 0 1px var(--line),0 6px 18px -8px rgba(42,32,19,.4);
+  box-shadow:0 0 0 1px var(--line),0 6px 18px -8px rgba(var(--shadow-rgb),.4);
   transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
 .site-hdr .word:hover .mark-img{transform:scale(1.08) rotate(-6deg)}
 /* not scoped to .site-hdr — the homepage header uses this too */
@@ -185,7 +224,7 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
 
 .mobile-menu{position:fixed;left:12px;right:12px;z-index:250;
   background:var(--panel);border:1px solid var(--line-bright);border-radius:16px;
-  box-shadow:0 26px 60px -22px rgba(42,32,19,.5);padding:10px;
+  box-shadow:0 26px 60px -22px rgba(var(--shadow-rgb),.5);padding:10px;
   display:flex;flex-direction:column;
   opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;
   transition:opacity .24s cubic-bezier(.16,.8,.28,1),transform .24s cubic-bezier(.16,.8,.28,1)}
@@ -193,7 +232,7 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
 .mobile-menu a{color:var(--text);text-decoration:none;
   font:550 clamp(1.25rem,4.6vw,1.4375rem)/1.3 var(--font-interface);letter-spacing:-.024em;
   padding:11px 15px;border-radius:11px;transition:background .2s,color .2s}
-.mobile-menu a:hover,.mobile-menu a:focus-visible{background:rgba(201,151,58,.12);color:var(--gold-bright)}
+.mobile-menu a:hover,.mobile-menu a:focus-visible{background:rgba(var(--tint-rgb),.12);color:var(--gold-bright)}
 .mobile-menu a[aria-current]{color:var(--gold)}
 .mobile-menu .mm-label{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);
   text-transform:uppercase;color:var(--muted2);padding:14px 15px 5px}
@@ -294,7 +333,7 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
   border:1px solid var(--line);border-radius:14px;padding:14px;
   transition:border-color .22s,transform .22s cubic-bezier(.16,.8,.28,1),box-shadow .22s}
 .mp-grid a:hover{border-color:var(--gold-dim);transform:translateY(-2px);
-  box-shadow:0 14px 30px -18px rgba(42,32,19,.55)}
+  box-shadow:0 14px 30px -18px rgba(var(--shadow-rgb),.55)}
 .mp-grid img{width:38px;height:38px;border-radius:10px;flex-shrink:0}
 .mp-grid b{display:block;font-weight:600;color:var(--text);letter-spacing:-.012em}
 .mp-grid .mp-note{display:block;margin-top:3px;color:var(--muted);
@@ -320,10 +359,10 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
 /* ── contact popover ───────────────────────── */
 .contact-pop{position:fixed;top:0;left:0;z-index:300;width:max-content;max-width:calc(100vw - 24px);
   background:
-    linear-gradient(160deg,rgba(201,151,58,.10),transparent 42%),
+    linear-gradient(160deg,rgba(var(--tint-rgb),.10),transparent 42%),
     var(--panel);
   border:1px solid var(--line-bright);border-radius:15px;padding:14px;
-  box-shadow:0 24px 54px -20px rgba(42,32,19,.5);
+  box-shadow:0 24px 54px -20px rgba(var(--shadow-rgb),.5);
   display:flex;flex-direction:column;gap:9px;
   opacity:0;transform:translateY(-6px) scale(.97);pointer-events:none;transform-origin:top center;
   transition:opacity .22s cubic-bezier(.16,.8,.28,1),transform .22s cubic-bezier(.16,.8,.28,1)}
@@ -338,10 +377,10 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
 .contact-mail{display:flex;align-items:center;gap:10px;text-decoration:none;
   font:500 clamp(.875rem,3.2vw,.9375rem)/1.4 var(--font-interface);letter-spacing:-.004em;
   color:var(--gold-bright);
-  padding:11px 13px;border-radius:11px;background:rgba(201,151,58,.09);
+  padding:11px 13px;border-radius:11px;background:rgba(var(--tint-rgb),.09);
   border:1px solid transparent;
   transition:background .22s,border-color .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
-.contact-mail:hover,.contact-mail:focus-visible{background:rgba(201,151,58,.17);border-color:var(--gold-dim);transform:translateX(2px)}
+.contact-mail:hover,.contact-mail:focus-visible{background:rgba(var(--tint-rgb),.17);border-color:var(--gold-dim);transform:translateX(2px)}
 .cm-icon{flex-shrink:0;opacity:.75}
 .cm-text{white-space:nowrap}
 .cm-arw{flex-shrink:0;margin-left:6px;opacity:0;transform:translateX(-4px);
@@ -378,4 +417,17 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
     transition-duration:.01ms!important;scroll-behavior:auto!important}
   .reveal{opacity:1;transform:none}
   .theme-toggle:hover{transform:none}
+}
+
+/* ── press feedback, site-wide ───────────────
+   A control that moves under the finger feels connected to the tap. Gated on
+   fine pointers with hover, so touch devices never get a stuck hover state. */
+@media (hover:hover) and (pointer:fine){
+  .btn,.pcard-go,.pcard-2nd,.btn-preview,.cta,.dl-alt,.pfilter{
+    transition:transform var(--t-press) var(--e-out),
+               color var(--t-ui) var(--e-out),
+               border-color var(--t-ui) var(--e-out),
+               background var(--t-ui) var(--e-out)}
+  .btn:active,.pcard-go:active,.pcard-2nd:active,.btn-preview:active,
+  .cta:active,.dl-alt:active,.pfilter:active{transform:scale(.97)}
 }

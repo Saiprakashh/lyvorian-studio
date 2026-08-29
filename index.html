@@ -7,7 +7,7 @@
 <meta name="description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, Fylunor and Medhakeli — private, practical software for everyday life."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260819h"/>
+<link rel="stylesheet" href="assets/site.css?v=20260829e"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -107,7 +107,7 @@
   @font-face{font-family:'Manrope Fallback';src:local('Segoe UI'),local('Arial');
     size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
 </style>
-<link rel="stylesheet" href="assets/home.css?v=20260819h"/>
+<link rel="stylesheet" href="assets/home.css?v=20260829e"/>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -165,6 +165,8 @@
   <div id="embers"></div>
 
   <div class="wrap hero-content">
+    <div class="hero-grid">
+    <div class="hero-copy">
     <div class="eyebrow">
       <span class="rule"></span>
       <span class="label">
@@ -183,37 +185,30 @@
     simpler, clearer, and more meaningful.</p>
     <p class="lede-sub">Built carefully. Privacy explained plainly. No unnecessary complexity.</p>
 
-    <section class="universe" aria-labelledby="uniTitle">
-      <div class="uni-msg">
-        <p class="uni-eyebrow">The Lyvorian universe</p>
-        <h2 class="uni-title" id="uniTitle">One studio. A growing family of thoughtful products.</h2>
-        <p class="uni-sub">Each product begins with a real everyday need and is shaped through careful
-        design, testing, privacy, and long-term refinement.</p>
-        <a href="products.html" class="btn btn-gold uni-cta">Explore All Products
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="#1a1206" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
+    <div class="hero-cta">
+      <a href="products.html" class="btn btn-gold">See the products
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#story" class="btn btn-ghost">Why we build this way</a>
+    </div>
+    </div>
 
-      <div class="uni-orbit">
-        <div class="orb-stage">
-          <svg class="orb-rings" viewBox="0 0 300 300" fill="none" aria-hidden="true">
-            <circle cx="150" cy="150" r="118" stroke="currentColor" stroke-width="1"/>
-            <circle cx="150" cy="150" r="78" stroke="currentColor" stroke-width="1" stroke-dasharray="3 7"/>
-          </svg>
-          <div class="orb-core" aria-hidden="true">
-            <img src="assets/icon-beige-512.png" alt="" width="34" height="34"/>
-            <span>Lyvorian</span>
-          </div>
-        <button type="button" class="orb-node n1" data-desc="Products currently ready to explore." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Available</span></button>
-        <button type="button" class="orb-node n2" data-desc="Products being refined on real devices." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Testing</span></button>
-        <button type="button" class="orb-node n3" data-desc="Being built now, one at a time." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">In development</span></button>
-        <button type="button" class="orb-node n4" data-desc="Ideas being studied before development." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Research</span></button>
-        <button type="button" class="orb-node n5" data-desc="Planned, waiting their turn." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Future</span></button>
-        <button type="button" class="orb-node n6" data-desc="Where everything starts." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">New ideas</span></button>
-        </div>
-        <p class="orb-readout" id="orbReadout" role="status" aria-live="polite">Select a stage to see what it means.</p>
+    <div class="hero-showcase" aria-hidden="true">
+      <div class="dev-stack" id="devStack">
+        <figure class="dev dev-3"><img src="assets/shot-goals.webp" alt="" width="560" height="1120" loading="lazy" decoding="async"/></figure>
+        <figure class="dev dev-2"><img src="assets/shot-expenses.webp" alt="" width="560" height="1120" loading="lazy" decoding="async"/></figure>
+        <figure class="dev dev-1">
+          <img src="assets/shot-dashboard.webp" alt="" width="560" height="1120" decoding="async"/>
+          <span class="dev-glare"></span>
+        </figure>
+        <span class="dev-chip">
+          <img src="assets/finance-tracker-icon.webp?v=20260819c" alt="" width="30" height="30"/>
+          <span><b>Finance Tracker</b><i>Live on Google Play</i></span>
+        </span>
       </div>
-    </section>
+    </div>
+    </div>
+
 
 <section id="work" aria-labelledby="workTitle">
   <div class="wrap">
@@ -275,18 +270,95 @@
         </div>
       </article>
 
+      <article class="pcard is-wip reveal reveal-2" data-status="development">
+        <span class="tease-stamp">&#8470; 3</span>
+        <a class="card-stretch" href="fylunor.html" aria-label="Fylunor — full details"></a>
+        <header class="pcard-head">
+          <img class="pcard-icon" src="assets/fylunor-icon.svg" alt="" width="46" height="46" loading="lazy"/>
+          <div>
+            <h3 class="pcard-name">Fylunor</h3>
+            <span class="pchip pchip-wip"><i aria-hidden="true"></i>In development</span>
+          </div>
+          <svg class="pcard-arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </header>
+        <p class="pcard-benefit">A document workspace that keeps your files where they belong &mdash; on your own device.</p>
+        <ul class="pcard-feats">
+          <li>Scanning, text recognition and a full PDF toolkit</li>
+          <li>Every tool runs locally, not on a server</li>
+          <li>An encrypted vault only you can open</li>
+        </ul>
+        <div class="tease-progress"><i></i></div>
+        <p class="pcard-plat"><span>Web</span><span>Not yet released</span></p>
+        <div class="pcard-foot">
+          <a class="pcard-go" href="fylunor.html">View product <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
+      <article class="pcard is-wip reveal reveal-3" data-status="testing">
+        <span class="tease-stamp">&#8470; 4</span>
+        <a class="card-stretch" href="medhakeli.html" aria-label="Medhakeli — full details"></a>
+        <header class="pcard-head">
+          <img class="pcard-icon" src="assets/medhakeli-icon.webp" alt="" width="46" height="46" loading="lazy"/>
+          <div>
+            <h3 class="pcard-name">Medhakeli</h3>
+            <span class="pchip pchip-wip"><i aria-hidden="true"></i>Testing</span>
+          </div>
+          <svg class="pcard-arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </header>
+        <p class="pcard-benefit">A learning game for children aged 2 to 9, built to be the opposite of most children&rsquo;s apps.</p>
+        <ul class="pcard-feats">
+          <li>No account and no network connection</li>
+          <li>No advertising and no tracking profile</li>
+          <li>Drawings never leave the device</li>
+        </ul>
+        <div class="tease-progress"><i></i></div>
+        <p class="pcard-plat"><span>Android</span><span>Not yet released</span></p>
+        <div class="pcard-foot">
+          <a class="pcard-go" href="medhakeli.html">View product <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </article>
+
     </div>
 
     <div class="products-more reveal">
-      <a class="btn btn-ghost" href="products.html">See all 5 products
+      <a class="btn btn-ghost" href="products.html">Browse the catalogue
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <p>Fylunor, Medhakeli and what comes after them.</p>
+      <p>Filter by stage, and see what is still only an idea.</p>
     </div>
   </div>
 </section>
   </div>
 </section>
+
+<section class="universe" aria-labelledby="uniTitle">
+    <div class="uni-msg">
+      <p class="uni-eyebrow">The Lyvorian universe</p>
+      <h2 class="uni-title" id="uniTitle">One studio. A growing family of thoughtful products.</h2>
+      <p class="uni-sub">Each product begins with a real everyday need and is shaped through careful
+      design, testing, privacy, and long-term refinement.</p>
+    </div>
+
+    <div class="uni-orbit">
+      <div class="orb-stage">
+        <svg class="orb-rings" viewBox="0 0 300 300" fill="none" aria-hidden="true">
+          <circle cx="150" cy="150" r="118" stroke="currentColor" stroke-width="1"/>
+          <circle cx="150" cy="150" r="78" stroke="currentColor" stroke-width="1" stroke-dasharray="3 7"/>
+        </svg>
+        <div class="orb-core" aria-hidden="true">
+          <img src="assets/icon-beige-512.png" alt="" width="34" height="34"/>
+          <span>Lyvorian</span>
+        </div>
+      <button type="button" class="orb-node n1" data-desc="Products currently ready to explore." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Available</span></button>
+      <button type="button" class="orb-node n2" data-desc="Products being refined on real devices." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Testing</span></button>
+      <button type="button" class="orb-node n3" data-desc="Being built now, one at a time." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">In development</span></button>
+      <button type="button" class="orb-node n4" data-desc="Ideas being studied before development." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Research</span></button>
+      <button type="button" class="orb-node n5" data-desc="Planned, waiting their turn." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Future</span></button>
+      <button type="button" class="orb-node n6" data-desc="Where everything starts." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">New ideas</span></button>
+      </div>
+      <p class="orb-readout" id="orbReadout" role="status" aria-live="polite">Select a stage to see what it means.</p>
+    </div>
+  </section>
 
 <div class="ticker-wrap">
   <div class="ticker">
@@ -403,12 +475,6 @@
       <div class="note-item"><span class="note-date">2026 · AUG</span><span>Finance Tracker is on Google Play — product № 1 now installable on Android as well as the web.</span></div>
       <div class="note-item"><span class="note-date">2026 · AUG</span><span>Medhakeli announced as product № 4 — a learning game for ages 2 to 9, no account, no network.</span></div>
       <div class="note-item"><span class="note-date">2026 · AUG</span><span>Fylunor announced as product № 3 — a document workspace that stays on your device.</span></div>
-      <div class="note-item"><span class="note-date">2026 · AUG</span><span>Finance Tracker’s payment flow verified end to end — subscribe, cancel, access removed.</span></div>
-      <div class="note-item"><span class="note-date">2026 · AUG</span><span>HabitAroha announced as product № 2 — V1 built, now in device testing.</span></div>
-      <div class="note-item"><span class="note-date">2026 · JUL</span><span>Android app in final polish — Play Store submission prep underway.</span></div>
-      <div class="note-item"><span class="note-date">2026 · JUL</span><span>Play Console developer account created and verified.</span></div>
-      <div class="note-item"><span class="note-date">2026 · JUL</span><span>Finance Tracker moved to faster hosting.</span></div>
-      <div class="note-item"><span class="note-date">2026 · JUL</span><span>lyvorianstudio.co.in went live — the studio has a front door.</span></div>
     </div>
     <div class="notes-more reveal"><a href="notes.html">Read the full log &rarr;</a></div>
   </div>
@@ -668,6 +734,6 @@
 <script data-goatcounter="https://lyvorianstudio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 <script src="assets/site.js?v=20260812m" defer></script>
-<script src="assets/home.js?v=20260812m" defer></script>
+<script src="assets/home.js?v=20260829e" defer></script>
 </body>
 </html>

@@ -445,6 +445,78 @@
   });
 })();
 
+// ── hero device stack: pointer parallax ───────────────────────
+// The tilt lives in CSS custom properties, so the idle float animation and
+// the reduced-motion rules keep working; JS only nudges two numbers. Fine
+// pointers only — on touch the stack keeps its designed angle rather than
+// snapping about on every tap.
+(function(){
+  var stack = document.getElementById('devStack');
+  if (!stack) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  var hero = stack.closest('.hero') || document.body;
+  var raf = 0, tx = 0, ty = 0;
+
+  function apply(){
+    raf = 0;
+    stack.style.setProperty('--ry', (-16 + tx * 13).toFixed(2) + 'deg');
+    stack.style.setProperty('--rx', ( 8 - ty * 9).toFixed(2) + 'deg');
+    stack.style.setProperty('--rz', ( 2 + tx * 2).toFixed(2) + 'deg');
+  }
+
+  hero.addEventListener('pointermove', function(e){
+    var b = hero.getBoundingClientRect();
+    tx = (e.clientX - b.left) / b.width  * 2 - 1;   // -1 .. 1
+    ty = (e.clientY - b.top)  / b.height * 2 - 1;
+    if (!raf) raf = requestAnimationFrame(apply);
+  });
+
+  // let CSS own the resting pose again
+  hero.addEventListener('pointerleave', function(){
+    stack.style.removeProperty('--rx');
+    stack.style.removeProperty('--ry');
+    stack.style.removeProperty('--rz');
+  });
+})();
+
+// ── hero device stack: pointer parallax ───────────────────────
+// The tilt lives in CSS custom properties, so the idle float animation and
+// the reduced-motion rules keep working; JS only nudges two numbers. Fine
+// pointers only — on touch the stack keeps its designed angle rather than
+// snapping about on every tap.
+(function(){
+  var stack = document.getElementById('devStack');
+  if (!stack) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  var hero = stack.closest('.hero') || document.body;
+  var raf = 0, tx = 0, ty = 0;
+
+  function apply(){
+    raf = 0;
+    stack.style.setProperty('--ry', (-16 + tx * 13).toFixed(2) + 'deg');
+    stack.style.setProperty('--rx', ( 8 - ty * 9).toFixed(2) + 'deg');
+    stack.style.setProperty('--rz', ( 2 + tx * 2).toFixed(2) + 'deg');
+  }
+
+  hero.addEventListener('pointermove', function(e){
+    var b = hero.getBoundingClientRect();
+    tx = (e.clientX - b.left) / b.width  * 2 - 1;   // -1 .. 1
+    ty = (e.clientY - b.top)  / b.height * 2 - 1;
+    if (!raf) raf = requestAnimationFrame(apply);
+  });
+
+  // let CSS own the resting pose again
+  hero.addEventListener('pointerleave', function(){
+    stack.style.removeProperty('--rx');
+    stack.style.removeProperty('--ry');
+    stack.style.removeProperty('--rz');
+  });
+})();
+
 // Product Universe - one readout serves hover, focus and tap, so the same
 // information reaches mouse, keyboard and touch without a hover-only tooltip.
 (function(){
