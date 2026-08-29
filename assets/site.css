@@ -51,31 +51,36 @@
   --glass-strong:rgba(255,253,248,.78);
 
   /* ── typography ─────────────────────────────────────────
-     Two families. Cormorant Garamond carries headlines and display text at
-     Regular and Medium; Manrope carries body, buttons and labels at Regular
-     through Bold. It is the same pairing the Finance Tracker app itself uses,
-     so the site and the product now read as one thing.
+     Three roles, and each one earns its place.
 
-     Cormorant is a Garamond: small x-height (.386 against Newsreader's .426)
-     and a delicate, high-contrast stroke. Two consequences are baked into the
-     tokens below — display sizes are ~10% larger than the sans-serif era
-     needed to hold the same optical weight, and the tight negative tracking
-     that suited a grotesque is relaxed almost to zero, because cramping a
-     Garamond closes its counters and muddies it.
+       display   Sora — a geometric grotesk with squared terminals. It reads
+                 engineered rather than friendly, which is the studio's claim.
+                 Deliberately NOT Geist (the shadcn/Vercel default look) and
+                 NOT Plus Jakarta Sans (already the voice of HabitAroha,
+                 Medhakeli and Vaanigo — the products, not the parent).
+       interface Manrope — the reading face. Body, buttons, labels, tables.
+       quote     Cormorant Garamond — editorial moments ONLY: pull quotes and
+                 the philosophy passages. A serif on every heading is what
+                 makes a software site read as a blog.
+
+     Sora x-height .534 sits beside Manrope's .540, so the two mix at the same
+     optical size with no compensation.
 
      Tokens use the `font` shorthand (weight size/line-height family), so any
      font-style must be declared AFTER the token or the shorthand resets it. */
-  --font-display:'Cormorant Garamond','Georgia',serif;
+  --font-display:'Sora','Manrope Fallback','Segoe UI',Arial,sans-serif;
   --font-interface:'Manrope','Manrope Fallback','Segoe UI',Arial,sans-serif;
+  --font-quote:'Cormorant Garamond','Georgia',serif;
 
-  /* display — Cormorant Garamond, Regular 400 / Medium 500 */
-  --t-hero:500 clamp(2.25rem,4.7vw,3.6rem)/1.06 var(--font-display);
-  --ls-hero:-.012em;
-  --t-h2:500 clamp(1.65rem,2.8vw,2.2rem)/1.16 var(--font-display);
-  --ls-h2:-.008em;
-  --t-h3:500 1.375rem/1.28 var(--font-display);
-  --ls-h3:-.006em;
-  --t-quote:400 clamp(1.25rem,2vw,1.5rem)/1.5 var(--font-display);
+  /* display — editorial scale. The hero is allowed to be genuinely large;
+     everything under it steps down hard so the page has one loud voice. */
+  --t-hero:600 clamp(2.5rem,5vw,4.5rem)/1.03 var(--font-display);
+  --ls-hero:-.035em;
+  --t-h2:600 clamp(1.85rem,3.4vw,2.75rem)/1.1 var(--font-display);
+  --ls-h2:-.028em;
+  --t-h3:600 1.3125rem/1.3 var(--font-display);
+  --ls-h3:-.014em;
+  --t-quote:400 clamp(1.375rem,2.2vw,1.75rem)/1.45 var(--font-quote);
   --ls-quote:0em;
 
   /* interface — Manrope, Regular 400 / Medium 500 / SemiBold 600 / Bold 700 */
@@ -89,8 +94,6 @@
   --ls-body-sm:0em;
   --t-eyebrow:600 .6875rem/1.5 var(--font-interface);
   --ls-eyebrow:.12em;
-  /* 550 and 450 were valid on a 100-900 axis; Manrope is pinned 400-700 here,
-     so these snap to the nearest real weight rather than silently rounding */
   --t-button:500 .875rem/1 var(--font-interface);
   --ls-button:-.006em;
   --t-form-label:500 .8125rem/1.4 var(--font-interface);
@@ -99,6 +102,48 @@
   --ls-status:.05em;
   --t-caption:400 .8125rem/1.5 var(--font-interface);
   --ls-caption:0em;
+
+  /* measure — long text must never run the width of the screen */
+  --measure:66ch;
+  --measure-tight:52ch;
+
+  /* ── spacing ─────────────────────────────────────────────
+     One scale. The audit found 38 distinct padding/margin values including
+     1, 3, 5, 7, 9, 11, 13, 15, 34, 38, 46, 52 and 58px — arbitrary numbers
+     that make rhythm impossible to hold across pages. */
+  --sp-1:4px;   --sp-2:8px;   --sp-3:12px;  --sp-4:16px;
+  --sp-5:24px;  --sp-6:32px;  --sp-7:48px;  --sp-8:64px;
+  --sp-9:96px;  --sp-10:128px; --sp-11:160px;
+
+  /* ── radius ──────────────────────────────────────────────
+     A hierarchy, not noise: the audit found 23 distinct values. Editorial
+     surfaces get 0 on purpose — the contrast against rounded controls is
+     what stops everything reading as the same soft card. */
+  --r-none:0;    --r-xs:6px;   --r-sm:8px;
+  --r-md:14px;   --r-lg:20px;  --r-xl:28px;  --r-pill:100px;
+
+  /* ── elevation ───────────────────────────────────────────
+     Depth from surface difference and a tight shadow, not a large blur. */
+  --sh-1:0 1px 2px rgba(var(--shadow-rgb),.18);
+  --sh-2:0 6px 18px -8px rgba(var(--shadow-rgb),.30);
+  --sh-3:0 18px 44px -20px rgba(var(--shadow-rgb),.42);
+  --sh-4:0 42px 92px -34px rgba(var(--shadow-rgb),.55);
+
+  /* ── layering ────────────────────────────────────────────
+     Named, so nothing has to guess a z-index and win by accident. */
+  --z-base:0; --z-raised:2; --z-sticky:20; --z-header:60;
+  --z-overlay:200; --z-modal:300; --z-toast:400;
+
+  /* ── grid ────────────────────────────────────────────────
+     12 columns on desktop, 8 on tablet, 4 on mobile, one gutter scale.
+     Breakpoints are listed for reference only: a media query cannot read a
+     custom property, so the numbers below are duplicated literally in the
+     @media rules and must be changed in both places. */
+  --grid-cols:12;
+  --gutter:clamp(20px,3.4vw,40px);
+  --maxw:1220px;
+  --maxw-narrow:760px;
+  /* breakpoints (literal in @media): 480 / 768 / 940 / 1100 / 1440 */
 }
 @media(prefers-color-scheme:dark){
   :root:not([data-theme]){
@@ -431,3 +476,10 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
   .btn:active,.pcard-go:active,.pcard-2nd:active,.btn-preview:active,
   .cta:active,.dl-alt:active,.pfilter:active{transform:scale(.97)}
 }
+
+/* ── editorial voice ─────────────────────────
+   The serif is allowed here and nowhere else: pull quotes and the philosophy
+   passages. Everything structural is set in the grotesk. */
+blockquote,.story blockquote,.uni-sub em,.pull-quote{
+  font:var(--t-quote);letter-spacing:var(--ls-quote);font-style:italic;
+  color:var(--text);max-width:var(--measure-tight)}

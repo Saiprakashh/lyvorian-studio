@@ -176,9 +176,11 @@
      group, each panel pushed back on its own Z — so the parallax is
      geometric rather than three faked offsets. No WebGL: a 3D runtime would
      weigh more than this entire page currently does. */
-  .hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);
     gap:clamp(30px,4.5vw,68px);align-items:center;text-align:left}
   .hero-copy{max-width:42rem}
+  .hero-copy h1{max-width:15ch}
+  .hero-copy .lede{max-width:var(--measure-tight)}
   .hero-copy h1,.hero-copy .lede,.hero-copy .lede-sub{margin-left:0;margin-right:0}
   .hero-copy .eyebrow{align-items:flex-start}
   .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;
