@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Lyvorian Studio — Software, built by hand</title>
+<meta name="description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, Fylunor and Medhakeli — private, practical software for everyday life."/>
+<!-- Still noindex while this is a preview. Everything below it is in place so
+     that promoting the page to the homepage is a one-line change, not a
+     scramble to rebuild the social and structured data. -->
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="theme-color" content="#f2e8d5"/>
+
+<!-- Must run before first paint, or a dark-mode visitor gets a flash of the
+     light theme. Mirrors index.html so the choice carries between pages. -->
+<script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
+
+<link rel="stylesheet" href="assets/site.css?v=20260829i"/>
+<link rel="stylesheet" href="assets/descent.css?v=20260831p"/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="manifest" href="site.webmanifest"/>
+<link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
+
+<link rel="canonical" href="https://lyvorianstudio.co.in/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Lyvorian Studio"/>
+<meta property="og:title" content="Lyvorian Studio — Software, built by hand"/>
+<meta property="og:description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, Fylunor and Medhakeli — private, practical software for everyday life."/>
+<meta property="og:url" content="https://lyvorianstudio.co.in/"/>
+<meta property="og:image" content="https://lyvorianstudio.co.in/assets/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Lyvorian Studio — Software, built by hand"/>
+<meta name="twitter:description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, Fylunor and Medhakeli — private, practical software for everyday life."/>
+<meta name="twitter:image" content="https://lyvorianstudio.co.in/assets/og-image.jpg"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://lyvorianstudio.co.in/#org",
+      "name": "Lyvorian Studio",
+      "url": "https://lyvorianstudio.co.in/",
+      "logo": "https://lyvorianstudio.co.in/assets/icon-beige-512.png",
+      "slogan": "Software, built by hand",
+      "email": "support@lyvorianstudio.co.in",
+      "foundingDate": "2026",
+      "sameAs": ["https://github.com/Saiprakashh"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://lyvorianstudio.co.in/#site",
+      "url": "https://lyvorianstudio.co.in/",
+      "name": "Lyvorian Studio",
+      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"}
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Finance Tracker",
+      "url": "https://lyvorianstudio.co.in/finance-tracker.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Android, Web",
+      "installUrl": "https://play.google.com/store/apps/details?id=com.saikumarfinance.app",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
+      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"}
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#work">Skip to content</a>
+
+<!-- The header rides over the sequence rather than sitting above it: the
+     picture starts at the very top of the viewport, which is most of why a
+     full-bleed hero reads as cinematic rather than as a banner. -->
+<header class="dsc-hdr">
+  <a class="dsc-mark" href="index.html">Lyvorian Studio</a>
+  <nav class="dsc-nav" aria-label="Primary">
+    <a href="#work">Products</a>
+    <a href="#about">About</a>
+    <a href="#how">How we work</a>
+    <a href="#studio">Studio</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#notes">Notes</a>
+  </nav>
+  <div class="hdr-tools">
+    <button class="dsc-theme" type="button" aria-label="Switch theme" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <!-- Below 560px the row of links is hidden, so without this the whole nav is
+         unreachable on a phone — six links rendered and none of them tappable. -->
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mmSheet"
+            aria-label="Open menu"><span aria-hidden="true"></span></button>
+  </div>
+</header>
+
+<div class="dsc-progress" aria-hidden="true"><i></i></div>
+
+<div class="mm" id="mmSheet" hidden>
+  <nav class="mm-nav" aria-label="Mobile">
+    <a href="#work">Products</a>
+    <a href="#about">About</a>
+    <a href="#how">How we work</a>
+    <a href="#studio">Studio</a>
+    <a href="#planning">Design &amp; planning</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#notes">Notes</a>
+    <a href="#ideas">Share an idea</a>
+  </nav>
+  <a class="mm-mail" href="mailto:support@lyvorianstudio.co.in">support@lyvorianstudio.co.in</a>
+</div>
+
+<main>
+
+<section class="descent" data-descent
+  data-frames="assets/descent/01-sky.webp,assets/descent/02-cloud.webp,assets/descent/03-building.webp,assets/descent/04-approach-sign.webp,assets/descent/09-ceo.webp,assets/descent/05-interior-live.webp,assets/descent/07-window.webp,assets/descent/08-rise.webp">
+  <div class="dsc-sticky">
+    <canvas class="dsc-canvas" aria-hidden="true"></canvas>
+    <div class="dsc-scrim" aria-hidden="true"></div>
+
+    <div class="dsc-stage">
+
+      <!-- beat 1 · already at full on arrival; rises in via CSS, leaves on scroll -->
+      <div class="dsc-beat dsc-id" data-beat="0,0,0.06,0.15" data-shift="0 -48">
+        <p class="dsc-label">Independent software studio · Est. 2026</p>
+        <h1 class="dsc-h1">Software made the slow way.</h1>
+        <p class="dsc-p">One product at a time, finished carefully
+          enough that it doesn't need an excuse.</p>
+        <a class="dsc-cta" href="#work">See what's shipped
+          <span class="dsc-arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- beat 2 · right -->
+      <div class="dsc-beat dsc-aside dsc-aside-r" data-beat="0.19,0.27,0.42,0.5" data-shift="40 0">
+        <p class="dsc-label">How it's made</p>
+        <p>Every screen and every edge case is written and tested by hand,
+          against daily use — not assembled from templates.</p>
+      </div>
+
+      <!-- beat 3 · left -->
+      <div class="dsc-beat dsc-aside dsc-aside-l" data-beat="0.55,0.63,0.78,0.87" data-shift="-40 0">
+        <p class="dsc-label">Where your data lives</p>
+        <p>The work happens on your device. Backups go to your own Google Drive.
+          No tracking, and nothing sold on.</p>
+      </div>
+
+      <!-- beat 4 · the close. `d` sits past 1 so it holds to the release. -->
+      <div class="dsc-beat dsc-halo" data-beat="0.86,0.96,1,2" aria-hidden="true"></div>
+      <div class="dsc-beat dsc-close" data-beat="0.88,0.97,1,2" data-shift="0 36">
+        <p class="dsc-label">Now on Google Play</p>
+        <h2 class="dsc-h1">Finance Tracker is live.</h2>
+        <a class="dsc-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app"
+           target="_blank" rel="noopener">
+          <img src="assets/google-play-badge.png" alt="Get Finance Tracker on Google Play"
+               width="646" height="250"/>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="dsc-hint" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- About, set on the reception wall. The copy sits in the wall's empty right
+     half, so the bronze lettering is never crowded and never overlapped. -->
+<section class="about" id="about">
+  <img class="about-bg" src="assets/studio/about-wall.webp" alt="" aria-hidden="true" width="1920" height="1072"/>
+  <div class="about-inner">
+    <div class="about-copy">
+      <p class="dsc-label">About the studio</p>
+      <h2 class="about-h2">Private, practical software for everyday life.</h2>
+      <p>We ship one product at a time, all the way through, before starting the
+        next. No funding round. No growth hacks. Just software finished carefully
+        enough that it doesn't need an excuse.</p>
+      <p>The work happens on your device. Backups go to your own Google Drive.
+        There is no tracking and nothing is sold on.</p>
+      <a class="dsc-cta" href="built-the-hard-way.html">Read the story behind it
+        <span class="dsc-arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- How we work — the three rules, carried over verbatim from index.html so the
+     two pages cannot drift apart. -->
+<section class="rules" id="how" aria-labelledby="rulesTitle">
+  <div class="rules-head">
+    <p class="dsc-label">How we work</p>
+    <h2 class="room-h2" id="rulesTitle">Three rules, no exceptions</h2>
+    <p class="room-sub">The constraints that shape everything Lyvorian ships.</p>
+  </div>
+  <div class="rules-grid">
+    <article class="rule-card">
+      <span class="rule-num">01</span>
+      <h3>Built by hand</h3>
+      <p>Every screen, every edge case, every line — written and tested by hand
+        against daily use, not assembled from templates.</p>
+    </article>
+    <article class="rule-card">
+      <span class="rule-num">02</span>
+      <h3>No shortcuts</h3>
+      <p>No funding round to chase, no growth hacks to juice metrics. Features
+        ship when they're finished, not when a deadline says so.</p>
+    </article>
+    <article class="rule-card">
+      <span class="rule-num">03</span>
+      <h3>Nothing ships until it holds up</h3>
+      <p>Every build is measured on a real phone, not assumed. Finance Tracker
+        went live that way; HabitAroha, Fylunor and Medhakeli each wait their
+        turn until they earn it — no half-finished releases, ever.</p>
+    </article>
+  </div>
+</section>
+
+<!-- How the work is made. Three plates, each with its own note. -->
+<section class="craft" id="studio">
+  <div class="craft-head">
+    <p class="dsc-label">Inside the studio</p>
+    <h2 class="room-h2">How the work gets made.</h2>
+  </div>
+  <div class="craft-grid">
+    <figure class="craft-item craft-wide">
+      <img src="assets/studio/office-wide.webp" alt="The Lyvorian Studio workspace at dawn" loading="lazy" width="1920" height="1072"/>
+      <figcaption><strong>The studio.</strong> Quiet hours, real devices, and the
+        product open on the desk every day.</figcaption>
+    </figure>
+    <figure class="craft-item">
+      <img src="assets/studio/design-process.webp" alt="Interface wireframes sketched on paper" loading="lazy" width="1920" height="1072"/>
+      <figcaption><strong>Design.</strong> Every screen is drawn on paper and
+        argued with before a line of it is built.</figcaption>
+    </figure>
+    <figure class="craft-item">
+      <img src="assets/studio/review-wall.webp" alt="Printed interface layouts pinned to a review wall" loading="lazy" width="1920" height="1072"/>
+      <figcaption><strong>Review.</strong> Layouts go up on the wall, where the
+        weak ones are obvious.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Design & planning. Full-bleed room on one side, the method on the other. -->
+<section class="plan" id="planning">
+  <img class="plan-bg" src="assets/descent/10-planning.webp"
+       alt="The Lyvorian Studio design and planning room — wireframes, flow diagrams and device prototypes"
+       loading="lazy" width="1920" height="1072"/>
+  <div class="plan-copy">
+    <p class="dsc-label">Design &amp; planning</p>
+    <h2 class="room-h2">Nothing gets built until it's been argued with.</h2>
+    <p>Every screen starts on paper. Flows go up on the wall where the weak
+      ones are obvious, and a layout only earns a line of code once it has
+      survived that.</p>
+    <ol class="plan-steps">
+      <li><span>01</span><strong>Draw it</strong> Wireframes on paper before any
+        file is opened, so the shape of a thing is cheap to change.</li>
+      <li><span>02</span><strong>Map it</strong> The whole flow on one board —
+        every state, every dead end, every case that gets forgotten later.</li>
+      <li><span>03</span><strong>Prove it</strong> On a real device, in real
+        hands, measured rather than assumed.</li>
+      <li><span>04</span><strong>Cut it</strong> Anything that doesn't earn its
+        place comes out, however good it looked on the board.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- The product room. Real 3D: a shared perspective with each screen on its own
+     Z plane, so moving the pointer produces true parallax between them rather
+     than a flat picture that tilts. -->
+<section class="room" id="work" data-room>
+  <div class="room-head">
+    <p class="dsc-label">The product room</p>
+    <h2 class="room-h2">Finance Tracker, screen by screen.</h2>
+    <p class="room-sub">Every screen below is the shipped app, not a mockup —
+      photographed from the build that's on Google Play today.</p>
+  </div>
+
+  <div class="room-stage">
+    <div class="room-deck" data-deck>
+      <!-- --x must be an absolute length: a percentage inside translate3d
+           resolves against the slab's own width, not the stage, which bunched
+           all five into a 110px huddle. -->
+      <a class="room-slab" style="--z:-260px;--x:calc(-1 * clamp(150px,24vw,352px));--r:-14deg" href="finance-tracker.html">
+        <img src="assets/shot-goals.webp" alt="Finance Tracker goals screen" loading="lazy" width="560" height="1120"/>
+        <span>Goals</span>
+      </a>
+      <a class="room-slab" style="--z:-120px;--x:calc(-1 * clamp(80px,12.5vw,184px));--r:-7deg" href="finance-tracker.html">
+        <img src="assets/shot-expenses.webp" alt="Finance Tracker expenses screen" loading="lazy" width="560" height="1120"/>
+        <span>Expenses</span>
+      </a>
+      <a class="room-slab room-hero" style="--z:60px;--x:0px;--r:0deg" href="finance-tracker.html">
+        <img src="assets/shot-dashboard.webp" alt="Finance Tracker dashboard" loading="lazy" width="560" height="1120"/>
+        <span>Dashboard</span>
+      </a>
+      <a class="room-slab" style="--z:-120px;--x:clamp(80px,12.5vw,184px);--r:7deg" href="finance-tracker.html">
+        <img src="assets/shot-income.webp" alt="Finance Tracker income screen" loading="lazy" width="560" height="1120"/>
+        <span>Income</span>
+      </a>
+      <a class="room-slab" style="--z:-260px;--x:clamp(150px,24vw,352px);--r:14deg" href="finance-tracker.html">
+        <img src="assets/shot-trading.webp" alt="Finance Tracker trading journal" loading="lazy" width="560" height="1120"/>
+        <span>Journal</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- The full roster, not just the shipped one. -->
+  <div class="prod-head">
+    <p class="dsc-label">Our products</p>
+    <h2 class="room-h2">Thoughtful tools, built for real life.</h2>
+  </div>
+  <div class="prod-grid">
+    <a class="prod-card" href="finance-tracker.html">
+      <img src="assets/finance-tracker-icon.webp" alt="" width="256" height="256" loading="lazy"/>
+      <span class="prod-no">№ 1</span>
+      <h3>Finance Tracker</h3>
+      <p>Expenses, income, budgets, goals and bills in one clean app — with bill
+        scanning and a Pro tier.</p>
+      <span class="chip chip-live">Live — Google Play &amp; web</span>
+    </a>
+    <a class="prod-card" href="habitaroha.html">
+      <img src="assets/habitaroha-icon.webp" alt="" width="92" height="92" loading="lazy"/>
+      <span class="prod-no">№ 2</span>
+      <h3>HabitAroha</h3>
+      <p>A calm habit tracker. Core tracking works fully offline and your habit
+        content stays encrypted on your device.</p>
+      <span class="chip">In testing</span>
+    </a>
+    <a class="prod-card" href="fylunor.html">
+      <img src="assets/fylunor-icon-336.png" alt="" width="336" height="336" loading="lazy"/>
+      <span class="prod-no">№ 3</span>
+      <h3>Fylunor</h3>
+      <p>A document workspace where scanning, OCR and every PDF tool run locally
+        on your device.</p>
+      <span class="chip">In development</span>
+    </a>
+    <a class="prod-card" href="medhakeli.html">
+      <img src="assets/medhakeli-icon.webp" alt="" width="92" height="92" loading="lazy"/>
+      <span class="prod-no">№ 4</span>
+      <h3>Medhakeli</h3>
+      <p>A learning game for children aged 2 to 9. Built and running offline —
+        no account, no network.</p>
+      <span class="chip">In testing</span>
+    </a>
+  </div>
+  <p class="room-more"><a class="inline" href="products.html">All products →</a></p>
+</section>
+
+<!-- Roadmap. Copy taken from index.html so the two cannot disagree about
+     what has shipped. -->
+<section class="road" id="roadmap" aria-labelledby="roadTitle">
+  <div class="road-head">
+    <p class="dsc-label">Roadmap</p>
+    <h2 class="room-h2" id="roadTitle">What's next</h2>
+    <p class="room-sub">One primary build at a time — here's where the road goes.</p>
+  </div>
+  <ol class="road-list">
+    <li class="road-item" data-state="done">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Finance Tracker — Web <em>Shipped</em></p>
+        <p class="road-desc">Live and growing: expenses, income, budgets, goals,
+          bills, scanning, and a Pro tier.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="done">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Finance Tracker — Android <em>Shipped</em></p>
+        <p class="road-desc">Live on Google Play, with the same account and
+          records as the web app.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="next">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">HabitAroha — Android <em>In testing</em></p>
+        <p class="road-desc">V1 is built and running on real devices. Going
+          through a full test pass before the Play Store listing goes up.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="next">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Medhakeli — Android <em>In testing</em></p>
+        <p class="road-desc">A learning game for children aged 2 to 9. Built and
+          running offline; going through a full test pass before the Play Store
+          listing.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="later">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Fylunor — Web <em>In development</em></p>
+        <p class="road-desc">A document workspace where scanning, OCR and every
+          PDF tool run locally. Still being built.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- Studio notes -->
+<section class="log" id="notes" aria-labelledby="logTitle">
+  <div class="log-head">
+    <p class="dsc-label">Studio notes</p>
+    <h2 class="room-h2" id="logTitle">Recently, at the workbench</h2>
+  </div>
+  <div class="log-list">
+    <div class="log-item"><span>2026 · AUG</span><p>Finance Tracker is on Google
+      Play — product № 1 now installable on Android as well as the web.</p></div>
+    <div class="log-item"><span>2026 · AUG</span><p>Medhakeli announced as product
+      № 4 — a learning game for ages 2 to 9, no account, no network.</p></div>
+    <div class="log-item"><span>2026 · AUG</span><p>Fylunor announced as product
+      № 3 — a document workspace that stays on your device.</p></div>
+  </div>
+  <p class="room-more"><a class="inline" href="notes.html">Read the full log →</a></p>
+</section>
+
+<!-- Shape what comes next. The live three-step wizard and its JS live on
+     index.html; this carries the same headings and the same six categories so
+     the section reads correctly here, and hands off to the working form. -->
+<section class="next" id="ideas" aria-labelledby="nextTitle">
+  <div class="next-head">
+    <p class="dsc-label">Shape what comes next</p>
+    <h2 class="room-h2" id="nextTitle">Your experience can help make Lyvorian better.</h2>
+    <p class="room-sub">Share a feature idea, report something that feels unclear,
+      or suggest a product that could make everyday life easier.</p>
+  </div>
+
+  <div class="next-panel">
+    <aside class="next-intro">
+      <p class="dsc-label">Your voice matters</p>
+      <h3 class="next-title">Help shape what Lyvorian builds next.</h3>
+      <p>You do not need to write a perfect proposal. A simple problem, idea or
+        observation is enough.</p>
+      <ol class="next-steps">
+        <li><span>1</span>Choose what you want to share</li>
+        <li><span>2</span>Explain the idea or issue</li>
+        <li><span>3</span>Add contact details only when you want a reply</li>
+      </ol>
+      <p class="next-privacy">No name is required. Add an email only when you
+        would like a response.</p>
+    </aside>
+
+    <div class="next-cats">
+      <p class="next-q">Things people write in about</p>
+      <ul>
+        <li><strong>Product idea</strong>I have an idea for a new Lyvorian product.</li>
+        <li><strong>Feature request</strong>I would like an existing product to do something new.</li>
+        <li><strong>Design or usability</strong>Something feels confusing, difficult or unclear.</li>
+        <li><strong>Bug or problem</strong>Something is not working as expected.</li>
+        <li><strong>Privacy or trust</strong>I have a question or concern about data or permissions.</li>
+        <li><strong>General feedback</strong>I want to share an observation or suggestion.</li>
+      </ul>
+      <!-- Deliberately a link, not a form. The live three-step wizard is ~448
+           lines of home.js and posts real mail via formsubmit.co; a second copy
+           would drift from the first the moment either is fixed, and the way
+           that fails is someone's message quietly not arriving. One form, one
+           place — this signposts it. -->
+      <a class="dsc-cta" href="index.html#ideas">Open the form
+        <span class="dsc-arrow" aria-hidden="true">→</span></a>
+      <p class="next-hint">The form is on the home page — it takes about a minute.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <a class="dsc-mark" href="index.html">Lyvorian Studio</a>
+      <p>An independent studio building careful software for everyday life.</p>
+      <p><a class="inline" href="mailto:support@lyvorianstudio.co.in">support@lyvorianstudio.co.in</a></p>
+    </div>
+    <nav aria-label="Products">
+      <p class="dsc-label">Products</p>
+      <a href="finance-tracker.html">Finance Tracker</a>
+      <a href="habitaroha.html">HabitAroha</a>
+      <a href="fylunor.html">Fylunor</a>
+      <a href="medhakeli.html">Medhakeli</a>
+      <a href="products.html">All products</a>
+    </nav>
+    <nav aria-label="Studio">
+      <p class="dsc-label">Studio</p>
+      <a href="index.html#story">Why we build this way</a>
+      <a href="built-the-hard-way.html">Built the hard way</a>
+      <a href="notes.html">Studio notes</a>
+      <a href="#roadmap">Roadmap</a>
+    </nav>
+    <nav aria-label="Legal">
+      <p class="dsc-label">Legal</p>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="subscription-terms.html">Subscriptions</a>
+      <a href="account-deletion.html">Delete your account</a>
+    </nav>
+  </div>
+  <!-- The studio signature. Rendered art rather than CSS text, so the sculpted
+       letterforms and the figure leaning on the L arrive as one piece.
+       aria-hidden + empty alt: the wordmark is decorative here, the studio name
+       is already announced by the footer's own link. -->
+  <figure class="foot-sig">
+    <img src="assets/studio/foot-mark.webp" alt="" aria-hidden="true" loading="lazy"
+         width="1920" height="794"/>
+  </figure>
+  <div class="foot-base">
+    <span>© 2026 Lyvorian Studio. All rights reserved.</span>
+    <span class="foot-live"><i aria-hidden="true"></i>Finance Tracker is live</span>
+  </div>
+</footer>
+
+<!-- Product screens open full size. The 3D deck showed them at ~150px, which is
+     too small to read an interface in — the lightbox is what makes them useful
+     rather than decorative. -->
+<div class="lb" id="lb" hidden>
+  <button class="lb-x" type="button" aria-label="Close">&#10005;</button>
+  <button class="lb-nav lb-prev" type="button" aria-label="Previous">&#8249;</button>
+  <img class="lb-img" src="" alt=""/>
+  <p class="lb-cap"></p>
+  <button class="lb-nav lb-next" type="button" aria-label="Next">&#8250;</button>
+</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">&#8593;</button>
+
+<script src="assets/descent.js?v=20260831d" defer></script>
+<script data-goatcounter="https://lyvorian.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

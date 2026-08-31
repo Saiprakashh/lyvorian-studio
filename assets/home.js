@@ -42,7 +42,7 @@
 
 // Story quote — word-by-word blur-in on scroll
 (function(){
-  var text = 'Lyvorian Studio isn’t a company yet — it’s one person building one product at a time, all the way through, before starting the next. No funding round. No growth hacks. Just software finished carefully enough that it doesn’t need an excuse.';
+  var text = 'Lyvorian Studio builds one product at a time, all the way through, before starting the next. No funding round. No growth hacks. Just software finished carefully enough that it doesn’t need an excuse.';
   var el = document.getElementById('storyQuote');
   var words = text.split(' ');
   el.innerHTML = words.map(function(w,i){
