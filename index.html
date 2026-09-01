@@ -691,7 +691,17 @@
      Inlined instead of loading site.js, whose own nav and theme handlers
      would bind a second time over descent.js's. Mirrors site.js:171-172. -->
 <script>if('serviceWorker' in navigator && location.protocol === 'https:'){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+<!-- Pinned and integrity-checked. This is the only third-party script the
+     site loads, and it runs in the same origin as the feedback form, so an
+     unpinned rolling build would let a compromise of gc.zgo.at read what a
+     visitor types before they ever press Send (the polyfill.io pattern).
+     count.v4.js is GoatCounter's immutable versioned build; gc.zgo.at sends
+     Access-Control-Allow-Origin: *, which SRI on a cross-origin script
+     requires. Explicit https, not "//": there is no reason to allow http.
+     If this is ever re-pinned, recompute the hash from the exact file. -->
 <script data-goatcounter="https://lyvorianstudio.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+        async src="https://gc.zgo.at/count.v4.js"
+        integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"
+        crossorigin="anonymous"></script>
 </body>
 </html>

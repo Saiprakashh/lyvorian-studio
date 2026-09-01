@@ -444,9 +444,20 @@
 
 <!-- GoatCounter — privacy-friendly analytics (no cookies, no personal data).
      Claim the code "lyvorianstudio" at goatcounter.com to activate; harmless until then. -->
-<script data-goatcounter="https://lyvorianstudio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- Pinned and integrity-checked. This is the only third-party script the
+     site loads, and it runs in the same origin as the feedback form, so an
+     unpinned rolling build would let a compromise of gc.zgo.at read what a
+     visitor types before they ever press Send (the polyfill.io pattern).
+     count.v4.js is GoatCounter's immutable versioned build; gc.zgo.at sends
+     Access-Control-Allow-Origin: *, which SRI on a cross-origin script
+     requires. Explicit https, not "//": there is no reason to allow http.
+     If this is ever re-pinned, recompute the hash from the exact file. -->
+<script data-goatcounter="https://lyvorianstudio.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.v4.js"
+        integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"
+        crossorigin="anonymous"></script>
 
 <script src="assets/site.js?v=20260829i" defer></script>
-<script src="assets/home.js?v=20260829k" defer></script>
+<script src="assets/home.js?v=20260829l" defer></script>
 </body>
 </html>

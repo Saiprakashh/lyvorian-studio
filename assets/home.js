@@ -630,9 +630,20 @@
     if (e.target.closest('.fb-back')) go(Math.max(1, at - 1));   // values are never cleared
   });
 
-  // draft survives a reload; written locally only, never transmitted
+  /* Draft survives a reload; written locally only, never transmitted.
+     It also EXPIRES. Without a lifetime it persisted indefinitely and was
+     restored straight into the visible textarea, so on a shared machine — a
+     library terminal, a family tablet — the next person was shown whatever the
+     last one had typed and abandoned. The category options invite exactly the
+     content you would not want surfaced that way ("Bug or problem", "Privacy
+     or trust"). A day is generous for surviving a reload. */
+  var DRAFT_TTL = 864e5;   // 24h
   try {
     var saved = JSON.parse(localStorage.getItem(DRAFT) || '{}');
+    if (!saved.at || Date.now() - saved.at > DRAFT_TTL){
+      localStorage.removeItem(DRAFT);
+      saved = {};
+    }
     if (saved.msg && msgEl){ msgEl.value = saved.msg; msgEl.dispatchEvent(new Event('input')); }
     if (saved.cat){
       var r = form.querySelector('input[name="fbCat"][value="' + saved.cat.replace(/"/g,'') + '"]');
@@ -642,7 +653,8 @@
   form.addEventListener('input', function(){
     try {
       localStorage.setItem(DRAFT, JSON.stringify({
-        msg: msgEl ? msgEl.value : '', cat: chosen() ? chosen().value : ''
+        msg: msgEl ? msgEl.value : '', cat: chosen() ? chosen().value : '',
+        at: Date.now()          // read back above; an undated draft is discarded
       }));
     } catch(_){}
   });
@@ -658,6 +670,9 @@
 
   var again = document.getElementById('fbAgain');
   if (again) again.addEventListener('click', function(){
+    // clear first: the previous message was already sent, so keeping its draft
+    // would repopulate the "new" form with the text that just went out
+    try { localStorage.removeItem(DRAFT); } catch(_){}
     document.getElementById('fbDone').hidden = true;
     form.hidden = false; go(1);
   });
