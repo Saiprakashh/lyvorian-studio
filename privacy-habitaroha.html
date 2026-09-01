@@ -2,6 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<!-- Content-Security-Policy, delivered by meta because GitHub Pages cannot
+     set response headers. script-src carries no 'unsafe-inline' and no
+     'unsafe-eval': the site has zero inline event handlers and zero eval /
+     new Function / string timers, so every inline script is covered by a
+     sha256 hash instead. style-src DOES need 'unsafe-inline' — there are 19
+     inline <style> blocks and 10 style="" attributes, and an attribute cannot
+     be hashed. img-src allows the GoatCounter host because count.v4.js falls
+     back to an image beacon on browsers without sendBeacon; connect-src allows
+     it for sendBeacon itself, and formsubmit.co for the feedback form.
+     frame-ancestors is deliberately absent: it is IGNORED in a meta CSP, so
+     clickjacking protection would need a real header Pages cannot send.
+     If an inline script changes, its hash must be recomputed or it is blocked. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at 'sha256-dkw7ue2v0iftJkGPEwjqUvmxSwYbgf9sg0hcZJagIGI=' 'sha256-x2jk2aH69OCFs7cEGOQA38pNq+gaiPwu/kQ6nlZw6vM=' 'sha256-nFhEJjnfy9TxLTFUJW8bFb3eNE/wxupfsBJ4rABvE60=' 'sha256-iN3Pxc5eyqpacl1/owi9cfPKxeNl79RhA0xNSKa8cIo='; style-src 'self' 'unsafe-inline'; img-src 'self' https://lyvorianstudio.goatcounter.com; font-src 'self'; connect-src 'self' https://formsubmit.co https://lyvorianstudio.goatcounter.com; manifest-src 'self'; worker-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Privacy Policy — HabitAroha | Lyvorian Studio</title>
 <meta name="description" content="Privacy policy for HabitAroha by Lyvorian Studio — an offline-first habit tracker. Your habits are encrypted on your own device and are not uploaded to us."/>

@@ -426,6 +426,61 @@ def check_footer_consistency():
             fail('footer', path, 0, 'footer differs from the other pages: ' + '; '.join(bits))
 
 
+# ── 12. the CSP still covers what each page loads ────────────────────────
+def check_csp():
+    """script-src is hash-based, with no 'unsafe-inline' to fall back on.
+
+    That makes it exact and brittle in the same breath: edit one character of an
+    inline script and its sha256 no longer matches, so the browser silently
+    refuses to run it. On these pages that script is the theme bootstrap, so the
+    symptom is a flash of the wrong theme on every page — easy to miss locally
+    and shipped before anyone notices. Same for adding a new external script
+    host and forgetting to list it.
+
+    So: recompute every inline script's hash from the file on disk and require
+    the page's own policy to contain it.
+    """
+    global checked
+    import hashlib
+    import base64
+
+    for path in pages():
+        s = read(path)
+        m = re.search(r'<meta http-equiv="Content-Security-Policy" content="([^"]+)"', s)
+        inline, ext = [], set()
+        for sm in re.finditer(r'<script\b([^>]*)>(.*?)</script>', s, re.S | re.I):
+            attrs, body = sm.group(1), sm.group(2)
+            src = re.search(r'src\s*=\s*"(https?://[^/"]+)', attrs)
+            if src:
+                ext.add(src.group(1))
+                continue
+            if re.search(r'src\s*=', attrs) or not body.strip():
+                continue
+            if re.search(r'type\s*=\s*"[^"]*json', attrs):   # ld+json is data
+                continue
+            inline.append((sm.start(), body))
+
+        if not m:
+            # only a page that actually loads something needs a policy
+            if inline or ext:
+                fail('csp', path, 0, 'page runs scripts but has no CSP meta tag')
+            continue
+
+        policy = m.group(1)
+        for pos, body in inline:
+            checked += 1
+            h = 'sha256-' + base64.b64encode(
+                hashlib.sha256(body.encode('utf-8')).digest()).decode()
+            if h not in policy:
+                fail('csp', path, lineno(s, pos),
+                     'inline script is not hashed in this page\'s CSP (%s…) — '
+                     'it will be blocked; recompute the hash' % h[:24])
+        for host in sorted(ext):
+            checked += 1
+            if host not in policy:
+                fail('csp', path, 0, 'external script host %s is not in script-src' % host)
+
+
 CHECKS = [
     ('references', check_references, 'every local href/src/url() resolves on disk'),
     ('anchors', check_anchors, 'every #fragment matches an id on that page'),
@@ -438,6 +493,7 @@ CHECKS = [
     ('word-span-guard', check_word_span_guards, 'no bare span selector catches word spans'),
     ('cache-keys', check_cache_keys, 'versioned assets exist'),
     ('footer', check_footer_consistency, 'every page footer offers the same destinations'),
+    ('csp', check_csp, "every inline script is hashed in its page's CSP"),
 ]
 
 

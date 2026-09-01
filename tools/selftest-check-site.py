@@ -28,6 +28,8 @@ GOOD_PAGE = '''<!doctype html>
 <meta charset="UTF-8"/>
 <title>Fixture</title>
 <link rel="stylesheet" href="assets/site.css"/>
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-CihokcEcBW4atb/CW/XWsvWwbTjqwQlE9nj9ii5ww5M='"/>
+<script>console.log(1)</script>
 </head>
 <body>
 <main>
@@ -71,6 +73,8 @@ FAULTS = [
                      'href="assets/nope.css?v=1"')),
     ('footer',
      lambda d: patch(d, 'other.html', '<a href="third.html">Third</a>', '')),
+    ('csp',
+     lambda d: patch(d, 'index.html', 'console.log(1)', 'console.log(2)')),
     ('word-span-guard',
      lambda d: append(d, 'assets/descent.css',
                       '\n.plan-steps span { display: block; }\n')),
