@@ -38,7 +38,13 @@ body { background: var(--bg); color: var(--text); }
 
 .descent {
   position: relative;
-  height: 520vh;            /* four beats need room; less than this crowds them */
+  /* Scroll distance IS the playback speed: the frame index is scroll progress
+     across this height, so a taller container means fewer frames per pixel
+     scrolled. At 520vh the nine frames changed roughly every half screen,
+     which read as hurried. 1200vh gives each of the eight transitions about a
+     screen and a third, and descent.js holds each frame for the first and last
+     third of its interval so it rests rather than dissolving throughout. */
+  height: 1200vh;
   background: var(--dsc-plate);
 }
 
@@ -154,6 +160,17 @@ body { background: var(--bg); color: var(--text); }
 }
 .dsc-aside-r { right: clamp(1.25rem, 6vw, 7rem); text-align: right; }
 .dsc-aside-l { left: clamp(1.25rem, 6vw, 7rem); }
+/* Sits low, over the office frame's empty floor rather than across the desk
+   and the figure. Not vertically centred like the other two — the point is to
+   occupy the dead space at the bottom of that shot. */
+.dsc-aside-b {
+  top: auto;
+  translate: none;
+  left: clamp(1.25rem, 6vw, 7rem);
+  right: clamp(1.25rem, 6vw, 7rem);
+  bottom: clamp(3rem, 10vh, 7rem);
+  max-width: min(34rem, 62vw);
+}
 
 .dsc-aside p {
   margin: 0;
@@ -171,8 +188,15 @@ body { background: var(--bg); color: var(--text); }
   width: min(46rem, 88vw);
   text-align: center;
 }
-.dsc-close .dsc-h1 { font-size: clamp(2.2rem, 5.6vw, 4.6rem); margin-bottom: 1.6rem; }
+.dsc-close .dsc-h1 { font-size: clamp(2.2rem, 5.6vw, 4.6rem); margin-bottom: 1.2rem; }
 .dsc-close .dsc-label { margin-bottom: 1.1rem; }
+.dsc-close-p {
+  margin: 0 auto 1.9rem;
+  max-width: 34rem;
+  color: var(--dsc-ink-2);
+  font: 300 clamp(.97rem, 1.25vw, 1.1rem)/1.65 var(--font-interface, system-ui, sans-serif);
+  text-wrap: pretty;
+}
 
 /* Its own backdrop, because the close can land over any frame. */
 .dsc-halo {
@@ -578,6 +602,20 @@ body { background: var(--bg); color: var(--text); }
   font: 500 .7rem/1.2 var(--font-interface, system-ui, sans-serif);
 }
 .chip-live { border-color: rgba(143, 224, 159, .38); color: #8fe09f; }
+
+/* The badge is a sibling of the card, not a child — nesting an <a> inside an
+   <a> is invalid and the browser drops one. Pulled up so it reads as part of
+   the Finance Tracker cell. */
+.prod-play {
+  grid-column: 1;
+  justify-self: start;
+  margin-top: -.6rem;
+  display: inline-flex;
+  border-radius: 8px;
+}
+.prod-play img { display: block; height: 40px; width: auto; }
+.prod-play:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 3px; }
+@media (max-width: 1040px) { .prod-play { grid-column: 1; } }
 @media (hover: hover) and (pointer: fine) {
   .prod-card:hover { border-color: var(--dsc-edge-2); transform: translateY(-3px); }
 }
@@ -665,6 +703,74 @@ body { background: var(--bg); color: var(--text); }
   max-width: 72rem;
   margin: 0 auto;
 }
+/* Sits under the studio blurb in the wide first column rather than becoming a
+   fifth column — four link columns plus icons is more grid than the content
+   deserves, and it would squeeze the others. */
+.foot-social { grid-column: 1; margin-top: .4rem; }
+.foot-social ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.foot-social a {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 44px;              /* tap target */
+  padding: 0 .85rem;
+  border-radius: 999px;
+  border: 1px solid var(--dsc-edge);
+  color: var(--dsc-ink-2);
+  text-decoration: none;
+  font: 400 .82rem/1 var(--font-interface, system-ui, sans-serif);
+  transition: border-color .22s cubic-bezier(.23, 1, .32, 1),
+              color .22s cubic-bezier(.23, 1, .32, 1);
+}
+.foot-social svg {
+  width: 17px; height: 17px; flex: none;
+  transition: transform .28s cubic-bezier(.23, 1, .32, 1);
+}
+
+/* ── brand colour on hover ─────────────────────────────────────────
+   Every icon draws in currentColor, so changing the link's `color` repaints
+   the mark — no second icon, no sprite. Instagram is the exception: its mark
+   is a gradient, so its three stops animate instead. Gradient stops sit
+   OUTSIDE the currentColor mechanism, which is why they need their own rules.
+
+   Resting state stays monochrome on purpose: four saturated logos sitting in
+   the footer at all times would pull more attention than the products do. */
+.foot-social .ig-1, .foot-social .ig-2, .foot-social .ig-3 {
+  stop-color: currentColor;
+  transition: stop-color .34s cubic-bezier(.23, 1, .32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .foot-social a:hover { border-color: currentColor; }
+  .foot-social a:hover svg { transform: scale(1.14) rotate(-4deg); }
+
+  .foot-social a[data-social="instagram"]:hover { color: #E1306C; }
+  .foot-social a[data-social="instagram"]:hover .ig-1 { stop-color: #F9CE34; }
+  .foot-social a[data-social="instagram"]:hover .ig-2 { stop-color: #EE2A7B; }
+  .foot-social a[data-social="instagram"]:hover .ig-3 { stop-color: #6228D7; }
+
+  .foot-social a[data-social="reddit"]:hover   { color: #FF4500; }
+  .foot-social a[data-social="whatsapp"]:hover { color: #25D366; }
+  /* X's mark is black on light and white on dark — the one brand whose
+     "original" colour depends on the theme, so it takes the ink token. */
+  .foot-social a[data-social="x"]:hover        { color: var(--dsc-ink); }
+}
+
+.foot-social a:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .foot-social a, .foot-social svg,
+  .foot-social .ig-1, .foot-social .ig-2, .foot-social .ig-3 { transition: none; }
+  .foot-social a:hover svg { transform: none; }   /* colour still changes */
+}
+@media (max-width: 800px) { .foot-social { grid-column: 1 / -1; } }
 .foot-in > div > p, .foot nav a {
   font: 300 .87rem/1.6 var(--font-interface, system-ui, sans-serif);
 }

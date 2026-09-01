@@ -72,6 +72,22 @@
 
   function ease(t) { return t * t * (3 - 2 * t); }
 
+  /* Each frame RESTS before it hands over.
+   *
+   * Without this the cross-dissolve runs the entire length of an interval, so
+   * something is always mid-fade and nothing is ever simply on screen — which
+   * reads as restless however much scroll distance it is given. Holding the
+   * outgoing frame for the first third, dissolving across the middle, then
+   * holding the incoming one, buys a calm that extra height alone cannot.
+   * The push-in deliberately does NOT use this: it stays linear so the camera
+   * keeps drifting through the hold and the frame feels alive, not frozen. */
+  var HOLD = 0.34;
+  function dwell(t) {
+    if (t <= HOLD) return 0;
+    if (t >= 1 - HOLD) return 1;
+    return ease((t - HOLD) / (1 - 2 * HOLD));
+  }
+
   /* Returns true only if a real photograph reached the canvas. A false means
      "still waiting" and must leave `painted` alone so we try again. */
   function paint(at) {
@@ -87,12 +103,16 @@
     /* The outgoing frame keeps pushing in as it leaves; the incoming one
        arrives a touch wide and settles. Both moving the same direction is what
        sells eight stills as one continuous descent. */
-    var push = reduce ? 0 : 0.12;
+    /* Eased into a slower push now that each frame occupies more scroll — at
+       0.12 over a longer dwell the zoom became noticeable as zoom rather than
+       as forward motion. */
+    var push = reduce ? 0 : 0.085;
     ctx.globalAlpha = 1;
     cover(imgs[i], 1 + push * t);
 
-    if (j !== i && ready[j] && t > 0) {
-      ctx.globalAlpha = ease(t);
+    var blend = dwell(t);
+    if (j !== i && ready[j] && blend > 0) {
+      ctx.globalAlpha = blend;
       cover(imgs[j], (1 - push * 0.5) + push * 0.5 * t);
       ctx.globalAlpha = 1;
     }

@@ -16,7 +16,7 @@
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
 
 <link rel="stylesheet" href="assets/site.css?v=20260829i"/>
-<link rel="stylesheet" href="assets/descent.css?v=20260831p"/>
+<link rel="stylesheet" href="assets/descent.css?v=20260831y"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -122,7 +122,7 @@
 <main>
 
 <section class="descent" data-descent
-  data-frames="assets/descent/01-sky.webp,assets/descent/02-cloud.webp,assets/descent/03-building.webp,assets/descent/04-approach-sign.webp,assets/descent/09-ceo.webp,assets/descent/05-interior-live.webp,assets/descent/07-window.webp,assets/descent/08-rise.webp">
+  data-frames="assets/descent/01-sky.webp,assets/descent/02-cloud.webp,assets/descent/02b-altitude.webp,assets/descent/03-building.webp,assets/descent/04-approach-sign.webp,assets/descent/09-ceo.webp,assets/descent/05-interior-live.webp,assets/descent/07-window.webp,assets/descent/08-rise.webp">
   <div class="dsc-sticky">
     <canvas class="dsc-canvas" aria-hidden="true"></canvas>
     <div class="dsc-scrim" aria-hidden="true"></div>
@@ -130,7 +130,7 @@
     <div class="dsc-stage">
 
       <!-- beat 1 · already at full on arrival; rises in via CSS, leaves on scroll -->
-      <div class="dsc-beat dsc-id" data-beat="0,0,0.06,0.15" data-shift="0 -48">
+      <div class="dsc-beat dsc-id" data-beat="0,0,0.10,0.18" data-shift="0 -48">
         <p class="dsc-label">Independent software studio · Est. 2026</p>
         <!-- A variation on the original hero line rather than a replacement
              for it: index.html opens "Private, practical software / for
@@ -142,9 +142,6 @@
         <h1 class="dsc-h1">Private, practical software, built to last.</h1>
         <p class="dsc-p">Built carefully. Privacy explained plainly.
           No unnecessary complexity.</p>
-        <!-- Holds through the cloud frame too, which was otherwise bare -->
-        <a class="dsc-cta" href="#work">See what's shipped
-          <span class="dsc-arrow" aria-hidden="true">→</span></a>
         <a class="dsc-cta" href="#work">See what's shipped
           <span class="dsc-arrow" aria-hidden="true">→</span></a>
       </div>
@@ -161,30 +158,37 @@
           against daily use — not assembled from templates.</p>
       </div>
 
-      <!-- beat 3 · low, over the empty floor of the office frame -->
-      <div class="dsc-beat dsc-aside dsc-aside-b" data-beat="0.49,0.55,0.62,0.67" data-shift="0 32">
+      <!-- beat 3 · left — arriving at the door -->
+      <div class="dsc-beat dsc-aside dsc-aside-l" data-beat="0.46,0.50,0.60,0.66" data-shift="-40 0">
         <p class="dsc-label">One at a time</p>
         <p>One primary build holds the studio's attention. Everything else waits
           its turn until the thing in front of it is finished.</p>
       </div>
 
-      <!-- beat 4 · left — interior, window -->
-      <div class="dsc-beat dsc-aside dsc-aside-l" data-beat="0.68,0.72,0.85,0.90" data-shift="-40 0">
+      <!-- beat 4 · low, over the office floor — covers the desk and the
+           interior. Copy is matched to the picture: this is the room where the
+           work happens, so it carries the line about where the data stays. -->
+      <div class="dsc-beat dsc-aside dsc-aside-b" data-beat="0.67,0.72,0.86,0.90" data-shift="0 32">
         <p class="dsc-label">Where your data lives</p>
         <p>The work happens on your device. Backups go to your own Google Drive.
           No tracking, and nothing sold on.</p>
       </div>
 
-      <!-- beat 5 · the close. `d` sits past 1 so it holds to the release. -->
+      <!-- beat 5 · the close. `d` sits past 1 so it holds to the release.
+           The sequence ends on the studio seen small from the sky — a
+           reflective frame, so it carries the thinking behind the work rather
+           than a store badge. The badge moves to the Finance Tracker card in
+           the product grid, where index.html also carries it — dropping it from
+           here must not drop the only direct route to the store. -->
       <div class="dsc-beat dsc-halo" data-beat="0.88,0.94,1,2" aria-hidden="true"></div>
       <div class="dsc-beat dsc-close" data-beat="0.90,0.96,1,2" data-shift="0 36">
-        <p class="dsc-label">Now on Google Play</p>
-        <h2 class="dsc-h1">Finance Tracker is live.</h2>
-        <a class="dsc-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app"
-           target="_blank" rel="noopener">
-          <img src="assets/google-play-badge.png" alt="Get Finance Tracker on Google Play"
-               width="646" height="250"/>
-        </a>
+        <p class="dsc-label">The thinking behind it</p>
+        <h2 class="dsc-h1">Nothing here happened by accident.</h2>
+        <p class="dsc-close-p">Every screen was drawn on paper, argued with on a
+          wall, and measured on a real device before it earned a single line of
+          code. Someone sat with each decision until it was right.</p>
+        <a class="dsc-cta" href="built-the-hard-way.html">Read how it's made
+          <span class="dsc-arrow" aria-hidden="true">→</span></a>
       </div>
 
     </div>
@@ -344,6 +348,13 @@
       <p>Expenses, income, budgets, goals and bills in one clean app — with bill
         scanning and a Pro tier.</p>
       <span class="chip chip-live">Live — Google Play &amp; web</span>
+    </a>
+    <!-- Sits outside the card's anchor: a link inside a link is invalid, and
+         the browser would swallow one of them. -->
+    <a class="prod-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app"
+       target="_blank" rel="noopener" aria-label="Get Finance Tracker on Google Play">
+      <img src="assets/google-play-badge.png" alt="Get it on Google Play"
+           width="646" height="250" loading="lazy"/>
     </a>
     <a class="prod-card" href="habitaroha.html">
       <img src="assets/habitaroha-icon.webp" alt="" width="92" height="92" loading="lazy"/>
@@ -522,6 +533,64 @@
       <a href="subscription-terms.html">Subscriptions</a>
       <a href="account-deletion.html">Delete your account</a>
     </nav>
+
+    <!-- ==================================================================
+         FOLLOW US — THE FOUR href VALUES BELOW ARE PLACEHOLDERS.
+         No social handles exist anywhere in this repo, so these were not
+         guessed: a link to the wrong account is worse than no link at all.
+         Replace each "#" with the real profile URL before this page ships,
+         and mirror the same four URLs into the JSON-LD "sameAs" array in
+         <head> so search engines associate them with the Organization.
+         ================================================================== -->
+    <nav class="foot-social" aria-label="Follow Lyvorian Studio">
+      <p class="dsc-label">Follow us</p>
+      <ul>
+        <!-- Instagram's mark is a gradient, not a flat colour. The stops start
+             as currentColor and animate to the brand ramp on hover — stop-color
+             is transitionable, so this needs no second icon. -->
+        <li><a href="#" data-social="instagram" aria-label="Lyvorian Studio on Instagram"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <defs>
+              <linearGradient id="igGrad" x1="2" y1="22" x2="22" y2="2">
+                <stop class="ig-1" offset="0%"/>
+                <stop class="ig-2" offset="50%"/>
+                <stop class="ig-3" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" stroke="url(#igGrad)" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="4.1" stroke="url(#igGrad)" stroke-width="1.6"/>
+            <circle cx="17.1" cy="6.9" r="1.15" fill="url(#igGrad)"/>
+          </svg><span>Instagram</span></a></li>
+
+        <li><a href="#" data-social="reddit" aria-label="Lyvorian Studio on Reddit"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <circle cx="12" cy="13.4" r="8.1" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="9.2" cy="13" r="1.15" fill="currentColor"/>
+            <circle cx="14.8" cy="13" r="1.15" fill="currentColor"/>
+            <path d="M9.1 16.5c1.7 1.2 4.1 1.2 5.8 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M14.3 5.1 15 2.4l2.7.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="14.3" cy="5.1" r="1.15" fill="currentColor"/>
+          </svg><span>Reddit</span></a></li>
+
+        <li><a href="#" data-social="whatsapp" aria-label="Lyvorian Studio WhatsApp channel"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <path d="M3.4 20.6l1.3-4.5a8.2 8.2 0 1 1 3.2 3.1l-4.5 1.4z"
+                  stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9.1 8.4c.3-.1.6 0 .8.3l.7 1.2c.1.3.1.6-.1.8l-.5.5a5.4 5.4 0 0 0 2.8 2.8l.5-.5c.2-.2.5-.3.8-.1l1.2.7c.3.2.4.5.3.8-.3.8-1.2 1.3-2 1.1a8 8 0 0 1-5.6-5.6c-.2-.8.3-1.7 1.1-2z"
+                  fill="currentColor"/>
+          </svg><span>WhatsApp</span></a></li>
+
+        <li><a href="#" data-social="x" aria-label="Lyvorian Studio on X"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <path d="M4 4l7.2 9.4L4.4 20h2.1l5.6-5.9 4.5 5.9H20l-7.5-9.8L19.4 4h-2.1l-5.2 5.5L8 4H4z"
+                  fill="currentColor"/>
+          </svg><span>X</span></a></li>
+      </ul>
+    </nav>
   </div>
   <!-- The studio signature. Rendered art rather than CSS text, so the sculpted
        letterforms and the figure leaning on the L arrive as one piece.
@@ -550,7 +619,7 @@
 
 <button class="to-top" id="toTop" type="button" aria-label="Back to top">&#8593;</button>
 
-<script src="assets/descent.js?v=20260831d" defer></script>
+<script src="assets/descent.js?v=20260831f" defer></script>
 <script data-goatcounter="https://lyvorian.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 </body>
