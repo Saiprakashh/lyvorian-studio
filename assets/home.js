@@ -3,6 +3,7 @@
 (function(){
   var bar = document.getElementById('scrollProgress');
   var toTop = document.getElementById('toTop');
+  if (!bar || !toTop) return;      // absent on pages without the full chrome
   function onScroll(){
     var h = document.documentElement;
     var scrolled = h.scrollTop;
@@ -21,7 +22,7 @@
 // Cursor glow
 (function(){
   var glow = document.getElementById('glow');
-  if (window.matchMedia('(hover: hover)').matches) {
+  if (glow && window.matchMedia('(hover: hover)').matches) {
     window.addEventListener('mousemove', function(e){
       glow.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
     }, {passive:true});
@@ -44,6 +45,11 @@
 (function(){
   var text = 'Lyvorian Studio builds one product at a time, all the way through, before starting the next. No funding round. No growth hacks. Just software finished carefully enough that it doesn’t need an excuse.';
   var el = document.getElementById('storyQuote');
+  // share-an-idea.html carries the form and nothing else, so this element is
+  // absent there. Without the guard the throw is uncaught at top level, which
+  // halts the REST of this file — including the feedback flow 500 lines below,
+  // leaving the form's Continue button dead with no clue why.
+  if (!el) return;
   var words = text.split(' ');
   el.innerHTML = words.map(function(w,i){
     return '<span class="word" style="transition-delay:' + (i*22) + 'ms">' + w + '</span>';
@@ -61,6 +67,7 @@
 // Floating embers in hero
 (function(){
   var host = document.getElementById('embers');
+  if (!host) return;               // the hero this decorates is homepage-only
   var n = window.innerWidth < 820 ? 8 : 16;
   for (var i=0;i<n;i++){
     var e = document.createElement('div');

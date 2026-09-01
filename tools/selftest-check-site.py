@@ -69,6 +69,8 @@ FAULTS = [
     ('cache-keys',
      lambda d: patch(d, 'index.html', 'href="assets/site.css"',
                      'href="assets/nope.css?v=1"')),
+    ('footer',
+     lambda d: patch(d, 'other.html', '<a href="third.html">Third</a>', '')),
     ('word-span-guard',
      lambda d: append(d, 'assets/descent.css',
                       '\n.plan-steps span { display: block; }\n')),
@@ -97,13 +99,23 @@ def build(d):
     for f in ('assets/site.css', 'assets/pic.webp'):
         io.open(os.path.join(d, f), 'w', encoding='utf-8', newline='').write('/* x */')
 
+    # the footer check compares pages against each other, so it needs a second
+    # page with a footer before it has anything to say
+    foot = ('<footer><a href="index.html">Home</a>'
+            '<a href="other.html">Other</a><a href="third.html">Third</a></footer>')
+    io.open(os.path.join(d, 'other.html'), 'w', encoding='utf-8', newline='').write(
+        GOOD_PAGE.replace('</body>', foot + '</body>'))
+    io.open(os.path.join(d, 'third.html'), 'w', encoding='utf-8', newline='').write(
+        GOOD_PAGE.replace('</body>', foot + '</body>'))
+
     # the word-span check only runs when all three of these exist, and it reads
     # the split roots out of the script
     # the word-span check reads index.html, so the fixture's index.html is the
     # one that must carry a .plan-steps marker for the injected fault to bite
     io.open(os.path.join(d, 'index.html'), 'w', encoding='utf-8',
-            newline='').write(GOOD_PAGE.replace(
-                '<main>', '<main><div class="plan-steps"><span>01</span></div>'))
+            newline='').write(GOOD_PAGE
+                .replace('<main>', '<main><div class="plan-steps"><span>01</span></div>')
+                .replace('</body>', foot + '</body>'))
     io.open(os.path.join(d, 'assets/descent.js'), 'w', encoding='utf-8', newline='').write(
         "['main', 'footer.foot', '.mm'].forEach(function (sel) { split(sel); });\n")
     io.open(os.path.join(d, 'assets/descent.css'), 'w', encoding='utf-8',

@@ -364,6 +364,60 @@ def check_cache_keys():
                      'versioned asset missing: %s?v=%s' % (m.group(1), m.group(2)))
 
 
+# ── 11. the footer offers the same pages everywhere ──────────────────────
+def check_footer_consistency():
+    """Every page carries a hand-maintained copy of the footer, so one page can
+    quietly end up offering a different set of destinations than the rest.
+
+    Inherited from tools/check-mirror.py, which compared exactly two pages. That
+    script guarded content duplicated between the homepage and its predecessor;
+    that duplication is gone, but the footer is still copied across all 20 pages,
+    so the check is worth more applied to all of them than to a pair.
+
+    A page never links to itself, and the homepage link is not required
+    everywhere, so both are excluded before comparing.
+    """
+    global checked
+    def foot_links(html, own):
+        m = re.search(r'<footer.*?</footer>', html, re.S | re.I)
+        if not m:
+            return None
+        return {h for h in re.findall(r'href="([^"#]+\.html)"', m.group(0))
+                if h not in (own, 'index.html')}
+
+    feet = {}
+    for path in pages():
+        links = foot_links(read(path), path)
+        # `is not None`, not a truthiness test: foot_links returns None when the
+        # page has no footer at all and a set when it does. An empty set means a
+        # footer that lost every link — the loudest version of the failure this
+        # check exists for, and a plain `if links:` skipped exactly that page.
+        if links is not None:
+            feet[path] = links
+    if len(feet) < 2:
+        return
+
+    # The reference is the union of what the feet offer. Comparing against a
+    # fixed set reported every page as "missing" itself, because a page's own
+    # filename is excluded from its set but contributed to the reference by all
+    # the others — so the expectation has to drop that page too.
+    common = set()
+    for v in feet.values():
+        common |= v
+    for path, links in sorted(feet.items()):
+        checked += 1
+        expected = common - {path}
+        if links != expected:
+            missing = sorted(expected - links)
+            extra = sorted(links - expected)
+            bits = []
+            if missing:
+                bits.append('missing ' + ', '.join(missing))
+            if extra:
+                bits.append('extra ' + ', '.join(extra))
+            fail('footer', path, 0, 'footer differs from the other pages: ' + '; '.join(bits))
+
+
 CHECKS = [
     ('references', check_references, 'every local href/src/url() resolves on disk'),
     ('anchors', check_anchors, 'every #fragment matches an id on that page'),
@@ -375,6 +429,7 @@ CHECKS = [
     ('images', check_images, '<img> has alt and intrinsic width/height'),
     ('word-span-guard', check_word_span_guards, 'no bare span selector catches word spans'),
     ('cache-keys', check_cache_keys, 'versioned assets exist'),
+    ('footer', check_footer_consistency, 'every page footer offers the same destinations'),
 ]
 
 
