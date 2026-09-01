@@ -552,12 +552,16 @@
     </nav>
 
     <!-- ==================================================================
-         FOLLOW US — THE FOUR href VALUES BELOW ARE PLACEHOLDERS.
-         No social handles exist anywhere in this repo, so these were not
-         guessed: a link to the wrong account is worse than no link at all.
-         Replace each "#" with the real profile URL before this page ships,
-         and mirror the same four URLs into the JSON-LD "sameAs" array in
-         <head> so search engines associate them with the Organization.
+         FOLLOW US. All four URLs are live, and each was verified as a real
+         account rather than merely a URL that returns 200 — Instagram,
+         Reddit and X by page title, the WhatsApp channel by its og:title
+         against a control, since a fabricated channel id returns
+         WhatsApp's generic fallback instead of the channel name.
+         The same four are mirrored into the JSON-LD "sameAs" array in
+         <head>. The Instagram and Reddit links arrived carrying app share
+         tokens (?igsi=... and /s/...); both were stripped — Reddit's
+         expanded to a full utm_source=share string that would otherwise
+         sit permanently in the structured data.
          ================================================================== -->
     <nav class="foot-social" aria-label="Follow Lyvorian Studio">
       <p class="dsc-label">Follow us</p>

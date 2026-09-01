@@ -103,9 +103,17 @@ def check_anchors():
     for path in pages():
         s = strip_comments(read(path))
         ids = set(re.findall(r'\bid\s*=\s*"([^"]+)"', s))
-        for m in re.finditer(r'href\s*=\s*"#([^"]+)"', s):
+        # [^"]* not [^"]+ — the + form cannot match href="#" at all, which made
+        # the empty-fragment branch below unreachable dead code.
+        for m in re.finditer(r'href\s*=\s*"#([^"]*)"', s):
             frag = m.group(1)
             if not frag:
+                # href="#" is a link to nowhere: it scrolls to the top and
+                # appends a bare # to the URL. Skipping it as "no fragment to
+                # resolve" let a dead site-logo link survive a full review.
+                checked += 1
+                fail('anchors', path, lineno(s, m.start()),
+                     'href="#" points nowhere — give it a real target')
                 continue
             checked += 1
             if frag not in ids:
