@@ -132,30 +132,52 @@
       <!-- beat 1 · already at full on arrival; rises in via CSS, leaves on scroll -->
       <div class="dsc-beat dsc-id" data-beat="0,0,0.06,0.15" data-shift="0 -48">
         <p class="dsc-label">Independent software studio · Est. 2026</p>
-        <h1 class="dsc-h1">Software made the slow way.</h1>
-        <p class="dsc-p">One product at a time, finished carefully
-          enough that it doesn't need an excuse.</p>
+        <!-- A variation on the original hero line rather than a replacement
+             for it: index.html opens "Private, practical software / for
+             everyday life." The first half is the brand refrain and stays; the
+             ending changes so the hero and the About heading further down are
+             not the same sentence twice. The supporting line is the old site's
+             own lede-sub, which is the best copy on the site — three short
+             clauses, no jargon. -->
+        <h1 class="dsc-h1">Private, practical software, built to last.</h1>
+        <p class="dsc-p">Built carefully. Privacy explained plainly.
+          No unnecessary complexity.</p>
+        <!-- Holds through the cloud frame too, which was otherwise bare -->
+        <a class="dsc-cta" href="#work">See what's shipped
+          <span class="dsc-arrow" aria-hidden="true">→</span></a>
         <a class="dsc-cta" href="#work">See what's shipped
           <span class="dsc-arrow" aria-hidden="true">→</span></a>
       </div>
 
-      <!-- beat 2 · right -->
-      <div class="dsc-beat dsc-aside dsc-aside-r" data-beat="0.19,0.27,0.42,0.5" data-shift="40 0">
+      <!-- Ranges are set so every one of the eight frames carries text. Before
+           rebalancing, three sat almost bare — cloud at 0.08 opacity, the CEO
+           office at 0.27 and the window at 0.14 — because the beats were
+           spaced by feel rather than against the frame positions (i/7). -->
+
+      <!-- beat 2 · right — building, approach -->
+      <div class="dsc-beat dsc-aside dsc-aside-r" data-beat="0.22,0.28,0.40,0.46" data-shift="40 0">
         <p class="dsc-label">How it's made</p>
         <p>Every screen and every edge case is written and tested by hand,
           against daily use — not assembled from templates.</p>
       </div>
 
-      <!-- beat 3 · left -->
-      <div class="dsc-beat dsc-aside dsc-aside-l" data-beat="0.55,0.63,0.78,0.87" data-shift="-40 0">
+      <!-- beat 3 · low, over the empty floor of the office frame -->
+      <div class="dsc-beat dsc-aside dsc-aside-b" data-beat="0.49,0.55,0.62,0.67" data-shift="0 32">
+        <p class="dsc-label">One at a time</p>
+        <p>One primary build holds the studio's attention. Everything else waits
+          its turn until the thing in front of it is finished.</p>
+      </div>
+
+      <!-- beat 4 · left — interior, window -->
+      <div class="dsc-beat dsc-aside dsc-aside-l" data-beat="0.68,0.72,0.85,0.90" data-shift="-40 0">
         <p class="dsc-label">Where your data lives</p>
         <p>The work happens on your device. Backups go to your own Google Drive.
           No tracking, and nothing sold on.</p>
       </div>
 
-      <!-- beat 4 · the close. `d` sits past 1 so it holds to the release. -->
-      <div class="dsc-beat dsc-halo" data-beat="0.86,0.96,1,2" aria-hidden="true"></div>
-      <div class="dsc-beat dsc-close" data-beat="0.88,0.97,1,2" data-shift="0 36">
+      <!-- beat 5 · the close. `d` sits past 1 so it holds to the release. -->
+      <div class="dsc-beat dsc-halo" data-beat="0.88,0.94,1,2" aria-hidden="true"></div>
+      <div class="dsc-beat dsc-close" data-beat="0.90,0.96,1,2" data-shift="0 36">
         <p class="dsc-label">Now on Google Play</p>
         <h2 class="dsc-h1">Finance Tracker is live.</h2>
         <a class="dsc-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app"
