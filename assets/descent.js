@@ -254,6 +254,91 @@
 })();
 
 
+/* Every word lifts under the cursor.
+ *
+ * A word can only respond to hover if it is its own element, so each one is
+ * wrapped in a span. Done in JS rather than by hand because the alternative is
+ * maintaining thousands of spans in the markup.
+ *
+ * Care taken:
+ *   - spaces stay as their own text nodes, so lines still break normally
+ *   - script/style/svg/canvas and the already-animated hero beats are skipped
+ *   - runs once, after the page is interactive, so it never blocks first paint
+ *   - existing links keep working: the spans go INSIDE the anchor, so the
+ *     anchor is still the thing you click
+ */
+(function () {
+  'use strict';
+
+  var SKIP = /^(SCRIPT|STYLE|SVG|CANVAS|NOSCRIPT|CODE|PRE)$/;
+
+  function split(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = n.parentNode;
+        while (p && p !== root) {
+          if (SKIP.test(p.nodeName) || p.classList && p.classList.contains('w')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          p = p.parentNode;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+
+    var nodes = [], n;
+    while ((n = walker.nextNode())) nodes.push(n);
+
+    nodes.forEach(function (node) {
+      var parts = node.nodeValue.split(/(\s+)/);   // keeps the whitespace runs
+      if (parts.length === 1 && !parts[0].trim()) return;
+
+      /* One wrapper per text node, never loose spans.
+         A bare run of word spans is fine in an inline context but wrong inside
+         a flex or grid parent: each word becomes its own item, so the
+         container's `gap` is inserted between EVERY word and the row stops
+         wrapping. That put .7rem between the words of every step in
+         "Share an idea" and pushed the page 48px wide on a 375px phone; the
+         CTA and the footer status line spaced out the same way.
+         Wrapping keeps the parent seeing exactly one child where it saw one
+         text node, so the original layout is preserved and every word still
+         gets its hover bump. */
+      var wrap = document.createElement('span');
+      wrap.className = 'wg';
+      parts.forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) {
+          wrap.appendChild(document.createTextNode(part));
+        } else {
+          var s = document.createElement('span');
+          s.className = 'w';
+          s.textContent = part;
+          wrap.appendChild(s);
+        }
+      });
+      node.parentNode.replaceChild(wrap, node);
+    });
+  }
+
+  function run() {
+    var count = 0;
+    ['main', 'footer.foot', '.mm'].forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (el) { split(el); }
+    });
+    count = document.querySelectorAll('.w').length;
+    document.documentElement.setAttribute('data-words', count);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+
+
 /* Theme toggle.
  *
  * Writes the same `lyv-theme` key index.html reads, so the choice follows the

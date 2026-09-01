@@ -25,12 +25,16 @@ body { background: var(--bg); color: var(--text); }
    dark pictures in either theme, so following the toggle here would put dark
    text on a dark photograph in light mode. */
 .descent, .about, .plan {
+  /* Exactly the site's own dark values — #f4f4f5 text on #212327, the same
+     pair index.html uses. These were #f6f6f7, two points off, which is
+     invisible alone but reads as a slightly different white when the two
+     pages sit side by side. */
   --dsc-plate:   #212327;
   --dsc-plate-2: #1b1d20;
-  --dsc-ink:     #f6f6f7;
-  --dsc-ink-2:   rgba(246, 246, 247, .72);
-  --dsc-ink-3:   rgba(246, 246, 247, .5);
-  --dsc-ink-4:   rgba(246, 246, 247, .22);
+  --dsc-ink:     #f4f4f5;
+  --dsc-ink-2:   rgba(244, 244, 245, .72);
+  --dsc-ink-3:   rgba(244, 244, 245, .5);
+  --dsc-ink-4:   rgba(244, 244, 245, .22);
   --dsc-edge:    rgba(255, 255, 255, .1);
   --dsc-edge-2:  rgba(255, 255, 255, .22);
   --dsc-card:    rgba(255, 255, 255, .022);
@@ -258,6 +262,92 @@ body { background: var(--bg); color: var(--text); }
 }
 @media (hover: hover) and (pointer: fine) { .dsc-nav a:hover { color: var(--dsc-ink); } }
 .dsc-mark:focus-visible, .dsc-nav a:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 4px; }
+/* ── every word lifts ──────────────────────────────────────────────
+   descent.js wraps each word in a .w span so it can answer to the cursor
+   individually. inline-block is what makes transform apply at all — inline
+   elements ignore it — and because the whitespace between words is left as
+   plain text nodes, lines still break exactly where they did before.
+
+   Kept small and quick: 3px over 160ms. A word should feel like it noticed
+   the cursor, not like it jumped. */
+/* One .wg wraps each split text node so a flex or grid parent still sees a
+   single child — otherwise its `gap` lands between every word and the row
+   stops wrapping.
+   No min-width:0 here: as a flex item that let the wrapper shrink below its
+   content, and "Choose what you want to share" broke onto six lines, one word
+   each. The default min-width:auto floors it at the longest word instead, so
+   the text wraps normally and still cannot force the row wider than the
+   viewport. */
+.wg { display: inline; }
+
+.w {
+  display: inline-block;
+  transition: transform .16s cubic-bezier(.23, 1, .32, 1),
+              color .16s cubic-bezier(.23, 1, .32, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .w:hover { transform: translateY(-3px); }
+  /* Headings are already large; they move less so the line does not ripple. */
+  h1 .w:hover, h2 .w:hover, .dsc-h1 .w:hover { transform: translateY(-2px); }
+}
+
+/* ── hover lift ────────────────────────────────────────────────────
+   Links, cards and buttons lift as a whole on top of the per-word motion, so
+   a link still reads as one object rather than a row of loose words.
+
+   translateY only, on the same easing as the rest of the page. Gated behind a
+   fine pointer so touch devices, which have no hover, never get stuck in the
+   lifted state after a tap. */
+@media (hover: hover) and (pointer: fine) {
+  .dsc-nav a,
+  .mm-nav a,
+  .foot nav a,
+  .dsc-list a,
+  .log-item a,
+  .room-more a,
+  .next-cats li,
+  .rule-card,
+  .craft-item,
+  .dsc-mark,
+  .foot .dsc-mark,
+  a.inline {
+    transition: transform .24s cubic-bezier(.23, 1, .32, 1),
+                color .22s cubic-bezier(.23, 1, .32, 1),
+                border-color .22s cubic-bezier(.23, 1, .32, 1);
+  }
+
+  .dsc-nav a:hover,
+  .mm-nav a:hover,
+  .foot nav a:hover,
+  .dsc-list a:hover,
+  .room-more a:hover,
+  .dsc-mark:hover,
+  a.inline:hover { transform: translateY(-2px); }
+
+  /* Cards carry more weight, so they move a touch further and pick up an edge */
+  .rule-card:hover,
+  .next-cats li:hover {
+    transform: translateY(-3px);
+    border-color: var(--dsc-edge-2);
+  }
+  .craft-item:hover { transform: translateY(-3px); }
+
+  /* Colour lifts with it, so the movement is not the only signal — that
+     matters for anyone who cannot perceive the 2px shift. */
+  .foot nav a:hover,
+  .dsc-list a:hover,
+  .mm-nav a:hover { color: var(--dsc-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w, .dsc-nav a, .mm-nav a, .foot nav a, .dsc-list a, .room-more a,
+  .next-cats li, .rule-card, .craft-item, .dsc-mark, a.inline { transition: none; }
+  .w:hover, h1 .w:hover, h2 .w:hover, .dsc-h1 .w:hover,
+  .dsc-nav a:hover, .mm-nav a:hover, .foot nav a:hover, .dsc-list a:hover,
+  .room-more a:hover, .next-cats li:hover, .rule-card:hover,
+  .craft-item:hover, .dsc-mark:hover, a.inline:hover { transform: none; }
+}
+
 /* ── header tools ──────────────────────────────────────────────── */
 .hdr-tools { display: flex; align-items: center; gap: .25rem; }
 .dsc-theme {
@@ -345,7 +435,7 @@ body { background: var(--bg); color: var(--text); }
   grid-row: 2;
   margin: 0;
   text-align: center;
-  color: rgba(246, 246, 247, .7);
+  color: rgba(244, 244, 245, .7);
   font: 500 .68rem/1 var(--font-interface, system-ui, sans-serif);
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -356,14 +446,14 @@ body { background: var(--bg); color: var(--text); }
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, .2);
   background: rgba(255, 255, 255, .06);
-  color: #f6f6f7;
+  color: #f4f4f5;
   font-size: 1.3rem;
   cursor: pointer;
 }
 .lb-x { position: absolute; top: clamp(1rem, 3vw, 2rem); right: clamp(1rem, 3vw, 2rem); }
 .lb-prev { grid-column: 1; }
 .lb-next { grid-column: 3; }
-.lb-x:focus-visible, .lb-nav:focus-visible { outline: 2px solid #f6f6f7; outline-offset: 3px; }
+.lb-x:focus-visible, .lb-nav:focus-visible { outline: 2px solid #f4f4f5; outline-offset: 3px; }
 @media (max-width: 560px) {
   .lb { grid-template-columns: 1fr; }
   .lb-prev { grid-column: 1; justify-self: start; }
@@ -676,7 +766,9 @@ body { background: var(--bg); color: var(--text); }
   border-top: 1px solid var(--dsc-edge);
 }
 .log-item:last-child { border-bottom: 1px solid var(--dsc-edge); }
-.log-item span {
+.log-item > span:not(.w):not(.wg) {   /* the date only — a bare `span` also caught every
+                                word span inside the <p>, shrinking the note
+                                body to .7rem with .1em letter-spacing. */
   color: var(--dsc-ink-3);
   font: 500 .7rem/1.6 var(--font-interface, system-ui, sans-serif);
   letter-spacing: .1em;
@@ -774,7 +866,10 @@ body { background: var(--bg); color: var(--text); }
 .foot-in > div > p, .foot nav a {
   font: 300 .87rem/1.6 var(--font-interface, system-ui, sans-serif);
 }
-.foot-in > div > p { margin: .8rem 0 0; max-width: 22rem; color: var(--dsc-ink-2); }
+/* index.html sets this line at full --text, not muted. Matching it, or the two
+   footers read as different weights of the same sentence. */
+.foot-in > div > p { margin: .8rem 0 0; max-width: 22rem; color: var(--dsc-ink); }
+.foot-in > div > p + p { color: var(--dsc-ink-2); }
 .foot nav { display: flex; flex-direction: column; gap: .5rem; }
 .foot nav .dsc-label { margin-bottom: .35rem; }
 .foot nav a { color: var(--dsc-ink-2); text-decoration: none; }
@@ -912,7 +1007,11 @@ body { background: var(--bg); color: var(--text); }
   color: var(--dsc-ink-2);
   font: 300 .9rem/1.5 var(--font-interface, system-ui, sans-serif);
 }
-.next-steps span {
+/* Must exclude .w: descent.js wraps every word in a <span class="w"> for the
+   hover bump, and those land as direct children of the <li> alongside the
+   number marker. A bare `.next-steps span` turned the word "reply" into a
+   1.35rem grid box, which pushed the page 8px wide on a 375px phone. */
+.next-steps li > span:not(.w):not(.wg) {
   flex: none;
   width: 1.35rem; height: 1.35rem;
   display: grid; place-items: center;
@@ -1004,6 +1103,13 @@ body { background: var(--bg); color: var(--text); }
   left: clamp(1.25rem, 5vw, 5.5rem);
   right: clamp(1.25rem, 5vw, 5.5rem);
   bottom: clamp(1.5rem, 5vh, 3.5rem);
+  top: clamp(1.5rem, 5vh, 3.5rem);
+  /* Bottom-anchored alone let the block grow upward out of the section when it
+     outgrew the picture. Pinning top AND bottom bounds it to the image, and
+     flex-end keeps it sitting low inside those bounds. */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   max-width: 62rem;
 }
 .plan-copy > p:not(.dsc-label) {
@@ -1030,7 +1136,7 @@ body { background: var(--bg); color: var(--text); }
   color: var(--dsc-ink-2);
   font: 300 .86rem/1.5 var(--font-interface, system-ui, sans-serif);
 }
-.plan-steps span {
+.plan-steps li > span:not(.w):not(.wg) {   /* the "01" marker only — not the word spans */
   display: block;
   margin-bottom: .4rem;
   color: var(--dsc-ink-3);
@@ -1046,14 +1152,19 @@ body { background: var(--bg); color: var(--text); }
   margin-bottom: .2rem;
 }
 
-/* Below 900px the picture is too short to hold the copy legibly, so it goes
-   back under the image rather than sitting on a sliver of it. */
-@media (max-width: 900px) {
+/* The overlay is only safe while the picture is TALLER than the copy sitting
+   on it. The image height is width x 1072/1920 (0.558), and the copy needs
+   ~683px, so the overlay needs about 1230px of width. Below that the copy —
+   anchored to the section's bottom — overflowed upward straight into the
+   studio section above. Measured at 952px: section 514px tall, copy 683px.
+   The old 900px breakpoint was set by eye at 1440px, where it happened to fit. */
+@media (max-width: 1280px) {
   .plan::after {
     background: linear-gradient(to top, rgba(12, 13, 15, .55) 0%, transparent 60%);
   }
   .plan-copy {
     position: static;
+    display: block;              /* undo the flex bounding used by the overlay */
     padding: clamp(1.75rem, 5vw, 2.75rem) clamp(1.25rem, 5vw, 3rem) clamp(2.5rem, 7vh, 4rem);
     max-width: none;
   }
@@ -1120,7 +1231,7 @@ body { background: var(--bg); color: var(--text); }
   border: 1px solid var(--dsc-edge-2);
   box-shadow: 0 40px 70px -30px rgba(0, 0, 0, .9);
 }
-.room-slab span {
+.room-slab > span:not(.w):not(.wg) {      /* the caption only — not the word spans in it */
   display: block;
   margin-top: .85rem;
   text-align: center;
