@@ -28,7 +28,10 @@ GOOD_PAGE = '''<!doctype html>
 <meta charset="UTF-8"/>
 <title>Fixture</title>
 <link rel="stylesheet" href="assets/site.css"/>
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-CihokcEcBW4atb/CW/XWsvWwbTjqwQlE9nj9ii5ww5M='"/>
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-CihokcEcBW4atb/CW/XWsvWwbTjqwQlE9nj9ii5ww5M=' 'sha256-8qh7h0fiqWRSuWtywGnY9Afvl+upErsfWgIoj/znuPY='"/>
+<style>html{display:none}</style>
+<script>if(self===top){document.documentElement.style.display='block'}</script>
+<noscript><style>html{display:block}</style></noscript>
 <script>console.log(1)</script>
 </head>
 <body>
@@ -75,6 +78,9 @@ FAULTS = [
      lambda d: patch(d, 'other.html', '<a href="third.html">Third</a>', '')),
     ('csp',
      lambda d: patch(d, 'index.html', 'console.log(1)', 'console.log(2)')),
+    ('framebuster',
+     lambda d: patch(d, 'index.html',
+                     '<noscript><style>html{display:block}</style></noscript>', '')),
     ('word-span-guard',
      lambda d: append(d, 'assets/descent.css',
                       '\n.plan-steps span { display: block; }\n')),

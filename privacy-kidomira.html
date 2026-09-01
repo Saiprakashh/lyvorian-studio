@@ -14,7 +14,19 @@
      frame-ancestors is deliberately absent: it is IGNORED in a meta CSP, so
      clickjacking protection would need a real header Pages cannot send.
      If an inline script changes, its hash must be recomputed or it is blocked. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at 'sha256-dkw7ue2v0iftJkGPEwjqUvmxSwYbgf9sg0hcZJagIGI=' 'sha256-x2jk2aH69OCFs7cEGOQA38pNq+gaiPwu/kQ6nlZw6vM=' 'sha256-nFhEJjnfy9TxLTFUJW8bFb3eNE/wxupfsBJ4rABvE60=' 'sha256-iN3Pxc5eyqpacl1/owi9cfPKxeNl79RhA0xNSKa8cIo='; style-src 'self' 'unsafe-inline'; img-src 'self' https://lyvorianstudio.goatcounter.com; font-src 'self'; connect-src 'self' https://formsubmit.co https://lyvorianstudio.goatcounter.com; manifest-src 'self'; worker-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-rpq8+21DRUFTpqyH5VcTMDbs2QkltB+KJQIAURL6Wh4=' https://gc.zgo.at 'sha256-dkw7ue2v0iftJkGPEwjqUvmxSwYbgf9sg0hcZJagIGI=' 'sha256-x2jk2aH69OCFs7cEGOQA38pNq+gaiPwu/kQ6nlZw6vM=' 'sha256-nFhEJjnfy9TxLTFUJW8bFb3eNE/wxupfsBJ4rABvE60=' 'sha256-iN3Pxc5eyqpacl1/owi9cfPKxeNl79RhA0xNSKa8cIo='; style-src 'self' 'unsafe-inline'; img-src 'self' https://lyvorianstudio.goatcounter.com; font-src 'self'; connect-src 'self' https://formsubmit.co https://lyvorianstudio.goatcounter.com; manifest-src 'self'; worker-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'"/>
+<!-- Clickjacking defence. The right tool is frame-ancestors, but it is IGNORED
+     in a meta CSP and GitHub Pages cannot send response headers, so this is the
+     available fallback.
+     Hide-by-default, not just a redirect: a plain "break out of the frame"
+     buster is defeated by <iframe sandbox>, which blocks the navigation. Here
+     the document starts display:none and only reveals itself once it confirms
+     it is the top window, so a sandboxed frame gets a blank page instead.
+     <noscript> restores it for anyone browsing without JavaScript, who cannot
+     be clickjacked into a scripted overlay anyway. -->
+<style>html{display:none}</style>
+<script>if(self===top){document.documentElement.style.display='block'}else{top.location=self.location}</script>
+<noscript><style>html{display:block}</style></noscript>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Moved — Privacy Policy | Lyvorian Studio</title>
 <!--

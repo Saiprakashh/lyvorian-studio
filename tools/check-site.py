@@ -481,6 +481,39 @@ def check_csp():
                 fail('csp', path, 0, 'external script host %s is not in script-src' % host)
 
 
+# ── 13. every page carries the clickjacking defence ──────────────────────
+def check_framebuster():
+    """frame-ancestors is ignored in a meta CSP and GitHub Pages cannot send
+    headers, so the clickjacking defence is a hide-by-default frame-buster in
+    the markup of each page.
+
+    Being per-page markup, it is exactly the kind of thing a new page is created
+    without — and its absence is invisible, because the page looks perfectly
+    normal unframed. The three parts have to travel together: the style that
+    hides the document, the script that reveals it when unframed, and the
+    <noscript> that restores it when scripting is off. Two out of three is
+    either no protection or a permanently blank page.
+    """
+    global checked
+    HIDE = 'html{display:none}'
+    REVEAL = 'self===top'
+    NOSCRIPT = '<noscript><style>html{display:block}</style></noscript>'
+
+    for path in pages():
+        s = read(path)
+        # only pages that carry a policy are real pages; the Search Console
+        # token file is 53 bytes of text with nothing to protect
+        if 'Content-Security-Policy' not in s:
+            continue
+        checked += 1
+        missing = [n for n, tok in
+                   (('hide style', HIDE), ('reveal script', REVEAL), ('noscript fallback', NOSCRIPT))
+                   if tok not in s]
+        if missing:
+            fail('framebuster', path, 0,
+                 'clickjacking defence incomplete — missing: %s' % ', '.join(missing))
+
+
 CHECKS = [
     ('references', check_references, 'every local href/src/url() resolves on disk'),
     ('anchors', check_anchors, 'every #fragment matches an id on that page'),
@@ -494,6 +527,7 @@ CHECKS = [
     ('cache-keys', check_cache_keys, 'versioned assets exist'),
     ('footer', check_footer_consistency, 'every page footer offers the same destinations'),
     ('csp', check_csp, "every inline script is hashed in its page's CSP"),
+    ('framebuster', check_framebuster, 'every page carries the clickjacking defence'),
 ]
 
 
