@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111216">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Enter the Lyvorian Studio project office—an immersive guided tour through the studio, its projects, and client website work.">
+  <title>Project Office — LyvorianStudio</title>
+  <!-- The site self-hosts its faces; pulling three more from a third party
+       here would mean two type systems and an external request on a site
+       whose whole claim is that it does not phone anywhere. -->
+  <link rel="preload" href="assets/fonts/Manrope-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/CormorantGaramond-var.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
+      font-display:swap;src:url('assets/fonts/CormorantGaramond-var.woff2') format('woff2');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    /* the rupee lives only in latin-ext, so it is its own file and is fetched
+       only by the pages that price something */
+    @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
+      font-display:swap;src:url('assets/fonts/CormorantGaramond-var-ext.woff2') format('woff2');
+      unicode-range:U+20B9}
+    @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
+      font-display:swap;src:url('assets/fonts/Manrope-var.woff2') format('woff2');
+      unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
+      font-display:swap;src:url('assets/fonts/Manrope-var-ext.woff2') format('woff2');
+      unicode-range:U+20B9}
+    /* Fallback metric-matched to Manrope (upm 2000, hhea 2132/-600, x-height .540)
+       so the swap to the real font causes no reflow. */
+    @font-face{font-family:'Manrope Fallback';src:local('Segoe UI'),local('Arial');
+      size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
+  </style>
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
+  <link rel="manifest" href="site.webmanifest"/>
+  <link rel="stylesheet" href="products.css?v=18">
+  <link rel="stylesheet" href="product-motion.css?v=15">
+  <link rel="stylesheet" href="product-premium.css?v=8">
+  <link rel="stylesheet" href="product-quality.css?v=13">
+</head>
+<body class="splash-active">
+  <a class="skip-link" href="#office-tour">Skip splash and enter office</a>
+
+  <div class="splash" data-splash role="status" aria-live="polite" aria-label="Lyvorian Project Office loading">
+    <div class="splash-grid" aria-hidden="true"></div>
+    <div class="splash-door splash-door-left" aria-hidden="true"></div><div class="splash-door splash-door-right" aria-hidden="true"></div>
+    <div class="splash-stage">
+      <div class="splash-orbit" aria-hidden="true"><i></i><i></i><i></i><b>LY</b><span></span></div>
+      <div class="splash-copy">
+        <span class="wordmark wordmark-splash" aria-label="LyvorianStudio"><span class="wordmark-ly">Lyvorian</span><em>Studio</em></span>
+        <span class="splash-eyebrow">Private walkthrough · Visit 001</span>
+        <div class="splash-title"><span>Project</span><em>Office</em></div>
+        <p>Preparing a guided visit through the people, rooms, projects and websites behind the studio.</p>
+        <div class="splash-line"><i></i></div>
+        <div class="splash-status"><span>Five project rooms</span><span>One connected studio</span><span>Scroll-led visit</span></div>
+      </div>
+    </div>
+    <button type="button" data-splash-skip><span>Skip introduction</span><i>↗</i></button>
+  </div>
+
+  <header class="tour-header">
+    <a class="tour-brand" href="index.html" aria-label="Back to LyvorianStudio home"><span class="wordmark wordmark-header"><span class="wordmark-ly">Lyvorian</span><em>Studio</em></span><span>Project Office</span></a>
+    <div class="tour-status"><span data-room-number>01</span><i><b data-tour-progress></b></i><span data-room-name>Arrival</span></div>
+    <a class="exit-link premium-exit" href="descent.html#work"><span class="exit-copy"><small>End studio visit</small><b>Exit office</b></span><span class="exit-icon">↗</span></a>
+  </header>
+
+  <div class="walkthrough-status" aria-hidden="true"><span>Scroll to walk</span><i><b data-walk-meter></b></i><em>Move mouse to look</em></div>
+  <div class="cinematic-lens" aria-hidden="true"></div>
+
+  <nav class="tour-rail" aria-label="Office rooms">
+    <a href="#arrival" aria-label="Arrival" data-tour-dot="0"><span>Arrival</span></a>
+    <a href="#reception" aria-label="Reception and café" data-tour-dot="1"><span>Reception</span></a>
+    <a href="#ceo-office" aria-label="CEO office" data-tour-dot="2"><span>CEO office</span></a>
+    <a href="#conference" aria-label="Conference room" data-tour-dot="3"><span>Conference</span></a>
+    <a href="#discussion" aria-label="Discussion room" data-tour-dot="4"><span>Discussion</span></a>
+    <a href="#product-wing" aria-label="Projects floor" data-tour-dot="5"><span>Projects floor</span></a>
+    <a href="#visit-complete" aria-label="Visit complete" data-tour-dot="6"><span>Complete</span></a>
+  </nav>
+
+  <main id="office-tour" tabindex="-1">
+    <!-- The splash carries the visible "Project Office" h1, but products.js
+         sets aria-hidden on it once the splash finishes, taking it out of the
+         accessibility tree and leaving the outline headed by an h2. This is
+         the persistent one. -->
+    <h1 class="visually-hidden">Project Office — Lyvorian Studio</h1>
+    <section class="tour-room arrival-room" id="arrival" data-room="Arrival" data-room-index="01">
+      <img class="room-bg" src="assets/office-building-v1.webp" alt="Modern Lyvorian Studio office building at dusk" width="1536" height="1024">
+      <div class="room-vignette"></div>
+      <div class="building-name"><span>Independent software studio</span><span class="wordmark wordmark-building" aria-label="LyvorianStudio"><span class="wordmark-ly">Lyvorian</span><em>Studio</em></span><i>PROJECT OFFICE</i></div>
+      <div class="entrance-door door-left" aria-hidden="true"></div><div class="entrance-door door-right" aria-hidden="true"></div>
+      <div class="arrival-copy room-copy">
+        <small>Welcome · Visit 01</small>
+        <h2>Come inside.<br><em>The work lives here.</em></h2>
+        <p>Scroll forward to enter the building and move through the Lyvorian Studio office.</p>
+        <div class="scroll-instruction"><i></i><span>Scroll to open the doors</span></div>
+      </div>
+    </section>
+
+    <section class="tour-room lobby-room" id="reception" data-room="Reception & café" data-room-index="02">
+      <img class="room-bg" src="assets/office-reception-cafe-v3.webp" alt="LyvorianStudio reception, café and lounge with illustrated 3D team members working, reading and having coffee" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette light"></div>
+      <div class="room-sign sign-left"><small><span class="wordmark wordmark-sign" aria-label="LyvorianStudio"><span class="wordmark-ly">Lyvorian</span><em>Studio</em></span> · Ground floor</small><b>Reception · Café · Lounge</b></div>
+      <div class="speech speech-reception"><span>Reception</span><p>Welcome to Lyvorian. The project team is expecting you.</p></div>
+      <div class="room-copy copy-right">
+        <small>Shared space · 02</small>
+        <h2>A calm start<br><em>before the work.</em></h2>
+        <p>The ground floor is deliberately open: reception, café, lounge seating, and room for informal conversations before decisions become screens.</p>
+        <div class="room-tags"><span>Reception</span><span>Cafeteria</span><span>Sitting area</span></div>
+      </div>
+    </section>
+
+    <section class="tour-room executive-room" id="ceo-office" data-room="CEO office" data-room-index="03">
+      <img class="room-bg room-bg-suite" src="assets/office-suites-v1.webp" alt="Glass-walled executive office at Lyvorian Studio" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette"></div>
+      <div class="room-sign"><small>EXECUTIVE SUITE</small><b>Founder / CEO</b></div>
+      <div class="speech speech-ceo"><span>Founder / CEO</span><p>Every project begins with a real problem—and earns the right to ship.</p></div>
+      <div class="room-copy copy-right">
+        <small>Direction · 03</small>
+        <h2>One vision.<br><em>End-to-end care.</em></h2>
+        <p>Strategy, experience design, engineering, privacy, and long-term stewardship stay connected instead of being handed between disconnected teams.</p>
+        <div class="room-metric"><b>01</b><span>primary build<br>at a time</span></div>
+      </div>
+    </section>
+
+    <section class="tour-room conference-room" id="conference" data-room="Conference room" data-room-index="04">
+      <img class="room-bg room-bg-suite" src="assets/office-suites-v1.webp" alt="Lyvorian Studio conference room" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette"></div>
+      <div class="room-sign sign-right"><small>ROOM 04</small><b>Conference room</b></div>
+      <div class="speech speech-team"><span>Team review</span><p>What can we remove without losing the value?</p></div>
+      <div class="room-copy">
+        <small>Decisions · 04</small>
+        <h2>Meetings with<br><em>a clear outcome.</em></h2>
+        <p>Project reviews bring research, interaction design, engineering constraints, and launch decisions into the same room.</p>
+        <div class="room-tags"><span>Project review</span><span>Launch planning</span><span>Quality gates</span></div>
+      </div>
+    </section>
+
+    <section class="tour-room discussion-room" id="discussion" data-room="Discussion room" data-room-index="05">
+      <img class="room-bg" src="assets/office-discussion-v1.webp" alt="LyvorianStudio discussion room with illustrated 3D team members reviewing project ideas" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette"></div>
+      <div class="room-sign"><small>ROOM 05</small><b>Discussion studio</b></div>
+      <div class="speech speech-discuss"><span>Design conversation</span><p>Let’s test the clearest path before adding another feature.</p></div>
+      <div class="room-copy copy-right">
+        <small>Collaboration · 05</small>
+        <h2>Ideas become<br><em>specific here.</em></h2>
+        <p>Small discussions turn a loose idea into a testable flow, a useful prototype, and a realistic build plan.</p>
+      </div>
+    </section>
+
+    <section class="tour-room product-wing-room" id="product-wing" data-room="Projects floor" data-room-index="06">
+      <img class="room-bg" src="assets/office-suites-v1.webp" alt="Lyvorian Studio project and website corridor" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette"></div>
+      <div class="projects-entry-panel" data-projects-entry>
+        <div class="projects-entry-index" aria-hidden="true">06</div>
+        <small><i></i> PROJECT FLOOR · LEVEL 01</small>
+        <h2>The projects live<br><em>beyond this door.</em></h2>
+        <p>Enter a dedicated corridor where every Lyvorian project has its own working room, story, and live interface.</p>
+        <a class="projects-entry-button" href="#projects-corridor" role="button" data-open-projects aria-expanded="false" aria-controls="projects-corridor">
+          <span><small>Open the project floor</small><b>Go to Projects Room</b></span><i>↗</i>
+        </a>
+        <div class="projects-entry-meta"><span>04 studio projects</span><span>01 website room</span><span>Guided access</span></div>
+      </div>
+      <div class="wing-map corridor-map" id="projects-corridor" data-projects-corridor aria-hidden="true">
+        <div class="corridor-heading"><span>PROJECT FLOOR · LEVEL 01</span><h2>Explore the studio.</h2><p>Five active rooms. Each one holds a real project, its thinking, and the people shaping what comes next.</p><a href="#product-wing" role="button" class="projects-close-button" data-close-projects>← Back to entrance</a></div>
+        <div class="office-corridor" aria-label="Project and website rooms">
+          <a class="room-door room-door-featured" href="#finance" data-room-door="finance"><span>01 · FLAGSHIP ROOM</span><img src="assets/finance-tracker-icon.webp" alt="" width="58" height="58"><b>Finance<br>Tracker</b><p>A clear view of spending, goals, bills, and the month ahead.</p><i>Live now</i><em>Enter project room <u>↗</u></em></a>
+          <a class="room-door" href="#habitaroha" data-room-door="habitaroha"><span>02 · WELLBEING</span><img src="assets/habitaroha-icon.webp" alt="" width="58" height="58"><b>HabitAroha</b><p>Private habits without streak pressure or noise.</p><i>In testing</i><em>Enter room <u>↗</u></em></a>
+          <a class="room-door" href="#fylunor" data-room-door="fylunor"><span>03 · DOCUMENTS</span><img src="assets/fylunor-icon.webp" alt="" width="58" height="58" loading="lazy"><b>Fylunor</b><p>Private scanning, OCR, and document workflows.</p><i>In development</i><em>Enter room <u>↗</u></em></a>
+          <a class="room-door" href="#medhakeli" data-room-door="medhakeli"><span>04 · LEARNING</span><img src="assets/medhakeli-icon.webp" alt="" width="58" height="58"><b>Medhakeli</b><p>Offline learning play made for curious young minds.</p><i>In testing</i><em>Enter room <u>↗</u></em></a>
+          <a class="room-door website-door" href="#websites" data-room-door="websites"><span>05 · CLIENT WING</span><div class="website-door-mark" aria-hidden="true"><u></u><u></u><u></u></div><b>Website<br>Studio</b><p>Brand systems, responsive builds, and motion-led launches.</p><i>Projects open</i><em>Enter website room <u>↗</u></em></a>
+        </div>
+      </div>
+      <div class="room-copy copy-bottom">
+        <small>Project floor · 06</small>
+        <h2>Every project<br><em>gets its own room.</em></h2>
+        <p>Each suite introduces the project, its current status, its manager, and the interface itself.</p>
+      </div>
+    </section>
+
+    <section class="tour-room product-room finance-product" id="finance" data-room="Finance Tracker" data-room-index="07">
+      <img class="room-bg" src="assets/office-suites-v1.webp" alt="Finance Tracker project room" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette strong"></div>
+      <div class="product-suite">
+        <div class="product-story"><div class="product-status"><span>ROOM 01</span><b>Live now</b></div><div class="product-title"><img src="assets/finance-tracker-icon.webp" alt="Finance Tracker icon" width="82" height="82"><div><small>Android & web</small><h2>Finance Tracker</h2></div></div><p>Expenses, income, budgets, goals and bills in one clean workspace that shows where the month actually went.</p><ul><li>Bill scanning</li><li>UPI auto-detect</li><li>Budgets & goals</li></ul><div class="product-actions"><a class="office-button" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">Open web app ↗</a><a href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app" target="_blank" rel="noopener">Google Play ↗</a></div></div>
+        <div class="product-display"><div class="display-window"><img src="assets/shot-dashboard.webp" alt="Finance Tracker dashboard screenshot" width="560" height="1120" loading="lazy"><img class="display-float" src="assets/shot-expenses.webp" alt="Finance Tracker expenses screenshot" width="560" height="1120" loading="lazy"></div><div class="manager-label"><span>Project room</span><b>Finance suite</b></div></div>
+      </div>
+    </section>
+
+    <section class="tour-room product-room habit-product" id="habitaroha" data-room="HabitAroha" data-room-index="08">
+      <img class="room-bg" src="assets/office-suites-v1.webp" alt="HabitAroha project room" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette strong"></div>
+      <div class="product-suite">
+        <div class="product-story"><div class="product-status"><span>ROOM 02</span><b>In testing</b></div><div class="product-title"><img src="assets/habitaroha-icon.webp" alt="HabitAroha icon" width="82" height="82"><div><small>Offline-first wellbeing</small><h2>HabitAroha</h2></div></div><p>A calm, private habit tracker for steady progress rather than noisy streak pressure. Core tracking works fully offline.</p><ul><li>Works offline</li><li>Encrypted data</li><li>Quiet progress</li></ul><div class="product-actions"><a class="office-button" href="habitaroha.html" target="_blank" rel="noopener">View project ↗</a></div></div>
+        <div class="product-display display-habit"><div class="habit-board"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><i></i><i></i><i></i><i></i><i></i></div><div class="icon-stage"><img src="assets/habitaroha-icon.webp" alt="" width="180" height="180"></div><div class="manager-label"><span>Project room</span><b>Wellbeing suite</b></div></div>
+      </div>
+    </section>
+
+    <section class="tour-room product-room fylunor-product" id="fylunor" data-room="Fylunor" data-room-index="09">
+      <img class="room-bg" src="assets/office-suites-v1.webp" alt="Fylunor project room" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette strong"></div>
+      <div class="product-suite">
+        <div class="product-story"><div class="product-status"><span>ROOM 03</span><b>In development</b></div><div class="product-title"><img src="assets/fylunor-icon.webp" alt="Fylunor icon" width="82" height="82"><div><small>Private document tools</small><h2>Fylunor</h2></div></div><p>Scanning, OCR, compression, redaction and PDF workflows designed so private files can stay on the device.</p><ul><li>Local OCR</li><li>PDF toolkit</li><li>Private by default</li></ul><div class="product-actions"><a class="office-button" href="fylunor.html" target="_blank" rel="noopener">View project ↗</a></div></div>
+        <div class="product-display display-files"><div class="document-stack" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div><div class="icon-stage"><img src="assets/fylunor-icon.webp" alt="" width="180" height="180"></div><div class="manager-label"><span>Project room</span><b>Document suite</b></div></div>
+      </div>
+    </section>
+
+    <section class="tour-room product-room medha-product" id="medhakeli" data-room="Medhakeli" data-room-index="10">
+      <img class="room-bg" src="assets/office-suites-v1.webp" alt="Medhakeli project room" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette strong"></div>
+      <div class="product-suite">
+        <div class="product-story"><div class="product-status"><span>ROOM 04</span><b>In testing</b></div><div class="product-title"><img src="assets/medhakeli-icon.webp" alt="Medhakeli icon" width="82" height="82"><div><small>Private learning play</small><h2>Medhakeli</h2></div></div><p>A learning game for children aged 2–9 with no account, no network, no advertising, and drawings kept on-device.</p><ul><li>Ages 2–9</li><li>Fully offline</li><li>No advertising</li></ul><div class="product-actions"><a class="office-button" href="medhakeli.html" target="_blank" rel="noopener">View project ↗</a></div></div>
+        <div class="product-display display-learning"><div class="learning-wall" aria-hidden="true"><i>A</i><i>7</i><i>●</i><i>△</i></div><div class="icon-stage"><img src="assets/medhakeli-icon.webp" alt="" width="180" height="180"></div><div class="manager-label"><span>Project room</span><b>Learning suite</b></div></div>
+      </div>
+    </section>
+
+    <section class="tour-room website-room" id="websites" data-room="Client websites" data-room-index="11">
+      <img class="room-bg" src="assets/office-web-studio-v1.webp" alt="Lyvorian website design lab with responsive layout concepts on wall displays, tablet and phone" width="1536" height="1024" loading="lazy">
+      <div class="room-vignette strong"></div>
+      <div class="website-suite-room">
+        <div class="website-copy"><div class="product-status"><span>CLIENT WING</span><b>Open for enquiries</b></div><small>UX · UI · Motion · Development</small><h2>Websites with<br><em>a point of view.</em></h2><p>Brand websites, launches and portfolios — built the same way as our own products, on the same terms. Open for enquiries. The layouts shown here are concepts, not client work.</p><div class="room-tags"><span>Brand systems</span><span>Responsive UI</span><span>Motion design</span><span>Frontend build</span></div><a class="office-button" href="mailto:support@lyvorianstudio.co.in?subject=Website%20project%20with%20Lyvorian">Discuss a website ↗</a></div>
+        <div class="web-lab" aria-hidden="true">
+          <div class="web-stage-label"><span>ILLUSTRATIVE CONCEPTS</span><b>One idea · every screen</b></div>
+          <div class="web-monitor monitor-one">
+            <div class="web-browserbar"><i></i><i></i><i></i><span>concept · editorial</span></div>
+            <div class="web-canvas web-canvas-editorial"><nav><b>Brand</b><span>Work</span><span>Journal</span><button type="button" tabindex="-1">Enquire</button></nav><section><small>LAYOUT CONCEPT</small><strong>Type, space<br>and hierarchy.</strong><button type="button" tabindex="-1">View concept ↗</button></section><div class="web-card-row"><i></i><i></i><i></i></div></div>
+          </div>
+          <div class="web-monitor monitor-two">
+            <div class="web-browserbar"><i></i><i></i><i></i><span>concept · dashboard</span></div>
+            <div class="web-canvas web-canvas-dashboard"><header><b>Dashboard</b><span>Overview · concept</span></header><div class="dash-stats"><i><small>METRIC</small><b>—</b></i><i><small>METRIC</small><b>—</b></i></div><div class="dash-chart"><span></span></div><div class="dash-list"><i></i><i></i><i></i></div></div>
+          </div>
+          <div class="web-phone"><div class="phone-speaker"></div><div class="phone-site"><b>Brand</b><small>Concept layout</small><strong>One idea,<br>every screen.</strong><i></i><button type="button" tabindex="-1">View project</button><span></span><span></span></div></div>
+          <div class="web-layer layer-wireframe"><span></span><span></span><span></span><b>WIREFRAME</b></div>
+          <div class="web-layer layer-tokens"><i></i><i></i><i></i><b>TYPE · COLOR · SPACE</b></div>
+          <div class="manager-label"><span>Concept work</span><b>Client wing</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tour-room final-room" id="visit-complete" data-room="Visit complete" data-room-index="12">
+      <div class="final-grid" aria-hidden="true"></div>
+      <div class="final-copy"><small>Tour complete</small><h2>The next room<br><em>can be yours.</em></h2><p>Follow a project, propose an idea, or start a website project with Lyvorian Studio.</p><div><a class="office-button" href="mailto:support@lyvorianstudio.co.in">Start a conversation ↗</a><a href="index.html">Return home</a></div></div>
+    </section>
+  </main>
+
+  <script src="products.js?v=20" defer></script>
+</body>
+</html>

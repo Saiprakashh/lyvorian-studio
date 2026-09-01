@@ -228,7 +228,10 @@
    * CSS collapses the container to one viewport; here we paint a single
    * representative frame, reveal the opening beat, and never start the loop. */
   if (reduce) {
-    var STILL = Math.min(N - 1, 2);   // the studio building — the establishing shot
+    var STILL = Math.min(N - 1, 3);   // 03-building — the establishing shot.
+    // Index 3, not 2: 02b-altitude was inserted into data-frames after this
+    // line was written, so reduced-motion visitors were shown a mid-air
+    // altitude frame with no studio in it.
     load(STILL);
     loadRest();
     var showStill = function () {
@@ -404,6 +407,7 @@
 })();
 
 
+
 /* Product-screen lightbox.
  *
  * The deck renders each screen at roughly 150px, which is far too small to
@@ -428,15 +432,23 @@
     img.alt = pic.getAttribute('alt') || '';
     cap.textContent = (s.querySelector('span') || {}).textContent || '';
   }
+  /* Everything except the lightbox. Marking these inert is what stops Tab
+     walking the page behind the backdrop — three tabs used to land on the
+     back-to-top button, painted underneath it, where Enter jumped the page to
+     the top with the lightbox still open and scroll still locked. */
+  var behind = [].slice.call(document.querySelectorAll('main, header.dsc-hdr, footer.foot'));
+
   function open(i, from) {
     lastFocus = from || null;
     show(i);
     lb.hidden = false;
+    behind.forEach(function (el) { el.inert = true; });
     document.body.style.overflow = 'hidden';
     lb.querySelector('.lb-x').focus();
   }
   function close() {
     lb.hidden = true;
+    behind.forEach(function (el) { el.inert = false; });
     document.body.style.overflow = '';
     if (lastFocus) lastFocus.focus();
   }

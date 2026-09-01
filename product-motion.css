@@ -1,0 +1,115 @@
+/* Scroll-driven product deconstruction, derived from the supplied luxury 3D reel. */
+.room-exit-button,.room-motion-guide { display:none !important; }
+.room-exit-button.is-control-active { display:flex !important; }
+.room-motion-guide.is-control-active { display:grid !important; }
+
+.product-room.is-room-open .product-story,
+.website-room.is-room-open .website-copy {
+  transform: translate3d(var(--story-x,0),var(--story-y,0),var(--story-z,0)) rotateY(var(--room-turn,0deg)) !important;
+  transform-origin: right center;
+  opacity: calc(.42 + var(--room-fade,1) * .58) !important;
+  transition: none !important;
+}
+
+.product-room.is-room-open .product-display,
+.website-room.is-room-open .web-lab {
+  transform: translate3d(var(--display-x,0),var(--display-y,0),var(--display-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
+  transform-origin: left center;
+  opacity: calc(.38 + var(--room-fade,1) * .62) !important;
+  transition: none !important;
+}
+
+.product-room.is-room-open .display-window,
+.website-room.is-room-open .monitor-one {
+  transform: translate3d(var(--screen-x,0),var(--screen-y,0),var(--screen-z,0)) rotateY(var(--room-turn,0deg)) !important;
+  transition: none !important;
+}
+
+.product-room.is-room-open .display-float,
+.website-room.is-room-open .monitor-two {
+  transform: translate3d(var(--float-x,0),var(--float-y,0),var(--float-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
+  transition: none !important;
+}
+
+.product-room.is-room-open .habit-board,
+.product-room.is-room-open .document-stack,
+.product-room.is-room-open .learning-wall {
+  transform: translate3d(var(--screen-x,0),var(--screen-y,0),var(--screen-z,0)) rotateY(var(--room-turn,0deg)) !important;
+  transition: none !important;
+}
+
+.product-room.is-room-open .icon-stage,
+.website-room.is-room-open .web-phone {
+  transform: translate3d(var(--float-x,0),var(--float-y,0),var(--float-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
+  transition: none !important;
+}
+
+.website-room.is-room-open .layer-wireframe {
+  transform: translate3d(var(--screen-x,0),var(--float-y,0),var(--screen-z,0)) rotateY(var(--room-turn,0deg)) !important;
+}
+
+.website-room.is-room-open .layer-tokens {
+  transform: translate3d(var(--float-x,0),var(--screen-y,0),var(--float-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
+}
+
+.product-room.is-room-open .product-manager,
+.website-room.is-room-open .web-manager {
+  transform: translate3d(var(--manager-x,0),var(--manager-y,0),var(--manager-z,0)) !important;
+  transition: none !important;
+}
+
+.product-room.is-room-open .manager-label,
+.website-room.is-room-open .manager-label {
+  transform: translate3d(var(--manager-x,0),var(--screen-y,0),var(--manager-z,0)) !important;
+  transition: none !important;
+}
+
+@media (max-width:1050px) {
+  .product-room .product-suite,
+  .website-room .website-suite-room {
+    position: sticky !important;
+    top: 78px;
+    height: auto !important;
+    min-height: 1120px !important;
+    margin: 78px auto 0 !important;
+  }
+  .room-motion-track { height:180svh; }
+  .room-motion-guide { right:14px; grid-template-columns:auto 90px auto; }
+  .product-room.is-room-open .product-story,
+  .website-room.is-room-open .website-copy {
+    transform: translate3d(0,var(--story-y,0),var(--story-z,0)) rotateX(var(--room-turn,0deg)) !important;
+  }
+  .product-room.is-room-open .product-display,
+  .website-room.is-room-open .web-lab {
+    transform: translate3d(0,var(--display-y,0),var(--display-z,0)) rotateX(var(--room-turn-inverse,0deg)) !important;
+  }
+}
+
+@media (max-width:720px) {
+  .product-room .product-suite,
+  .website-room .website-suite-room { top:66px; min-height:1040px !important; margin:66px auto 0 !important; }
+  .room-motion-guide { left:14px; right:14px; bottom:10px; grid-template-columns:auto 1fr auto; }
+  .room-motion-guide span,.room-motion-guide em { font-size:7px; }
+  .room-motion-guide em { min-width:64px; }
+  .room-motion-track { height:150svh; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .room-motion-track { height:20px; }
+  .room-motion-guide { display:none; }
+  .product-room.is-room-open .product-story,
+  .website-room.is-room-open .website-copy,
+  .product-room.is-room-open .product-display,
+  .website-room.is-room-open .web-lab,
+  .product-room.is-room-open .display-window,
+  .website-room.is-room-open .monitor-one,
+  .product-room.is-room-open .display-float,
+  .website-room.is-room-open .monitor-two,
+  .product-room.is-room-open .habit-board,
+  .product-room.is-room-open .document-stack,
+  .product-room.is-room-open .learning-wall,
+  .product-room.is-room-open .icon-stage,
+  .website-room.is-room-open .web-phone,
+  .product-room.is-room-open .product-manager,
+  .website-room.is-room-open .web-manager { transform:none !important; opacity:1 !important; }
+}

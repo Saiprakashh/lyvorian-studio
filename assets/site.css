@@ -406,10 +406,18 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
   border:1px solid var(--line-bright);border-radius:15px;padding:14px;
   box-shadow:0 24px 54px -20px rgba(var(--shadow-rgb),.5);
   display:flex;flex-direction:column;gap:9px;
+  /* visibility, not just opacity: neither opacity:0 nor pointer-events:none
+     takes an element out of the tab order, so the closed popover's mailto link
+     stayed focusable on all 15 pages that carry it — an invisible tab stop the
+     screen reader could not announce, because aria-hidden had pruned it.
+     Delayed so the close transition still plays. */
   opacity:0;transform:translateY(-6px) scale(.97);pointer-events:none;transform-origin:top center;
-  transition:opacity .22s cubic-bezier(.16,.8,.28,1),transform .22s cubic-bezier(.16,.8,.28,1)}
+  visibility:hidden;
+  transition:opacity .22s cubic-bezier(.16,.8,.28,1),transform .22s cubic-bezier(.16,.8,.28,1),
+             visibility 0s linear .22s}
 .contact-pop.flip{transform:translateY(6px) scale(.97);transform-origin:bottom center}
-.contact-pop.show{opacity:1;transform:none;pointer-events:auto}
+.contact-pop.show{opacity:1;transform:none;pointer-events:auto;visibility:visible;
+  transition-delay:0s}
 .contact-tail{position:absolute;width:11px;height:11px;background:var(--panel);
   border-left:1px solid var(--line-bright);border-top:1px solid var(--line-bright);
   top:-6px;left:var(--tail-x,50%);margin-left:-6px;transform:rotate(45deg);border-radius:2px 0 0 0}
@@ -519,7 +527,9 @@ header.site-hdr,body > header{transition:padding var(--t-panel) var(--e-inout),
 .mm-nav{display:flex;flex-direction:column}
 .mm-nav a{display:flex;flex-direction:column;gap:2px;padding:var(--sp-3) var(--sp-2);
   border-radius:var(--r-md);text-decoration:none;color:var(--text)}
-.mm-nav a span{font:600 1.25rem/1.25 var(--font-interface);letter-spacing:-.02em}
+/* :not(.w):not(.wg) — descent.js splits .mm into word spans, which match
+   this at (0,1,2) and beat .mm-nav a, restyling every menu label. */
+.mm-nav a span:not(.w):not(.wg){font:600 1.25rem/1.25 var(--font-interface);letter-spacing:-.02em}
 .mm-nav a em{font-style:normal;color:var(--muted2);
   font:var(--t-body-sm);letter-spacing:var(--ls-body-sm)}
 .mm-cap{display:block;margin-bottom:var(--sp-2);color:var(--muted2);

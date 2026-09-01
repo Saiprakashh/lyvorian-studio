@@ -238,7 +238,11 @@ body { background: var(--bg); color: var(--text); }
 .dsc-hdr {
   position: absolute;
   top: 0; left: 0; right: 0;
-  z-index: 5;
+  /* Above .mm (z-index 11). The header creates a stacking context, so
+     .nav-toggle's own z-index:12 was trapped inside it and the 97%-opaque
+     menu sheet painted over the very button that closes it — leaving a phone
+     with no way out but picking a nav link. */
+  z-index: 12;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -456,6 +460,10 @@ body { background: var(--bg); color: var(--text); }
 .lb-x:focus-visible, .lb-nav:focus-visible { outline: 2px solid #f4f4f5; outline-offset: 3px; }
 @media (max-width: 560px) {
   .lb { grid-template-columns: 1fr; }
+  /* The grid drops to one column here, but .lb-img and .lb-cap still asked for
+     column 2, which created an implicit second track and pushed the screenshot
+     off-centre past the right padding. */
+  .lb-img, .lb-cap { grid-column: 1; }
   .lb-prev { grid-column: 1; justify-self: start; }
   .lb-next { grid-column: 1; justify-self: end; }
   .lb-prev, .lb-next { position: absolute; bottom: 1.5rem; }
@@ -486,7 +494,11 @@ body { background: var(--bg); color: var(--text); }
 }
 .nav-toggle::before { top: 15px; }
 .nav-toggle span    { top: 21px; }
-.nav-toggle::after  { top: 27px; }
+/* translate:none because site.css:291 gives .nav-toggle::after a
+   translate:-50% -50% under (pointer:coarse) to enlarge the tap target. That
+   resolves against THIS 22x1.5px bar, not the button, shifting it 11px left —
+   a hamburger with one stroke sticking out, and an X that does not cross. */
+.nav-toggle::after  { top: 27px; translate: none; }
 .nav-toggle[aria-expanded="true"]::before { transform: translateY(6px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span    { opacity: 0; }
 .nav-toggle[aria-expanded="true"]::after  { transform: translateY(-6px) rotate(-45deg); }
@@ -642,76 +654,6 @@ body { background: var(--bg); color: var(--text); }
   .craft-wide img { aspect-ratio: 16 / 9; }
 }
 
-/* ── the product roster ────────────────────────────────────────── */
-.prod-head { max-width: 46rem; margin: clamp(3.5rem, 8vh, 5.5rem) auto clamp(1.8rem, 4vh, 2.6rem); text-align: center; }
-.prod-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(.9rem, 1.8vw, 1.4rem);
-  max-width: 76rem;
-  margin: 0 auto;
-  padding-inline: clamp(1.25rem, 5vw, 3rem);
-}
-.prod-card {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: .55rem;
-  padding: clamp(1.3rem, 2vw, 1.75rem);
-  border-radius: 14px;
-  border: 1px solid var(--dsc-edge);
-  background: var(--dsc-card);
-  text-decoration: none;
-  transition: border-color .25s cubic-bezier(.23, 1, .32, 1),
-              transform .25s cubic-bezier(.23, 1, .32, 1);
-}
-.prod-card img { display: block; width: 44px; height: 44px; border-radius: 11px; margin-bottom: .5rem; }
-.prod-no {
-  color: var(--dsc-ink-3);
-  font: 500 .68rem/1 var(--font-interface, system-ui, sans-serif);
-  letter-spacing: .1em;
-}
-.prod-card h3 {
-  margin: 0;
-  color: var(--dsc-ink);
-  font: 500 1.06rem/1.25 var(--font-display, Georgia, serif);
-}
-.prod-card > p {
-  margin: 0;
-  flex: 1;
-  color: var(--dsc-ink-2);
-  font: 300 .86rem/1.55 var(--font-interface, system-ui, sans-serif);
-}
-.chip {
-  align-self: flex-start;
-  margin-top: .4rem;
-  padding: .32rem .7rem;
-  border-radius: var(--r-pill, 999px);
-  border: 1px solid var(--dsc-edge-2);
-  color: var(--dsc-ink-2);
-  font: 500 .7rem/1.2 var(--font-interface, system-ui, sans-serif);
-}
-.chip-live { border-color: rgba(143, 224, 159, .38); color: #8fe09f; }
-
-/* The badge is a sibling of the card, not a child — nesting an <a> inside an
-   <a> is invalid and the browser drops one. Pulled up so it reads as part of
-   the Finance Tracker cell. */
-.prod-play {
-  grid-column: 1;
-  justify-self: start;
-  margin-top: -.6rem;
-  display: inline-flex;
-  border-radius: 8px;
-}
-.prod-play img { display: block; height: 40px; width: auto; }
-.prod-play:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 3px; }
-@media (max-width: 1040px) { .prod-play { grid-column: 1; } }
-@media (hover: hover) and (pointer: fine) {
-  .prod-card:hover { border-color: var(--dsc-edge-2); transform: translateY(-3px); }
-}
-@media (max-width: 1040px) { .prod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px)  { .prod-grid { grid-template-columns: 1fr; } }
-
 /* ── roadmap ───────────────────────────────────────────────────── */
 .road, .log {
   background: var(--dsc-plate);
@@ -736,7 +678,10 @@ body { background: var(--bg); color: var(--text); }
   justify-self: center;
 }
 .road-item[data-state="done"]  .road-dot { background: #8fe09f; }
-.road-item[data-state="next"]  .road-dot { background: transparent; border: 2px solid rgba(246,246,247,.55); }
+/* Token, not a hardcoded near-white: .road is not in the forced-dark list,
+   so in light mode this ring composited to ~1.08:1 on the beige plate and
+   the in-flight item was the only invisible one. */
+.road-item[data-state="next"]  .road-dot { background: transparent; border: 2px solid var(--dsc-ink-2); }
 .road-item[data-state="later"] .road-dot { background: var(--dsc-ink-4); }
 .road-title {
   margin: 0 0 .3rem;
@@ -1163,7 +1108,14 @@ body { background: var(--bg); color: var(--text); }
     background: linear-gradient(to top, rgba(12, 13, 15, .55) 0%, transparent 60%);
   }
   .plan-copy {
-    position: static;
+    /* relative, not static: the base rule's z-index:2 is inert on a static
+       box, so .plan::after (z-index:1) painted its scrim over the steps and
+       dropped them from ~14.3:1 to ~3.8:1 — below AA on every phone.
+       inset:auto with it, because on a relative box the base rule's
+       left/right stop being edges and become OFFSETS — they shoved the block
+       20px right and off the screen. */
+    position: relative;
+    inset: auto;
     display: block;              /* undo the flex bounding used by the overlay */
     padding: clamp(1.75rem, 5vw, 2.75rem) clamp(1.25rem, 5vw, 3rem) clamp(2.5rem, 7vh, 4rem);
     max-width: none;
@@ -1173,10 +1125,10 @@ body { background: var(--bg); color: var(--text); }
 @media (max-width: 520px) { .plan-steps { grid-template-columns: 1fr; } }
 
 /* ── the product room ──────────────────────────────────────────────
-   One perspective on the stage, `preserve-3d` on the deck, and every slab on
-   its own translateZ. That is what makes the parallax real: the near screen
-   sweeps further than the far ones because it genuinely is nearer, not
-   because a script is moving them at different rates. */
+   The room itself is now project-office.html — a seven-room walkthrough with
+   its own splash and scroll choreography. What lives here is the doorway to
+   it, so the inlined 3D deck (and the lightbox that only existed to enlarge
+   its 150px slabs) has been removed rather than left running alongside. */
 .room {
   background: var(--dsc-plate);
   color: var(--dsc-ink);
@@ -1195,6 +1147,97 @@ body { background: var(--bg); color: var(--text); }
   letter-spacing: -.016em;
   text-wrap: balance;
 }
+.portal {
+  display: flex;
+  justify-content: center;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* Deliberately a door, not a button: wide, quiet, and it opens rather than
+   submits. The glow sits behind the label on ::before so the hover reads as
+   light coming from the far side of it. */
+.portal-cta {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "label arrow" "title arrow";
+  align-items: center;
+  gap: .45rem 1.5rem;
+  width: min(46rem, 100%);
+  padding: clamp(1.6rem, 4vw, 2.4rem) clamp(1.5rem, 4vw, 2.6rem);
+  border: 1px solid var(--dsc-edge-2);
+  border-radius: 18px;
+  background: var(--dsc-card);
+  color: var(--dsc-ink);
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color .3s cubic-bezier(.23, 1, .32, 1),
+              transform .3s cubic-bezier(.23, 1, .32, 1);
+}
+.portal-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 140% at 50% 120%,
+    color-mix(in srgb, var(--dsc-ink) 12%, transparent) 0%, transparent 68%);
+  opacity: 0;
+  transition: opacity .3s cubic-bezier(.23, 1, .32, 1);
+}
+.portal-label {
+  grid-area: label;
+  font: 500 .68rem/1 var(--font-interface, system-ui, sans-serif);
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  /* ink-2, not ink-3: at .68rem this is small text needing 4.5:1, and ink-3
+     against the portal's card fill measured 3.76:1 in light mode. Every other
+     .dsc-label on the page already uses ink-2, which measures 5.47:1. */
+  color: var(--dsc-ink-2);
+}
+.portal-title {
+  grid-area: title;
+  font: 500 clamp(1.5rem, 3.2vw, 2.3rem)/1.1 var(--font-display, Georgia, serif);
+  letter-spacing: -.014em;
+}
+.portal-arrow {
+  grid-area: arrow;
+  display: grid;
+  place-items: center;
+  width: 3rem; height: 3rem;
+  border: 1px solid var(--dsc-edge-2);
+  border-radius: 50%;
+  font-size: 1.1rem;
+  color: var(--dsc-ink-2);
+  transition: transform .3s cubic-bezier(.23, 1, .32, 1),
+              border-color .3s cubic-bezier(.23, 1, .32, 1),
+              color .3s cubic-bezier(.23, 1, .32, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .portal-cta:hover { border-color: var(--dsc-ink-3); transform: translateY(-3px); }
+  .portal-cta:hover::before { opacity: 1; }
+  .portal-cta:hover .portal-arrow {
+    transform: translateX(4px);
+    border-color: var(--dsc-ink-2);
+    color: var(--dsc-ink);
+  }
+}
+.portal-cta:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .portal-cta, .portal-cta::before, .portal-arrow { transition: none; }
+  .portal-cta:hover { transform: none; }
+}
+/* Below 460px the circle and the serif title fight for the same row. */
+@media (max-width: 460px) {
+  .portal-cta {
+    grid-template-columns: 1fr;
+    grid-template-areas: "label" "title" "arrow";
+    justify-items: start;
+    gap: .55rem;
+  }
+  .portal-arrow { width: 2.6rem; height: 2.6rem; margin-top: .4rem; }
+}
+
 .room-sub {
   margin: 0;
   color: var(--dsc-ink-2);
@@ -1231,7 +1274,7 @@ body { background: var(--bg); color: var(--text); }
   border: 1px solid var(--dsc-edge-2);
   box-shadow: 0 40px 70px -30px rgba(0, 0, 0, .9);
 }
-.room-slab > span:not(.w):not(.wg) {      /* the caption only — not the word spans in it */
+.room-slab > span:not(.w):not(.wg):not(.wg) {      /* the caption only — not the word spans in it */
   display: block;
   margin-top: .85rem;
   text-align: center;
@@ -1369,3 +1412,44 @@ body { background: var(--bg); color: var(--text); }
       rgba(12, 13, 15, .78) 0%, rgba(12, 13, 15, .34) 46%, transparent 82%);
   }
 }
+
+
+/* ── the deck's store buttons ───────────────────────────────────────
+   Same pair finance-tracker.html uses, restated here because that page's
+   rules live in a stylesheet this one does not load. */
+.deck-head { margin-top: clamp(3.5rem, 9vh, 6rem); }
+.dl-row.deck-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.4rem;
+  margin-top: clamp(2.2rem, 5vh, 3.2rem);
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+}
+.deck-actions .dl-badge { display: inline-flex; border-radius: 9px; }
+.deck-actions .dl-badge img { display: block; height: 52px; width: auto; }
+.deck-actions .dl-badge:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 4px; }
+.deck-actions .dl-alt {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  min-height: 52px;             /* matches the badge so the row sits level */
+  padding: 0 1.5rem;
+  border: 1px solid var(--dsc-ink-3);
+  border-radius: 999px;
+  color: var(--dsc-ink);
+  text-decoration: none;
+  font: 500 .74rem/1 var(--font-interface, system-ui, sans-serif);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  transition: background .22s cubic-bezier(.23, 1, .32, 1),
+              border-color .22s cubic-bezier(.23, 1, .32, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .deck-actions .dl-alt:hover {
+    background: color-mix(in srgb, var(--dsc-ink) 12%, transparent);
+    border-color: var(--dsc-ink-2);
+  }
+}
+.deck-actions .dl-alt:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 3px; }

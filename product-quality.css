@@ -1,0 +1,225 @@
+/* Project Office quality pass — v17 */
+:root{--focus-ring:#b9ffe9}
+
+/* Restore the designed ending and keep every interactive state visible. */
+.final-room{display:grid!important}
+:where(a,button):focus-visible{outline:2px solid var(--focus-ring);outline-offset:4px}
+.room-door:focus-visible{outline-offset:2px}
+[inert]{pointer-events:none!important}
+.product-room[aria-hidden="true"],.website-room[aria-hidden="true"]{visibility:hidden!important}
+
+/* Product suites use distinct room lighting while sharing one architectural shell. */
+.finance-product{--suite-accent:114,224,196;--suite-secondary:107,151,255}
+.habit-product{--suite-accent:133,226,171;--suite-secondary:205,236,144}
+.fylunor-product{--suite-accent:183,166,255;--suite-secondary:128,116,214}
+.medha-product{--suite-accent:244,183,118;--suite-secondary:232,151,196}
+.website-room{--suite-accent:114,224,196;--suite-secondary:183,166,255}
+.product-room .room-vignette.strong,.website-room .room-vignette.strong{
+  background:
+    radial-gradient(circle at 72% 27%,rgba(var(--suite-accent),.2),transparent 28%),
+    radial-gradient(circle at 22% 78%,rgba(var(--suite-secondary),.13),transparent 33%),
+    linear-gradient(90deg,rgba(10,11,13,.88),rgba(10,11,13,.56) 48%,rgba(10,11,13,.72));
+}
+.product-display::before,.web-lab::before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(var(--suite-accent),.08),transparent 34%,rgba(var(--suite-secondary),.07));box-shadow:inset 0 1px rgba(255,255,255,.08)}
+.product-status b{border-color:rgba(var(--suite-accent),.35);background:rgba(var(--suite-accent),.1);color:rgb(var(--suite-accent))}
+.product-title img{box-shadow:0 18px 42px rgba(0,0,0,.36),0 0 0 1px rgba(var(--suite-accent),.24)}
+
+/* Keep room content readable on short screens and long product names intact. */
+.product-suite,.website-suite-room,.product-story,.product-display,.website-copy,.web-lab{min-width:0}
+.product-story,.website-copy{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.product-title>div{min-width:0}.product-title h2{overflow-wrap:anywhere}
+.product-actions{row-gap:14px}.product-actions a{min-height:42px;display:inline-flex;align-items:center}
+.room-exit-button{min-width:184px;justify-content:center}
+.room-motion-guide{max-width:calc(100vw - 28px)}
+
+/* Characters and props stay planted on the room floor. */
+.product-manager,.web-manager{background-position-y:bottom!important;transform-origin:50% 100%!important}
+.icon-stage{isolation:isolate}
+.icon-stage::after{content:"";position:absolute;z-index:-1;left:16%;right:16%;bottom:4px;height:15px;border-radius:50%;background:rgba(0,0,0,.5);filter:blur(8px)}
+.icon-stage img{animation:iconSettle 4.5s ease-in-out infinite!important;transform-origin:50% 100%}
+@keyframes iconSettle{0%,100%{transform:translateY(-2px) scale(1)}50%{transform:translateY(-2px) scale(1.018)}}
+
+/* The final room acts as a deliberate exit, not an unfinished blank screen. */
+.final-room::before{content:"LYVORIAN STUDIO";position:absolute;left:50%;top:50%;z-index:0;color:rgba(255,255,255,.025);font:600 clamp(76px,14vw,230px)/.8 Manrope,sans-serif;letter-spacing:-.08em;white-space:nowrap;transform:translate(-50%,-50%)}
+.final-copy{padding:36px;border:1px solid rgba(255,255,255,.13);background:linear-gradient(135deg,rgba(43,45,49,.62),rgba(17,18,22,.46));backdrop-filter:blur(18px)}
+
+/* The project floor is a deliberate destination: the corridor exists only after entry. */
+.projects-entry-panel{
+  position:absolute;z-index:50;left:50%;top:50%;display:grid;width:min(760px,calc(100% - 48px));
+  padding:clamp(28px,4vw,58px);overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:28px;
+  background:linear-gradient(135deg,rgba(50,52,58,.84),rgba(16,17,20,.72) 58%,rgba(25,25,34,.78));
+  box-shadow:inset 0 1px rgba(255,255,255,.18),0 42px 110px rgba(0,0,0,.5),0 0 70px rgba(183,166,255,.08);
+  backdrop-filter:blur(24px) saturate(1.22);transform:translate(-50%,-48%);transition:opacity .38s ease,visibility .38s,transform .65s var(--ease)
+}
+.projects-entry-panel::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 84% 18%,rgba(114,224,196,.15),transparent 27%),radial-gradient(circle at 8% 92%,rgba(183,166,255,.15),transparent 32%),linear-gradient(115deg,transparent 35%,rgba(255,255,255,.045) 50%,transparent 65%)}
+.projects-entry-panel::after{content:"";position:absolute;right:clamp(22px,4vw,48px);top:0;width:1px;height:100%;background:linear-gradient(transparent,rgba(255,255,255,.2),transparent);opacity:.55}
+.projects-entry-panel>*{position:relative;z-index:1}
+.projects-entry-panel>small{display:flex;align-items:center;gap:10px;color:#a9f4df;font-size:10px;font-weight:600;letter-spacing:.18em}
+.projects-entry-panel>small i{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 18px rgba(114,224,196,.8)}
+.projects-entry-panel h2{max-width:640px;margin:30px 0 20px;font-size:clamp(52px,6.2vw,88px);line-height:.78;letter-spacing:-.07em}
+.projects-entry-panel h2 em{color:var(--lilac);font-family:var(--serif);font-weight:400}
+.projects-entry-panel>p{max-width:590px;margin:0;color:#c4c6ca;font-size:13px;line-height:1.7}
+.projects-entry-index{position:absolute;right:24px;top:18px;color:rgba(255,255,255,.045);font:600 clamp(96px,14vw,170px)/1 var(--sans);letter-spacing:-.09em}
+.projects-entry-button{display:flex;align-items:center;justify-content:space-between;gap:28px;width:min(100%,470px);min-height:76px;margin-top:34px;padding:10px 12px 10px 22px;color:#f5f4ef;border:1px solid rgba(255,255,255,.22);border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.045));box-shadow:inset 0 1px rgba(255,255,255,.17),0 18px 45px rgba(0,0,0,.25);backdrop-filter:blur(18px);cursor:pointer;text-align:left;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}
+.projects-entry-button>span{display:grid;gap:5px}.projects-entry-button small{color:#9fa2a8;font-size:8px;letter-spacing:.14em;text-transform:uppercase}.projects-entry-button b{font-size:15px;letter-spacing:-.02em}.projects-entry-button>i{display:grid;place-items:center;width:50px;height:50px;color:#17181b;border-radius:14px;background:linear-gradient(135deg,var(--mint),#aef4e1);font-size:18px;font-style:normal;box-shadow:0 10px 30px rgba(114,224,196,.22);transition:transform .35s var(--ease)}
+.projects-entry-button:hover,.projects-entry-button:focus-visible{border-color:rgba(114,224,196,.66);box-shadow:inset 0 1px rgba(255,255,255,.2),0 24px 58px rgba(0,0,0,.34),0 0 34px rgba(114,224,196,.1);transform:translateY(-3px)}
+.projects-entry-button:hover>i,.projects-entry-button:focus-visible>i{transform:translate(2px,-2px)}
+.projects-entry-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.projects-entry-meta span{padding:7px 10px;color:#9da0a6;border:1px solid rgba(255,255,255,.11);border-radius:999px;background:rgba(12,13,16,.28);font-size:8px;letter-spacing:.09em;text-transform:uppercase}
+.product-wing-room .corridor-map{opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(-50px,var(--content-shift,0),var(--content-z,0)) scale(.97);transition:opacity .38s ease,visibility .38s,transform .7s var(--ease)}
+.product-wing-room.projects-open .projects-entry-panel{opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-52%) scale(.96)}
+.product-wing-room.projects-open .corridor-map{opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(var(--content-x,0),var(--content-shift,0),var(--content-z,0)) rotateY(var(--content-turn,0))}
+.product-wing-room:has(.corridor-map:target) .projects-entry-panel{opacity:0;visibility:hidden;pointer-events:none}
+.product-wing-room .corridor-map:target{opacity:1;visibility:visible;pointer-events:auto}
+.corridor-heading{position:relative}.corridor-heading p{padding-top:38px}
+.projects-close-button{position:absolute;right:0;top:0;min-height:30px;padding:0 11px;color:#d9dadc;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.06);cursor:pointer;font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:color .25s,border-color .25s,background .25s}
+.projects-close-button:hover,.projects-close-button:focus-visible{color:#17181b;border-color:var(--mint);background:var(--mint)}
+
+@media (min-width:1051px) and (max-height:760px){
+  .product-room .product-suite,.website-room .website-suite-room{top:80px!important;height:calc(100svh - 92px)!important;margin:80px auto 12px!important}
+  .product-story,.website-copy{padding:24px 30px!important}
+  .product-title{margin-top:24px!important}.product-title h2{font-size:clamp(38px,4vw,60px)!important}
+  .product-story>p{margin-top:18px!important;line-height:1.5}.product-story ul{margin:18px 0!important}
+  .website-copy>small{margin-top:18px!important}.website-copy h2{font-size:clamp(40px,4.5vw,66px)!important}
+  .product-manager,.web-manager{height:min(46svh,330px)!important}
+}
+
+@media (max-width:1050px){
+  .product-story,.website-copy{overflow:visible}
+  .final-room{min-height:100svh!important}
+  .projects-entry-panel{top:50%;width:min(720px,calc(100% - 40px))}
+}
+
+@media (max-width:720px){
+  .room-exit-button{top:73px;left:12px;min-width:0;max-width:calc(100vw - 24px);padding:0 12px}
+  .room-motion-guide{left:12px!important;right:12px!important;bottom:max(10px,env(safe-area-inset-bottom))!important}
+  .product-title{align-items:flex-start;gap:14px}.product-title h2{font-size:clamp(34px,11vw,48px)!important}
+  .product-actions{align-items:flex-start;flex-direction:column;gap:10px}
+  .office-corridor{overflow-x:hidden!important}
+  .final-copy{width:calc(100% - 28px);padding:28px 20px}.final-copy h2{font-size:clamp(54px,18vw,78px)}
+  .product-wing-room:not(.projects-open){min-height:100svh!important}
+  .projects-entry-panel{position:absolute;top:50%;width:calc(100% - 28px);padding:28px 20px;border-radius:20px;transform:translate(-50%,-47%)}
+  .projects-entry-panel h2{margin:24px 0 16px;font-size:clamp(46px,15vw,68px)}
+  .projects-entry-panel>p{font-size:12px}.projects-entry-index{right:18px;font-size:92px}
+  .projects-entry-button{min-height:70px;margin-top:26px;padding-left:17px}.projects-entry-button>i{width:46px;height:46px}
+  .projects-entry-meta{margin-top:18px}.projects-entry-meta span{font-size:7px}
+  .product-wing-room .corridor-map{display:none;opacity:0;visibility:hidden}
+  .product-wing-room.projects-open .corridor-map{display:grid;opacity:1;visibility:visible;transform:none}
+  .corridor-heading p{padding-top:0}.projects-close-button{position:static;grid-column:1;width:max-content;margin-top:8px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .icon-stage img{animation:none!important;transform:none!important}
+  .product-room,.website-room{scroll-behavior:auto!important}
+  .projects-entry-panel,.product-wing-room .corridor-map{transition:none!important}
+}
+
+/* V18 — Project floor becomes an editorial suite directory, not five empty panels. */
+.product-wing-room.projects-open .corridor-map{top:calc(98px + 10svh);bottom:auto;height:min(760px,calc(100svh - 130px));padding:22px 24px 24px!important;background:linear-gradient(145deg,rgba(35,36,42,.92),rgba(14,15,18,.88));border-color:rgba(255,255,255,.16);box-shadow:inset 0 1px rgba(255,255,255,.12),0 34px 100px rgba(0,0,0,.46);backdrop-filter:blur(24px) saturate(1.2);transform:none!important}
+.corridor-heading{grid-template-columns:minmax(0,1fr) minmax(260px,380px);padding:0 2px 17px}
+.corridor-heading>span{font-size:9px}.corridor-heading h2{font-size:clamp(34px,3.2vw,48px);letter-spacing:-.055em}.corridor-heading p{max-width:350px;padding-top:34px;color:#aeb0b6;font-size:10px}
+.office-corridor{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(2,minmax(170px,1fr));gap:12px;min-height:0;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.13);background:transparent!important}
+.office-corridor::before{inset:14px 0 0;height:auto;clip-path:none;background:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(#000,transparent);opacity:.55}
+.room-door{min-height:0;padding:0;isolation:isolate;border:1px solid rgba(255,255,255,.12)!important;border-radius:16px!important;background:linear-gradient(145deg,rgba(50,51,58,.78),rgba(24,25,30,.94))!important;box-shadow:inset 0 1px rgba(255,255,255,.1),0 18px 42px rgba(0,0,0,.2)!important;transform:none!important;transition:transform .45s var(--ease),border-color .3s,box-shadow .3s!important}
+.room-door:nth-child(1){grid-column:1/5;grid-row:1/3;--door-accent:114,224,196}
+.room-door:nth-child(2){grid-column:5/9;grid-row:1;--door-accent:143,228,178}
+.room-door:nth-child(3){grid-column:5/9;grid-row:2;--door-accent:183,166,255}
+.room-door:nth-child(4){grid-column:9/13;grid-row:1;--door-accent:244,183,118}
+.room-door:nth-child(5){grid-column:9/13;grid-row:2;--door-accent:171,153,255}
+.room-door::before{inset:0!important;border:0!important;border-radius:inherit!important;background:radial-gradient(circle at 17% 34%,rgba(var(--door-accent),.19),transparent 30%),linear-gradient(115deg,rgba(255,255,255,.055),transparent 34%,transparent 70%,rgba(var(--door-accent),.055))!important;transition:opacity .35s}
+.room-door::after{left:18px;right:18px;bottom:0;height:2px;background:linear-gradient(90deg,transparent,rgba(var(--door-accent),.9),transparent);filter:none;opacity:.65}
+.room-door>span{left:20px;top:18px;color:rgb(var(--door-accent));font-size:8px;letter-spacing:.15em}
+.room-door>img,.website-door-mark{left:24%;top:48%;width:66px;height:66px;border:1px solid rgba(255,255,255,.13);border-radius:15px!important;background:rgba(10,11,14,.38);box-shadow:0 18px 38px rgba(0,0,0,.34),0 0 28px rgba(var(--door-accent),.09);transform:translate(-50%,-50%)!important}
+.room-door>b{position:absolute;z-index:3;left:39%;right:18px;top:28%;font-size:clamp(21px,2vw,30px);line-height:.92;letter-spacing:-.055em}
+.room-door>p{position:absolute;z-index:3;left:39%;right:22px;top:48%;margin:0;color:#aeb0b6;font-size:9px;line-height:1.5}
+.room-door>i{position:absolute;z-index:3;left:39%;bottom:51px;margin:0;padding:6px 8px;color:rgb(var(--door-accent));border:1px solid rgba(var(--door-accent),.22);border-radius:999px;background:rgba(var(--door-accent),.07);font-size:7px;font-weight:600}
+.room-door>em{position:absolute;z-index:3;left:20px;right:20px;bottom:17px;display:flex;align-items:center;justify-content:space-between;margin:0;padding:11px 0 0;color:#d8d9dc;border-top:1px solid rgba(255,255,255,.11);font-size:8px;text-transform:uppercase;letter-spacing:.08em}
+.room-door>em u{text-decoration:none;color:rgb(var(--door-accent));font-size:13px;transition:transform .3s var(--ease)}
+.room-door:hover,.room-door:focus-visible{border-color:rgba(var(--door-accent),.52)!important;box-shadow:inset 0 1px rgba(255,255,255,.13),0 28px 58px rgba(0,0,0,.34),0 0 30px rgba(var(--door-accent),.08)!important;transform:translateY(-5px)!important}
+.room-door:hover::before,.room-door:focus-visible::before{opacity:1.35}.room-door:hover>em u,.room-door:focus-visible>em u{transform:translate(2px,-2px)}
+.room-door-featured>span{left:28px;top:24px}.room-door-featured>img{left:28px;top:84px;width:82px;height:82px;transform:none!important}
+.room-door-featured>b{left:28px;right:25px;top:auto;bottom:151px;font-size:clamp(34px,3.6vw,57px)}
+.room-door-featured>p{left:28px;right:28px;top:auto;bottom:99px;max-width:310px;font-size:10px}
+.room-door-featured>i{left:28px;bottom:58px}.room-door-featured>em{left:28px;right:28px;bottom:18px}
+.room-door-featured::before{background:radial-gradient(circle at 22% 24%,rgba(var(--door-accent),.22),transparent 32%),linear-gradient(155deg,rgba(255,255,255,.055),transparent 40%),repeating-linear-gradient(90deg,transparent 0 47px,rgba(255,255,255,.018) 48px)!important}
+.website-door-mark{display:flex;padding:13px}.website-door-mark u{width:12px;background:linear-gradient(rgb(var(--door-accent)),var(--mint))}
+
+@media (max-width:1050px) and (min-width:721px){
+  .product-wing-room.projects-open{min-height:100svh!important}
+  .product-wing-room.projects-open .corridor-map{inset:calc(88px + 10svh) 3% auto;height:calc(100svh - 110px)}
+  .office-corridor{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(145px,1fr));gap:9px}
+  .room-door:nth-child(1){grid-column:1/3;grid-row:1}.room-door:nth-child(2),.room-door:nth-child(3),.room-door:nth-child(4),.room-door:nth-child(5){grid-column:auto;grid-row:auto}
+  .room-door-featured>img{left:22px;top:58px;width:64px;height:64px}.room-door-featured>b{left:105px;top:52px;bottom:auto;font-size:30px}.room-door-featured>p{left:105px;top:92px;bottom:auto}.room-door-featured>i{left:105px;bottom:45px}
+  .room-door>p{font-size:8px}.room-door>em{bottom:12px;padding-top:8px}
+}
+
+@media (max-width:720px){
+  .product-wing-room.projects-open{min-height:1900px!important}
+  .product-wing-room.projects-open .corridor-map{width:calc(100% - 24px)!important;height:auto;margin:78px auto 18px;padding:18px 14px!important;border-radius:18px!important}
+  .corridor-heading{grid-template-columns:1fr;padding-bottom:16px}.corridor-heading p{grid-column:1;padding-top:0}.projects-close-button{margin-top:12px}
+  .office-corridor{grid-template-columns:1fr;grid-template-rows:auto;gap:10px;padding-top:12px}
+  .room-door:nth-child(1),.room-door:nth-child(2),.room-door:nth-child(3),.room-door:nth-child(4),.room-door:nth-child(5){grid-column:1;grid-row:auto;min-height:260px}
+  .room-door:nth-child(1){min-height:340px}
+  .room-door>span{left:17px;top:16px}.room-door>img,.website-door-mark{left:22%;top:47%;width:62px;height:62px}
+  .room-door>b{left:38%;top:27%;font-size:25px}.room-door>p{left:38%;top:47%;font-size:9px}.room-door>i{left:38%;bottom:49px}.room-door>em{left:17px;right:17px;bottom:15px}
+  .room-door-featured>img{left:20px;top:70px;width:76px;height:76px}.room-door-featured>b{left:20px;top:auto;bottom:144px;font-size:42px}.room-door-featured>p{left:20px;bottom:93px}.room-door-featured>i{left:20px;bottom:53px}.room-door-featured>em{left:20px;right:20px;bottom:15px}
+}
+
+/* ── touch target sizes ─────────────────────────────────────────────
+   The room rail rendered as 8px dots on a phone: visible, but far below the
+   44px minimum, so the seven of them were effectively untappable — the same
+   failure the main site's nav had.
+
+   Padding the dot alone does not fix it. At an 11px dot on a 9px gap the
+   expanded hit areas would overlap and the later sibling would swallow the
+   earlier one's taps, so the pitch has to grow with the target. Widening the
+   gap to 34px gives each dot a clean 45px slot; seven of those is 281px, which
+   still fits a short viewport.
+
+   Scoped to coarse pointers: a mouse is precise, the dots carry hover labels,
+   and the desktop rail's rhythm is deliberate. */
+@media (pointer: coarse) {
+  /* The dot is 8px at this size, not the 11px it is on desktop, so the pitch
+     is measured from 8: 8 + 36 = 44 exactly. */
+  .tour-rail { gap: 36px; }
+  .tour-rail a::before {
+    content: "";
+    position: absolute;
+    inset: -18px;            /* 8px dot + 36 = a 44px touch target */
+  }
+  /* The wordmark is the way back out; 15px of text is not a target. */
+  .tour-brand, .exit-link { min-height: 44px; align-content: center; }
+  .splash [data-splash-skip] { min-height: 44px; padding-inline: 14px; }
+
+  /* Real controls sitting at 41px and 15px. The decorative buttons inside
+     .web-lab are deliberately left alone: that block is aria-hidden with
+     tabindex="-1" throughout, so they are inert mock-ups, and scaling them
+     to 44px would blow up the mock interface they are drawing. */
+  .office-button,
+  .product-actions a,
+  .final-copy div a { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+/* ── theme ──────────────────────────────────────────────────────────
+   This page does not follow the site's light/dark toggle, and that is a
+   decision rather than an oversight: every room is a dark photographic
+   render, so a light mode here would need new artwork, not new CSS — a
+   light-themed chrome wrapped around night-time rooms reads worse than a
+   page that simply commits.
+
+   What was missing is the declaration. Without color-scheme the browser
+   still paints form controls, scrollbars and the overscroll gutter from the
+   visitor's OS preference, so a light-mode visitor got light scrollbars
+   against a near-black building. */
+:root { color-scheme: dark; }
+
+/* Off-screen but still announced — not display:none, which would remove it
+   from the accessibility tree along with everything else. */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
