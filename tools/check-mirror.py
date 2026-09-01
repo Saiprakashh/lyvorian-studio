@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Catch index.html and descent.html drifting apart.
+"""Catch index.html and share-an-idea.html drifting apart.
 
 Several blocks are duplicated between the two pages by hand — the three rules,
 the roadmap, the studio notes, the footer link sets. They match today because
@@ -38,23 +38,37 @@ def texts(html, pattern):
     return out
 
 
-idx, prev = load('index.html'), load('descent.html')
+idx, prev = load('index.html'), load('share-an-idea.html')
 
+# One pattern per page, because the two pages are different designs. These
+# follow the DESIGN, not the filename: index.html now carries what used to be
+# descent.html, and share-an-idea.html carries the old homepage's markup.
+# Getting these the wrong way round makes both sides match zero items and the
+# check reports "in sync" while comparing nothing.
 CHECKS = [
     ('the three rules',
-     r'class="value-desc"[^>]*>(.*?)</p>',
-     r'class="rule-card"[^>]*>.*?<h3>.*?</h3>\s*<p>(.*?)</p>'),
+     r'class="rule-card"[^>]*>.*?<h3>.*?</h3>\s*<p>(.*?)</p>',
+     r'class="value-desc"[^>]*>(.*?)</p>'),
     ('roadmap entries',
-     r'class="roadmap-desc"[^>]*>(.*?)</p>',
-     r'class="road-desc"[^>]*>(.*?)</p>'),
+     r'class="road-desc"[^>]*>(.*?)</p>',
+     r'class="roadmap-desc"[^>]*>(.*?)</p>'),
     ('studio notes',
-     r'class="note-item"><span class="note-date">[^<]*</span><span>(.*?)</span>',
-     r'class="log-item"><span>[^<]*</span><p>(.*?)</p>'),
+     r'class="log-item"><span>[^<]*</span><p>(.*?)</p>',
+     r'class="note-item"><span class="note-date">[^<]*</span><span>(.*?)</span>'),
 ]
+
+# A comparison of nothing is not a pass. If either side extracts zero items the
+# pattern no longer matches its page, and the check must say so.
+GUARD_EMPTY = True
 
 problems = 0
 for label, pat_idx, pat_prev in CHECKS:
     a, b = texts(idx, pat_idx), texts(prev, pat_prev)
+    if GUARD_EMPTY and not a and not b:
+        print('  FAIL  %-18s both sides matched 0 items — the patterns no longer '
+              'fit these pages, so this check is proving nothing' % label)
+        problems += 1
+        continue
     if a == b:
         print('  OK    %-18s %d item(s) match' % (label, len(a)))
         continue
@@ -69,15 +83,15 @@ for label, pat_idx, pat_prev in CHECKS:
 
 # Footer targets: the same set of pages should be reachable from both feet.
 # A page never links to itself, so each page's own filename is excluded —
-# otherwise descent.html's link home to index.html reads as false drift.
+# otherwise share-an-idea.html's link home to index.html reads as false drift.
 def foot_links(html, own):
     m = re.search(r'<footer.*?</footer>', html, re.S | re.I)
     if not m:
         return set()
     return {h for h in re.findall(r'href="([^"#]+\.html)"', m.group(0))
-            if h not in (own, 'index.html', 'descent.html')}
+            if h not in (own, 'index.html', 'share-an-idea.html')}
 
-fa, fb = foot_links(idx, 'index.html'), foot_links(prev, 'descent.html')
+fa, fb = foot_links(idx, 'index.html'), foot_links(prev, 'share-an-idea.html')
 if fa == fb:
     print('  OK    %-18s %d target(s) match' % ('footer links', len(fa)))
 else:

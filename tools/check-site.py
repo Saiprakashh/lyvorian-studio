@@ -293,11 +293,11 @@ def check_word_span_guards():
     which has broken this page four separate times — a number marker turned a
     word into a 24px grid box and pushed the page wide on a phone.
 
-    Only descent.html loads descent.css, and only descent.html is word-split, so
-    the rule applies to that stylesheet."""
+    Only the homepage loads descent.css, and only the homepage is word-split,
+    so the rule applies to that stylesheet."""
     global checked
     path = 'assets/descent.css'
-    page = 'descent.html'
+    page = 'index.html'
     if not (os.path.exists(path) and os.path.exists(page) and os.path.exists('assets/descent.js')):
         return
 

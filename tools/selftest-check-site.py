@@ -99,8 +99,10 @@ def build(d):
 
     # the word-span check only runs when all three of these exist, and it reads
     # the split roots out of the script
-    io.open(os.path.join(d, 'descent.html'), 'w', encoding='utf-8',
-            newline='').write(GOOD_PAGE.replace('Fixture', 'Descent').replace(
+    # the word-span check reads index.html, so the fixture's index.html is the
+    # one that must carry a .plan-steps marker for the injected fault to bite
+    io.open(os.path.join(d, 'index.html'), 'w', encoding='utf-8',
+            newline='').write(GOOD_PAGE.replace(
                 '<main>', '<main><div class="plan-steps"><span>01</span></div>'))
     io.open(os.path.join(d, 'assets/descent.js'), 'w', encoding='utf-8', newline='').write(
         "['main', 'footer.foot', '.mm'].forEach(function (sel) { split(sel); });\n")

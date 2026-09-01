@@ -6,8 +6,36 @@
 <title>Lyvorian Studio — Software, built by hand</title>
 <meta name="description" content="Lyvorian Studio is an independent software studio building Finance Tracker, HabitAroha, Fylunor and Medhakeli — private, practical software for everyday life."/>
 <meta name="theme-color" content="#f2e8d5"/>
+
+<!-- Must run before first paint, or a dark-mode visitor gets a flash of the
+     light theme. Mirrors index.html so the choice carries between pages. -->
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
+
+<link rel="preload" href="assets/fonts/Manrope-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/CormorantGaramond-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
+    font-display:swap;src:url('assets/fonts/CormorantGaramond-var.woff2') format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  /* the rupee lives only in latin-ext, so it is its own file and is fetched
+     only by the pages that price something */
+  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
+    font-display:swap;src:url('assets/fonts/CormorantGaramond-var-ext.woff2') format('woff2');
+    unicode-range:U+20B9}
+  @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
+    font-display:swap;src:url('assets/fonts/Manrope-var.woff2') format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
+    font-display:swap;src:url('assets/fonts/Manrope-var-ext.woff2') format('woff2');
+    unicode-range:U+20B9}
+  /* Fallback metric-matched to Manrope (upm 2000, hhea 2132/-600, x-height .540)
+     so the swap to the real font causes no reflow. */
+  @font-face{font-family:'Manrope Fallback';src:local('Segoe UI'),local('Arial');
+    size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
+</style>
+
 <link rel="stylesheet" href="assets/site.css?v=20260829j"/>
+<link rel="stylesheet" href="assets/descent.css?v=20260901n"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -39,7 +67,20 @@
       "slogan": "Software, built by hand",
       "email": "support@lyvorianstudio.co.in",
       "foundingDate": "2026",
-      "sameAs": ["https://github.com/Saiprakashh"]
+      "sameAs": [
+        "https://github.com/Saiprakashh",
+        "https://www.instagram.com/lyvorian_studio",
+        "https://www.reddit.com/user/Lyvorian_studio",
+        "https://whatsapp.com/channel/0029VbDWqQnGehELlpgHhl0P",
+        "https://x.com/Lyvorianstudio"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://lyvorianstudio.co.in/#site",
+      "url": "https://lyvorianstudio.co.in/",
+      "name": "Lyvorian Studio",
+      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"}
     },
     {
       "@type": "SoftwareApplication",
@@ -49,733 +90,565 @@
       "operatingSystem": "Android, Web",
       "installUrl": "https://play.google.com/store/apps/details?id=com.saikumarfinance.app",
       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
-      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"},
-      "description": "Expenses, income, budgets, goals and bills in one clean app — with bill scanning, confirmed UPI payment detection, an optional trading journal, and a Pro tier."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "HabitAroha",
-      "url": "https://lyvorianstudio.co.in/habitaroha.html",
-      "applicationCategory": "HealthApplication",
-      "operatingSystem": "Android",
-      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
-      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"},
-      "description": "A calm, offline-first habit tracker. Core tracking works fully offline and habit content stays encrypted on the device."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Fylunor",
-      "url": "https://lyvorianstudio.co.in/fylunor.html",
-      "applicationCategory": "ProductivityApplication",
-      "operatingSystem": "Web",
-      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"},
-      "description": "A document workspace where scanning, OCR, compression, redaction and every PDF tool run locally on your own device."
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "Medhakeli",
-      "url": "https://lyvorianstudio.co.in/medhakeli.html",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "Android",
-      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"},
-      "description": "A learning game for children aged 2 to 9 that works with no account and no network connection, with no advertising."
+      "publisher": {"@id": "https://lyvorianstudio.co.in/#org"}
     }
   ]
 }
 </script>
-
-<link rel="preload" href="assets/fonts/Manrope-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/CormorantGaramond-var.woff2" as="font" type="font/woff2" crossorigin>
-<style>
-  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
-    font-display:swap;src:url('assets/fonts/CormorantGaramond-var.woff2') format('woff2');
-    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-  /* the rupee lives only in latin-ext, so it is its own file and is fetched
-     only by the pages that price something */
-  @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 500;
-    font-display:swap;src:url('assets/fonts/CormorantGaramond-var-ext.woff2') format('woff2');
-    unicode-range:U+20B9}
-  @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
-    font-display:swap;src:url('assets/fonts/Manrope-var.woff2') format('woff2');
-    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-  @font-face{font-family:'Manrope';font-style:normal;font-weight:400 700;
-    font-display:swap;src:url('assets/fonts/Manrope-var-ext.woff2') format('woff2');
-    unicode-range:U+20B9}
-  /* Fallback metric-matched to Manrope (upm 2000, hhea 2132/-600, x-height .540)
-     so the swap to the real font causes no reflow. */
-  @font-face{font-family:'Manrope Fallback';src:local('Segoe UI'),local('Arial');
-    size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
-</style>
-<link rel="stylesheet" href="assets/home.css?v=20260829i"/>
 </head>
 <body>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
-<svg class="grain" width="100%" height="100%">
-  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>
-  <rect width="100%" height="100%" filter="url(#n)"/>
-</svg>
-<div class="glow" id="glow"></div>
-<div class="scroll-progress" id="scrollProgress"></div>
-
-<header>
-  <div class="hdr-inner wrap">
-    <div class="hdr-left">
-      <div class="logo-3d">
-      <a href="#" class="word" id="logoWord">
-        <img src="assets/icon-beige-512.png" alt="" class="mark-img" width="34" height="34"/>
-        <span class="wtext">Lyvorian Studio</span>
-      </a>
-      </div>
-    </div>
-    <nav><span class="nav-rail" aria-hidden="true"></span>
-      <a href="products.html">Products</a>
-      <a href="#story">Studio</a>
-      <a href="notes.html">Notes</a>
-      <a href="#ideas">Share an idea</a>
-      <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
-    </nav>
-    <div class="hdr-right">
-    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><svg class="bars" width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ex" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-      <svg class="sun" width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3.4" stroke="currentColor" stroke-width="1.4"/><path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.95 3.05l-1.13 1.13M4.18 11.82l-1.13 1.13M12.95 12.95l-1.13-1.13M4.18 4.18L3.05 3.05" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-      <svg class="moon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.8 9.6A6 6 0 016.4 2.2a6 6 0 107.4 7.4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+<!-- The header rides over the sequence rather than sitting above it: the
+     picture starts at the very top of the viewport, which is most of why a
+     full-bleed hero reads as cinematic rather than as a banner. -->
+<header class="dsc-hdr">
+  <a class="dsc-mark" href="index.html">Lyvorian Studio</a>
+  <nav class="dsc-nav" aria-label="Primary">
+    <a href="#work">Products</a>
+    <a href="#about">About</a>
+    <a href="#how">How we work</a>
+    <a href="#studio">Studio</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#notes">Notes</a>
+  </nav>
+  <div class="hdr-tools">
+    <button class="dsc-theme" type="button" aria-label="Switch theme" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6L17 17M7 7L5.4 5.4"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
     </button>
-    </div>
+    <!-- Below 560px the row of links is hidden, so without this the whole nav is
+         unreachable on a phone — six links rendered and none of them tappable. -->
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mmSheet"
+            aria-label="Open menu"><span aria-hidden="true"></span></button>
   </div>
 </header>
 
+<div class="dsc-progress" aria-hidden="true"><i></i></div>
+
+<div class="mm" id="mmSheet" hidden>
+  <nav class="mm-nav" aria-label="Mobile">
+    <a href="#work">Products</a>
+    <a href="#about">About</a>
+    <a href="#how">How we work</a>
+    <a href="#studio">Studio</a>
+    <a href="#planning">Design &amp; planning</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#notes">Notes</a>
+    <a href="#ideas">Share an idea</a>
+  </nav>
+  <a class="mm-mail" href="mailto:support@lyvorianstudio.co.in">support@lyvorianstudio.co.in</a>
+</div>
 
 <main id="main" tabindex="-1">
-<section class="hero" aria-labelledby="heroTitle">
-  <div class="aurora aurora-1"></div>
-  <div class="aurora aurora-2"></div>
-  <svg class="orbit-svg" viewBox="0 0 800 800" fill="none">
-    <circle class="orbit orbit-a" cx="400" cy="400" r="260"/>
-    <circle class="orbit orbit-b" cx="400" cy="400" r="190"/>
-    <circle class="orbit orbit-c" cx="400" cy="400" r="120"/>
-  </svg>
-  <img class="orbit-mark" src="assets/logo-mark.webp" alt="" width="166" height="208" aria-hidden="true"/>
-  <svg class="orbit-dots" viewBox="0 0 800 800" fill="none" aria-hidden="true">
-    <g class="od-a"><circle cx="660.0" cy="400.0" r="3"/><circle cx="232.9" cy="599.2" r="3"/><circle cx="290.1" cy="164.4" r="3"/></g>
-    <g class="od-b"><circle cx="509.0" cy="555.6" r="3"/><circle cx="210.0" cy="400.0" r="3"/><circle cx="495.0" cy="235.5" r="3"/></g>
-    <g class="od-c"><circle cx="512.8" cy="441.0" r="3.4"/><circle cx="287.2" cy="441.0" r="3.4"/><circle cx="420.8" cy="281.8" r="3.4"/></g>
-  </svg>
-  <div id="embers"></div>
 
-  <div class="wrap hero-content">
-    <div class="hero-grid">
-    <div class="hero-copy">
-    <div class="eyebrow">
-      <span class="rule"></span>
-      <span class="label">
-        <span class="eb-part">Independent software studio</span>
-        <span class="eb-sep" aria-hidden="true"></span>
-        <span class="eb-part">One primary build at a time</span>
-        <span class="eb-sep" aria-hidden="true"></span>
-        <span class="eb-part">Est. 2026</span>
-      </span>
+<section class="descent" data-descent
+  data-frames="assets/descent/01-sky.webp,assets/descent/02-cloud.webp,assets/descent/02b-altitude.webp,assets/descent/03-building.webp,assets/descent/04-approach-sign.webp,assets/descent/09-ceo.webp,assets/descent/05-interior-live.webp,assets/descent/07-window.webp,assets/descent/08-rise.webp">
+  <div class="dsc-sticky">
+    <canvas class="dsc-canvas" aria-hidden="true"></canvas>
+    <div class="dsc-scrim" aria-hidden="true"></div>
+
+    <div class="dsc-stage">
+
+      <!-- beat 1 · already at full on arrival; rises in via CSS, leaves on scroll -->
+      <div class="dsc-beat dsc-id" data-beat="0,0,0.10,0.18" data-shift="0 -48">
+        <p class="dsc-label">Independent software studio · Est. 2026</p>
+        <!-- A variation on the original hero line rather than a replacement
+             for it: index.html opens "Private, practical software / for
+             everyday life." The first half is the brand refrain and stays; the
+             ending changes so the hero and the About heading further down are
+             not the same sentence twice. The supporting line is the old site's
+             own lede-sub, which is the best copy on the site — three short
+             clauses, no jargon. -->
+        <h1 class="dsc-h1">Private, practical software, built to last.</h1>
+        <p class="dsc-p">Built carefully. Privacy explained plainly.
+          No unnecessary complexity.</p>
+        <a class="dsc-cta" href="#work">See what's shipped
+          <span class="dsc-arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Ranges are set so every one of the eight frames carries text. Before
+           rebalancing, three sat almost bare — cloud at 0.08 opacity, the CEO
+           office at 0.27 and the window at 0.14 — because the beats were
+           spaced by feel rather than against the frame positions (i/7). -->
+
+      <!-- beat 2 · right — building, approach -->
+      <div class="dsc-beat dsc-aside dsc-aside-r" data-beat="0.22,0.28,0.40,0.46" data-shift="40 0">
+        <p class="dsc-label">How it's made</p>
+        <p>Every screen and every edge case is written and tested by hand,
+          against daily use — not assembled from templates.</p>
+      </div>
+
+      <!-- beat 3 · left — arriving at the door -->
+      <div class="dsc-beat dsc-aside dsc-aside-l" data-beat="0.46,0.50,0.60,0.66" data-shift="-40 0">
+        <p class="dsc-label">One at a time</p>
+        <p>One primary build holds the studio's attention. Everything else waits
+          its turn until the thing in front of it is finished.</p>
+      </div>
+
+      <!-- beat 4 · low, over the office floor — covers the desk and the
+           interior. Copy is matched to the picture: this is the room where the
+           work happens, so it carries the line about where the data stays. -->
+      <div class="dsc-beat dsc-aside dsc-aside-b" data-beat="0.67,0.72,0.86,0.90" data-shift="0 32">
+        <p class="dsc-label">Where your data lives</p>
+        <p>Wherever a product can do its work on your device, it does — and backups
+          go to your own Google Drive, not ours. Nothing is ever sold on.</p>
+      </div>
+
+      <!-- beat 5 · the close. `d` sits past 1 so it holds to the release.
+           The sequence ends on the studio seen small from the sky — a
+           reflective frame, so it carries the thinking behind the work rather
+           than a store badge. The badge moves to the Finance Tracker card in
+           the product grid, where index.html also carries it — dropping it from
+           here must not drop the only direct route to the store. -->
+      <div class="dsc-beat dsc-halo" data-beat="0.88,0.94,1,2" aria-hidden="true"></div>
+      <div class="dsc-beat dsc-close" data-beat="0.90,0.96,1,2" data-shift="0 36">
+        <p class="dsc-label">The thinking behind it</p>
+        <h2 class="dsc-h1">Nothing here happened by accident.</h2>
+        <p class="dsc-close-p">Every screen was drawn on paper, argued with on a
+          wall, and measured on a real device before it earned a single line of
+          code. Someone sat with each decision until it was right.</p>
+        <a class="dsc-cta" href="built-the-hard-way.html">Read how it's made
+          <span class="dsc-arrow" aria-hidden="true">→</span></a>
+      </div>
+
     </div>
-    <h1 id="heroTitle">
-      <span class="line"><span>Private, practical software</span></span>
-      <span class="line"><span>for <em>everyday</em> life.</span></span>
-    </h1>
-    <p class="lede">Lyvorian Studio creates purposeful digital products that make everyday life
-    simpler, clearer, and more meaningful.</p>
-    <p class="lede-sub">Built carefully. Privacy explained plainly. No unnecessary complexity.</p>
 
-    <div class="hero-cta">
-      <a href="products.html" class="btn btn-gold">See the products
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="dsc-hint" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- About, set on the reception wall. The copy sits in the wall's empty right
+     half, so the bronze lettering is never crowded and never overlapped. -->
+<span id="story" aria-hidden="true"></span>
+<section class="about" id="about">
+  <img class="about-bg" src="assets/studio/about-wall.webp" alt="" aria-hidden="true"
+       loading="lazy" decoding="async" width="1920" height="1072"/>
+  <div class="about-inner">
+    <div class="about-copy">
+      <p class="dsc-label">About the studio</p>
+      <h2 class="about-h2">Private, practical software for everyday life.</h2>
+      <p>We ship one product at a time, all the way through, before starting the
+        next. No funding round. No growth hacks. Just software finished carefully
+        enough that it doesn't need an excuse.</p>
+      <p>Wherever a product can do its work on your device, it does, and backups go
+        to your own Google Drive rather than ours. Nothing is ever sold on.</p>
+      <a class="dsc-cta" href="built-the-hard-way.html">Read the story behind it
+        <span class="dsc-arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- How we work — the three rules, carried over verbatim from index.html so the
+     two pages cannot drift apart. -->
+<section class="rules" id="how" aria-labelledby="rulesTitle">
+  <div class="rules-head">
+    <p class="dsc-label">How we work</p>
+    <h2 class="room-h2" id="rulesTitle">Three rules, no exceptions</h2>
+    <p class="room-sub">The constraints that shape everything Lyvorian ships.</p>
+  </div>
+  <div class="rules-grid">
+    <article class="rule-card">
+      <span class="rule-num">01</span>
+      <h3>Built by hand</h3>
+      <p>Every screen, every edge case, every line — written and tested by hand
+        against daily use, not assembled from templates.</p>
+    </article>
+    <article class="rule-card">
+      <span class="rule-num">02</span>
+      <h3>No shortcuts</h3>
+      <p>No funding round to chase, no growth hacks to juice metrics. Features
+        ship when they're finished, not when a deadline says so.</p>
+    </article>
+    <article class="rule-card">
+      <span class="rule-num">03</span>
+      <h3>Nothing ships until it holds up</h3>
+      <p>Every build is measured on a real phone, not assumed. Finance Tracker
+        went live that way; HabitAroha, Fylunor and Medhakeli each wait their
+        turn until they earn it — no half-finished releases, ever.</p>
+    </article>
+  </div>
+</section>
+
+<!-- How the work is made. Three plates, each with its own note. -->
+<section class="craft" id="studio">
+  <div class="craft-head">
+    <p class="dsc-label">Inside the studio</p>
+    <h2 class="room-h2">How the work gets made.</h2>
+  </div>
+  <div class="craft-grid">
+    <figure class="craft-item craft-wide">
+      <img src="assets/studio/office-wide.webp?v=20260901b" alt="The Lyvorian Studio workspace at dawn" loading="lazy" width="1920" height="1072"/>
+      <figcaption><strong>The studio.</strong> Quiet hours, real devices, and the
+        product open on the desk every day.</figcaption>
+    </figure>
+    <figure class="craft-item">
+      <img src="assets/studio/design-process.webp?v=20260901b" alt="A designer sketching interface wireframes on paper at a desk" loading="lazy" width="1920" height="1072"/>
+      <figcaption><strong>Design.</strong> Every screen is drawn on paper and
+        argued with before a line of it is built.</figcaption>
+    </figure>
+    <figure class="craft-item">
+      <img src="assets/studio/review-wall.webp?v=20260901b" alt="Printed interface layouts pinned to a review wall" loading="lazy" width="1920" height="1072"/>
+      <figcaption><strong>Review.</strong> Layouts go up on the wall, where the
+        weak ones are obvious.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Design & planning. Full-bleed room on one side, the method on the other. -->
+<section class="plan" id="planning">
+  <img class="plan-bg" src="assets/descent/10-planning.webp"
+       alt="The Lyvorian Studio design and planning room — wireframes, flow diagrams and device prototypes"
+       loading="lazy" width="1920" height="1072"/>
+  <div class="plan-copy">
+    <p class="dsc-label">Design &amp; planning</p>
+    <h2 class="room-h2">Nothing gets built until it's been argued with.</h2>
+    <p>Every screen starts on paper. Flows go up on the wall where the weak
+      ones are obvious, and a layout only earns a line of code once it has
+      survived that.</p>
+    <ol class="plan-steps">
+      <li><span>01</span><strong>Draw it</strong> Wireframes on paper before any
+        file is opened, so the shape of a thing is cheap to change.</li>
+      <li><span>02</span><strong>Map it</strong> The whole flow on one board —
+        every state, every dead end, every case that gets forgotten later.</li>
+      <li><span>03</span><strong>Prove it</strong> On a real device, in real
+        hands, measured rather than assumed.</li>
+      <li><span>04</span><strong>Cut it</strong> Anything that doesn't earn its
+        place comes out, however good it looked on the board.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- The product room is no longer inlined here. It is the full Project Office
+     walkthrough on its own page — seven rooms, its own splash and scroll
+     choreography — so this section is the doorway to it rather than a flat
+     preview of it. The #work id stays: the hero CTA and the nav both point
+     at it. -->
+<section class="room" id="work" data-room>
+  <div class="room-head">
+    <p class="dsc-label">The product room</p>
+    <h2 class="room-h2">Walk through the studio.</h2>
+    <p class="room-sub">Arrival, reception, the CEO office, the conference and
+      discussion rooms, and the projects floor where the products live — a
+      guided visit you move through by scrolling.</p>
+  </div>
+
+  <div class="portal">
+    <a class="portal-cta" href="project-office.html">
+      <!-- No room count here on purpose: the rail has seven stops but the page
+           has twelve sections, so any single number is wrong somewhere. -->
+      <span class="portal-label">Guided visit · Scroll to walk</span>
+      <span class="portal-title">Explore products room</span>
+      <span class="portal-arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <!-- The shipped product, at full size. The deck is real 3D: one perspective
+       on the stage and every screen on its own translateZ, so moving the
+       pointer produces genuine parallax between them rather than a flat
+       picture that tilts. -->
+  <div class="room-head deck-head">
+    <p class="dsc-label">Product № 1</p>
+    <h2 class="room-h2">Finance Tracker, screen by screen.</h2>
+    <p class="room-sub">Every screen below is the shipped app, not a mockup —
+      photographed from the build that's on Google Play today.</p>
+  </div>
+
+  <div class="room-stage">
+    <div class="room-deck" data-deck>
+      <!-- --x must be an absolute length: a percentage inside translate3d
+           resolves against the slab's own width, not the stage, which bunched
+           all five into a 110px huddle. -->
+      <a class="room-slab" style="--z:-260px;--x:calc(-1 * clamp(150px,24vw,352px));--r:-14deg" href="finance-tracker.html">
+        <img src="assets/shot-goals.webp" alt="Finance Tracker goals screen" loading="lazy" width="560" height="1120"/>
+        <span>Goals</span>
       </a>
-      <a href="#story" class="btn btn-ghost">Why we build this way</a>
-    </div>
-    </div>
-
-    <div class="hero-showcase" aria-hidden="true">
-      <div class="dev-stack" id="devStack">
-        <figure class="dev dev-3"><img src="assets/shot-goals.webp" alt="" width="560" height="1120" loading="lazy" decoding="async"/></figure>
-        <figure class="dev dev-2"><img src="assets/shot-expenses.webp" alt="" width="560" height="1120" loading="lazy" decoding="async"/></figure>
-        <figure class="dev dev-1">
-          <img src="assets/shot-dashboard.webp" alt="" width="560" height="1120" decoding="async"/>
-          <span class="dev-glare"></span>
-        </figure>
-        <span class="dev-chip">
-          <img src="assets/finance-tracker-icon.webp?v=20260819c" alt="" width="30" height="30"/>
-          <span><b>Finance Tracker</b><i>Live on Google Play</i></span>
-        </span>
-      </div>
-    </div>
-    </div>
-
-
-<section id="work" aria-labelledby="workTitle">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">Our products</div>
-      <h2 class="sec-title" id="workTitle">Thoughtful tools, built for real life.</h2>
-      <p class="sec-sub">The two furthest along. The full catalogue — including what is still
-      being built — lives on the products page.</p>
-    </div>
-
-    <div class="pgrid" id="pGrid">
-
-      <article class="pcard is-live reveal" data-status="available development" id="ftCard">
-        <a class="card-stretch" href="finance-tracker.html" aria-label="Finance Tracker — full details"></a>
-        <header class="pcard-head">
-          <img class="pcard-icon" src="assets/finance-tracker-icon.webp?v=20260819c" alt="" width="46" height="46"/>
-          <div>
-            <h3 class="pcard-name">Finance Tracker</h3>
-            <span class="pchip pchip-live"><i aria-hidden="true"></i>Available</span>
-          </div>
-          <svg class="pcard-arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </header>
-        <p class="pcard-benefit">All of your money in one clean app — so you can see where the month
-        actually went.</p>
-        <ul class="pcard-feats">
-          <li>Expenses, income, budgets, goals and bills</li>
-          <li>Bill scanning and confirmed UPI detection</li>
-          <li>Optional trading journal, off by default</li>
-        </ul>
-        <div class="pcard-plat"><span class="plat-live">Web &mdash; live</span><a class="plat-play" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app" target="_blank" rel="noopener"><img src="assets/google-play-badge.png" alt="Get Finance Tracker on Google Play" width="646" height="250"/></a></div>
-        <div class="pcard-foot">
-          <a class="pcard-go" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">Open Finance Tracker <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <button type="button" class="btn-preview pcard-2nd" data-gallery="finance-tracker">Preview 6 screens</button>
-        </div>
-      </article>
-
-      <article class="pcard is-wip reveal reveal-1" data-status="testing">
-        <span class="tease-stamp">№ 2</span>
-        <a class="card-stretch" href="habitaroha.html" aria-label="HabitAroha — full details"></a>
-        <header class="pcard-head">
-          <img class="pcard-icon" src="assets/habitaroha-icon.webp" alt="" width="46" height="46" loading="lazy"/>
-          <div>
-            <h3 class="pcard-name">HabitAroha</h3>
-            <span class="pchip pchip-wip"><i aria-hidden="true"></i>Testing</span>
-          </div>
-          <svg class="pcard-arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </header>
-        <p class="pcard-benefit">A calm habit tracker for steady progress rather than streak
-        pressure.</p>
-        <ul class="pcard-feats">
-          <li>Six habit types and flexible schedules</li>
-          <li>Core tracking works fully offline</li>
-          <li>Habit content encrypted on your device</li>
-        </ul>
-        <div class="tease-progress"><i></i></div>
-        <p class="pcard-plat"><span>Android</span><span>Not yet released</span></p>
-        <div class="pcard-foot">
-          <a class="pcard-go" href="habitaroha.html">View product <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </article>
-
-      <article class="pcard is-wip reveal reveal-2" data-status="development">
-        <span class="tease-stamp">&#8470; 3</span>
-        <a class="card-stretch" href="fylunor.html" aria-label="Fylunor — full details"></a>
-        <header class="pcard-head">
-          <img class="pcard-icon" src="assets/fylunor-icon.svg" alt="" width="46" height="46" loading="lazy"/>
-          <div>
-            <h3 class="pcard-name">Fylunor</h3>
-            <span class="pchip pchip-wip"><i aria-hidden="true"></i>In development</span>
-          </div>
-          <svg class="pcard-arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </header>
-        <p class="pcard-benefit">A document workspace that keeps your files where they belong &mdash; on your own device.</p>
-        <ul class="pcard-feats">
-          <li>Scanning, text recognition and a full PDF toolkit</li>
-          <li>Every tool runs locally, not on a server</li>
-          <li>An encrypted vault only you can open</li>
-        </ul>
-        <div class="tease-progress"><i></i></div>
-        <p class="pcard-plat"><span>Web</span><span>Not yet released</span></p>
-        <div class="pcard-foot">
-          <a class="pcard-go" href="fylunor.html">View product <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </article>
-
-      <article class="pcard is-wip reveal reveal-3" data-status="testing">
-        <span class="tease-stamp">&#8470; 4</span>
-        <a class="card-stretch" href="medhakeli.html" aria-label="Medhakeli — full details"></a>
-        <header class="pcard-head">
-          <img class="pcard-icon" src="assets/medhakeli-icon.webp" alt="" width="46" height="46" loading="lazy"/>
-          <div>
-            <h3 class="pcard-name">Medhakeli</h3>
-            <span class="pchip pchip-wip"><i aria-hidden="true"></i>Testing</span>
-          </div>
-          <svg class="pcard-arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </header>
-        <p class="pcard-benefit">A learning game for children aged 2 to 9, built to be the opposite of most children&rsquo;s apps.</p>
-        <ul class="pcard-feats">
-          <li>No account and no network connection</li>
-          <li>No advertising and no tracking profile</li>
-          <li>Drawings never leave the device</li>
-        </ul>
-        <div class="tease-progress"><i></i></div>
-        <p class="pcard-plat"><span>Android</span><span>Not yet released</span></p>
-        <div class="pcard-foot">
-          <a class="pcard-go" href="medhakeli.html">View product <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </article>
-
-    </div>
-
-    <div class="products-more reveal">
-      <a class="btn btn-ghost" href="products.html">Browse the catalogue
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <a class="room-slab" style="--z:-120px;--x:calc(-1 * clamp(80px,12.5vw,184px));--r:-7deg" href="finance-tracker.html">
+        <img src="assets/shot-expenses.webp" alt="Finance Tracker expenses screen" loading="lazy" width="560" height="1120"/>
+        <span>Expenses</span>
       </a>
-      <p>Filter by stage, and see what is still only an idea.</p>
+      <a class="room-slab room-hero" style="--z:60px;--x:0px;--r:0deg" href="finance-tracker.html">
+        <img src="assets/shot-dashboard.webp" alt="Finance Tracker dashboard" loading="lazy" width="560" height="1120"/>
+        <span>Dashboard</span>
+      </a>
+      <a class="room-slab" style="--z:-120px;--x:clamp(80px,12.5vw,184px);--r:7deg" href="finance-tracker.html">
+        <img src="assets/shot-income.webp" alt="Finance Tracker income screen" loading="lazy" width="560" height="1120"/>
+        <span>Income</span>
+      </a>
+      <a class="room-slab" style="--z:-260px;--x:clamp(150px,24vw,352px);--r:14deg" href="finance-tracker.html">
+        <img src="assets/shot-trading.webp" alt="Finance Tracker trading journal" loading="lazy" width="560" height="1120"/>
+        <span>Journal</span>
+      </a>
     </div>
   </div>
-</section>
-  </div>
-</section>
 
-<section class="universe" aria-labelledby="uniTitle">
-    <div class="uni-msg">
-      <p class="uni-eyebrow">The Lyvorian universe</p>
-      <h2 class="uni-title" id="uniTitle">One studio. A growing family of thoughtful products.</h2>
-      <p class="uni-sub">Each product begins with a real everyday need and is shaped through careful
-      design, testing, privacy, and long-term refinement.</p>
-    </div>
-
-    <div class="uni-orbit">
-      <div class="orb-stage">
-        <svg class="orb-rings" viewBox="0 0 300 300" fill="none" aria-hidden="true">
-          <circle cx="150" cy="150" r="118" stroke="currentColor" stroke-width="1"/>
-          <circle cx="150" cy="150" r="78" stroke="currentColor" stroke-width="1" stroke-dasharray="3 7"/>
-        </svg>
-        <div class="orb-core" aria-hidden="true">
-          <img src="assets/icon-beige-512.png" alt="" width="34" height="34"/>
-          <span>Lyvorian</span>
-        </div>
-      <button type="button" class="orb-node n1" data-desc="Products currently ready to explore." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Available</span></button>
-      <button type="button" class="orb-node n2" data-desc="Products being refined on real devices." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Testing</span></button>
-      <button type="button" class="orb-node n3" data-desc="Being built now, one at a time." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">In development</span></button>
-      <button type="button" class="orb-node n4" data-desc="Ideas being studied before development." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Research</span></button>
-      <button type="button" class="orb-node n5" data-desc="Planned, waiting their turn." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">Future</span></button>
-      <button type="button" class="orb-node n6" data-desc="Where everything starts." aria-expanded="false"><span class="orb-dot" aria-hidden="true"></span><span class="orb-label">New ideas</span></button>
-      </div>
-      <p class="orb-readout" id="orbReadout" role="status" aria-live="polite">Select a stage to see what it means.</p>
-    </div>
-  </section>
-
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>Built by hand <em>✦</em> No shortcuts <em>✦</em> One primary build at a time <em>✦</em> Carefully, on purpose <em>✦</em></span>
-    <span>Built by hand <em>✦</em> No shortcuts <em>✦</em> One primary build at a time <em>✦</em> Carefully, on purpose <em>✦</em></span>
-  </div>
-</div>
-
-<section class="values" aria-labelledby="valuesTitle">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">How we work</div>
-      <h2 class="sec-title" id="valuesTitle">Three rules, no exceptions</h2>
-      <p class="sec-sub">The constraints that shape everything Lyvorian ships.</p>
-    </div>
-    <div class="value-grid">
-      <div class="value-card reveal reveal-1">
-        <span class="value-num">01</span>
-        <h3 class="value-title">Built by hand</h3>
-        <p class="value-desc">Every screen, every edge case, every line — written and tested by hand against daily use, not assembled from templates.</p>
-      </div>
-      <div class="value-card reveal reveal-2">
-        <span class="value-num">02</span>
-        <h3 class="value-title">No shortcuts</h3>
-        <p class="value-desc">No funding round to chase, no growth hacks to juice metrics. Features ship when they're finished, not when a deadline says so.</p>
-      </div>
-      <div class="value-card reveal reveal-3">
-        <span class="value-num">03</span>
-        <h3 class="value-title">Nothing ships until it holds up</h3>
-        <p class="value-desc">Every build is measured on a real phone, not assumed. Finance Tracker went live that way; HabitAroha, Fylunor and Medhakeli each wait their turn until they earn it — no half-finished releases, ever.</p>
-      </div>
-    </div>
+  <!-- Same pair, same order as finance-tracker.html, so the store button and
+       the web link do not change shape between pages. -->
+  <div class="dl-row deck-actions">
+    <a class="dl-badge" href="https://play.google.com/store/apps/details?id=com.saikumarfinance.app"
+       target="_blank" rel="noopener">
+      <img src="assets/google-play-badge.png" alt="Get Finance Tracker on Google Play"
+           width="646" height="250" loading="lazy"/>
+    </a>
+    <a class="dl-alt" href="https://app.lyvorianstudio.co.in" target="_blank" rel="noopener">
+      Open the web app
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
   </div>
 </section>
 
-
-
-<section class="story" id="story" aria-label="The philosophy">
-  <svg class="orbit-figure" viewBox="0 0 800 800" fill="none">
-    <circle class="orbit orbit-a" cx="400" cy="400" r="260"/>
-    <circle class="orbit orbit-b" cx="400" cy="400" r="190"/>
-    <circle class="orbit orbit-c" cx="400" cy="400" r="120"/>
-  </svg>
-
-  <div class="wrap">
-    <div class="story-inner reveal">
-      <blockquote id="storyQuote"></blockquote>
-      <cite>The philosophy</cite>
-      <div style="margin-top:22px">
-        <a href="built-the-hard-way.html" class="btn btn-ghost" style="font-size:14px;padding:11px 22px">Read the story behind it
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
+<!-- Roadmap. Copy taken from index.html so the two cannot disagree about
+     what has shipped. -->
+<section class="road" id="roadmap" aria-labelledby="roadTitle">
+  <div class="road-head">
+    <p class="dsc-label">Roadmap</p>
+    <h2 class="room-h2" id="roadTitle">What's next</h2>
+    <p class="room-sub">One primary build at a time — here's where the road goes.</p>
   </div>
+  <ol class="road-list">
+    <li class="road-item" data-state="done">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Finance Tracker — Web <em>Shipped</em></p>
+        <p class="road-desc">Live and growing: expenses, income, budgets, goals,
+          bills, scanning, and a Pro tier.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="done">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Finance Tracker — Android <em>Shipped</em></p>
+        <p class="road-desc">Live on Google Play, with the same account and
+          records as the web app.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="next">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">HabitAroha — Android <em>In testing</em></p>
+        <p class="road-desc">V1 is built and running on real devices. Going
+          through a full test pass before the Play Store listing goes up.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="next">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Medhakeli — Android <em>In testing</em></p>
+        <p class="road-desc">A learning game for children aged 2 to 9. Built and
+          running offline; going through a full test pass before the Play Store
+          listing.</p>
+      </div>
+    </li>
+    <li class="road-item" data-state="later">
+      <span class="road-dot" aria-hidden="true"></span>
+      <div>
+        <p class="road-title">Fylunor — Web <em>In development</em></p>
+        <p class="road-desc">A document workspace where scanning, OCR and every
+          PDF tool run locally. Still being built.</p>
+      </div>
+    </li>
+  </ol>
 </section>
 
-<section id="roadmap" aria-labelledby="roadmapTitle">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">Roadmap</div>
-      <h2 class="sec-title" id="roadmapTitle">What's next</h2>
-      <p class="sec-sub">One primary build at a time — here's where the road goes.</p>
-    </div>
-    <div class="roadmap-list reveal">
-      <div class="roadmap-item">
-        <span class="roadmap-dot done"></span>
-        <div>
-          <p class="roadmap-title">Finance Tracker — Web<span class="roadmap-tag"> Shipped</span></p>
-          <p class="roadmap-desc">Live and growing: expenses, income, budgets, goals, bills, scanning, and a Pro tier.</p>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <span class="roadmap-dot done"></span>
-        <div>
-          <p class="roadmap-title">Finance Tracker — Android<span class="roadmap-tag"> Shipped</span></p>
-          <p class="roadmap-desc">Live on Google Play, with the same account and records as the web app.</p>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <span class="roadmap-dot next"></span>
-        <div>
-          <p class="roadmap-title">HabitAroha — Android<span class="roadmap-tag"> In testing</span></p>
-          <p class="roadmap-desc">V1 is built and running on real devices. Going through a full test pass before the Play Store listing goes up.</p>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <span class="roadmap-dot next"></span>
-        <div>
-          <p class="roadmap-title">Medhakeli — Android<span class="roadmap-tag"> In testing</span></p>
-          <p class="roadmap-desc">A learning game for children aged 2 to 9. Built and running offline; going through a full test pass before the Play Store listing.</p>
-        </div>
-      </div>
-      <div class="roadmap-item">
-        <span class="roadmap-dot later"></span>
-        <div>
-          <p class="roadmap-title">Fylunor — Web<span class="roadmap-tag"> In development</span></p>
-          <p class="roadmap-desc">A document workspace where scanning, OCR and every PDF tool run locally. Still being built.</p>
-        </div>
-      </div>
-    </div>
+<!-- Studio notes -->
+<section class="log" id="notes" aria-labelledby="logTitle">
+  <div class="log-head">
+    <p class="dsc-label">Studio notes</p>
+    <h2 class="room-h2" id="logTitle">Recently, at the workbench</h2>
   </div>
+  <div class="log-list">
+    <div class="log-item"><span>2026 · AUG</span><p>Finance Tracker is on Google
+      Play — product № 1 now installable on Android as well as the web.</p></div>
+    <div class="log-item"><span>2026 · AUG</span><p>Medhakeli announced as product
+      № 4 — a learning game for ages 2 to 9, no account, no network.</p></div>
+    <div class="log-item"><span>2026 · AUG</span><p>Fylunor announced as product
+      № 3 — a document workspace that stays on your device.</p></div>
+  </div>
+  <p class="room-more"><a class="inline" href="notes.html">Read the full log →</a></p>
 </section>
 
-
-
-<section class="notes" id="notes" aria-labelledby="notesTitle">
-  <div class="wrap">
-    <div class="sec-head reveal" style="margin-bottom:34px">
-      <div class="sec-eyebrow">Studio notes</div>
-      <h2 class="sec-title" id="notesTitle" style="font-size:clamp(22px,3vw,28px)">Recently, at the workbench</h2>
-    </div>
-    <div class="notes-list reveal">
-      <div class="note-item"><span class="note-date">2026 · AUG</span><span>Finance Tracker is on Google Play — product № 1 now installable on Android as well as the web.</span></div>
-      <div class="note-item"><span class="note-date">2026 · AUG</span><span>Medhakeli announced as product № 4 — a learning game for ages 2 to 9, no account, no network.</span></div>
-      <div class="note-item"><span class="note-date">2026 · AUG</span><span>Fylunor announced as product № 3 — a document workspace that stays on your device.</span></div>
-    </div>
-    <div class="notes-more reveal"><a href="notes.html">Read the full log &rarr;</a></div>
+<!-- Shape what comes next. The live three-step wizard and its JS live on
+     index.html; this carries the same headings and the same six categories so
+     the section reads correctly here, and hands off to the working form. -->
+<section class="next" id="ideas" aria-labelledby="nextTitle">
+  <div class="next-head">
+    <p class="dsc-label">Shape what comes next</p>
+    <h2 class="room-h2" id="nextTitle">Your experience can help make Lyvorian better.</h2>
+    <p class="room-sub">Share a feature idea, report something that feels unclear,
+      or suggest a product that could make everyday life easier.</p>
   </div>
-</section>
 
-<section id="ideas" aria-labelledby="ideasTitle">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow">Shape what comes next</div>
-      <h2 class="sec-title" id="ideasTitle">Your experience can help make Lyvorian better.</h2>
-      <p class="sec-sub">Share a feature idea, report something that feels unclear, or suggest a
-      product that could make everyday life easier.</p>
-    </div>
-
-    <div class="fb-panel reveal">
-      <aside class="fb-intro">
-        <p class="fb-eyebrow">Your voice matters</p>
-        <h3 class="fb-title">Help shape what Lyvorian builds next.</h3>
-        <p class="fb-lead">You do not need to write a perfect proposal. A simple problem, idea, or
+  <div class="next-panel">
+    <aside class="next-intro">
+      <p class="dsc-label">Your voice matters</p>
+      <h3 class="next-title">Help shape what Lyvorian builds next.</h3>
+      <p>You do not need to write a perfect proposal. A simple problem, idea or
         observation is enough.</p>
-        <ol class="fb-steps-list">
-          <li><span>1</span> Choose what you want to share</li>
-          <li><span>2</span> Explain the idea or issue</li>
-          <li><span>3</span> Add contact details only when you want a reply</li>
-        </ol>
-        <p class="fb-privacy">
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5l5.5 2v4c0 3.2-2.3 5.8-5.5 7-3.2-1.2-5.5-3.8-5.5-7v-4l5.5-2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-          No name is required. Add an email only when you would like a response.
-        </p>
-      </aside>
+      <ol class="next-steps">
+        <li><span>1</span>Choose what you want to share</li>
+        <li><span>2</span>Explain the idea or issue</li>
+        <li><span>3</span>Add contact details only when you want a reply</li>
+      </ol>
+      <p class="next-privacy">No name is required. Add an email only when you
+        would like a response.</p>
+    </aside>
 
-      <form class="fb-form" id="ideasForm" novalidate>
-        <ol class="fb-progress" id="fbProgress" aria-label="Progress">
-          <li class="on" data-step="1"><span class="fb-pnum">1</span>Type</li>
-          <li data-step="2"><span class="fb-pnum">2</span>Details</li>
-          <li data-step="3"><span class="fb-pnum">3</span>Contact</li>
-        </ol>
-        <p class="fb-srstep" id="fbSrStep" role="status" aria-live="polite">Step 1 of 3: choose a type</p>
-
-        <fieldset class="fb-step on" data-step="1">
-          <legend class="f-label">What would you like to share?</legend>
-          <div class="fb-cats">
-            <label class="fb-cat">
-              <input type="radio" name="fbCat" value="Product idea" data-submit="Send Product Idea" data-prompt="What problem would this product help solve?" checked/>
-              <span class="fb-cat-in">
-                <svg class="fb-cat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.4a5.8 5.8 0 00-3.4 10.5c.5.4.8 1 .8 1.6v.6h5.2v-.6c0-.6.3-1.2.8-1.6A5.8 5.8 0 0012 3.4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M10 19.2h4M10.6 21h2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                <span class="fb-cat-t">Product idea</span>
-                <span class="fb-cat-d">I have an idea for a new Lyvorian product.</span>
-                <svg class="fb-tick" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </label>
-            <label class="fb-cat">
-              <input type="radio" name="fbCat" value="Feature request" data-submit="Send Feature Request" data-prompt="What would you like the product to do?"/>
-              <span class="fb-cat-in">
-                <svg class="fb-cat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4.2v15.6M4.2 12h15.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="12" r="8.4" stroke="currentColor" stroke-width="1.4"/></svg>
-                <span class="fb-cat-t">Feature request</span>
-                <span class="fb-cat-d">I would like an existing product to do something new.</span>
-                <svg class="fb-tick" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </label>
-            <label class="fb-cat">
-              <input type="radio" name="fbCat" value="Design or usability" data-submit="Send Design Feedback" data-prompt="What felt confusing or difficult?"/>
-              <span class="fb-cat-in">
-                <svg class="fb-cat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 19.5l4-1 8.6-8.6a2 2 0 000-2.8l-.2-.2a2 2 0 00-2.8 0L5.5 15.5l-1 4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-                <span class="fb-cat-t">Design or usability</span>
-                <span class="fb-cat-d">Something feels confusing, difficult, or unclear.</span>
-                <svg class="fb-tick" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </label>
-            <label class="fb-cat">
-              <input type="radio" name="fbCat" value="Bug or problem" data-submit="Report a Problem" data-prompt="What happened, and what did you expect?"/>
-              <span class="fb-cat-in">
-                <svg class="fb-cat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="7" y="7.6" width="10" height="9.4" rx="4.7" stroke="currentColor" stroke-width="1.4"/><path d="M9.4 7.2a2.6 2.6 0 015.2 0M4.6 11h2.6M16.8 11h2.6M4.6 16h2.6M16.8 16h2.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                <span class="fb-cat-t">Bug or problem</span>
-                <span class="fb-cat-d">Something is not working as expected.</span>
-                <svg class="fb-tick" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </label>
-            <label class="fb-cat">
-              <input type="radio" name="fbCat" value="Privacy or trust" data-submit="Send Privacy Question" data-prompt="What would you like clarified?"/>
-              <span class="fb-cat-in">
-                <svg class="fb-cat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.4l6.4 2.4v5.4c0 3.9-2.7 7.4-6.4 8.6-3.7-1.2-6.4-4.7-6.4-8.6V5.8L12 3.4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-                <span class="fb-cat-t">Privacy or trust</span>
-                <span class="fb-cat-d">I have a question or concern about data or permissions.</span>
-                <svg class="fb-tick" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </label>
-            <label class="fb-cat">
-              <input type="radio" name="fbCat" value="General feedback" data-submit="Send Feedback" data-prompt="What would you like to share?"/>
-              <span class="fb-cat-in">
-                <svg class="fb-cat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12.6c0 3.6-3.6 6.5-8 6.5-1 0-2-.15-2.9-.43L4.6 20l1.1-3.4C4.6 15.5 4 14.1 4 12.6 4 9 7.6 6.1 12 6.1s8 2.9 8 6.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-                <span class="fb-cat-t">General feedback</span>
-                <span class="fb-cat-d">I want to share an observation or suggestion.</span>
-                <svg class="fb-tick" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </label>
-          </div>
-          <div class="fb-nav"><button type="button" class="btn-send fb-next">Continue
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="#1a1206" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button></div>
-        </fieldset>
-
-        <fieldset class="fb-step" data-step="2">
-          <legend class="f-label" id="fbPrompt">What would you like to share?</legend>
-          <div class="field-wrap">
-            <textarea id="ideaMsg" maxlength="1200" aria-describedby="charCount fbMsgErr" required></textarea>
-            <span class="char-count" id="charCount">0 / 1200</span>
-          </div>
-          <p class="fb-err" id="fbMsgErr" hidden>Please add a little detail before continuing.</p>
-          <div class="fb-nav">
-            <button type="button" class="fb-back">Back</button>
-            <button type="button" class="btn-send fb-next">Continue
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="#1a1206" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </fieldset>
-
-        <fieldset class="fb-step" data-step="3">
-          <legend class="f-label">Would you like a reply?</legend>
-          <label class="f-label fb-sm" for="ideaEmail">Email <span class="fb-opt">optional</span></label>
-          <input id="ideaEmail" type="email" placeholder="you@example.com" autocomplete="email"/>
-          <p class="fb-hint">Add your email only when you would like a reply.</p>
-          <button type="button" class="fb-addname" id="fbAddName" aria-expanded="false" aria-controls="fbNameWrap">+ Add my name</button>
-          <div id="fbNameWrap" hidden>
-            <label class="f-label fb-sm" for="ideaName">Name <span class="fb-opt">optional</span></label>
-            <input id="ideaName" type="text" placeholder="However you'd like to sign it" autocomplete="name"/>
-          </div>
-          <p class="fb-hint">Your message goes to the studio inbox and is read by the person who
-          builds everything here. What we do with it is described in the
-          <a href="privacy.html">privacy policy</a>.</p>
-          <div class="fb-nav">
-            <button type="button" class="fb-back">Back</button>
-            <button type="submit" class="btn-send" id="sendBtn">Send Product Idea
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.5 1.5L7 9M14.5 1.5L10 14.5l-3-5.5-5.5-3L14.5 1.5z" stroke="#1a1206" stroke-width="1.4" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </fieldset>
-
-        <input type="text" id="ideaHoney" style="display:none" tabindex="-1" autocomplete="off"/>
-      </form>
-
-      <div class="fb-done" id="fbDone" hidden>
-        <svg class="fb-done-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="1.5"/><path d="M15 24.5l6.2 6.2L33 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h3>Thank you for helping shape Lyvorian.</h3>
-        <p>Your message has been received and will be reviewed carefully.</p>
-        <div class="fb-done-actions">
-          <a href="products.html" class="btn-send">Explore products</a>
-          <button type="button" class="fb-back" id="fbAgain">Share another idea</button>
-        </div>
-      </div>
+    <div class="next-cats">
+      <p class="next-q">Things people write in about</p>
+      <ul>
+        <li><strong>Product idea</strong>I have an idea for a new Lyvorian product.</li>
+        <li><strong>Feature request</strong>I would like an existing product to do something new.</li>
+        <li><strong>Design or usability</strong>Something feels confusing, difficult or unclear.</li>
+        <li><strong>Bug or problem</strong>Something is not working as expected.</li>
+        <li><strong>Privacy or trust</strong>I have a question or concern about data or permissions.</li>
+        <li><strong>General feedback</strong>I want to share an observation or suggestion.</li>
+      </ul>
+      <!-- Deliberately a link, not a form. The live three-step wizard is ~448
+           lines of home.js and posts real mail via formsubmit.co; a second copy
+           would drift from the first the moment either is fixed, and the way
+           that fails is someone's message quietly not arriving. One form, one
+           place — this signposts it. -->
+      <a class="dsc-cta" href="share-an-idea.html#ideas">Open the form
+        <span class="dsc-arrow" aria-hidden="true">→</span></a>
+      <p class="next-hint">The form is on the home page — it takes about a minute.</p>
     </div>
   </div>
 </section>
+
 </main>
 
-<footer class="site-foot">
-  <div class="wrap">
-    <div class="foot-top">
-      <div class="foot-say">
-        <p class="foot-line">An independent studio building careful software for everyday life.</p>
-        <a class="foot-mail" href="mailto:support@lyvorianstudio.co.in">support@lyvorianstudio.co.in</a>
-      </div>
-      <div class="foot-cols">
-        <div>
-          <span class="foot-cap">Products</span>
-          <a href="finance-tracker.html">Finance Tracker</a>
-          <a href="habitaroha.html">HabitAroha</a>
-          <a href="fylunor.html">Fylunor</a>
-          <a href="medhakeli.html">Medhakeli</a>
-          <a href="products.html">All products</a>
-        </div>
-        <div>
-          <span class="foot-cap">Studio</span>
-          <a href="index.html#story">Why we build this way</a>
-          <a href="built-the-hard-way.html">Built the hard way</a>
-          <a href="notes.html">Studio notes</a>
-          <a href="index.html#roadmap">Roadmap</a>
-        </div>
-        <div>
-          <span class="foot-cap">Legal</span>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="subscription-terms.html">Subscriptions</a>
-          <a href="account-deletion.html">Delete your account</a>
-        </div>
-      </div>
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <a class="dsc-mark" href="index.html">Lyvorian Studio</a>
+      <p>An independent studio building careful software for everyday life.</p>
+      <p><a class="inline" href="mailto:support@lyvorianstudio.co.in">support@lyvorianstudio.co.in</a></p>
     </div>
-    <div class="foot-mark" aria-hidden="true">LYVORIAN</div>
-    <div class="foot-base">
-      <span>&copy; 2026 Lyvorian Studio. All rights reserved.</span>
-      <span class="foot-live"><i></i>Finance Tracker is live</span>
-    </div>
-  </div>
-</footer>
-
-<div class="gallery" id="gallery-finance-tracker" role="dialog" aria-modal="true" aria-label="Finance Tracker screenshots">
-  <button class="lb-close gallery-close" aria-label="Close gallery">&#10005;</button>
-  <div class="gallery-inner">
-    <div class="gallery-head">
-      <h3 class="gallery-title">Finance Tracker</h3>
-      <div class="gallery-sub">Real screens from the live app</div>
-    </div>
-    <div class="gallery-grid">
-      <div class="shot" data-label="Dashboard" tabindex="0" role="button" aria-label="Enlarge dashboard screenshot">
-        <img data-src="assets/shot-dashboard.webp?v=20260819b" alt="Finance Tracker dashboard — balance, budgets and spending at a glance" width="560" height="1120"/>
-        <span class="shot-name">Dashboard</span>
-      </div>
-      <div class="shot" data-label="Expenses" tabindex="0" role="button" aria-label="Enlarge expenses screenshot">
-        <img data-src="assets/shot-expenses.webp?v=20260819b" alt="Finance Tracker expenses screen — categorised spending" width="560" height="1120"/>
-        <span class="shot-name">Expenses</span>
-      </div>
-      <div class="shot" data-label="Income" tabindex="0" role="button" aria-label="Enlarge income screenshot">
-        <img data-src="assets/shot-income.webp?v=20260819b" alt="Finance Tracker income screen — salary and other income logged" width="560" height="1120"/>
-        <span class="shot-name">Income</span>
-      </div>
-      <div class="shot" data-label="Goals" tabindex="0" role="button" aria-label="Enlarge goals screenshot">
-        <img data-src="assets/shot-goals.webp?v=20260819b" alt="Finance Tracker goals screen — savings goals with progress" width="560" height="1120"/>
-        <span class="shot-name">Goals</span>
-      </div>
-      <div class="shot" data-label="Trading" tabindex="0" role="button" aria-label="Enlarge trading screenshot">
-        <img data-src="assets/shot-trading.webp?v=20260819b" alt="Finance Tracker trading journal — trade log, P&amp;L and statistics" width="560" height="1120"/>
-        <span class="shot-name">Trading</span>
-      </div>
-      <div class="shot" data-label="More" tabindex="0" role="button" aria-label="Enlarge more screenshot">
-        <img data-src="assets/shot-more.webp?v=20260819b" alt="Finance Tracker more screen — tools and settings" width="560" height="1120"/>
-        <span class="shot-name">More</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
-  <button class="lb-close" id="lbClose" aria-label="Close preview">&#10005;</button>
-  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous screenshot">
-    <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <button class="lb-nav lb-next" id="lbNext" aria-label="Next screenshot">
-    <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <div class="lb-stage">
-    <img id="lbImg" src="" alt=""/>
-    <span class="lb-caption" id="lbCaption"></span>
-  </div>
-</div>
-
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-
-
-<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu">
-  <div class="mm-head">
-    <span class="mm-label">Lyvorian Studio</span>
-    <span class="mm-status"><i></i>1 live &middot; 3 in build</span>
-  </div>
-  <nav class="mm-nav" aria-label="Primary">
-    <a href="products.html"><span>Products</span><em>Four, and what is next</em></a>
-    <a href="index.html#story"><span>Studio</span><em>Why we build this way</em></a>
-    <a href="notes.html"><span>Notes</span><em>What changed, and when</em></a>
-    <a href="index.html#ideas"><span>Share an idea</span><em>Shape what comes next</em></a>
-  </nav>
-  <div class="mm-products">
-    <span class="mm-cap">Jump to a product</span>
-    <div class="mm-chips">
+    <nav aria-label="Products">
+      <p class="dsc-label">Products</p>
       <a href="finance-tracker.html">Finance Tracker</a>
       <a href="habitaroha.html">HabitAroha</a>
       <a href="fylunor.html">Fylunor</a>
       <a href="medhakeli.html">Medhakeli</a>
-    </div>
+      <a href="products.html">All products</a>
+    </nav>
+    <nav aria-label="Studio">
+      <p class="dsc-label">Studio</p>
+      <a href="index.html#story">Why we build this way</a>
+      <a href="built-the-hard-way.html">Built the hard way</a>
+      <a href="notes.html">Studio notes</a>
+      <a href="#roadmap">Roadmap</a>
+    </nav>
+    <nav aria-label="Legal">
+      <p class="dsc-label">Legal</p>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="subscription-terms.html">Subscriptions</a>
+      <a href="account-deletion.html">Delete your account</a>
+    </nav>
+
+    <!-- ==================================================================
+         FOLLOW US — THE FOUR href VALUES BELOW ARE PLACEHOLDERS.
+         No social handles exist anywhere in this repo, so these were not
+         guessed: a link to the wrong account is worse than no link at all.
+         Replace each "#" with the real profile URL before this page ships,
+         and mirror the same four URLs into the JSON-LD "sameAs" array in
+         <head> so search engines associate them with the Organization.
+         ================================================================== -->
+    <nav class="foot-social" aria-label="Follow Lyvorian Studio">
+      <p class="dsc-label">Follow us</p>
+      <ul>
+        <!-- Instagram's mark is a gradient, not a flat colour. The stops start
+             as currentColor and animate to the brand ramp on hover — stop-color
+             is transitionable, so this needs no second icon. -->
+        <li><a href="https://www.instagram.com/lyvorian_studio" data-social="instagram"
+               aria-label="Lyvorian Studio on Instagram"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <defs>
+              <linearGradient id="igGrad" x1="2" y1="22" x2="22" y2="2">
+                <stop class="ig-1" offset="0%"/>
+                <stop class="ig-2" offset="50%"/>
+                <stop class="ig-3" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" stroke="url(#igGrad)" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="4.1" stroke="url(#igGrad)" stroke-width="1.6"/>
+            <circle cx="17.1" cy="6.9" r="1.15" fill="url(#igGrad)"/>
+          </svg><span>Instagram</span></a></li>
+
+        <li><a href="https://www.reddit.com/user/Lyvorian_studio" data-social="reddit"
+               aria-label="Lyvorian Studio on Reddit"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <circle cx="12" cy="13.4" r="8.1" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="9.2" cy="13" r="1.15" fill="currentColor"/>
+            <circle cx="14.8" cy="13" r="1.15" fill="currentColor"/>
+            <path d="M9.1 16.5c1.7 1.2 4.1 1.2 5.8 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M14.3 5.1 15 2.4l2.7.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="14.3" cy="5.1" r="1.15" fill="currentColor"/>
+          </svg><span>Reddit</span></a></li>
+
+        <li><a href="https://whatsapp.com/channel/0029VbDWqQnGehELlpgHhl0P" data-social="whatsapp"
+               aria-label="Lyvorian Studio WhatsApp channel"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <path d="M3.4 20.6l1.3-4.5a8.2 8.2 0 1 1 3.2 3.1l-4.5 1.4z"
+                  stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9.1 8.4c.3-.1.6 0 .8.3l.7 1.2c.1.3.1.6-.1.8l-.5.5a5.4 5.4 0 0 0 2.8 2.8l.5-.5c.2-.2.5-.3.8-.1l1.2.7c.3.2.4.5.3.8-.3.8-1.2 1.3-2 1.1a8 8 0 0 1-5.6-5.6c-.2-.8.3-1.7 1.1-2z"
+                  fill="currentColor"/>
+          </svg><span>WhatsApp</span></a></li>
+
+        <li><a href="https://x.com/Lyvorianstudio" data-social="x"
+               aria-label="Lyvorian Studio on X"
+               target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <path d="M4 4l7.2 9.4L4.4 20h2.1l5.6-5.9 4.5 5.9H20l-7.5-9.8L19.4 4h-2.1l-5.2 5.5L8 4H4z"
+                  fill="currentColor"/>
+          </svg><span>X</span></a></li>
+      </ul>
+    </nav>
   </div>
-  <a class="mm-mail" href="mailto:support@lyvorianstudio.co.in">
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.4" y="3.2" width="13.2" height="9.6" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2.2 4.6L8 8.7l5.8-4.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    support@lyvorianstudio.co.in
-  </a>
+  <!-- The studio signature. Rendered art rather than CSS text, so the sculpted
+       letterforms and the figure leaning on the L arrive as one piece.
+       aria-hidden + empty alt: the wordmark is decorative here, the studio name
+       is already announced by the footer's own link. -->
+  <figure class="foot-sig">
+    <img src="assets/studio/foot-mark.webp" alt="" aria-hidden="true" loading="lazy"
+         width="1920" height="794"/>
+  </figure>
+  <div class="foot-base">
+    <span>© 2026 Lyvorian Studio. All rights reserved.</span>
+    <span class="foot-live"><i aria-hidden="true"></i>Finance Tracker is live</span>
+  </div>
+</footer>
+
+<!-- Product screens open full size. The 3D deck showed them at ~150px, which is
+     too small to read an interface in — the lightbox is what makes them useful
+     rather than decorative. -->
+<!-- role/aria-modal so it announces as a dialog; descent.js also marks the
+     page inert while it is open, so Tab cannot walk out behind it. -->
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true"
+     aria-label="Product screenshot viewer">
+  <button class="lb-x" type="button" aria-label="Close">&#10005;</button>
+  <button class="lb-nav lb-prev" type="button" aria-label="Previous">&#8249;</button>
+  <img class="lb-img" src="" alt=""/>
+  <p class="lb-cap"></p>
+  <button class="lb-nav lb-next" type="button" aria-label="Next">&#8250;</button>
 </div>
 
-<div class="contact-pop" id="contactPop" role="dialog" aria-label="Contact the studio" aria-hidden="true">
-  <span class="contact-tail"></span>
-  <div class="contact-pop-label">Email the studio</div>
-  <a class="contact-mail" href="mailto:support@lyvorianstudio.co.in">
-    <svg class="cm-icon" width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.4" y="3.2" width="13.2" height="9.6" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2.2 4.6L8 8.7l5.8-4.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="cm-text">support@lyvorianstudio.co.in</span>
-    <svg class="cm-arw" width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </a>
-</div>
+<button class="to-top" id="toTop" type="button" aria-label="Back to top">&#8593;</button>
 
-<div class="idea-toast" id="ideaToast" role="status">
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12l7.5-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  Sent straight to the studio — thank you!
-</div>
-
-<button class="to-top" id="toTop" aria-label="Back to top">
-  <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4 7l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</button>
-
-
-
-
-<!-- GoatCounter — privacy-friendly analytics (no cookies, no personal data).
-     Claim the code "lyvorianstudio" at goatcounter.com to activate; harmless until then. -->
-<script data-goatcounter="https://lyvorianstudio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
-<script src="assets/site.js?v=20260829i" defer></script>
-<script src="assets/home.js?v=20260829i" defer></script>
+<script src="assets/descent.js?v=20260901e" defer></script>
+<!-- The manifest above is only install-eligible with a controlling worker.
+     Inlined instead of loading site.js, whose own nav and theme handlers
+     would bind a second time over descent.js's. Mirrors site.js:171-172. -->
+<script>if('serviceWorker' in navigator && location.protocol === 'https:'){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
+<script data-goatcounter="https://lyvorianstudio.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
