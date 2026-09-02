@@ -146,7 +146,17 @@
 @media (max-width:1050px) and (min-width:721px){
   .product-wing-room.projects-open{min-height:100svh!important}
   .product-wing-room.projects-open .corridor-map{inset:calc(88px + 10svh) 3% auto;height:calc(100svh - 110px)}
-  .office-corridor{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(145px,1fr));gap:9px}
+  /* 145px was below what a card can actually hold. Its icon and title are
+     anchored to the top and its badge and CTA to the bottom, so as the row
+     shrinks the two halves close on each other: at a 700px-tall window every one
+     of the five cards had the badge sitting in the description, and the featured
+     card had it in the title. The content needs ~200px.
+
+     The row minimum is the whole fix. .office-corridor is already overflow-y:auto,
+     so once the rows are allowed their real height the grid simply scrolls on a
+     short window, which is the honest outcome — a visitor scrolls a little
+     instead of reading two lines printed on top of each other. */
+  .office-corridor{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(200px,1fr));gap:9px}
   .room-door:nth-child(1){grid-column:1/3;grid-row:1}.room-door:nth-child(2),.room-door:nth-child(3),.room-door:nth-child(4),.room-door:nth-child(5){grid-column:auto;grid-row:auto}
   /* Same two-line title, same collision, smaller: p sat at top:92px, only 40px
      below a title that starts at 52px and stands 54px tall, so the description
