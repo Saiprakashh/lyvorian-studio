@@ -119,6 +119,13 @@
   var lb = document.getElementById('lightbox');
   var lbImg = document.getElementById('lbImg');
   var lbCaption = document.getElementById('lbCaption');
+  // Bail when the gallery markup is not on the page. share-an-idea.html carries
+  // the form and nothing else, and line ~174 below calls
+  // getElementById('lbClose').addEventListener directly — an uncaught throw
+  // there halts the REST of this file, including the feedback flow 400 lines
+  // down, leaving the form's Continue button dead with no clue why. That has
+  // already happened once here, via #storyQuote.
+  if (!lb || !lbImg || !lbCaption) return;
   var openGallery = null, items = [], idx = 0;
 
   function setOverflow(){ document.body.style.overflow = (openGallery || lb.classList.contains('open')) ? 'hidden' : ''; }

@@ -653,13 +653,38 @@ body { background: var(--bg); color: var(--text); }
 }
 .about-copy .dsc-cta { margin-top: .9rem; }
 
+/* Below 900px the wall STOPS being a backdrop and becomes a picture above the
+   copy. This is not a taste call — it is forced by the sign.
+
+   The bronze lettering is a band across 29%-97% of the plate's width. With
+   object-position at 50% and object-fit:cover, showing all of it needs the box
+   to be at least ~1.68 wide-to-tall, essentially the image's own 1.79. Desktop
+   clears that (1280x756 = 1.69). A 320px phone against a 40rem min-height is
+   304x770 = 0.40, which crops to 22% of the image width — the middle third of
+   the wordmark and nothing else. No object-position fixes it; a 22% window
+   cannot contain a 68% band.
+
+   So on narrow screens the image sits in flow at its own aspect ratio, whole,
+   and the copy sits beneath it on the plate. Both survive intact. */
 @media (max-width: 900px) {
-  .about-bg { object-position: 50% 40%; }
-  .about::after {
-    background: linear-gradient(to bottom,
-      rgba(18, 19, 22, .30) 0%, rgba(18, 19, 22, .78) 48%, rgba(18, 19, 22, .93) 100%);
+  .about-bg {
+    position: static;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1920 / 1072;
+    object-fit: cover;       /* no crop: the box now matches the source ratio */
+    object-position: 50% 50%;
+    z-index: auto;
   }
-  .about-inner { justify-content: flex-start; align-items: flex-start; min-height: 40rem; }
+  /* the scrim existed to keep copy legible ON the photo; there is no copy on
+     the photo any more, and leaving it would just grey the picture */
+  .about::after { content: none; }
+  .about-inner {
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 0;
+    padding-top: clamp(2rem, 6vh, 3rem);
+  }
   .about-copy { max-width: none; }
 }
 
