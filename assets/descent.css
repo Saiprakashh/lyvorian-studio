@@ -903,6 +903,30 @@ body { background: var(--bg); color: var(--text); }
 .foot nav .dsc-label { margin-bottom: .35rem; }
 .foot nav a { color: var(--dsc-ink-2); text-decoration: none; }
 @media (hover: hover) and (pointer: fine) { .foot nav a:hover { color: var(--dsc-ink); } }
+
+/* ── footer touch targets ───────────────────────────────────────────
+   The footer links are .87rem on 1.6 line-height = 22px, on a .5rem gap, so
+   the pitch is 30px. That PASSES WCAG 2.2 AA: 2.5.8 wants 24x24, and its
+   spacing exception is satisfied at 30px. It fails 2.5.5 AAA, which wants 44.
+
+   Raising the target alone is not enough — at a 30px pitch, 44px hit areas
+   would overlap and later siblings would swallow earlier ones' taps, which is
+   the same trap the Project Office rail had. So the gap collapses to 0 as the
+   target grows: 44px box on a 44px pitch, adjacent but never overlapping. The
+   text does not move relative to itself; only the tappable box around it grows.
+
+   Coarse pointers only. A mouse is precise, and on desktop the tighter 30px
+   rhythm is what makes the columns read as lists rather than menus. */
+@media (pointer: coarse) {
+  .foot nav { gap: 0; }
+  .foot a:not([data-social]) {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  /* the wordmark is an inline-flex lockup; keep it centred without stretching */
+  .foot .dsc-mark { display: inline-flex; }
+}
 /* The studio signature. The art is rendered on its own near-black ground, so it
    is masked to fade into the footer plate at every edge rather than sitting in
    a visible rectangle — the seam is what would give it away as a pasted image. */
