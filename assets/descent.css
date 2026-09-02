@@ -602,7 +602,16 @@ body { background: var(--bg); color: var(--text); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 50%;
+  /* 91%, not 50%. object-position does not set where the window is CENTRED —
+     it sets what fraction of the surplus width is trimmed off the LEFT, so the
+     visible window is [(1-v)X, (1-v)X + v] for a visible fraction v.
+     The sign band runs 29%-97%, and solving that for every width from 1120px
+     up gives X >= 91%, tightest exactly at 1120px where the only value that
+     works is 91% and the window lands on 29%-97% precisely. Wider screens have
+     less surplus to trim, so the same value keeps the sign whole and simply
+     shows more wall to its left.
+     At 50% the window was 15%-91% at 1280px: the end of the wordmark cut. */
+  object-position: 91% 50%;
   z-index: -2;
 }
 /* Measured, not guessed: the bronze lettering is a band spanning 29%-97% of
@@ -653,20 +662,21 @@ body { background: var(--bg); color: var(--text); }
 }
 .about-copy .dsc-cta { margin-top: .9rem; }
 
-/* Below 900px the wall STOPS being a backdrop and becomes a picture above the
+/* Below 1120px the wall STOPS being a backdrop and becomes a picture above the
    copy. This is not a taste call — it is forced by the sign.
 
    The bronze lettering is a band across 29%-97% of the plate's width. With
    object-position at 50% and object-fit:cover, showing all of it needs the box
-   to be at least ~1.68 wide-to-tall, essentially the image's own 1.79. Desktop
-   clears that (1280x756 = 1.69). A 320px phone against a 40rem min-height is
+   to be at least ~1.68 wide-to-tall, essentially the image's own 1.79. Measured, not assumed: the box height is driven by the COPY, not the
+   min-height, so at 1280 it is 1249x918 = 1.36 and the sign is cut there too
+   — which is why this threshold is 1120px and not 900px. A 320px phone against a 40rem min-height is
    304x770 = 0.40, which crops to 22% of the image width — the middle third of
    the wordmark and nothing else. No object-position fixes it; a 22% window
    cannot contain a 68% band.
 
    So on narrow screens the image sits in flow at its own aspect ratio, whole,
    and the copy sits beneath it on the plate. Both survive intact. */
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
   .about-bg {
     position: static;
     width: 100%;
