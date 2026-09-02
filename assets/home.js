@@ -197,7 +197,6 @@
 (function(){
   var form = document.getElementById('ideasForm');
   if (!form) return;
-  var picked = 'App idea';
   var msgEl = document.getElementById('ideaMsg');
   var countEl = document.getElementById('charCount');
   var toast = document.getElementById('ideaToast');
@@ -207,10 +206,8 @@
     var r = form.querySelector('input[name="fbCat"]:checked');
     return r ? r.value : 'General feedback';
   }
-  form.addEventListener('change', function(e){
-    if (e.target.name === 'fbCat') picked = currentCat();
-  });
-  picked = currentCat();
+  // deliberately NOT cached: a restored draft sets the radio without firing
+  // change, so any cache silently disagrees with what the visitor sees.
   msgEl.addEventListener('input', function(){
     var n = msgEl.value.length;
     countEl.textContent = n + ' / 1200';
@@ -225,6 +222,9 @@
   }
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    // Enter inside the step-1 radio group or a step-2 field would otherwise
+    // submit the whole form before the visitor reached the send button.
+    if (at !== 3) return;
     var msg = msgEl.value.trim();
     if (!msg) return;
     if (document.getElementById('ideaHoney').value) return; // bot
@@ -238,11 +238,11 @@
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       body: JSON.stringify({
-        _subject: '💡 New ' + picked + ' — Lyvorian Studio site' + (name ? ' (from ' + name + ')' : ''),
+        _subject: '💡 New ' + currentCat() + ' — Lyvorian Studio site' + (name ? ' (from ' + name + ')' : ''),
         _template: 'box',
         _captcha: 'false',
         _replyto: email || undefined,
-        'Idea type': picked,
+        'Idea type': currentCat(),
         'From': name || 'Anonymous visitor',
         'Reply-to email': email || 'Not shared',
         'Their message': msg,
@@ -601,7 +601,11 @@
 
   function chosen(){ return form.querySelector('input[name="fbCat"]:checked'); }
 
-  function go(n){
+  // moveFocus defaults on, because the two step buttons that call go() ARE
+  // visitor-initiated and should move focus. Only the call on page load
+  // passes false: focusing a control nobody asked for skips the visitor past
+  // the page they were about to read. products.js:48 uses this same flag.
+  function go(n, moveFocus){
     at = n;
     steps.forEach(function(s){ s.classList.toggle('on', +s.dataset.step === n); });
     prog.forEach(function(p){
@@ -613,7 +617,7 @@
     });
     srStep.textContent = 'Step ' + n + ' of 3: ' + ['choose a type','details','contact'][n-1];
     var first = steps[n-1].querySelector('input,textarea,button');
-    if (first) first.focus({preventScroll:true});
+    if (moveFocus !== false && first) first.focus({preventScroll:true});
   }
 
   function syncCat(){
@@ -686,7 +690,7 @@
 
   syncCat();
   // start deterministically rather than trusting the markup's initial classes
-  // to stay in sync with the progress indicator
-  go(1);
+  // to stay in sync with the progress indicator. No focus move: nobody asked.
+  go(1, false);
 })();
 

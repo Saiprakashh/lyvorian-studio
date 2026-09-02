@@ -7,6 +7,9 @@
   --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
   --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
   --maroon:#8a3838; --ok:#3b7a4f; --ok-dot:#5da271;
+  /* The focus ring is a control, not decoration: WCAG wants 3:1 for a
+     non-text indicator and --gold-bright manages 2.3:1 on this page. */
+  --focus:#8a6a2e;
   --hdr:rgba(242,232,213,.75);
   --r:16px;
 
@@ -151,6 +154,11 @@
        names so every existing rule keeps working, remapped to neutrals. */
     --gold:#e8e9ec; --gold-bright:#ffffff; --gold-dim:rgba(255,255,255,.34);
     --ok:#8fe09f; --ok-dot:#8fe09f;
+    /* --maroon was never remapped for dark: #8a3838 on #2b2d31 is 1.78:1,
+       which made the form error message and every "we never do this" ✕
+       marker effectively invisible. */
+    --maroon:#ef9a9a;
+    --focus:#ffffff;
     --hdr:rgba(33,35,39,.82);
     /* charcoal has no warmth to reinforce: the decorative layer goes neutral,
        with a faint cool counterpoint instead of the maroon */
@@ -173,6 +181,7 @@
   --text:#2a2013; --muted:#6b5a3e; --muted2:#8c7a5c;
   --gold:#a97a1f; --gold-bright:#c98f22; --gold-dim:#8a6a2e;
   --ok:#3b7a4f; --ok-dot:#5da271;
+  --focus:#8a6a2e;
   --hdr:rgba(242,232,213,.75);
   --glass:rgba(255,252,245,.62);
   --glass-brd:rgba(255,255,255,.75);
@@ -188,6 +197,11 @@
        names so every existing rule keeps working, remapped to neutrals. */
     --gold:#e8e9ec; --gold-bright:#ffffff; --gold-dim:rgba(255,255,255,.34);
     --ok:#8fe09f; --ok-dot:#8fe09f;
+    /* --maroon was never remapped for dark: #8a3838 on #2b2d31 is 1.78:1,
+       which made the form error message and every "we never do this" ✕
+       marker effectively invisible. */
+    --maroon:#ef9a9a;
+    --focus:#ffffff;
     --hdr:rgba(33,35,39,.82);
     /* charcoal has no warmth to reinforce: the decorative layer goes neutral,
        with a faint cool counterpoint instead of the maroon */
@@ -222,9 +236,9 @@ h1,h2,h3{text-wrap:balance}
 /* ── keyboard focus, site-wide ─────────────── */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 select:focus-visible,[tabindex]:focus-visible{
-  outline:2px solid var(--gold-bright);outline-offset:3px;border-radius:4px}
+  outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}
 .card:focus-visible,.btn-preview:focus-visible,.hero-btn:focus-visible,
-.cta:focus-visible,.shot:focus-visible{outline:2px solid var(--gold-bright);outline-offset:4px}
+.cta:focus-visible,.shot:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
 
 /* ── shared header (secondary pages) ───────── */
 /* header.site-hdr beats a page's bare `header{}` rule on specificity,
@@ -331,16 +345,20 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
    already passes at 6.47:1, so it keeps the plain tokens below.
    Chips use two class names (0,2,0) to beat each page's own .plat-wip; the
    nav rules match the originals' specificity and win on source order. */
+.skip-link{color:#856010}                      /* 5.16:1 on --panel — the
+   first control a keyboard user meets, and var(--gold) put it at 3.5:1 */
 .plat.plat-wip{color:#856010}                  /* 4.70:1 on --bg   */
 .plat.plat-live{color:#357045}                 /* 4.86:1 on --bg   */
 .site-hdr nav a[aria-current]{color:#856010}   /* 4.70:1 on --hdr  */
 .mobile-menu a[aria-current]{color:#7d5a0e}    /* --panel is lighter than --bg */
 @media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .skip-link{color:var(--gold)}
   :root:not([data-theme="light"]) .plat.plat-wip{color:var(--gold)}
   :root:not([data-theme="light"]) .plat.plat-live{color:var(--ok)}
   :root:not([data-theme="light"]) .site-hdr nav a[aria-current]{color:var(--gold)}
   :root:not([data-theme="light"]) .mobile-menu a[aria-current]{color:var(--gold)}
 }
+:root[data-theme="dark"] .skip-link{color:var(--gold)}
 :root[data-theme="dark"] .plat.plat-wip{color:var(--gold)}
 :root[data-theme="dark"] .plat.plat-live{color:var(--ok)}
 :root[data-theme="dark"] .site-hdr nav a[aria-current]{color:var(--gold)}
@@ -576,7 +594,7 @@ header.site-hdr,body > header{transition:padding var(--t-panel) var(--e-inout),
   border-bottom:1px solid var(--line-bright);padding-bottom:2px}
 .foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
 .foot-cols div{display:flex;flex-direction:column;gap:10px}
-.foot-cap{color:var(--muted2);font:var(--t-eyebrow);
+.foot-cap{color:var(--muted);font:var(--t-eyebrow);
   letter-spacing:var(--ls-eyebrow);text-transform:uppercase;margin-bottom:2px}
 .foot-cols a{color:var(--muted);text-decoration:none;font:var(--t-body-sm);
   width:fit-content}
@@ -587,7 +605,7 @@ header.site-hdr,body > header{transition:padding var(--t-panel) var(--e-inout),
 .foot-base{display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-5);
   align-items:center;justify-content:space-between;
   padding-top:var(--sp-4);border-top:1px solid var(--line);
-  color:var(--muted2);font:var(--t-caption);letter-spacing:var(--ls-caption)}
+  color:var(--muted);font:var(--t-caption);letter-spacing:var(--ls-caption)}
 .foot-live{display:inline-flex;align-items:center;gap:7px;color:var(--ok)}
 .foot-live i{width:6px;height:6px;border-radius:50%;background:var(--ok-dot);
   box-shadow:0 0 7px var(--ok-dot)}

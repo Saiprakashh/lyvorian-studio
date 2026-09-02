@@ -696,7 +696,7 @@
   .fb-tick{width:15px;height:15px;position:absolute;top:13px;right:13px;color:var(--gold);
     opacity:0;transition:opacity .19s}
   .fb-cat:hover .fb-cat-in{border-color:var(--gold-dim);transform:translateY(-2px)}
-  .fb-cat input:focus-visible + .fb-cat-in{outline:2px solid var(--gold-bright);outline-offset:3px}
+  .fb-cat input:focus-visible + .fb-cat-in{outline:2px solid var(--focus);outline-offset:3px}
   .fb-cat input:checked + .fb-cat-in{border-color:var(--gold);background:var(--bg2)}
   .fb-cat input:checked + .fb-cat-in .fb-tick{opacity:1}
 
@@ -803,7 +803,7 @@
     transition:transform .25s cubic-bezier(.16,.8,.28,1)}
   .plat-play img{display:block;height:40px;width:auto}
   .plat-play:hover{transform:translateY(-2px)}
-  .plat-play:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+  .plat-play:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
   @media(prefers-reduced-motion:reduce){.plat-play:hover{transform:none}}
 
   .pcard-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);

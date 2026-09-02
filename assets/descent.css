@@ -775,7 +775,7 @@ body { background: var(--bg); color: var(--text); }
 .road-title em {
   font-style: normal;
   margin-left: .5rem;
-  color: var(--dsc-ink-3);
+  color: var(--dsc-ink-2);
   font-size: .78rem;
   letter-spacing: .04em;
 }
@@ -798,7 +798,7 @@ body { background: var(--bg); color: var(--text); }
 .log-item > span:not(.w):not(.wg) {   /* the date only — a bare `span` also caught every
                                 word span inside the <p>, shrinking the note
                                 body to .7rem with .1em letter-spacing. */
-  color: var(--dsc-ink-3);
+  color: var(--dsc-ink-2);
   font: 500 .7rem/1.6 var(--font-interface, system-ui, sans-serif);
   letter-spacing: .1em;
 }
@@ -972,7 +972,7 @@ body { background: var(--bg); color: var(--text); }
   margin: clamp(1.4rem, 3vh, 2rem) auto 0;
   padding-top: 1.4rem;
   border-top: 1px solid var(--dsc-edge);
-  color: var(--dsc-ink-3);
+  color: var(--dsc-ink-2);
   font: 300 .8rem/1.5 var(--font-interface, system-ui, sans-serif);
 }
 .foot-live { display: inline-flex; align-items: center; gap: .5rem; color: var(--dsc-ink-2); }
@@ -1003,7 +1003,7 @@ body { background: var(--bg); color: var(--text); }
 .rule-num {
   display: block;
   margin-bottom: 1.5rem;
-  color: var(--dsc-ink-3);
+  color: var(--dsc-ink-2);
   font: 500 .72rem/1 var(--font-interface, system-ui, sans-serif);
   letter-spacing: .12em;
   font-variant-numeric: tabular-nums;
@@ -1078,7 +1078,7 @@ body { background: var(--bg); color: var(--text); }
 .next-cats { min-width: 0; }
 .next-q {
   margin: 0 0 1rem;
-  color: var(--dsc-ink-3);
+  color: var(--dsc-ink-2);
   font: 500 .66rem/1 var(--font-interface, system-ui, sans-serif);
   letter-spacing: .18em;
   text-transform: uppercase;
@@ -1108,7 +1108,7 @@ body { background: var(--bg); color: var(--text); }
 }
 .next-hint {
   margin: .85rem 0 0;
-  color: var(--dsc-ink-3);
+  color: var(--dsc-ink-2);
   font: 300 .82rem/1.5 var(--font-interface, system-ui, sans-serif);
 }
 @media (max-width: 860px) {
@@ -1561,3 +1561,17 @@ body { background: var(--bg); color: var(--text); }
   }
 }
 .deck-actions .dl-alt:focus-visible { outline: 2px solid var(--dsc-ink); outline-offset: 3px; }
+
+/* ── print ──────────────────────────────────────────────────────
+   Save-as-PDF walked through roughly a dozen blank pages before reaching any
+   content: .descent reserves 1200vh of scroll, .dsc-sticky pins a blank plate
+   across it, and every .dsc-beat is hidden until the rAF loop paints one —
+   which never happens in a print context. Collapse the scroll-jack, drop the
+   painted layers, and let the beats print as ordinary stacked text. */
+@media print{
+  .descent{height:auto}
+  .dsc-sticky{position:relative;height:auto;overflow:visible}
+  .dsc-canvas,.dsc-scrim,.dsc-hint,.dsc-progress{display:none}
+  .dsc-beat{position:static;opacity:1!important;visibility:visible!important;
+    transform:none!important}
+}

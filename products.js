@@ -16,7 +16,11 @@ const tourProgress = document.querySelector("[data-tour-progress]");
 const walkMeter = document.querySelector("[data-walk-meter]");
 const tourDots = [...document.querySelectorAll("[data-tour-dot]")];
 const arrival = document.querySelector(".arrival-room");
-const backgroundRegions = [document.querySelector(".tour-header"), document.querySelector(".tour-rail"), skipLink, ...rooms].filter(Boolean);
+// .tour-header is deliberately NOT in this list. products.css raises it above
+// the open room (z-index 1400) so it stays visible, and marking it inert made
+// the "Exit office" link the visitor can plainly see do nothing at all. It
+// carries the two legitimate ways out of a room, so it stays interactive.
+const backgroundRegions = [document.querySelector(".tour-rail"), skipLink, ...rooms].filter(Boolean);
 
 function finishSplash() {
   splash?.classList.add("is-done");

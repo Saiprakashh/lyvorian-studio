@@ -242,6 +242,15 @@
     if (!showStill() && imgs[STILL]) {
       imgs[STILL].addEventListener('load', showStill, { once: true });
     }
+    /* No rAF loop runs in this branch, so nothing would ever re-measure the
+       bitmap: after a rotate the still stayed stretched to the old size for
+       the life of the page. measure() resizes and resets the transform, and
+       painted is cleared so the repaint is not skipped as already-current. */
+    addEventListener('resize', function () {
+      measure();
+      painted = -1;
+      showStill();
+    }, { passive: true });
     /* Beats are scroll-driven, so with no scroll they would all sit at zero.
        Show the identity block and leave the rest out. */
     Array.prototype.forEach.call(root.querySelectorAll('[data-beat]'), function (el) {
@@ -436,7 +445,7 @@
      walking the page behind the backdrop — three tabs used to land on the
      back-to-top button, painted underneath it, where Enter jumped the page to
      the top with the lightbox still open and scroll still locked. */
-  var behind = [].slice.call(document.querySelectorAll('main, header.dsc-hdr, footer.foot'));
+  var behind = [].slice.call(document.querySelectorAll('main, header.dsc-hdr, footer.foot, .skip-link, #toTop'));
 
   function open(i, from) {
     lastFocus = from || null;

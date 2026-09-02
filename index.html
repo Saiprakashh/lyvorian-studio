@@ -59,8 +59,8 @@
     size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
 </style>
 
-<link rel="stylesheet" href="assets/site.css?v=20260902a"/>
-<link rel="stylesheet" href="assets/descent.css?v=20260902f"/>
+<link rel="stylesheet" href="assets/site.css?v=20260902b"/>
+<link rel="stylesheet" href="assets/descent.css?v=20260902g"/>
 <!-- No-JavaScript rendering of the hero. Every .dsc-beat is
      opacity:0;visibility:hidden and only descent.js ever raises one, so without
      it the hero — including this page's single <h1> — is never shown, and
@@ -268,6 +268,7 @@
 <span id="story" aria-hidden="true"></span>
 <section class="about" id="about">
   <img class="about-bg" src="assets/studio/about-wall.webp" alt="" aria-hidden="true"
+       srcset="assets/studio/about-wall-750w.webp 750w, assets/studio/about-wall-1200w.webp 1200w, assets/studio/about-wall.webp 1920w" sizes="100vw"
        loading="lazy" decoding="async" width="1920" height="1072"/>
   <div class="about-inner">
     <div class="about-copy">
@@ -323,17 +324,17 @@
   </div>
   <div class="craft-grid">
     <figure class="craft-item craft-wide">
-      <img src="assets/studio/office-wide.webp?v=20260901b" alt="The Lyvorian Studio workspace at dawn" loading="lazy" width="1920" height="1072"/>
+      <img src="assets/studio/office-wide.webp?v=20260901b" srcset="assets/studio/office-wide-750w.webp 750w, assets/studio/office-wide-1200w.webp 1200w, assets/studio/office-wide.webp?v=20260901b 1920w" sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1248px) 50vw, 620px" alt="The Lyvorian Studio workspace at dawn" loading="lazy" width="1920" height="1072"/>
       <figcaption><strong>The studio.</strong> Quiet hours, real devices, and the
         product open on the desk every day.</figcaption>
     </figure>
     <figure class="craft-item">
-      <img src="assets/studio/design-process.webp?v=20260901b" alt="A designer sketching interface wireframes on paper at a desk" loading="lazy" width="1920" height="1072"/>
+      <img src="assets/studio/design-process.webp?v=20260901b" srcset="assets/studio/design-process-750w.webp 750w, assets/studio/design-process-1200w.webp 1200w, assets/studio/design-process.webp?v=20260901b 1920w" sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1248px) 50vw, 620px" alt="A designer sketching interface wireframes on paper at a desk" loading="lazy" width="1920" height="1072"/>
       <figcaption><strong>Design.</strong> Every screen is drawn on paper and
         argued with before a line of it is built.</figcaption>
     </figure>
     <figure class="craft-item">
-      <img src="assets/studio/review-wall.webp?v=20260901b" alt="Printed interface layouts pinned to a review wall" loading="lazy" width="1920" height="1072"/>
+      <img src="assets/studio/review-wall.webp?v=20260901b" srcset="assets/studio/review-wall-750w.webp 750w, assets/studio/review-wall-1200w.webp 1200w, assets/studio/review-wall.webp?v=20260901b 1920w" sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1248px) 50vw, 620px" alt="Printed interface layouts pinned to a review wall" loading="lazy" width="1920" height="1072"/>
       <figcaption><strong>Review.</strong> Layouts go up on the wall, where the
         weak ones are obvious.</figcaption>
     </figure>
@@ -343,6 +344,7 @@
 <!-- Design & planning. Full-bleed room on one side, the method on the other. -->
 <section class="plan" id="planning">
   <img class="plan-bg" src="assets/descent/10-planning.webp"
+       srcset="assets/descent/10-planning-750w.webp 750w, assets/descent/10-planning-1200w.webp 1200w, assets/descent/10-planning.webp 1920w" sizes="100vw"
        alt="The Lyvorian Studio design and planning room — wireframes, flow diagrams and device prototypes"
        loading="lazy" width="1920" height="1072"/>
   <div class="plan-copy">
@@ -594,7 +596,7 @@
            place — this signposts it. -->
       <a class="dsc-cta" href="share-an-idea.html#ideas">Open the form
         <span class="dsc-arrow" aria-hidden="true">→</span></a>
-      <p class="next-hint">The form is on the home page — it takes about a minute.</p>
+      <p class="next-hint">It takes about a minute, and needs no account.</p>
     </div>
   </div>
 </section>
@@ -702,7 +704,7 @@
        aria-hidden + empty alt: the wordmark is decorative here, the studio name
        is already announced by the footer's own link. -->
   <figure class="foot-sig">
-    <img src="assets/studio/foot-mark.webp" alt="" aria-hidden="true" loading="lazy"
+    <img src="assets/studio/foot-mark.webp" alt="" aria-hidden="true" loading="lazy" srcset="assets/studio/foot-mark-750w.webp 750w, assets/studio/foot-mark-1200w.webp 1200w, assets/studio/foot-mark.webp 1920w" sizes="(max-width: 1200px) 100vw, 1152px"
          width="1920" height="794"/>
   </figure>
   <div class="foot-base">
@@ -727,7 +729,7 @@
 
 <button class="to-top" id="toTop" type="button" aria-label="Back to top">&#8593;</button>
 
-<script src="assets/descent.js?v=20260902a" defer></script>
+<script src="assets/descent.js?v=20260902b" defer></script>
 <!-- The manifest above is only install-eligible with a controlling worker.
      Inlined instead of loading site.js, whose own nav and theme handlers
      would bind a second time over descent.js's. Mirrors site.js:171-172. -->
