@@ -261,7 +261,10 @@
       showToast('Could not send right now — please email support@lyvorianstudio.co.in', false);
     }).finally(function(){
       btn.disabled = false;
-      btn.firstChild.textContent = 'Send it over ';
+      // the label belongs to the chosen category (see syncCat); syncCat
+      // itself is in a later IIFE, so read the same source it reads
+      var cat = form.querySelector('input[name="fbCat"]:checked');
+      btn.firstChild.textContent = ((cat && cat.dataset.submit) || 'Send') + ' ';
     });
   });
 })();

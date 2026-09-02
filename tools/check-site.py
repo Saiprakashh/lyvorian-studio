@@ -83,30 +83,42 @@ def check_references():
     ref_re = re.compile(r'(?:href|src)\s*=\s*"([^"]+)"')
     url_re = re.compile(r'url\(\s*[\'"]?([^\'")]+)[\'"]?\s*\)')
 
+    # srcset is a comma-separated list of "url descriptor" pairs, so the plain
+    # href/src pattern never looked inside one. Six homepage images carry a
+    # srcset, and a typo in a variant filename is invisible: the browser simply
+    # picks another candidate, so the page looks right to whoever has the real
+    # file cached and 404s for everyone else.
+    set_re = re.compile(r'srcset\s*=\s*"([^"]+)"')
+
     targets = [(p, ref_re) for p in pages()]
+    targets += [(p, set_re) for p in pages()]
     targets += [(p, url_re) for p in glob.glob('*.css') + glob.glob('assets/*.css')]
 
     for path, rx in targets:
         s = read(path)
         base = os.path.dirname(path)
         for m in rx.finditer(s):
-            raw = m.group(1).strip()
-            if (not raw or raw.startswith(('http://', 'https://', 'mailto:', 'tel:',
-                                           'data:', '#', '//'))):
-                continue
-            checked += 1
-            f = raw.split('?')[0].split('#')[0]
-            # A leading slash is site-root-relative, not relative to the file.
-            # 404.html uses those deliberately: the server may serve it at any
-            # URL depth, so relative paths there would break. Resolving them
-            # against the page's own directory reported all 13 as missing.
-            if f.startswith('/'):
-                cand = os.path.normpath(f.lstrip('/'))
-            else:
-                cand = os.path.normpath(os.path.join(base, f))
-            if not os.path.exists(cand):
-                fail('references', path, lineno(s, m.start()),
-                     '%s -> missing %s' % (raw, cand))
+            group = m.group(1).strip()
+            # one url per comma for srcset; everything else is a single value
+            raws = ([c.strip().split()[0] for c in group.split(',') if c.strip()]
+                    if rx is set_re else [group])
+            for raw in raws:
+                if (not raw or raw.startswith(('http://', 'https://', 'mailto:', 'tel:',
+                                               'data:', '#', '//'))):
+                    continue
+                checked += 1
+                f = raw.split('?')[0].split('#')[0]
+                # A leading slash is site-root-relative, not relative to the file.
+                # 404.html uses those deliberately: the server may serve it at any
+                # URL depth, so relative paths there would break. Resolving them
+                # against the page's own directory reported all 13 as missing.
+                if f.startswith('/'):
+                    cand = os.path.normpath(f.lstrip('/'))
+                else:
+                    cand = os.path.normpath(os.path.join(base, f))
+                if not os.path.exists(cand):
+                    fail('references', path, lineno(s, m.start()),
+                         '%s -> missing %s' % (raw, cand))
 
 
 # ── 2. in-page anchors point at an id that exists ────────────────────────

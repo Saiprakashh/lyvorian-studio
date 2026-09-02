@@ -42,7 +42,8 @@ GOOD_PAGE = '''<!doctype html>
   <button aria-controls="panel" aria-expanded="false">Toggle</button>
   <div id="panel">Panel</div>
   <section id="target">
-    <img src="assets/pic.webp" alt="A picture" width="10" height="10"/>
+    <img src="assets/pic.webp" srcset="assets/pic.webp 750w" sizes="100vw"
+         alt="A picture" width="10" height="10"/>
   </section>
 </main>
 </body>
@@ -54,8 +55,15 @@ GOOD_PAGE = '''<!doctype html>
 # proven — media-dead has three separate jobs and a green run on one of them says
 # nothing about the other two.
 FAULTS = [
-    ('references',
+    ('references', 'a dangling href',
      lambda d: patch(d, 'index.html', 'assets/site.css', 'assets/gone.css')),
+
+    # A srcset candidate is not an href or a src, so the plain pattern walked
+    # straight past it. A typo there is silent — the browser just picks another
+    # candidate — which is exactly the kind of miss a suite is for.
+    ('references', 'a broken srcset candidate',
+     lambda d: patch(d, 'index.html', 'srcset="assets/pic.webp 750w"',
+                     'srcset="assets/gone-750w.webp 750w"')),
     ('anchors',
      lambda d: patch(d, 'index.html', 'href="#target"', 'href="#nowhere"')),
     ('duplicate-ids',

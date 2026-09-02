@@ -13,7 +13,10 @@
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       var next = cur === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
-      localStorage.setItem('lyv-theme', next);
+      // guarded like descent.js:381 — a blocked store throws here, and the
+      // throw would skip the theme-color update below, leaving the browser
+      // UI painted for the previous theme
+      try { localStorage.setItem('lyv-theme', next); } catch (e) {}
       var meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', next === 'dark' ? '#191410' : '#f2e8d5');
     });

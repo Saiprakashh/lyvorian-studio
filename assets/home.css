@@ -31,10 +31,14 @@
   body > header{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:var(--hdr);border-bottom:1px solid var(--line)}
   /* .theme-toggle lives in assets/site.css; only the offset is local */
   .hdr-right .theme-toggle{margin-left:10px}
-  .hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+  /* padding-BLOCK, not the shorthand: .hdr-inner and .wrap sit on the same
+     element, so `padding:18px 0` also zeroed the 24px inline padding .wrap
+     provides and the logo rendered hard against the screen edge, on this page
+     alone. Only the vertical halves belong to the header. */
+  .hdr-inner{display:flex;align-items:center;justify-content:space-between;padding-block:18px}
   body > header{transition:box-shadow .25s ease}
   .hdr-inner{transition:padding .22s cubic-bezier(.16,.8,.28,1)}
-  body > header.compact .hdr-inner{padding:11px 0}
+  body > header.compact .hdr-inner{padding-block:11px}
   body > header.compact .mark-img{width:29px;height:29px}
   .mark-img{transition:width .22s,height .22s}
   .hdr-left{display:flex;align-items:center;gap:22px}
