@@ -214,7 +214,7 @@
     <li><b>A character of their own</b><span>Each child profile picks a character and a language that follow them.</span></li>
     <li><b>Drawing that stays private</b><span>Artwork stays on the device that made it — the server refuses to accept it.</span></li>
     <li><b>Parent Zone</b><span>Behind a PIN that is hashed and never leaves the device.</span></li>
-    <li><b>Works offline</b><span>Voice packs download once and are not reported back to us.</span></li>
+    <li><b>Works offline</b><span>Voice packs download once and the audio stays on the device. A pack name is reported only if you switch on usage data.</span></li>
   </ul>
 
   <h2>What is stored, and where</h2>
@@ -233,7 +233,8 @@
     <li>A photograph, address or phone number</li>
     <li>Your child's drawings — the server refuses to accept them, even with an account</li>
     <li>Your Parent Zone PIN — it is hashed and never leaves the device</li>
-    <li>Which voice packs you have downloaded</li>
+    <li>Which voice packs you have downloaded — unless you switch on anonymous usage
+    data, which records the pack name in its download event</li>
   </ul>
   <p class="qualifier">The server enforces this with an allow-list, so a bug in the app cannot
   start sending more than the list permits. Anonymous usage data exists but is off unless a parent
