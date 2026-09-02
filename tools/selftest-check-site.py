@@ -49,7 +49,10 @@ GOOD_PAGE = '''<!doctype html>
 </html>
 '''
 
-# Each fault: (check name it must trip, how to break the fixture)
+# Each fault: (check name it must trip, how to break the fixture), with an
+# optional label in the middle when one check needs several faults to be called
+# proven — media-dead has three separate jobs and a green run on one of them says
+# nothing about the other two.
 FAULTS = [
     ('references',
      lambda d: patch(d, 'index.html', 'assets/site.css', 'assets/gone.css')),
@@ -84,6 +87,26 @@ FAULTS = [
     ('word-span-guard',
      lambda d: append(d, 'assets/descent.css',
                       '\n.plan-steps span { display: block; }\n')),
+
+    # The shape of commit ea92642: an inner condition contradicting the one it
+    # is nested in. This is the fault the check exists for.
+    ('media-dead', 'contradiction in a stylesheet',
+     lambda d: append(d, 'assets/descent.css',
+                      '\n@media (pointer: fine) {\n'
+                      '  @media (pointer: coarse) { .dead { color: red; } }\n}\n')),
+
+    # 8 pages carry @media inside inline <style>. If the check only ever reads
+    # .css files it looks just as green while covering none of them.
+    ('media-dead', 'contradiction in an inline <style>',
+     lambda d: patch(d, 'index.html', '<style>html{display:none}</style>',
+                     '<style>html{display:none}</style>'
+                     '<style>@media (max-width: 500px) {'
+                     ' @media (min-width: 900px) { .dead { color: red; } } }</style>')),
+
+    # Silence on an unparseable file is how a check ends up covering nothing and
+    # still printing "ok". It has to say so out loud.
+    ('media-dead', 'unparseable CSS is reported, not skipped',
+     lambda d: append(d, 'assets/descent.css', '\n.z { content: "never closed ;\n')),
 ]
 
 
@@ -155,17 +178,19 @@ def main():
 
         # 2. every injected fault must be caught by its own check
         bad = 0
-        for check, inject in FAULTS:
-            d = os.path.join(base, 'f_' + check)
+        for n, entry in enumerate(FAULTS):
+            check, inject = entry[0], entry[-1]
+            label = entry[1] if len(entry) == 3 else check
+            d = os.path.join(base, 'f%02d_%s' % (n, check))
             shutil.copytree(clean, d)
             inject(d)
             out = run(d)
             caught = re.search(r'^\s*FAIL\s+%s\b' % re.escape(check), out, re.M)
             if caught:
-                print('  ok    %-18s catches its fault' % check)
+                print('  ok    %-18s catches its fault' % label)
             else:
                 bad += 1
-                print('  ASLEEP %-17s injected fault NOT reported' % check)
+                print('  ASLEEP %-17s injected fault NOT reported' % label)
                 print('         ---- output ----')
                 for ln in out.splitlines():
                     print('         ' + ln)

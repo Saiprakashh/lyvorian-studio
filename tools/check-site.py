@@ -57,9 +57,23 @@ def pages():
     return sorted(glob.glob('*.html'))
 
 
+def blank_out(m):
+    """Replace a match with spaces, keeping BOTH its length and its newlines.
+
+    Length preservation keeps offsets valid. Newline preservation keeps lineno()
+    truthful, which the obvious ' ' * len(m.group(0)) does not: it turns every
+    newline inside the match into a space, so every line number after a
+    multi-line comment comes out short. Measured on this repo, that idiom put
+    assets/site.css's `@media print` at line 367 when it is on line 447. A
+    finding that cites unrelated correct code reads as noise, and a suite that
+    reads as noise stops being read.
+    """
+    return re.sub(r'[^\n]', ' ', m.group(0))
+
+
 def strip_comments(s):
-    """Blank out HTML comments, keeping length so offsets stay valid."""
-    return re.sub(r'<!--.*?-->', lambda m: ' ' * len(m.group(0)), s, flags=re.S)
+    """Blank out HTML comments, keeping length and line numbers valid."""
+    return re.sub(r'<!--.*?-->', blank_out, s, flags=re.S)
 
 
 # ── 1. every local reference resolves ────────────────────────────────────
@@ -328,7 +342,7 @@ def check_word_span_guards():
               'margin', 'padding', 'float', 'inset', 'place-items')
 
     s = read(path)
-    s_nc = re.sub(r'/\*.*?\*/', lambda m: ' ' * len(m.group(0)), s, flags=re.S)
+    s_nc = re.sub(r'/\*.*?\*/', blank_out, s, flags=re.S)
     for m in re.finditer(r'([^{}]+)\{([^{}]*)\}', s_nc):
         sel, body = m.group(1).strip(), m.group(2)
         if not sel or sel.startswith('@'):
@@ -514,6 +528,443 @@ def check_framebuster():
                  'clickjacking defence incomplete — missing: %s' % ', '.join(missing))
 
 
+# ── 14. no @media block is dead on arrival ───────────────────────────────
+# Nested @media conditions AND together, so an inner condition that contradicts
+# an enclosing one produces a block that can never match in any configuration.
+# That is exactly commit ea92642: a `@media (pointer: coarse)` block was appended
+# inside a `@media (hover: hover) and (pointer: fine)` block whose brace opened
+# on the same line as a rule. The stylesheet parsed, the braces balanced, and all
+# 13 checks stayed green while the rule was dead on every device. Only measuring
+# the rendered element found it.
+#
+# The whole risk here is a parser that invents nesting that is not there, so the
+# scan is conservative twice over: it proves the source parseable before saying
+# anything, and it abstains on any condition it cannot fully model. Silence on a
+# condition costs a miss; a wrong reading costs the suite's credibility.
+
+# Discrete features whose values are genuinely mutually exclusive: a UA reports
+# exactly one of them. Deliberately short, because the interesting mistakes are
+# the features that LOOK exclusive and are not. any-pointer/any-hover are
+# set-valued — a laptop with a touchscreen matches `any-pointer: coarse` AND
+# `any-pointer: fine` — and color-gamut/dynamic-range are cumulative supersets,
+# where a P3 display also matches srgb. All are excluded: treating any of them as
+# exclusive would flag working CSS. prefers-contrast: custom is not provably
+# exclusive of more/less, so that feature is out too. `prefers-color-scheme:
+# no-preference` was dropped from the spec and so is not listed; a query using it
+# simply falls through as an unmodelled value rather than being called a defect.
+DISCRETE_MQ = {
+    'pointer': ('none', 'coarse', 'fine'),
+    'hover': ('none', 'hover'),
+    'orientation': ('portrait', 'landscape'),
+    'prefers-color-scheme': ('light', 'dark'),
+    'prefers-reduced-motion': ('no-preference', 'reduce'),
+    'prefers-reduced-transparency': ('no-preference', 'reduce'),
+    'forced-colors': ('none', 'active'),
+    'scripting': ('none', 'initial-only', 'enabled'),
+    'update': ('none', 'slow', 'fast'),
+    'overflow-inline': ('none', 'scroll'),
+}
+
+# Four separate quantities, never compared with one another: a small window on a
+# large screen is ordinary, not a contradiction. aspect-ratio, resolution and the
+# integer features are not modelled at all.
+RANGE_MQ = ('width', 'height', 'device-width', 'device-height')
+
+MEDIA_TYPES = ('all', 'print', 'screen', 'speech', 'tty', 'tv', 'projection',
+               'handheld', 'braille', 'embossed', 'aural')
+
+# Absolute units are exactly inter-convertible by spec, so they share a family
+# and compare as exact Fractions. em and rem get a family each: comparing within
+# one family is scale-invariant (40k > 30k for every k) and needs no assumption
+# about font size, while comparing em against px would require inventing one.
+# vw/vh are self-referential and ch/ex depend on a font the checker cannot see,
+# so both are refused rather than guessed at.
+MQ_UNITS = {'px': (1, 1, 'px'), 'pt': (96, 72, 'px'), 'pc': (16, 1, 'px'),
+            'in': (96, 1, 'px'), 'cm': (4800, 127, 'px'), 'mm': (480, 127, 'px'),
+            'q': (120, 127, 'px'), 'em': (1, 1, 'em'), 'rem': (1, 1, 'rem')}
+
+# Block at-rules that condition nothing about the viewport, so a @media inside
+# one is still a conjunct of the chain and the chain survives them. Everything
+# else with a block — @keyframes above all — is opaque: brace depth is still
+# tracked through it, but no at-rule inside is recognised, because `0%,100% {`
+# is a keyframe selector and not a rule.
+TRANSPARENT_AT = ('supports', 'layer', 'container', 'scope')
+
+# Order matters in the first alternation. Comments are consumed BEFORE strings,
+# which is not optional: 26 comments in this repo contain an odd number of
+# apostrophes ("a page's bare header"), and a strings-first scan opens a string
+# at one of them and swallows hundreds of lines of real rules. Unquoted url() is
+# consumed before both and excludes a leading quote, so url("x") is still left to
+# the string rule. Restricting string bodies to a single line means an
+# unterminated quote fails to match and survives into the parseability gate,
+# where it is reported, instead of silently eating the rest of the file.
+_CSS_MASK = re.compile(r'/\*.*?\*/'
+                       r'|url\(\s*[^)"\'\s][^)]*\)'
+                       r'|"[^"\n]*"'
+                       r"|'[^'\n]*'", re.S)
+_CSS_TOKEN = re.compile(r'@[-\w]+|[{};]')
+_KEYFRAMES = re.compile(r'^(?:-[a-z]+-)?keyframes$')
+_MQ_NUM = re.compile(r'^([+-]?(?:\d+\.?\d*|\.\d+))([a-z]*)$')
+_STYLE_BLOCK = re.compile(r'<style\b[^>]*>(.*?)</style>', re.I | re.S)
+
+
+def mask_css(s):
+    """Blank comments, strings and unquoted url(), preserving length and lines."""
+    return _CSS_MASK.sub(blank_out, s)
+
+
+class _Frame(object):
+    __slots__ = ('kind', 'opaque', 'prelude', 'at', 'line', 'terms',
+                 'poison', 'reported')
+
+    def __init__(self, kind, opaque=False, prelude='', at=0, line=0):
+        self.kind, self.opaque = kind, opaque
+        self.prelude, self.at, self.line = prelude, at, line
+        self.terms, self.poison, self.reported = [], False, False
+
+
+def _mq_length(v):
+    """'820.5px' -> (Fraction, family). None means "do not model this term"."""
+    from fractions import Fraction
+    m = _MQ_NUM.match(v)
+    if not m:
+        return None                       # calc(), var(), 6e2px, 16/9, ...
+    num, unit = m.group(1).lstrip('+'), m.group(2)
+    try:
+        f = Fraction(num)                 # parsed from the string: no float drift
+    except (ValueError, ZeroDivisionError):
+        return None
+    if f < 0:
+        return None                       # negative is invalid for width/height
+    if not unit:
+        return (Fraction(0), 'px') if f == 0 else None   # only 0 may be unitless
+    if unit not in MQ_UNITS:
+        return None                       # vw, ch, %, dppx, ...
+    n, d, fam = MQ_UNITS[unit]
+    return (f * Fraction(n, d), fam)
+
+
+def _mq_bound(feat, val, op):
+    """-> ('r', feature, family, low, low_is_strict, high, high_is_strict)."""
+    L = _mq_length(val)
+    if not L:
+        return None
+    v, fam = L
+    return {'>=': ('r', feat, fam, v, False, None, False),
+            '>': ('r', feat, fam, v, True, None, False),
+            '<=': ('r', feat, fam, None, False, v, False),
+            '<': ('r', feat, fam, None, False, v, True),
+            '=': ('r', feat, fam, v, False, v, False)}.get(op)
+
+
+def _mq_range_term(t):
+    """Range syntax, including the reversed and two-sided forms."""
+    parts = [x.strip() for x in re.split(r'(<=|>=|<|>|=)', t)]
+    if len(parts) == 3:
+        a, op, b = parts
+        if a in RANGE_MQ:
+            return _mq_bound(a, b, op)
+        if b in RANGE_MQ:
+            # (600px <= width) is a LOWER bound on width. Reading it as an upper
+            # one is a false-positive machine, so the operator is flipped rather
+            # than the term dropped.
+            return _mq_bound(b, a, {'<': '>', '<=': '>=', '>': '<',
+                                    '>=': '<=', '=': '='}[op])
+        return None
+    if len(parts) == 5:
+        a, op1, f, op2, c = parts
+        if f not in RANGE_MQ:
+            return None
+        asc = op1 in ('<', '<=') and op2 in ('<', '<=')
+        desc = op1 in ('>', '>=') and op2 in ('>', '>=')
+        if not (asc or desc):
+            return None                   # (600px <= width >= 900px) is malformed
+        if asc:                           # a <= width <= c
+            lo = _mq_bound(f, a, {'<': '>', '<=': '>='}[op1])
+            hi = _mq_bound(f, c, op2)
+        else:                             # a >= width >= c
+            hi = _mq_bound(f, a, {'>': '<', '>=': '<='}[op1])
+            lo = _mq_bound(f, c, op2)
+        if not lo or not hi or lo[2] != hi[2]:
+            return None
+        return ('r', f, lo[2], lo[3], lo[4], hi[5], hi[6])
+    return None
+
+
+def _mq_term(t):
+    """One parenthesised test -> a modelled term, or None to ignore it.
+
+    Ignoring a term is always sound: a chain is a pure conjunction, so dropping a
+    conjunct only widens what could match and can never manufacture a finding.
+    """
+    if re.search(r'[<>=]', t):
+        return _mq_range_term(t)
+    if ':' not in t:
+        return None                       # boolean context, e.g. (hover)
+    name, _, val = t.partition(':')
+    name, val = name.strip(), val.strip()
+    if name in DISCRETE_MQ:
+        # An unlisted value is deprecated (hover: on-demand) or invalid. Either
+        # way the query matches nothing, but for a reason that has nothing to do
+        # with nesting, so diagnosing it here would give the wrong answer.
+        return ('d', name, val) if val in DISCRETE_MQ[name] else None
+    for pre, op in (('min-', '>='), ('max-', '<=')):
+        if name.startswith(pre) and name[len(pre):] in RANGE_MQ:
+            return _mq_bound(name[len(pre):], val, op)
+    if name in RANGE_MQ:
+        return _mq_bound(name, val, '=')
+    return None
+
+
+def _mq_prelude(p):
+    """-> (terms, poisoned).
+
+    Poisoned means this condition is not a flat conjunction of simple tests, so
+    nothing in the chain it belongs to may be reported. `not` inverts the sense
+    of the whole query and a comma makes it a union; either one read as a
+    conjunction turns a query matching almost everything into a false report.
+    """
+    low = ' '.join(p.lower().split())
+    if ',' in low:
+        return ([], True)
+    if re.search(r'(?<![-\w])not(?![-\w])', low):
+        return ([], True)
+    if re.search(r'(?<![-\w])or(?![-\w])', low):
+        return ([], True)
+
+    groups, outside, depth, cur = [], [], 0, ''
+    for ch in low:
+        if ch == '(':
+            depth += 1
+            if depth > 1:
+                return ([], True)         # calc(), var(), ((a) or (b))
+            cur = ''
+            continue
+        if ch == ')':
+            depth -= 1
+            if depth < 0:
+                return ([], True)
+            groups.append(cur)
+            continue
+        if depth:
+            cur += ch
+        else:
+            outside.append(ch)
+    if depth:
+        return ([], True)
+
+    toks, n_type = ''.join(outside).split(), 0
+    for i, t in enumerate(toks):
+        if t == 'and':
+            continue
+        if t == 'only':
+            if i or len(toks) < 2 or toks[1] not in MEDIA_TYPES:
+                return ([], True)
+        elif t in MEDIA_TYPES:
+            n_type += 1
+        else:
+            return ([], True)             # a token we do not recognise
+    if n_type > 1 or toks.count('and') != max(0, len(groups) + n_type - 1):
+        return ([], True)                 # not the flat `A and B and C` assumed
+
+    return ([t for t in (_mq_term(' '.join(g.split())) for g in groups) if t], False)
+
+
+def _mq_matching(masked, open_idx):
+    depth = 0
+    for i in range(open_idx, len(masked)):
+        if masked[i] == '{':
+            depth += 1
+        elif masked[i] == '}':
+            depth -= 1
+            if not depth:
+                return i
+    return None
+
+
+def _mq_report(path, src, masked, stack, line0):
+    """Fold the chain of enclosing @media conditions and prove it satisfiable."""
+    global checked
+    chain = [f for f in stack if f.kind == 'media']
+    if any(f.poison for f in chain):
+        return
+    if any(f.reported for f in chain[:-1]):
+        chain[-1].reported = True         # one finding per dead chain, not N
+        return
+
+    disc, iv, facts, hit = {}, {}, 0, None
+    for fr in chain:
+        for t in fr.terms:
+            facts += 1
+            if t[0] == 'd':
+                _, feat, val = t
+                if feat not in disc:
+                    disc[feat] = (val, fr)
+                elif disc[feat][0] != val and hit is None:
+                    hit = ('d', feat, disc[feat], (val, fr))
+            else:
+                _, feat, fam, lo, lo_s, hi, hi_s = t
+                cur = iv.setdefault((feat, fam), [None, False, None, False, fr, fr])
+                if lo is not None and (cur[0] is None or lo > cur[0]):
+                    cur[0], cur[1], cur[4] = lo, lo_s, fr
+                elif lo is not None and lo == cur[0] and lo_s:
+                    cur[1] = True
+                if hi is not None and (cur[2] is None or hi < cur[2]):
+                    cur[2], cur[3], cur[5] = hi, hi_s, fr
+                elif hi is not None and hi == cur[2] and hi_s:
+                    cur[3] = True
+    if not facts:
+        return                            # `@media print` alone proves nothing
+    checked += 1                          # one assertion: this chain is satisfiable
+
+    if hit is None:
+        for key in sorted(iv, key=lambda k: (k[0], k[1])):
+            lo, lo_s, hi, hi_s, lo_fr, hi_fr = iv[key]
+            if lo is None or hi is None:
+                continue
+            # No epsilon anywhere. CSS pixels are fractional, so max-width:820
+            # with min-width:821 really is empty — 820.5 satisfies neither — and
+            # must be reported, while min-width:600 with max-width:600 is
+            # satisfiable at exactly 600 and must not be.
+            if lo > hi or (lo == hi and (lo_s or hi_s)):
+                hit = ('r', key, iv[key])
+                break
+    if hit is None:
+        return
+
+    inner = chain[-1]
+    end = _mq_matching(masked, inner.at)
+    # A dead block that declares nothing kills nothing. Reporting a no-op spends
+    # the reader's attention on a non-defect, which is how a suite starts getting
+    # skimmed instead of read.
+    if end is None or not re.search(r'\{[^{}]*:', masked[inner.at + 1:end]):
+        return
+    inner.reported = True
+
+    if hit[0] == 'd':
+        _, feat, (v1, f1), (v2, f2) = hit
+        what = ('%s is fixed to "%s" (line %d) and to "%s" (line %d), and no '
+                'device reports two values of it'
+                % (feat, v1, line0 - 1 + f1.line, v2, line0 - 1 + f2.line))
+    else:
+        _, (feat, fam), (lo, lo_s, hi, hi_s, lo_fr, hi_fr) = hit
+        what = ('%s must be %s%s (line %d) and %s%s (line %d) at once, and no '
+                'viewport is both'
+                % (feat, '>' if lo_s else '>=', _mq_fmt(lo, fam),
+                   line0 - 1 + lo_fr.line, '<' if hi_s else '<=',
+                   _mq_fmt(hi, fam), line0 - 1 + hi_fr.line))
+    remedy = ('Move this block out of the enclosing @media, or drop one of the '
+              'two terms.' if len(chain) > 1 else
+              'Drop or widen one of the two terms.')
+    trail = ' > '.join(f.prelude for f in chain)
+    if len(trail) > 160:
+        trail = trail[:157] + '...'
+    fail('media-dead', path, line0 - 1 + inner.line,
+         'dead @media: %s, so nothing in this block can ever apply. %s  chain: %s'
+         % (what, remedy, trail))
+
+
+def _mq_fmt(f, fam):
+    return ('%s%s' % (f.numerator, fam)) if f.denominator == 1 else \
+           ('%s%s' % (('%f' % float(f)).rstrip('0').rstrip('.'), fam))
+
+
+def _mq_scan(path, src, line0):
+    """Walk one block of CSS, reporting any @media chain that cannot be satisfied.
+
+    line0 is the line the source starts on, so a <style> block reports positions
+    in its PAGE rather than in the fragment.
+    """
+    masked = mask_css(src)
+
+    # Prove the source parseable before believing anything derived from it. A
+    # leftover /* or quote means an unterminated construct, and unbalanced braces
+    # mean the frame stack is fiction — a fictional stack invents nesting that is
+    # not in the file, which is the worst failure available here.
+    #
+    # This is reported rather than skipped. Skipping is how a check ends up
+    # covering nothing while still printing "ok", and a check that gives the same
+    # answer whether or not it ran is worth nothing. Either the CSS really is
+    # malformed or the masker above needs extending; both are worth a human's
+    # attention, and neither is a guess about what the CSS means.
+    why = None
+    if '/*' in masked:
+        why = 'unterminated /* comment'
+    elif '"' in masked or "'" in masked:
+        why = 'unterminated string literal'
+    else:
+        depth = 0
+        for ch in masked:
+            if ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth < 0:
+                    why = 'a } arrives with no matching {'
+                    break
+        if why is None and depth:
+            why = '%d unclosed block(s) at end of source' % depth
+    if why:
+        fail('media-dead', path, line0,
+             'cannot analyse this CSS (%s), so nothing here is covered — fix the '
+             'source, or teach mask_css() the construct' % why)
+        return
+
+    stack, pending, opaque = [], None, 0
+    for m in _CSS_TOKEN.finditer(masked):
+        tok = m.group(0)
+        if tok[0] == '@':
+            if opaque:
+                continue                  # inside @keyframes: percentages, not rules
+            if pending is not None:
+                return                    # `@media ... @foo {` is not CSS we model
+            pending = (tok[1:].lower(), m.start())
+        elif tok == ';':
+            pending = None                # @import/@charset/@layer a,b; open no block
+        elif tok == '{':
+            if pending is None:
+                fr = _Frame('rule', opaque=bool(opaque))
+            else:
+                name, at = pending
+                pending = None
+                if name == 'media':
+                    fr = _Frame('media',
+                                prelude=' '.join(src[at:m.start()].split()),
+                                at=m.start(), line=lineno(src, at))
+                    fr.terms, fr.poison = _mq_prelude(
+                        masked[at + 1 + len(name):m.start()])
+                elif _KEYFRAMES.match(name) or name not in TRANSPARENT_AT:
+                    fr = _Frame('at', opaque=True)
+                else:
+                    fr = _Frame('at')
+            if fr.opaque:
+                opaque += 1
+            stack.append(fr)
+            if fr.kind == 'media' and not opaque:
+                _mq_report(path, src, masked, stack, line0)
+        else:                             # '}'
+            if not stack:
+                return
+            if stack.pop().opaque:
+                opaque -= 1
+
+
+def check_media_dead():
+    """A @media nested inside a condition it contradicts is dead in every
+    configuration, and nothing says so: the file parses and the braces balance.
+
+    Both surfaces are scanned. The stylesheets are the obvious one, but 8 pages
+    carry @media rules inside inline <style> blocks, and the same mistake made
+    there would be just as invisible.
+    """
+    for path in sorted(glob.glob('*.css') + glob.glob('assets/*.css')):
+        _mq_scan(path, read(path), 1)
+    for path in pages():
+        s = read(path)
+        for m in _STYLE_BLOCK.finditer(s):
+            _mq_scan(path, m.group(1), lineno(s, m.start(1)))
+
+
 CHECKS = [
     ('references', check_references, 'every local href/src/url() resolves on disk'),
     ('anchors', check_anchors, 'every #fragment matches an id on that page'),
@@ -528,6 +979,7 @@ CHECKS = [
     ('footer', check_footer_consistency, 'every page footer offers the same destinations'),
     ('csp', check_csp, "every inline script is hashed in its page's CSP"),
     ('framebuster', check_framebuster, 'every page carries the clickjacking defence'),
+    ('media-dead', check_media_dead, 'no @media is nested inside a condition it contradicts'),
 ]
 
 
