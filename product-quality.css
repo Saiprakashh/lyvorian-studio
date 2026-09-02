@@ -255,3 +255,21 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* ── splash mark ────────────────────────────────────────────────────
+   The orbit used to hold a letter monogram, <b>LY</b>, styled twice —
+   a gradient rounded square in products.css and then a serif "LY" with a
+   stacked text-shadow in product-premium.css, the second overriding the first
+   through fourteen !important declarations. Swapping the element to an <img>
+   drops every one of those rules on the floor, because they all select `b`,
+   which is why this block can be plain CSS with no !important of its own.
+   The mark is 332x416, so only the width is set and the height follows. */
+.splash-orbit .splash-mark{
+  position:absolute; z-index:4; left:50%; top:50%;
+  width:88px; height:auto;
+  transform:translate(-50%,-50%);
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.78));
+}
+@media (max-width:430px){
+  .splash-orbit .splash-mark{ width:56px; }
+}
