@@ -566,22 +566,13 @@ DISCRETE_MQ = {
 }
 
 # Four separate quantities, never compared with one another: a small window on a
-# large screen is ordinary, not a contradiction. aspect-ratio, resolution and the
-# integer features are not modelled at all.
+# large screen is ordinary, not a contradiction. Only the classic min-/max-/exact
+# forms in px are modelled — aspect-ratio, resolution and the integer features
+# are not modelled at all.
 RANGE_MQ = ('width', 'height', 'device-width', 'device-height')
 
 MEDIA_TYPES = ('all', 'print', 'screen', 'speech', 'tty', 'tv', 'projection',
                'handheld', 'braille', 'embossed', 'aural')
-
-# Absolute units are exactly inter-convertible by spec, so they share a family
-# and compare as exact Fractions. em and rem get a family each: comparing within
-# one family is scale-invariant (40k > 30k for every k) and needs no assumption
-# about font size, while comparing em against px would require inventing one.
-# vw/vh are self-referential and ch/ex depend on a font the checker cannot see,
-# so both are refused rather than guessed at.
-MQ_UNITS = {'px': (1, 1, 'px'), 'pt': (96, 72, 'px'), 'pc': (16, 1, 'px'),
-            'in': (96, 1, 'px'), 'cm': (4800, 127, 'px'), 'mm': (480, 127, 'px'),
-            'q': (120, 127, 'px'), 'em': (1, 1, 'em'), 'rem': (1, 1, 'rem')}
 
 # Block at-rules that condition nothing about the viewport, so a @media inside
 # one is still a conjunct of the chain and the chain survives them. Everything
@@ -604,7 +595,7 @@ _CSS_MASK = re.compile(r'/\*.*?\*/'
                        r"|'[^'\n]*'", re.S)
 _CSS_TOKEN = re.compile(r'@[-\w]+|[{};]')
 _KEYFRAMES = re.compile(r'^(?:-[a-z]+-)?keyframes$')
-_MQ_NUM = re.compile(r'^([+-]?(?:\d+\.?\d*|\.\d+))([a-z]*)$')
+_MQ_PX = re.compile(r'^([+-]?(?:\d+\.?\d*|\.\d+))(px)?$')
 _STYLE_BLOCK = re.compile(r'<style\b[^>]*>(.*?)</style>', re.I | re.S)
 
 
@@ -623,72 +614,35 @@ class _Frame(object):
         self.terms, self.poison, self.reported = [], False, False
 
 
-def _mq_length(v):
-    """'820.5px' -> (Fraction, family). None means "do not model this term"."""
-    from fractions import Fraction
-    m = _MQ_NUM.match(v)
+def _mq_px(v):
+    """'820.5px' -> 820.5. None means "do not model this term".
+
+    px only, plus the bare 0 that CSS allows for any length. em and rem depend on
+    a font size the checker cannot see and vw is defined in terms of the very
+    viewport it would be constraining, so they are refused rather than converted:
+    a wrong conversion invents a contradiction that is not there. Nothing here is
+    ever arithmetic — every value is parsed once and then only compared — so a
+    float holds each one exactly as it was written.
+    """
+    m = _MQ_PX.match(v)
     if not m:
-        return None                       # calc(), var(), 6e2px, 16/9, ...
-    num, unit = m.group(1).lstrip('+'), m.group(2)
-    try:
-        f = Fraction(num)                 # parsed from the string: no float drift
-    except (ValueError, ZeroDivisionError):
-        return None
-    if f < 0:
+        return None                       # calc(), var(), 40em, 6e2px, 16/9, ...
+    n = float(m.group(1))
+    if n < 0:
         return None                       # negative is invalid for width/height
-    if not unit:
-        return (Fraction(0), 'px') if f == 0 else None   # only 0 may be unitless
-    if unit not in MQ_UNITS:
-        return None                       # vw, ch, %, dppx, ...
-    n, d, fam = MQ_UNITS[unit]
-    return (f * Fraction(n, d), fam)
+    if n and not m.group(2):
+        return None                       # only 0 may be written without a unit
+    return n
 
 
 def _mq_bound(feat, val, op):
-    """-> ('r', feature, family, low, low_is_strict, high, high_is_strict)."""
-    L = _mq_length(val)
-    if not L:
+    """-> ('r', feature, low, high). Either bound may be None, both are inclusive."""
+    n = _mq_px(val)
+    if n is None:
         return None
-    v, fam = L
-    return {'>=': ('r', feat, fam, v, False, None, False),
-            '>': ('r', feat, fam, v, True, None, False),
-            '<=': ('r', feat, fam, None, False, v, False),
-            '<': ('r', feat, fam, None, False, v, True),
-            '=': ('r', feat, fam, v, False, v, False)}.get(op)
-
-
-def _mq_range_term(t):
-    """Range syntax, including the reversed and two-sided forms."""
-    parts = [x.strip() for x in re.split(r'(<=|>=|<|>|=)', t)]
-    if len(parts) == 3:
-        a, op, b = parts
-        if a in RANGE_MQ:
-            return _mq_bound(a, b, op)
-        if b in RANGE_MQ:
-            # (600px <= width) is a LOWER bound on width. Reading it as an upper
-            # one is a false-positive machine, so the operator is flipped rather
-            # than the term dropped.
-            return _mq_bound(b, a, {'<': '>', '<=': '>=', '>': '<',
-                                    '>=': '<=', '=': '='}[op])
-        return None
-    if len(parts) == 5:
-        a, op1, f, op2, c = parts
-        if f not in RANGE_MQ:
-            return None
-        asc = op1 in ('<', '<=') and op2 in ('<', '<=')
-        desc = op1 in ('>', '>=') and op2 in ('>', '>=')
-        if not (asc or desc):
-            return None                   # (600px <= width >= 900px) is malformed
-        if asc:                           # a <= width <= c
-            lo = _mq_bound(f, a, {'<': '>', '<=': '>='}[op1])
-            hi = _mq_bound(f, c, op2)
-        else:                             # a >= width >= c
-            hi = _mq_bound(f, a, {'>': '<', '>=': '<='}[op1])
-            lo = _mq_bound(f, c, op2)
-        if not lo or not hi or lo[2] != hi[2]:
-            return None
-        return ('r', f, lo[2], lo[3], lo[4], hi[5], hi[6])
-    return None
+    return {'>=': ('r', feat, n, None),
+            '<=': ('r', feat, None, n),
+            '=': ('r', feat, n, n)}[op]
 
 
 def _mq_term(t):
@@ -698,7 +652,11 @@ def _mq_term(t):
     conjunct only widens what could match and can never manufacture a finding.
     """
     if re.search(r'[<>=]', t):
-        return _mq_range_term(t)
+        # Range syntax, (width >= 900px) and its reversed and two-sided forms.
+        # Not modelled: reading one of those operators backwards would be a
+        # false-positive machine, and nothing in this repo writes them. If that
+        # changes, the cost is silence on those queries, never a wrong answer.
+        return None
     if ':' not in t:
         return None                       # boolean context, e.g. (hover)
     name, _, val = t.partition(':')
@@ -803,31 +761,27 @@ def _mq_report(path, src, masked, stack, line0):
                 elif disc[feat][0] != val and hit is None:
                     hit = ('d', feat, disc[feat], (val, fr))
             else:
-                _, feat, fam, lo, lo_s, hi, hi_s = t
-                cur = iv.setdefault((feat, fam), [None, False, None, False, fr, fr])
+                _, feat, lo, hi = t
+                cur = iv.setdefault(feat, [None, None, fr, fr])
                 if lo is not None and (cur[0] is None or lo > cur[0]):
-                    cur[0], cur[1], cur[4] = lo, lo_s, fr
-                elif lo is not None and lo == cur[0] and lo_s:
-                    cur[1] = True
-                if hi is not None and (cur[2] is None or hi < cur[2]):
-                    cur[2], cur[3], cur[5] = hi, hi_s, fr
-                elif hi is not None and hi == cur[2] and hi_s:
-                    cur[3] = True
+                    cur[0], cur[2] = lo, fr
+                if hi is not None and (cur[1] is None or hi < cur[1]):
+                    cur[1], cur[3] = hi, fr
     if not facts:
         return                            # `@media print` alone proves nothing
     checked += 1                          # one assertion: this chain is satisfiable
 
     if hit is None:
-        for key in sorted(iv, key=lambda k: (k[0], k[1])):
-            lo, lo_s, hi, hi_s, lo_fr, hi_fr = iv[key]
+        for feat in sorted(iv):
+            lo, hi, lo_fr, hi_fr = iv[feat]
             if lo is None or hi is None:
                 continue
             # No epsilon anywhere. CSS pixels are fractional, so max-width:820
             # with min-width:821 really is empty — 820.5 satisfies neither — and
             # must be reported, while min-width:600 with max-width:600 is
             # satisfiable at exactly 600 and must not be.
-            if lo > hi or (lo == hi and (lo_s or hi_s)):
-                hit = ('r', key, iv[key])
+            if lo > hi:
+                hit = ('r', feat, iv[feat])
                 break
     if hit is None:
         return
@@ -847,12 +801,10 @@ def _mq_report(path, src, masked, stack, line0):
                 'device reports two values of it'
                 % (feat, v1, line0 - 1 + f1.line, v2, line0 - 1 + f2.line))
     else:
-        _, (feat, fam), (lo, lo_s, hi, hi_s, lo_fr, hi_fr) = hit
-        what = ('%s must be %s%s (line %d) and %s%s (line %d) at once, and no '
-                'viewport is both'
-                % (feat, '>' if lo_s else '>=', _mq_fmt(lo, fam),
-                   line0 - 1 + lo_fr.line, '<' if hi_s else '<=',
-                   _mq_fmt(hi, fam), line0 - 1 + hi_fr.line))
+        _, feat, (lo, hi, lo_fr, hi_fr) = hit
+        what = ('%s must be >=%gpx (line %d) and <=%gpx (line %d) at once, and '
+                'no viewport is both'
+                % (feat, lo, line0 - 1 + lo_fr.line, hi, line0 - 1 + hi_fr.line))
     remedy = ('Move this block out of the enclosing @media, or drop one of the '
               'two terms.' if len(chain) > 1 else
               'Drop or widen one of the two terms.')
@@ -862,11 +814,6 @@ def _mq_report(path, src, masked, stack, line0):
     fail('media-dead', path, line0 - 1 + inner.line,
          'dead @media: %s, so nothing in this block can ever apply. %s  chain: %s'
          % (what, remedy, trail))
-
-
-def _mq_fmt(f, fam):
-    return ('%s%s' % (f.numerator, fam)) if f.denominator == 1 else \
-           ('%s%s' % (('%f' % float(f)).rstrip('0').rstrip('.'), fam))
 
 
 def _mq_scan(path, src, line0):
