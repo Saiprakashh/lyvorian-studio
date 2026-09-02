@@ -306,3 +306,22 @@
     min-height:150svh;
   }
 }
+/* Neither of the two rules above may survive reduced motion. products.css:93
+   drops the sticky stack back to position:relative, and products.js:341 returns
+   out of the camera entirely — so the spacing buys nothing there and costs
+   everything. Measured on the live site at 1280x900: with the stack sticky, the
+   middle of a gap hits room#0, still pinned; with it relative, the same points
+   hit MAIN. Five 50svh bands of bare page background, 2.5 screens of it, shown
+   to the visitors the setting exists to protect. The mobile branch has no void
+   — a 150svh room paints its own box — but it is 50svh of dead scroll per room
+   pacing an animation that is not running, so it goes back too.
+   Both selectors mirror their rule above exactly, so this reverts what the
+   pacing added and nothing else; equal specificity and later in source order,
+   so each wins over its own counterpart. products.js measures real offsetTops
+   rather than assuming a stride, so the camera needs no matching change. */
+@media (prefers-reduced-motion:reduce){
+  .tour-room:not(.product-wing-room):not(.final-room){ margin-bottom:0; }
+  .tour-room:not(.product-room):not(.website-room):not(.product-wing-room):not(.final-room){
+    min-height:100svh;
+  }
+}
