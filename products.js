@@ -251,17 +251,60 @@ function updateRoomCamera() {
     const metrics = roomMetrics[index] || { top: room.offsetTop, span: viewportHeight };
     const roomTop = metrics.top;
     const roomHeight = metrics.span;
-    const phase = clamp((scrollY - roomTop + viewportHeight) / (roomHeight + viewportHeight));
+    const phaseSpan = roomHeight + viewportHeight;
+    const phase = clamp((scrollY - roomTop + viewportHeight) / phaseSpan);
     const enter = smooth(clamp(phase * 2));
     const exit = smooth(clamp((phase - .5) * 2));
     const focus = Math.sin(phase * Math.PI);
+
+    // Let the copy REST while the room is simply on screen.
+    //
+    // descent.js:76 says why, for the hero: without a hold "something is always
+    // mid-fade and nothing is ever simply on screen — which reads as restless
+    // however much scroll distance it is given". The same was true here. Measured
+    // on the live site: while a room sits pinned and completely uncovered, its
+    // copy was still sliding +/-35px in X and 75px in Z, because `passage` ran
+    // linearly through the room's whole life.
+    //
+    // The hero's own dwell() curve does NOT port across, and porting it would
+    // make this worse rather than better. There, t is the fraction through one
+    // TRANSITION, so its flat stretches sit at the two ENDS of t and that is rest
+    // on screen. Here, phase is the fraction through a room's whole life —
+    // arriving, resting, being covered — so the still moment is the MIDDLE.
+    // dwell() applied to passage would pin the copy at its full +/-105px offset
+    // through both wipes and swing the entire 210px range during the plateau:
+    // three times today's movement, precisely where we want none.
+    //
+    // So: same principle, curve turned inside out. Flat in the middle, ramping at
+    // the ends. The edges are derived, not guessed — the room is fully arrived
+    // once scrollY reaches roomTop (phase = viewportHeight/phaseSpan) and the
+    // next room starts wiping over it at scrollY = roomTop + roomHeight -
+    // viewportHeight (phase = roomHeight/phaseSpan). Measured against the live
+    // page at a 100svh gap those come out at 0.333 and 0.667, matching the
+    // observed window exactly. Deriving them also means this stays correct for
+    // the wing room, whose span is a single viewport and whose plateau is
+    // therefore a point, and on mobile, where nothing pins at all.
+    //
+    // focus/enter/exit/scale/panY/opacity keep reading `phase` on purpose, so the
+    // camera goes on drifting through the rest — descent.js:81 makes exactly this
+    // split, keeping the push-in linear "so the frame feels alive, not frozen".
+    const restStart = viewportHeight / phaseSpan;
+    const restEnd = roomHeight / phaseSpan;   // 1 - restEnd === restStart
+    const drift = phase < restStart ? smooth(phase / restStart) - 1
+      : phase > restEnd ? smooth((phase - restEnd) / restStart)
+      : 0;
+    // The room's own furniture stays on the linear curve: the backdrop's turn,
+    // the name plaque, and the tilts the overlay rooms' panels read. That is the
+    // same split again from the other side — descent.js:81 keeps the push-in
+    // linear through the hold so the frame stays alive. Settling the copy is the
+    // point; freezing the room around it as well would stop it dead.
     const passage = (phase - .5) * 2;
-    const spread = Math.abs(passage);
+    const spread = Math.abs(drift);
     const direction = index % 2 === 0 ? 1 : -1;
     const scale = 1.17 - focus * .13 + exit * .045;
     const panY = (0.5 - phase) * 62;
-    const contentShift = passage * -72;
-    const contentX = passage * direction * 105;
+    const contentShift = drift * -72;
+    const contentX = drift * direction * 105;
     const contentZ = -spread * 210 + focus * 36;
     const contentOpacity = Math.max(.12, Math.min(1, .08 + focus * 1.16));
     const transition = Math.max(1 - enter, exit);
@@ -274,7 +317,7 @@ function updateRoomCamera() {
     room.style.setProperty("--content-shift", `${contentShift.toFixed(2)}px`);
     room.style.setProperty("--content-x", `${contentX.toFixed(2)}px`);
     room.style.setProperty("--content-z", `${contentZ.toFixed(2)}px`);
-    room.style.setProperty("--content-turn", `${(passage * direction * -9).toFixed(2)}deg`);
+    room.style.setProperty("--content-turn", `${(drift * direction * -9).toFixed(2)}deg`);
     room.style.setProperty("--content-opacity", contentOpacity.toFixed(3));
     room.style.setProperty("--camera-brightness", (.68 + focus * .32).toFixed(3));
     room.style.setProperty("--camera-saturate", (.74 + focus * .26).toFixed(3));

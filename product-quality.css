@@ -285,12 +285,27 @@
    height:100svh — so each contributes exactly its own height in scroll and
    making it taller would give it flow it cannot pin within. The margin does the
    job instead: the room's box stays 100svh and stays pinned, while the NEXT
-   room's arrival is pushed 50svh later. Dwell time goes to 150svh with the pin
-   untouched.
+   room's arrival is pushed 100svh later. Stride goes to 200svh with the pin
+   untouched, and the room rests on screen for the whole middle screen of it.
 
-   Below 1050px the rooms are ordinary flow items, so min-height is the lever.
-   The product and website rooms are left alone — they already run to 1450px
-   and 1320px because they hold a whole product panel.
+   Below 1050px the lever is different, and so is what it buys. products.css
+   overrides the sticky rule with position:relative under (max-width:1050px), so
+   nothing pins there: a room simply scrolls past and its copy always travels at
+   exactly the scroll rate — measured, the copy's centre runs monotonically from
+   2.28vh to -0.28vh with no still point anywhere. So min-height cannot buy
+   stillness here, only distance between arrivals.
+
+   It stays at 150svh and is deliberately NOT matched to the desktop stride. The
+   copy is not centred in its room; it sits about two thirds down the box, so
+   inflating the box pushes it further past the window the rest curve freezes.
+   Measured on room 2 at 375x812, sampling the room's whole span: with the copy
+   on screen, the camera's X swing is 123.7px at 100svh, 95.3px at 150svh and
+   91.4px at 200svh — but the share of the rest window in which the copy is
+   visible at all goes 0.67 at 150svh to 0.00 at 200svh, where the freeze lands
+   entirely on empty backdrop two screens below the copy. The last 3.9px of
+   quiet is not worth spending the rest on nothing, plus 2.5 more screens of
+   scrolling. The product and website rooms are left alone — they already run to
+   1450px and 1320px because they hold a whole product panel.
 
    Two rooms are deliberately NOT slowed, on either layout. .product-wing-room is
    a decision point holding a button, and .final-room is the way out — neither is
@@ -299,7 +314,15 @@
    rules further up this file; naming them here makes that intent explicit
    instead of leaving it to depend on someone else's !important winning. */
 @media (min-width:1051px){
-  .tour-room:not(.product-wing-room):not(.final-room){ margin-bottom:50svh; }
+  /* 100svh, not 50. The gap is not merely spacing — it IS the plateau, the only
+     stretch in which a room is pinned, uncovered and simply on screen. A room's
+     own box is 100svh so that it can pin at all, and the wipe across that box is
+     layout-driven: the next room physically slides up over this one in exactly
+     one viewport and no amount of JS can slow it. Only the margin buys stillness.
+     At 100svh the three segments — arrive, rest, be covered — come out equal, so
+     the rest is a full screen and the phase plateau lands on [1/3, 2/3], which is
+     measured to be exactly where it lands. Stride 200svh, document 1200svh. */
+  .tour-room:not(.product-wing-room):not(.final-room){ margin-bottom:100svh; }
 }
 @media (max-width:1050px){
   .tour-room:not(.product-room):not(.website-room):not(.product-wing-room):not(.final-room){
