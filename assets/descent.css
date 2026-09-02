@@ -249,12 +249,61 @@ body { background: var(--bg); color: var(--text); }
   gap: 1.5rem;
   padding: clamp(1.1rem, 2.4vw, 1.9rem) clamp(1.25rem, 5vw, 5.5rem);
 }
+/* The original wordmark typography, restored: Cormorant Garamond at
+   1.125rem, mixed case, tracking pulled slightly TIGHT at -.01em, with a 12px
+   gap to the mark. The descent header had it as .82rem uppercase interface
+   type on +.17em tracking — legible, but a different wordmark, and the studio
+   name is the one thing that should not change shape between pages. */
 .dsc-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   color: var(--dsc-ink);
   text-decoration: none;
-  font: 500 .82rem/1 var(--font-interface, system-ui, sans-serif);
-  letter-spacing: .17em;
-  text-transform: uppercase;
+  font: 500 1.125rem/1.2 var(--font-display, Georgia, serif);
+  letter-spacing: -.01em;
+}
+/* The mark keeps its brand gold rather than being recoloured to match the
+   wordmark: the hero sequence itself shows this monogram in bronze on the
+   building and the office wall, so a white version here would read as a
+   different logo.
+   The shadow is what makes that safe. Gold measures 2.88:1 against the sky
+   frame behind the header — under the 3:1 WCAG asks of a meaningful graphic —
+   and the backdrop keeps changing as the sequence plays, so no single colour
+   choice is legible against all nine frames. A dark drop-shadow gives the
+   silhouette its own edge regardless of what is behind it. */
+.dsc-logo {
+  width: auto;
+  height: 29px;            /* the size the original header used */
+  flex: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .55));
+  /* The original transitioned only width and height here, so its own
+     hover scale/rotate snapped instead of easing. Transform is included so the
+     movement it was clearly written for actually plays. */
+  transition: transform .22s ease-out, filter .22s ease-out;
+}
+
+/* The wordmark's 3D tilt, restored. perspective lives on the wrapper and
+   preserve-3d on the lockup, so descent.js only has to write two rotations and
+   the browser's perspective divide does the rest. */
+.dsc-logo-3d { perspective: 600px; }
+.dsc-mark { transform-style: preserve-3d; transition: transform .2s ease-out; }
+.dsc-wtext { display: inline-block; transform-style: preserve-3d; transition: transform .2s ease-out; }
+
+@media (hover: hover) and (pointer: fine) {
+  .dsc-mark:hover .dsc-logo {
+    transform: scale(1.08) rotate(-6deg);
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .6));
+  }
+}
+
+/* The tilt is decorative motion; honour a request to stop it. */
+@media (prefers-reduced-motion: reduce) {
+  .dsc-mark, .dsc-wtext, .dsc-logo { transition: none; }
+  .dsc-mark:hover .dsc-logo { transform: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .dsc-logo { filter: none; }
 }
 .dsc-nav { display: flex; gap: clamp(1rem, 2.4vw, 2.2rem); }
 .dsc-nav a {

@@ -565,3 +565,39 @@
     wake();
   }, { passive: true });
 })();
+
+
+/* Wordmark 3D tilt — the original homepage behaviour, restored.
+ *
+ * Only the two rotations are written; the perspective on .dsc-logo-3d and the
+ * preserve-3d on the lockup do the rest, so the mark and the text separate in
+ * depth rather than tilting as one flat plane.
+ *
+ * Gated on a fine pointer exactly as the original was: on touch there is no
+ * hover to follow, and leaving a transform applied after a tap would strand the
+ * wordmark at an angle. Reduced motion opts out too — this is decoration.
+ */
+(function () {
+  'use strict';
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  [].slice.call(document.querySelectorAll('.dsc-logo-3d')).forEach(function (wrap) {
+    var mark = wrap.querySelector('.dsc-mark');
+    if (!mark) return;
+
+    wrap.addEventListener('mousemove', function (e) {
+      var r = wrap.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      mark.style.transform =
+        'rotateY(' + (x * 26).toFixed(2) + 'deg) rotateX(' + (-y * 22).toFixed(2) +
+        'deg) translateZ(6px)';
+    });
+
+    wrap.addEventListener('mouseleave', function () {
+      mark.style.transform = 'rotateY(0) rotateX(0) translateZ(0)';
+    });
+  });
+})();
