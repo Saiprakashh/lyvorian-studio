@@ -352,7 +352,11 @@
     :root:not([data-theme="light"]) .sec-eyebrow{color:var(--gold)}
   }
   :root[data-theme="dark"] .sec-eyebrow{color:var(--gold)}
-  .sec-title{margin:0 0 14px;text-wrap:balance;font:var(--t-h2);letter-spacing:var(--ls-h2)}
+  /* max-width:none is load-bearing. This heading was an h2 until the page was
+   given a real h1; home.css carries a bare `h1{max-width:20ch}` for the
+   homepage hero, and with nothing on .sec-title to override it the promoted
+   heading was squeezed from 600px on one line to 292px over three. */
+.sec-title{max-width:none;margin:0 0 14px;text-wrap:balance;font:var(--t-h2);letter-spacing:var(--ls-h2)}
   .sec-sub{color:var(--muted);text-wrap:balance;font:var(--t-body-lg);letter-spacing:var(--ls-body-lg);max-width:62ch}
 
   /* ── Product card ───────────────────────── */
