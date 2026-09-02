@@ -273,3 +273,36 @@
 @media (max-width:430px){
   .splash-orbit .splash-mark{ width:56px; }
 }
+
+/* ── room pacing ────────────────────────────────────────────────────
+   The homepage hero gives each of its eight transitions 150vh — descent.css:45
+   records that 520vh was tried first and "read as hurried". The Project Office
+   was giving each room exactly 100svh, so rooms arrived 1.5x faster than hero
+   frames while carrying far more movement per pixel: a full camera push, pan,
+   X/Z translation, rotation and opacity fade rather than a crossfade.
+
+   Above 1050px the rooms are a sticky stack — position:sticky, top:0,
+   height:100svh — so each contributes exactly its own height in scroll and
+   making it taller would give it flow it cannot pin within. The margin does the
+   job instead: the room's box stays 100svh and stays pinned, while the NEXT
+   room's arrival is pushed 50svh later. Dwell time goes to 150svh with the pin
+   untouched.
+
+   Below 1050px the rooms are ordinary flow items, so min-height is the lever.
+   The product and website rooms are left alone — they already run to 1450px
+   and 1320px because they hold a whole product panel.
+
+   Two rooms are deliberately NOT slowed, on either layout. .product-wing-room is
+   a decision point holding a button, and .final-room is the way out — neither is
+   a room you walk through, and lingering in them reads as waiting rather than as
+   pacing. Both were already pinned to one screen below 1050px by !important
+   rules further up this file; naming them here makes that intent explicit
+   instead of leaving it to depend on someone else's !important winning. */
+@media (min-width:1051px){
+  .tour-room:not(.product-wing-room):not(.final-room){ margin-bottom:50svh; }
+}
+@media (max-width:1050px){
+  .tour-room:not(.product-room):not(.website-room):not(.product-wing-room):not(.final-room){
+    min-height:150svh;
+  }
+}

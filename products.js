@@ -214,6 +214,26 @@ rooms.forEach((room, index) => room.style.setProperty("--room-order", index + 1)
 let ticking = false;
 let walkingTimer;
 
+// Measured once per layout change: reading offsetTop/offsetHeight and
+// getComputedStyle for twelve rooms on every scroll frame would be a forced
+// reflow per frame. The five product/website rooms are position:fixed overlays
+// opened by a click, not part of the scroll flow, so they are excluded from the
+// spacing chain and fall back to a single viewport.
+let roomMetrics = [];
+function measureRooms() {
+  const viewportHeight = innerHeight;
+  const inFlow = rooms.filter(room => getComputedStyle(room).position !== "fixed");
+  roomMetrics = rooms.map(room => {
+    if (getComputedStyle(room).position === "fixed") return { top: 0, span: viewportHeight };
+    const next = inFlow[inFlow.indexOf(room) + 1];
+    const top = room.offsetTop;
+    return { top, span: next ? next.offsetTop - top : Math.max(viewportHeight, room.offsetHeight) };
+  });
+}
+measureRooms();
+addEventListener("resize", measureRooms, { passive: true });
+addEventListener("load", measureRooms);
+
 function updateRoomCamera() {
   const viewportHeight = innerHeight;
   let currentRoom = 0;
@@ -221,9 +241,16 @@ function updateRoomCamera() {
   const smooth = value => value * value * (3 - 2 * value);
 
   rooms.forEach((room, index) => {
-    const stackedLayout = innerWidth > 1050;
-    const roomTop = stackedLayout ? index * viewportHeight : room.offsetTop;
-    const roomHeight = stackedLayout ? viewportHeight : Math.max(viewportHeight, room.offsetHeight);
+    // Real geometry, not index * viewportHeight. That shortcut was only ever
+    // correct while every room was exactly one viewport tall and butted against
+    // the next; the pacing margin breaks both halves of that assumption, and the
+    // camera would drift further out of step with every room down the page.
+    // roomSpan is the distance to the NEXT room's arrival, so the camera arc
+    // matches how long the room is actually on screen — lengthen the spacing and
+    // the camera slows with it rather than finishing early and sitting faded out.
+    const metrics = roomMetrics[index] || { top: room.offsetTop, span: viewportHeight };
+    const roomTop = metrics.top;
+    const roomHeight = metrics.span;
     const phase = clamp((scrollY - roomTop + viewportHeight) / (roomHeight + viewportHeight));
     const enter = smooth(clamp(phase * 2));
     const exit = smooth(clamp((phase - .5) * 2));
