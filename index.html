@@ -59,8 +59,24 @@
     size-adjust:108%;ascent-override:106.6%;descent-override:30%;line-gap-override:0%}
 </style>
 
-<link rel="stylesheet" href="assets/site.css?v=20260829j"/>
+<link rel="stylesheet" href="assets/site.css?v=20260902a"/>
 <link rel="stylesheet" href="assets/descent.css?v=20260902f"/>
+<!-- No-JavaScript rendering of the hero. Every .dsc-beat is
+     opacity:0;visibility:hidden and only descent.js ever raises one, so without
+     it the hero — including this page's single <h1> — is never shown, and
+     .descent reserves 1200vh of blank plate above the first real section:
+     twelve screens of nothing, with no headline and no accessible heading
+     anywhere on the page. This collapses the scroll-jack to one screen and
+     reveals the identity beat, which is the state descent.js itself builds for
+     reduced-motion visitors.
+     It has to sit AFTER descent.css: these selectors carry no more specificity
+     than the ones they override, so in the <head> block above they lost on
+     source order and did nothing at all. -->
+<noscript><style>
+  .descent{height:100svh}
+  .dsc-sticky{position:relative}
+  .dsc-id{opacity:1;visibility:visible;transform:none}
+</style></noscript>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>

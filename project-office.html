@@ -63,6 +63,23 @@
   <link rel="stylesheet" href="product-motion.css?v=15">
   <link rel="stylesheet" href="product-premium.css?v=8">
   <link rel="stylesheet" href="product-quality.css?v=15">
+  <!-- No-JavaScript rendering. The splash is dismissed only by finishSplash()
+       in products.js, reached by three routes that are all JavaScript, so with
+       none the loading bar fills and the visitor sits behind a fixed, opaque,
+       scroll-locked overlay forever — and the framebuster's html{display:block}
+       guarantees they see that rather than nothing. The skip link is no escape
+       either: the overlay is position:fixed, so scrolling cannot move it.
+       Skipping the intro outright is the state finishSplash() produces, and
+       products.css already renders it this way for prefers-reduced-motion.
+       Must follow the stylesheets, or source order beats it. -->
+  <noscript><style>
+    /* !important is required, not decorative: product-premium.css sets
+       `.splash{display:grid !important}`, which beats any plain declaration at
+       any source position. The same omission is why the reduced-motion
+       `.splash{display:none}` in products.css never took effect either. */
+    .splash{display:none !important}
+    body.splash-active{overflow:visible}
+  </style></noscript>
 </head>
 <body class="splash-active">
   <a class="skip-link" href="#office-tour">Skip splash and enter office</a>

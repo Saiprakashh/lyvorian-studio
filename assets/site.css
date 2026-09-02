@@ -264,13 +264,32 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
 .nav-toggle[aria-expanded="true"] .bars{display:none}
 .nav-toggle[aria-expanded="true"] .ex{display:block}
 
+/* visibility, not just opacity — the same fix .contact-pop carries further down,
+   for the same reason, and it should have been applied to both at once. Neither
+   opacity:0 nor pointer-events:none takes an element out of the tab order, so
+   the CLOSED menu kept nine focusable links live (4 nav + 4 chips + the mail
+   link) on all 15 pages that carry it, at every width up to 820px. It sits
+   after </footer> and has no `top` until JS opens it, so those nine tab stops
+   landed on a fixed-position box far below the fold that the page cannot scroll
+   into view — and being role="dialog" aria-modal="true", a screen reader
+   entering it can treat the rest of the page as inert while the visitor sees
+   nothing happen at all.
+
+   max-height and overflow because a fixed box is excluded from the viewport's
+   scrollable overflow: on a landscape phone the sheet renders 566px tall from
+   top:66px on a 375px-tall screen, leaving the fourth nav item, all four product
+   chips and the support address permanently off-screen with no way to reach
+   them. site.js sets the exact height from the header rect it already measures. */
 .mobile-menu{position:fixed;left:12px;right:12px;z-index:250;
   background:var(--panel);border:1px solid var(--line-bright);border-radius:16px;
   box-shadow:0 26px 60px -22px rgba(var(--shadow-rgb),.5);padding:10px;
   display:flex;flex-direction:column;
-  opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;
-  transition:opacity .24s cubic-bezier(.16,.8,.28,1),transform .24s cubic-bezier(.16,.8,.28,1)}
-.mobile-menu.show{opacity:1;transform:none;pointer-events:auto}
+  overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;visibility:hidden;
+  transition:opacity .24s cubic-bezier(.16,.8,.28,1),transform .24s cubic-bezier(.16,.8,.28,1),
+             visibility 0s linear .24s}
+.mobile-menu.show{opacity:1;transform:none;pointer-events:auto;visibility:visible;
+  transition-delay:0s}
 .mobile-menu a{color:var(--text);text-decoration:none;
   font:550 clamp(1.25rem,4.6vw,1.4375rem)/1.3 var(--font-interface);letter-spacing:-.024em;
   padding:11px 15px;border-radius:11px;transition:background .2s,color .2s}

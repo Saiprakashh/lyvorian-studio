@@ -582,10 +582,10 @@
 
   /* ── Ideas / share thoughts ─────────────── */
   .f-label{letter-spacing:var(--ls-form-label);
-    text-transform:uppercase;color:var(--muted2);display:block;margin-bottom:8px;font:var(--t-form-label)}
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;font:var(--t-form-label)}
   .field-wrap{position:relative}
   @media(max-width:600px){.two-col{grid-template-columns:1fr}}
-  .char-count{position:absolute;bottom:10px;right:14px;letter-spacing:var(--ls-caption);color:var(--muted2);pointer-events:none;
+  .char-count{position:absolute;bottom:10px;right:14px;letter-spacing:var(--ls-caption);color:var(--muted);pointer-events:none;
     transition:color .25s;font:var(--t-caption)}
   .char-count.warm{color:var(--gold)}
   .btn-send{display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:12px;border:none;cursor:pointer;color:#1a1206;
@@ -663,12 +663,12 @@
   .fb-steps-list span{flex-shrink:0;width:21px;height:21px;border-radius:50%;
     border:1px solid var(--line-bright);color:var(--gold);
     display:flex;align-items:center;justify-content:center;font:600 .75rem/1 var(--font-interface);letter-spacing:0em}
-  .fb-privacy{display:flex;gap:9px;align-items:flex-start;color:var(--muted2);margin:0;font:var(--t-caption);letter-spacing:var(--ls-caption)}
+  .fb-privacy{display:flex;gap:9px;align-items:flex-start;color:var(--muted);margin:0;font:var(--t-caption);letter-spacing:var(--ls-caption)}
   .fb-privacy svg{width:15px;height:15px;flex-shrink:0;margin-top:2px;color:var(--gold-dim)}
 
   .fb-form{padding:36px 34px}
   .fb-progress{list-style:none;display:flex;gap:10px;padding:0;margin:0 0 26px;flex-wrap:wrap}
-  .fb-progress li{display:flex;align-items:center;gap:7px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);
+  .fb-progress li{display:flex;align-items:center;gap:7px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
     padding:6px 12px;border:1px solid var(--line);border-radius:100px;font:500 .6875rem/1 var(--font-interface)}
   .fb-pnum{width:16px;height:16px;border-radius:50%;border:1px solid var(--line-bright);
     display:flex;align-items:center;justify-content:center;font:600 .6875rem/1 var(--font-interface)}
@@ -692,7 +692,7 @@
     transition:border-color .19s,transform .19s cubic-bezier(.16,.8,.28,1)}
   .fb-cat-icon{width:19px;height:19px;color:var(--gold);grid-row:1/3;align-self:center}
   .fb-cat-t{color:var(--text);font:600 .9375rem/1.35 var(--font-interface);letter-spacing:-.012em}
-  .fb-cat-d{color:var(--muted2);font:400 .8125rem/1.55 var(--font-interface);letter-spacing:0em}
+  .fb-cat-d{color:var(--muted);font:400 .8125rem/1.55 var(--font-interface);letter-spacing:0em}
   .fb-tick{width:15px;height:15px;position:absolute;top:13px;right:13px;color:var(--gold);
     opacity:0;transition:opacity .19s}
   .fb-cat:hover .fb-cat-in{border-color:var(--gold-dim);transform:translateY(-2px)}
@@ -706,7 +706,7 @@
   .fb-back:hover{border-color:var(--gold-dim);color:var(--text)}
   .fb-sm{display:block;margin-top:16px}
   .fb-opt{opacity:.6;font-weight:400}
-  .fb-hint{color:var(--muted2);margin:8px 0 0;font:var(--t-caption);letter-spacing:var(--ls-caption)}
+  .fb-hint{color:var(--muted);margin:8px 0 0;font:var(--t-caption);letter-spacing:var(--ls-caption)}
   .fb-err{color:var(--maroon);margin:8px 0 0;font:550 .8125rem/1.5 var(--font-interface);letter-spacing:0em}
   .fb-addname{background:none;border:0;color:var(--gold);cursor:pointer;
     padding:12px 0;min-height:44px;font:550 .8125rem/1.5 var(--font-interface);letter-spacing:-.002em}

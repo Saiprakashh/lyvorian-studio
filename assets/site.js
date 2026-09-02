@@ -24,9 +24,24 @@
   var menu = document.getElementById('mobileMenu');
   function closeMenu(){
     if (!menu) return;
+    // Take focus back BEFORE hiding: the sheet is the last thing in the
+    // document, so focus left inside it would otherwise be dropped to the top
+    // of the page and a keyboard user would have to tab the whole page again.
+    var inside = menu.contains(document.activeElement);
     menu.classList.remove('show');
+    // inert as well as the CSS visibility, and deliberately not instead of it.
+    // The stylesheet hides the closed sheet with `visibility:hidden` on a .24s
+    // delay so the close animation still plays — but that means the tab stops
+    // only disappear once the transition COMPLETES, and a transition that is
+    // interrupted or never runs leaves nine focusable links behind. inert takes
+    // effect on the same frame and needs no animation, so the tab order is
+    // correct even mid-close. The CSS still carries the no-JS case, where the
+    // menu can never be opened at all.
+    menu.inert = true;
     navBtn.setAttribute('aria-expanded','false');
+    if (inside) navBtn.focus();
   }
+  if (menu) menu.inert = true;          // closed is the state it ships in
   if (navBtn && menu){
     navBtn.addEventListener('click', function(e){
       e.stopPropagation();
@@ -34,8 +49,18 @@
       if (open){ closeMenu(); return; }
       var r = navBtn.getBoundingClientRect();
       menu.style.top = (r.bottom + 10) + 'px';
+      // A fixed box cannot be scrolled to by the page, so bound it to what is
+      // actually on screen and let it scroll inside itself. Without this the
+      // sheet runs off a landscape phone and its lower half is unreachable.
+      menu.style.maxHeight = Math.max(120, window.innerHeight - (r.bottom + 10) - 12) + 'px';
+      menu.inert = false;
       menu.classList.add('show');
       navBtn.setAttribute('aria-expanded','true');
+      // Move into the sheet, or a keyboard user has to tab the entire page to
+      // reach a menu that sits after the footer. :focus-visible means a pointer
+      // user never sees a ring for this.
+      var firstLink = menu.querySelector('a');
+      if (firstLink) firstLink.focus();
     });
     menu.addEventListener('click', function(e){
       if (e.target.closest('a')) closeMenu();
