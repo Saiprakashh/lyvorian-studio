@@ -919,13 +919,29 @@ body { background: var(--bg); color: var(--text); }
    rhythm is what makes the columns read as lists rather than menus. */
 @media (pointer: coarse) {
   .foot nav { gap: 0; }
-  .foot a:not([data-social]) {
+  /* Scoped to the nav columns, which is what the 22px-on-a-30px-pitch finding
+     was actually about. The earlier `.foot a:not([data-social])` was too broad
+     in two ways, both of them visible on a phone:
+
+     Its own carve-out below it could never win. `.foot a:not([data-social])` is
+     (0,2,1) and `.foot .dsc-mark` is (0,2,0) — equal class count, but the first
+     also carries a type selector, so it takes the wordmark regardless of source
+     order. The lockup became a full-width 148px block instead of a shrink-
+     wrapped 29px one, which is the opposite of what the comment claimed.
+
+     And it caught the support@ mailto link, an inline link inside a paragraph.
+     WCAG 2.5.8 exempts targets whose size is constrained by the line-height of
+     surrounding text for exactly this reason; forcing it to a 44px flex box
+     turned a run of prose into a block and doubled the paragraph's line box.
+
+     Restricting to `nav` fixes both, because neither the wordmark nor the mail
+     link is inside one. :not([data-social]) still matters — .foot-social is
+     itself a <nav>, so without it the four icon pills would be caught too. */
+  .foot nav a:not([data-social]) {
     display: flex;
     align-items: center;
     min-height: 44px;
   }
-  /* the wordmark is an inline-flex lockup; keep it centred without stretching */
-  .foot .dsc-mark { display: inline-flex; }
 }
 /* The studio signature. The art is rendered on its own near-black ground, so it
    is masked to fade into the footer plate at every edge rather than sitting in
