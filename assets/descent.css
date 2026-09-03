@@ -344,6 +344,31 @@ body { background: var(--bg); color: var(--text); }
   h1 .w:hover, h2 .w:hover, .dsc-h1 .w:hover { transform: translateY(-2px); }
 }
 
+/* An address is one word, and inline-block cannot wrap OR shrink.
+   "support@lyvorianstudio.co.in" is a single token, so the split gives it one
+   .w of 187px. Below 800px .foot-in is repeat(2, minmax(0,1fr)), which at 375px
+   is a 148px track — and because the span is inline-block it neither breaks
+   across lines nor narrows to its track, so it ran 40px into the next column.
+   Measured on the live site at 375: the address overlapped the Products
+   column's "Medhakeli" link by 16px across and 12px down, and the last 17px of
+   the mail link — 9% of its width — activated medhakeli.html instead of opening
+   mail. Visible from 320px up to about 390px, so squarely on a phone. It was
+   the only one of 1101 word spans on the page that overflowed anything, and
+   only on index.html, the one page that runs the footer split.
+
+   `anywhere` and not `break-word`: only `anywhere` lowers the span's min-content
+   contribution, and that is exactly what lets an inline-block shrink to its
+   track. `break-word` leaves the intrinsic width at 187px and the overflow
+   stands. That same property is why this is scoped to mailto and not put on .w
+   — a global `anywhere` would drop EVERY word's min-content to one character,
+   and the .wg note above records what that costs: min-width:auto floors a flex
+   row at its longest word, and without that floor "Choose what you want to
+   share" once broke onto six lines of one word each.
+
+   Nothing moves where the address already fits, because overflow-wrap only acts
+   when the content genuinely does not — desktop is byte-identical. */
+a[href^="mailto:"] .w { max-width: 100%; overflow-wrap: anywhere; }
+
 /* ── hover lift ────────────────────────────────────────────────────
    Links, cards and buttons lift as a whole on top of the per-word motion, so
    a link still reads as one object rather than a row of loose words.
