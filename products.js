@@ -63,7 +63,27 @@ function setProjectsOpen(isOpen, moveFocus = true) {
   // viewports in, on the Projects floor, with Arrival, Reception, the CEO
   // office, Conference and Discussion already behind the visitor.
   if (!moveFocus) return;
+  // Remeasure BEFORE scrolling, because opening the corridor changes the flow.
+  // At <=720px product-quality.css:172 takes .product-wing-room from the 100svh
+  // that product-quality.css:99 pins it to while closed up to min-height:1900px,
+  // so on an 812px phone the wing's own span more than doubles and .final-room's
+  // offsetTop moves about 1090px down the page. roomMetrics refreshes only on
+  // resize and load, so without this the camera keeps running both rooms off
+  // geometry that no longer exists — and since updateRoomCamera now derives the
+  // rest window FROM that span, the plateau would be computed for a room size
+  // that is gone. Above 720px the corridor is absolutely positioned, so there is
+  // nothing to remeasure and this costs one layout read on a click. updateTour()
+  // after, because the scroll can land exactly where we already are, in which
+  // case no scroll event fires and nothing repaints from the fresh numbers.
+  //
+  // This MUST stay below the !moveFocus guard. setProjectsOpen(false, false) is
+  // called during module evaluation, and roomMetrics is a `let` declared further
+  // down beside measureRooms(), so remeasuring from above the guard throws on the
+  // temporal dead zone — inside a handler nobody awaits, where it would be
+  // swallowed silently.
+  measureRooms();
   window.scrollTo({ top: projectWing.offsetTop, behavior: "auto" });
+  updateTour();
   requestAnimationFrame(() => {
     const focusTarget = isOpen ? projectsCorridor.querySelector("[data-room-door]") : openProjectsButton;
     focusTarget?.focus({ preventScroll: true });
@@ -232,7 +252,10 @@ function measureRooms() {
 }
 measureRooms();
 addEventListener("resize", measureRooms, { passive: true });
-addEventListener("load", measureRooms);
+// Remeasuring alone left the camera painting from the pre-load metrics until the
+// visitor happened to scroll: a late font swap or a decoded image moves every
+// offsetTop, and updateRoomCamera derives its rest window from those spans.
+addEventListener("load", () => { measureRooms(); updateTour(); });
 
 function updateRoomCamera() {
   const viewportHeight = innerHeight;
@@ -288,16 +311,38 @@ function updateRoomCamera() {
     // focus/enter/exit/scale/panY/opacity keep reading `phase` on purpose, so the
     // camera goes on drifting through the rest — descent.js:81 makes exactly this
     // split, keeping the push-in linear "so the frame feels alive, not frozen".
-    const restStart = viewportHeight / phaseSpan;
-    const restEnd = roomHeight / phaseSpan;   // 1 - restEnd === restStart
+    // Math.min, because roomHeight can be SHORTER than viewportHeight, and the
+    // naive pair then inverts: restEnd lands below restStart, both ternary
+    // conditions below are true at once so the first branch wins, and drift
+    // steps discontinuously where they cross. It is reachable, not theoretical.
+    // .product-wing-room is excluded from both pacing levers, so its span is a
+    // fixed 100svh, while viewportHeight is read as live innerHeight — which on
+    // a phone grows towards the LARGE viewport as the URL bar retracts. The
+    // room then measures shorter than the viewport and the plateau turns inside
+    // out, on the one room that holds a button.
+    // Clamping to the shorter of the two keeps the pair ordered and still
+    // symmetric about .5. Where roomHeight >= viewportHeight — every
+    // walk-through room on both layouts — it is algebraically the expression it
+    // replaces, since 1 - vh/(H+vh) === H/(H+vh), so the desktop [1/3, 2/3]
+    // window is untouched.
+    const restStart = Math.min(viewportHeight, roomHeight) / phaseSpan;
+    const restEnd = 1 - restStart;
     const drift = phase < restStart ? smooth(phase / restStart) - 1
       : phase > restEnd ? smooth((phase - restEnd) / restStart)
       : 0;
-    // The room's own furniture stays on the linear curve: the backdrop's turn,
-    // the name plaque, and the tilts the overlay rooms' panels read. That is the
-    // same split again from the other side — descent.js:81 keeps the push-in
-    // linear through the hold so the frame stays alive. Settling the copy is the
-    // point; freezing the room around it as well would stop it dead.
+    // The room's own furniture stays on the linear curve: the backdrop's turn
+    // and the tilts the overlay rooms' panels read. That is the same split again
+    // from the other side — descent.js:81 keeps the push-in linear through the
+    // hold so the frame stays alive. Settling the copy is the point; freezing
+    // the room around it as well would stop it dead.
+    //
+    // The name plaque is deliberately NOT on that list. products.css:79 composes
+    // --sign-x, --sign-y, --sign-z and --sign-turn onto one element, and the
+    // first three are derived below from contentX/contentShift/contentZ, so they
+    // already rest. Leaving only its yaw linear made the plaque the one thing
+    // that is half held and half live — it rotated through 3.3deg with zero
+    // translation across the plateau, which reads as a wobble, not as drift.
+    // Either the whole element rests or none of it does; it rests.
     const passage = (phase - .5) * 2;
     const spread = Math.abs(drift);
     const direction = index % 2 === 0 ? 1 : -1;
@@ -341,7 +386,7 @@ function updateRoomCamera() {
     room.style.setProperty("--sign-x", `${(-contentX * .42).toFixed(2)}px`);
     room.style.setProperty("--sign-y", `${(contentShift * .45).toFixed(2)}px`);
     room.style.setProperty("--sign-z", `${(contentZ * .4).toFixed(2)}px`);
-    room.style.setProperty("--sign-turn", `${(passage * direction * 4.95).toFixed(2)}deg`);
+    room.style.setProperty("--sign-turn", `${(drift * direction * 4.95).toFixed(2)}deg`);
     room.style.setProperty("--speech-x", `${(contentX * .25).toFixed(2)}px`);
     room.style.setProperty("--speech-y", `${(-contentShift * .18).toFixed(2)}px`);
     room.style.setProperty("--speech-z", `${(contentZ * .25).toFixed(2)}px`);
