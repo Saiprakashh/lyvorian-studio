@@ -430,3 +430,67 @@
   }
   .product-wing-room .projects-entry-index{bottom:calc(100% - 10px); right:18px}
 }
+
+
+/* ══ REDESIGN ROLLOUT · image-first, remaining rooms ═════════════════════════
+   Room 06 above proved the pattern. The product and website rooms hid their
+   render behind THREE stacked layers, not one: an 82%-opaque suite card with
+   an 18px backdrop blur, a vignette running .88/.56/.72, and brightness(.72)
+   on the image itself. Multiplied out, roughly 8% of the render survived to
+   the screen, which is why nobody could see room art we had paid to generate.
+   The suite card keeps a job here that the entry panel did not have -- it
+   carries a two-column layout with real product screenshots -- so it stays,
+   but as frosted glass rather than a wall. The 18px blur means what shows
+   through is a soft wash, not competing detail. */
+
+/* Descendant, NOT child: .room-bg lives inside a <picture>, so `.product-room >
+   .room-bg` matches nothing. products.css has the same latent bug -- its
+   `.product-room>.room-bg{filter:brightness(.62)}` has never applied, which is
+   why the computed value was always .72 from the descendant rule above it. */
+.product-room .room-bg,
+.website-room .room-bg{
+  filter:brightness(.92) saturate(.96) !important;
+}
+
+.product-room .room-vignette.strong,
+.website-room .room-vignette.strong{
+  background:
+    radial-gradient(circle at 72% 27%,rgba(var(--suite-accent),.20),transparent 28%),
+    radial-gradient(circle at 22% 78%,rgba(var(--suite-secondary),.13),transparent 33%),
+    linear-gradient(90deg,rgba(10,11,13,.60),rgba(10,11,13,.24) 48%,rgba(10,11,13,.46));
+}
+
+.product-suite,
+.website-suite-room{
+  background:rgba(22,23,27,.66);
+  box-shadow:0 35px 110px rgba(0,0,0,.5);
+}
+
+/* The corridor rooms were never the problem -- .room-copy is bare copy over a
+   side gradient, not a card -- but the same gradient still buries the right
+   third. Easing it lets the render carry the room without touching the type. */
+.tour-room:not(.product-room):not(.website-room):not(.product-wing-room) > .room-vignette{
+  background:
+    linear-gradient(90deg,rgba(10,11,13,.90) 0%,rgba(10,11,13,.52) 42%,rgba(10,11,13,.06) 72%),
+    linear-gradient(0deg,rgba(10,11,13,.68),transparent 48%);
+}
+
+
+/* On a phone the suite card is full-width and taller than the viewport, so its
+   opacity is irrelevant -- there is simply no room left around it for the
+   render to show. But .room-bg is position:fixed inside an open product room,
+   so starting the card below the fold turns the scroll into a reveal: the
+   render holds the top of the screen and the card rises over it. At the
+   inherited margin-top:10svh it buried the image immediately. */
+@media (max-width:720px){
+  /* product-motion.css pins this card with `position:sticky!important; top:66px`
+     and `margin:66px auto 0!important`, so a plain longhand loses to the
+     important shorthand -- and even winning it would change nothing, because a
+     card stuck 66px from the top leaves no room to reveal. Moving the sticky
+     anchor itself is what works: the render holds the top 40% of the screen and
+     the card pins beneath it. Needs !important purely to answer motion's. */
+  .product-room .product-suite{
+    top:40svh !important;
+    margin-top:40svh !important;
+  }
+}
