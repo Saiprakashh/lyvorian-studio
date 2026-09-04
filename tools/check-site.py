@@ -484,7 +484,13 @@ def check_csp():
     import base64
 
     for path in pages():
-        s = read(path)
+        # strip_comments, because a COMMENT that merely mentions a script tag is
+        # not a script. Writing "<script src>" inside an explanatory comment made
+        # this check open a tag there and run to the next real </script>, then
+        # demand a hash for the prose in between — three pages failing over an
+        # element that does not exist. A commented-out script does not execute
+        # and must not be hashed either.
+        s = strip_comments(read(path))
         m = re.search(r'<meta http-equiv="Content-Security-Policy" content="([^"]+)"', s)
         inline, ext = [], set()
         for sm in re.finditer(r'<script\b([^>]*)>(.*?)</script>', s, re.S | re.I):
@@ -1037,6 +1043,80 @@ def check_link_names():
                      % (name, len(hrefs), ', '.join(sorted(hrefs))))
 
 
+# ── 16. hiding by attribute needs a rule that outranks the author sheet ──
+def check_hidden_guard():
+    """`el.hidden = true` does nothing if the author sheet sets display.
+
+    The UA stylesheet's [hidden]{display:none} loses to ANY author rule that
+    sets display on the same element — not on specificity, on cascade ORIGIN,
+    which the author sheet always wins. So the attribute goes on, the element
+    stays on screen, and its controls stay in the tab order.
+
+    That is not theoretical. products.html's filter set `hidden` on the right
+    cards every time while .pcard{display:flex} kept all five in the layout: the
+    count read "Showing 1 product in research" over five visible cards, with
+    thirteen focusable controls inside the four that were supposedly gone.
+
+    So: if a page's reachable JavaScript toggles the attribute, that page must
+    reach a [hidden] rule that sets display:none. Reachable means the page's own
+    inline <script>/<style> plus the local files it links — a guard sitting in a
+    stylesheet the page never loads is worth nothing, which is exactly how this
+    happened: the correct rule existed in home.css, and products.html does not
+    load home.css.
+
+    LIMIT, because it should be said rather than discovered: this asks only that
+    SOME [hidden] guard is reachable, not that it covers the element actually
+    being hidden. Which elements receive the attribute is decided at runtime and
+    cannot be read off the source. A page with .lb[hidden] guarded and a new
+    unguarded component would still pass here. The bulletproof form is a bare
+    [hidden]{display:none} in the shared sheet; this check accepts the
+    class-scoped ones the site already uses."""
+    global checked
+    toggle_re = re.compile(
+        r'\.hidden\s*=(?!=)|(?:set|toggle)Attribute\s*\(\s*[\'"]hidden[\'"]', re.I)
+    guard_re = re.compile(r'\[hidden\][^{}]*\{[^}]*display\s*:\s*none', re.I)
+
+    def local(url):
+        url = url.split('?')[0].split('#')[0]
+        if not url or url.startswith(('http://', 'https://', '//', 'data:')):
+            return None
+        return url
+
+    for path in pages():
+        s = strip_comments(read(path))
+
+        js = ''.join(re.findall(r'<script\b[^>]*>(.*?)</script>', s, re.S | re.I))
+        for m in re.finditer(r'<script\b[^>]*\bsrc\s*=\s*"([^"]+)"', s, re.I):
+            src = local(m.group(1))
+            if src and os.path.exists(src):
+                js += '\n' + read(src)
+
+        hit = toggle_re.search(js)
+        if not hit:
+            continue
+        checked += 1
+
+        css = ''.join(re.findall(r'<style\b[^>]*>(.*?)</style>', s, re.S | re.I))
+        for m in re.finditer(r'<link\b[^>]*\bhref\s*=\s*"([^"]+\.css[^"]*)"', s, re.I):
+            href = local(m.group(1))
+            if href and os.path.exists(href):
+                css += '\n' + read(href)
+
+        # mask_css FIRST, and this is not defensive tidiness. Without it the
+        # very comment above the real rule in products.html — which explains the
+        # bug and quotes "[hidden]{display:none}" while doing so — satisfied the
+        # search, so the check passed with the actual rule deleted. A positive
+        # control caught it: remove the guard, and the check must go red. It did
+        # not. Prose is not a rule, and a checker that reads its own explanation
+        # as evidence proves only that someone wrote about the problem.
+        if not guard_re.search(mask_css(css)):
+            anchor = re.search(r'<script\b', s)
+            fail('hidden-guard', path, lineno(s, anchor.start()) if anchor else 1,
+                 'this page toggles the hidden attribute but reaches no '
+                 '[hidden]{display:none} rule — an author display rule will '
+                 'keep the element on screen and in the tab order')
+
+
 CHECKS = [
     ('references', check_references, 'every local href/src/url() resolves on disk'),
     ('anchors', check_anchors, 'every #fragment matches an id on that page'),
@@ -1053,6 +1133,7 @@ CHECKS = [
     ('framebuster', check_framebuster, 'every page carries the clickjacking defence'),
     ('media-dead', check_media_dead, 'no @media is nested inside a condition it contradicts'),
     ('link-names', check_link_names, 'an aria-label keeps the visible words, and one name means one destination'),
+    ('hidden-guard', check_hidden_guard, 'a page that toggles [hidden] reaches a rule that makes it stick'),
 ]
 
 

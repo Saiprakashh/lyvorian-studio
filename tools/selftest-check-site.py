@@ -33,6 +33,11 @@ GOOD_PAGE = '''<!doctype html>
 <script>if(self===top){document.documentElement.style.display='block'}</script>
 <noscript><style>html{display:block}</style></noscript>
 <script>console.log(1)</script>
+<!-- External, not inline: the CSP hashes inline scripts, and an extra one here
+     would need its own hash. 'self' already covers a same-origin file, and
+     check_hidden_guard has to follow a src attribute to find the toggle anyway,
+     so this exercises that path too. -->
+<script src="assets/app.js"></script>
 </head>
 <body>
 <main>
@@ -135,6 +140,13 @@ FAULTS = [
      lambda d: patch(d, 'index.html', '<a href="other.html" aria-label="Other page — open">Open</a>',
                      '<a href="other.html" aria-label="Other page — open">Open ↗</a>')),
 
+    # An attribute that hides nothing. The UA's [hidden]{display:none} loses to
+    # any author display rule on cascade origin, so the guard has to be written
+    # out — and this is the fault that proves the check notices when it is not.
+    ('hidden-guard', 'a page toggles [hidden] with no rule to make it stick',
+     lambda d: patch(d, 'assets/site.css', '[hidden]{display:none}',
+                     '[hidden]{outline:0}')),
+
     # One name, two destinations: indistinguishable in a screen reader's links
     # list, which is the other half of what this check is for.
     ('link-names', 'one name leading to two destinations',
@@ -163,8 +175,15 @@ def build(d):
     os.makedirs(os.path.join(d, 'tools'), exist_ok=True)
     io.open(os.path.join(d, 'index.html'), 'w', encoding='utf-8',
             newline='').write(GOOD_PAGE)
-    for f in ('assets/site.css', 'assets/pic.webp'):
-        io.open(os.path.join(d, f), 'w', encoding='utf-8', newline='').write('/* x */')
+    io.open(os.path.join(d, 'assets/pic.webp'), 'w', encoding='utf-8',
+            newline='').write('/* x */')
+    # site.css carries the [hidden] guard, because app.js below toggles the
+    # attribute. The clean fixture has to exercise the PASSING path or the fault
+    # below proves nothing about it.
+    io.open(os.path.join(d, 'assets/site.css'), 'w', encoding='utf-8',
+            newline='').write('/* x */\n[hidden]{display:none}\n')
+    io.open(os.path.join(d, 'assets/app.js'), 'w', encoding='utf-8',
+            newline='').write("document.getElementById('panel').hidden = true;\n")
 
     # the footer check compares pages against each other, so it needs a second
     # page with a footer before it has anything to say
