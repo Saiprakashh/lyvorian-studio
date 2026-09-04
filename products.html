@@ -141,6 +141,18 @@
     -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
     box-shadow:var(--glass-shd),inset 0 1px 0 var(--glass-hi);
     transition:border-color .22s,box-shadow .22s,transform .22s cubic-bezier(.16,.8,.28,1)}
+  /* Without this the filter does nothing. The buttons set the `hidden`
+     ATTRIBUTE, and `display:flex` above is an author rule, so it beats the UA
+     stylesheet's [hidden]{display:none} on origin alone — no specificity fight,
+     the author sheet simply wins. Measured on the live page with Research
+     selected: the count read "Showing 1 product in research" while all five
+     cards still occupied layout (408, 427, 524, 427, 290px) and thirteen
+     controls inside the four filtered-out cards were still reachable by Tab.
+     The page announced one number and showed another.
+     This exact line already existed at home.css:765 — products.html carries its
+     own copy of that block and the copy lost it. Same drift, same two files, as
+     the .plat-play focus ring earlier today. */
+  .pcard[hidden]{display:none}
   .pcard::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
     background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 42%);z-index:0}
   .pcard > *{position:relative;z-index:1}
