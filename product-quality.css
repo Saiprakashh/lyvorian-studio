@@ -28,6 +28,18 @@
 .product-suite,.website-suite-room,.product-story,.product-display,.website-copy{min-width:0}
 .product-story,.website-copy{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
 .product-title>div{min-width:0}.product-title h2{overflow-wrap:anywhere}
+/* overflow-wrap:anywhere above is the last-resort guard against a long name
+   overflowing the story column - but it breaks mid-WORD, and it was firing:
+   "HabitAroha" rendered as "HabitAroh / a" at 1100, 1280, 1440, 1600 and 1920.
+   Only the two-column desktop layout is tight. Beside the 70px icon the title
+   gets 187px at 1051 and 332px at 1600 (avail = 0.264vw - 90px), while the name
+   costs ~4.91px of width per px of type. This tracks that envelope with ~9%
+   slack so the guard never fires. Below 1051px the column is full width and the
+   original size already fits, so that range is left alone. The short-desktop
+   rule below carries its own size; min-height keeps the two disjoint. */
+@media (min-width:1051px) and (min-height:761px){
+  .product-title h2{font-size:clamp(34px,calc(5vw - 18px),62px)!important}
+}
 .product-actions{row-gap:14px}.product-actions a{min-height:42px;display:inline-flex;align-items:center}
 .room-exit-button{min-width:184px;justify-content:center}
 .room-motion-guide{max-width:calc(100vw - 28px)}
@@ -484,47 +496,56 @@
 
 
 /* ══ GLASS · every panel in the office ══════════════════════════════════════
-   One treatment for all of them, so a room sign, a suite card and a corridor
-   door are visibly the same material. Loaded last, so it beats the per-element
-   fills those rules still carry as their pre-glass fallback.
+   Clear glass, not frosted. The first attempt used blur(34px), which reads as
+   light coming through but hides WHAT is behind -- the room dissolved into a
+   smooth wash. Real glass shows the scene through it, so the blur drops to 3px
+   (just enough to feel like a pane rather than a hole) and the fill drops to a
+   tint rather than a screen.
 
-   The blur does the legibility work, not the fill: at .30 alpha the render
-   behind still reads through, and it is blur(34px) that turns a busy night
-   photograph into a smooth ground type can sit on. Raising the fill instead
-   would just rebuild the opaque box.
+   The legibility then has to come from the TYPE, not from hiding the room
+   behind it: everything inside these panels gets a tight dark shadow, which
+   holds the glyph edges against whatever the render happens to be doing without
+   putting a grey sheet over the view.
 
-   .room-copy is deliberately NOT here. On desktop it is bare copy over the
-   render with no panel at all; giving it glass would invent a box the design
-   never had. Its mobile-only background is handled separately below. */
+   .room-copy is excluded on purpose -- on desktop it is bare copy over the
+   render with no panel at all, and glass there would invent a box. */
 .tour-header,.room-sign,.speech,.manager-label,.wing-map,
 .corridor-map,.product-suite,.website-suite-room,.product-story,.website-copy,
 .final-copy,.room-metric,.room-door,.room-motion-guide,.room-exit-button{
-  border-color:rgba(255,255,255,.34) !important;
+  border-color:rgba(255,255,255,.42) !important;
   background:linear-gradient(135deg,
-    rgba(78,80,88,.30),
-    rgba(22,23,28,.28) 62%,
-    rgba(12,13,17,.20)) !important;
+    rgba(120,124,136,.16),
+    rgba(18,19,24,.13) 58%,
+    rgba(10,11,15,.10)) !important;
   box-shadow:
-    inset 0 1px rgba(255,255,255,.26),
-    inset 0 -1px rgba(255,255,255,.06),
-    0 22px 60px rgba(0,0,0,.34) !important;
-  backdrop-filter:blur(34px) saturate(1.45) !important;
-  -webkit-backdrop-filter:blur(34px) saturate(1.45) !important;
+    inset 0 1px rgba(255,255,255,.34),
+    inset 0 -1px rgba(255,255,255,.09),
+    0 18px 50px rgba(0,0,0,.30) !important;
+  backdrop-filter:blur(3px) saturate(1.12) !important;
+  -webkit-backdrop-filter:blur(3px) saturate(1.12) !important;
 }
 
-/* The small pills inside those panels sit on glass now, so they need their own
-   slightly lighter fill or they disappear into it. */
+/* With the panel now see-through, the glyphs carry their own legibility. A
+   tight dark shadow rather than a glow: it holds the letter edges over a bright
+   patch of render without reading as a halo. */
+.room-sign,.speech,.manager-label,.wing-map,.corridor-map,
+.product-story,.website-copy,.final-copy,.room-metric,
+.room-door,.room-motion-guide,.room-exit-button{
+  text-shadow:0 1px 2px rgba(0,0,0,.85),0 2px 8px rgba(0,0,0,.55);
+}
+
+/* Pills inside a see-through panel need a touch more body than the panel. */
 .room-tags span,.product-story li,.projects-entry-meta span,.pchip{
-  background:rgba(255,255,255,.07);
-  border-color:rgba(255,255,255,.20);
+  background:rgba(255,255,255,.10);
+  border-color:rgba(255,255,255,.26);
 }
 
 @media (max-width:720px){
-  /* the one place .room-copy does carry a panel */
   .room-copy,.room-copy.copy-right,.room-copy.copy-bottom{
-    background:linear-gradient(135deg,rgba(78,80,88,.32),rgba(22,23,28,.30) 62%,rgba(12,13,17,.22));
-    backdrop-filter:blur(30px) saturate(1.4);
-    -webkit-backdrop-filter:blur(30px) saturate(1.4);
-    border:1px solid rgba(255,255,255,.30);
+    background:linear-gradient(135deg,rgba(120,124,136,.18),rgba(18,19,24,.15) 58%,rgba(10,11,15,.12));
+    backdrop-filter:blur(3px) saturate(1.12);
+    -webkit-backdrop-filter:blur(3px) saturate(1.12);
+    border:1px solid rgba(255,255,255,.36);
+    text-shadow:0 1px 2px rgba(0,0,0,.85),0 2px 8px rgba(0,0,0,.55);
   }
 }
