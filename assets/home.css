@@ -351,7 +351,7 @@
   .sec-head{max-width:600px;margin:0 auto 60px;text-align:center}
   /* --gold at 11px measures 3.15:1 on the light page; same treatment as the
      .kicker on every other page. Dark already passes and keeps the token. */
-  .sec-eyebrow{letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:#856010;margin-bottom:14px;font:var(--t-eyebrow)}
+  .sec-eyebrow{letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:#7d5a0e;margin-bottom:14px;font:var(--t-eyebrow)}
   @media(prefers-color-scheme:dark){
     :root:not([data-theme="light"]) .sec-eyebrow{color:var(--gold)}
   }

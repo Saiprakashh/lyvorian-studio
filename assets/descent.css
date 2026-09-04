@@ -9,7 +9,22 @@
   --dsc-plate-2: var(--bg2);
   --dsc-ink:     var(--text);
   --dsc-ink-2:   var(--muted);
-  --dsc-ink-3:   var(--muted2);
+  /* --muted, not --muted2. --muted2 is #8c7a5c in light, which is 3.42:1 on
+     --bg and 3.15:1 on --bg2 — under AA at every size this token is used at.
+     An earlier pass had already swapped six individual --dsc-ink-3 uses to
+     --dsc-ink-2 for exactly this reason; doing it once at the token finishes
+     that job and, more to the point, catches the ones nobody thought to look
+     at. Measured on the live homepage in light: .room-slab's captions at 3.42
+     (10px) and .next-privacy at 3.76 (13px, and !important, so only a token
+     remap reaches it at all) — 18 elements the per-rule approach had missed.
+     Safe in dark too: there --muted is #a9adb5 against --muted2's #989ea9, so
+     this raises contrast rather than lowering it, and the dark cinematic
+     sections below keep their own three ink tiers regardless, because that
+     block is class-scoped rather than theme-scoped.
+     The three border uses of this token shift with it, from 3.42:1 to 5.47:1
+     against --bg — still decorative, and further clear of the 3:1 that WCAG
+     1.4.11 asks of a non-text boundary. */
+  --dsc-ink-3:   var(--muted);
   --dsc-ink-4:   var(--line-bright);
   --dsc-edge:    var(--line);
   --dsc-edge-2:  var(--line-bright);

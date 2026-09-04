@@ -345,11 +345,11 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
    already passes at 6.47:1, so it keeps the plain tokens below.
    Chips use two class names (0,2,0) to beat each page's own .plat-wip; the
    nav rules match the originals' specificity and win on source order. */
-.skip-link{color:#856010}                      /* 5.16:1 on --panel — the
+.skip-link{color:#7d5a0e}                      /* 4.76:1 on --bg2, the darkest light ground — the
    first control a keyboard user meets, and var(--gold) put it at 3.5:1 */
-.plat.plat-wip{color:#856010}                  /* 4.70:1 on --bg   */
-.plat.plat-live{color:#357045}                 /* 4.86:1 on --bg   */
-.site-hdr nav a[aria-current]{color:#856010}   /* 4.70:1 on --hdr  */
+.plat.plat-wip{color:#7d5a0e}                  /* 4.76:1 on --bg2  */
+.plat.plat-live{color:#33693f}                 /* 4.92:1 on --bg2  */
+.site-hdr nav a[aria-current]{color:#7d5a0e}   /* 4.76:1 on --bg2  */
 .mobile-menu a[aria-current]{color:#7d5a0e}    /* --panel is lighter than --bg */
 @media(prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .skip-link{color:var(--gold)}
@@ -370,9 +370,9 @@ header.site-hdr{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);
    a.inline, a.home-link beats .home-link, .log .entry time beats .entry time.
    --muted2 misses in BOTH themes (3.42 light / 4.40 dark), so the back link
    moves to --muted outright and needs no dark override. */
-a.inline:any-link{color:#856010}   /* 4.70:1, was --gold at 3.15:1 */
+a.inline:any-link{color:#7d5a0e}   /* 4.76:1 on --bg2, was --gold at 2.90 */
 a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
-.log .entry time{color:#856010}
+.log .entry time{color:#7d5a0e}
 @media(prefers-color-scheme:dark){
   :root:not([data-theme="light"]) a.inline:any-link{color:var(--gold)}
   :root:not([data-theme="light"]) .log .entry time{color:var(--gold)}
@@ -385,7 +385,7 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
    .shots .shot span is deliberately NOT plain .shot span — the homepage
    gallery's captions are also .shot span, but they sit on a dark overlay
    where --muted2 is correct and --muted would be unreadable. */
-.wrap .kicker,header .kicker{color:#856010}      /* 4.70:1, was 3.15:1 */
+.wrap .kicker,header .kicker{color:#7d5a0e}      /* 4.76:1 on --bg2, was 3.15:1 */
 .shots .shot span{color:var(--muted)}            /* strip captions, not the overlay's */
 .log .log-year{color:var(--muted)}               /* --muted2: 3.42 light, 4.40 dark */
 .wrap footer{color:var(--muted)}                 /* every page's copyright line */
@@ -416,18 +416,24 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
    3.42 light / 4.40 dark). The --gold and --ok items are darkened for light and
    handed their tokens back in dark, where --gold is #e8e9ec and --ok #8fe09f.
    Every selector carries one extra type or class because products.html's own
-   <style> loads after this file — specificity, not source order. Backgrounds
-   here are --bg or lighter (cards sit on #fcf8f0), so the ratios quoted against
-   --bg are the worst case. */
-a.foot-mail{color:#856010}               /* 4.70:1 on --bg   — was 3.15 */
-span.foot-live{color:#357045}            /* 4.86:1 on --bg   — was 4.23 */
+   <style> loads after this file — specificity, not source order.
+
+   Ratios are quoted against --bg2 (#ecdfc4), because that and not --bg is the
+   darkest light ground on the site: index.html's own .foot uses it. Quoting
+   against --bg is exactly how the first attempt shipped #856010 and #357045,
+   which measure 4.70 and 4.86 there but only 4.33 and 4.48 on --bg2 — both
+   under AA, in a footer that is on every page. They are now #7d5a0e and
+   #33693f, which clear --bg2 at 4.76 and 4.92; anything clearing --bg2 clears
+   --bg and --panel as well, so one number covers every light surface. */
+a.foot-mail{color:#7d5a0e}               /* 4.76:1 on --bg2  — was 2.90 */
+span.foot-live{color:#33693f}            /* 4.92:1 on --bg2  — was 4.23 */
 button.pfilter{color:var(--muted)}       /* 5.47:1           — was 3.81 */
 p.pcount{color:var(--muted)}             /* 5.47:1           — was 3.42 */
-a.pcard-go{color:#856010}                /* 4.70:1 or better — was 3.62 */
+a.pcard-go{color:#7d5a0e}                /* 4.76:1 or better — was 3.62 */
 a.pcard-2nd{color:var(--muted)}          /* 5.47:1           — was 3.93 */
-span.stamp{color:#856010}                /* 4.70:1 or better — was 3.62 */
+span.stamp{color:#7d5a0e}                /* 4.76:1 or better — was 3.62 */
 span.pchip{color:var(--muted)}           /* 5.47:1           — was 3.93 */
-span.pchip.pchip-wip{color:#856010}      /* beats span.pchip — was 3.62 */
+span.pchip.pchip-wip{color:#7d5a0e}      /* beats span.pchip — was 3.62 */
 p.pcard-plat > span{color:var(--muted)}  /* 5.47:1           — was 4.01 */
 @media(prefers-color-scheme:dark){
   :root:not([data-theme="light"]) a.foot-mail{color:var(--gold)}
