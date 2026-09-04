@@ -509,3 +509,28 @@ if (roomOverlays.some(room => room.id === requestedRoom)) {
 }
 
 addEventListener("pageshow", updateTour);
+
+
+// Theme toggle. The early inline script in the head has already resolved the
+// theme before first paint; this only handles the click and keeps the control's
+// accessible name honest. Writes the same lyv-theme key the rest of the site
+// reads, so switching in here follows you back out to the homepage.
+const themeToggle = document.querySelector("[data-theme-toggle]");
+function syncThemeControl() {
+  const light = document.documentElement.getAttribute("data-theme") === "light";
+  if (themeToggle) {
+    themeToggle.setAttribute("aria-pressed", String(light));
+    // the label must say what the button DOES, not what the theme currently is
+    themeToggle.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+  }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", light ? "#f2e8d5" : "#111216");
+}
+themeToggle?.addEventListener("click", () => {
+  const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", next);
+  // private mode and blocked storage both throw here; the theme must still flip
+  try { localStorage.setItem("lyv-theme", next); } catch (e) {}
+  syncThemeControl();
+});
+syncThemeControl();
