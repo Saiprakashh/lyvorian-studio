@@ -37,7 +37,7 @@
 @keyframes iconSettle{0%,100%{transform:translateY(-2px) scale(1)}50%{transform:translateY(-2px) scale(1.018)}}
 
 /* The final room acts as a deliberate exit, not an unfinished blank screen. */
-.final-room::before{content:"LYVORIAN STUDIO";position:absolute;left:50%;top:50%;z-index:0;color:rgba(var(--ink-rgb),0.025);font:600 clamp(76px,14vw,230px)/.8 Manrope,sans-serif;letter-spacing:-.08em;white-space:nowrap;transform:translate(-50%,-50%)}
+.final-room::before{content:"LYVORIAN STUDIO";position:absolute;left:50%;top:50%;z-index:0;color:rgba(255,255,255,.025);font:600 clamp(76px,14vw,230px)/.8 Manrope,sans-serif;letter-spacing:-.08em;white-space:nowrap;transform:translate(-50%,-50%)}
 .final-copy{padding:36px;border:1px solid rgba(255,255,255,.13);background:linear-gradient(135deg,rgba(43,45,49,.62),rgba(17,18,22,.46));backdrop-filter:blur(18px)}
 
 /* The project floor is a deliberate destination: the corridor exists only after entry. */
@@ -51,24 +51,24 @@
 .projects-entry-panel::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 84% 18%,rgba(197,198,201,.15),transparent 27%),radial-gradient(circle at 8% 92%,rgba(175,176,178,.15),transparent 32%),linear-gradient(115deg,transparent 35%,rgba(255,255,255,.045) 50%,transparent 65%)}
 .projects-entry-panel::after{content:"";position:absolute;right:clamp(22px,4vw,48px);top:0;width:1px;height:100%;background:linear-gradient(transparent,rgba(255,255,255,.2),transparent);opacity:.55}
 .projects-entry-panel>*{position:relative;z-index:1}
-.projects-entry-panel>small{display:flex;align-items:center;gap:10px;color:var(--ink-2);font-size:10px;font-weight:600;letter-spacing:.18em}
+.projects-entry-panel>small{display:flex;align-items:center;gap:10px;color:#e1e2e5;font-size:10px;font-weight:600;letter-spacing:.18em}
 .projects-entry-panel>small i{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 18px rgba(197,198,201,.8)}
 .projects-entry-panel h2{max-width:640px;margin:30px 0 20px;font-size:clamp(52px,6.2vw,88px);line-height:.78;letter-spacing:-.07em}
 .projects-entry-panel h2 em{color:var(--lilac);font-family:var(--serif);font-weight:400}
-.projects-entry-panel>p{max-width:590px;margin:0;color:var(--ink-2);font-size:13px;line-height:1.7}
-.projects-entry-index{position:absolute;right:24px;top:18px;color:rgba(var(--ink-rgb),0.045);font:600 clamp(96px,14vw,170px)/1 var(--sans);letter-spacing:-.09em}
-.projects-entry-button{display:flex;align-items:center;justify-content:space-between;gap:28px;width:min(100%,470px);min-height:76px;margin-top:34px;padding:10px 12px 10px 22px;color:var(--white);border:1px solid rgba(255,255,255,.22);border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.045));box-shadow:inset 0 1px rgba(255,255,255,.17),0 18px 45px rgba(0,0,0,.25);backdrop-filter:blur(18px);cursor:pointer;text-align:left;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}
-.projects-entry-button>span{display:grid;gap:5px}.projects-entry-button small{color:var(--muted);font-size:8px;letter-spacing:.14em;text-transform:uppercase}.projects-entry-button b{font-size:15px;letter-spacing:-.02em}.projects-entry-button>i{display:grid;place-items:center;width:50px;height:50px;color:#17181b;border-radius:14px;background:linear-gradient(135deg,var(--mint),#e2e3e6);font-size:18px;font-style:normal;box-shadow:0 10px 30px rgba(197,198,201,.22);transition:transform .35s var(--ease)}
+.projects-entry-panel>p{max-width:590px;margin:0;color:#c4c6ca;font-size:13px;line-height:1.7}
+.projects-entry-index{position:absolute;right:24px;top:18px;color:rgba(255,255,255,.045);font:600 clamp(96px,14vw,170px)/1 var(--sans);letter-spacing:-.09em}
+.projects-entry-button{display:flex;align-items:center;justify-content:space-between;gap:28px;width:min(100%,470px);min-height:76px;margin-top:34px;padding:10px 12px 10px 22px;color:#f5f4ef;border:1px solid rgba(255,255,255,.22);border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.045));box-shadow:inset 0 1px rgba(255,255,255,.17),0 18px 45px rgba(0,0,0,.25);backdrop-filter:blur(18px);cursor:pointer;text-align:left;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}
+.projects-entry-button>span{display:grid;gap:5px}.projects-entry-button small{color:#9fa2a8;font-size:8px;letter-spacing:.14em;text-transform:uppercase}.projects-entry-button b{font-size:15px;letter-spacing:-.02em}.projects-entry-button>i{display:grid;place-items:center;width:50px;height:50px;color:#17181b;border-radius:14px;background:linear-gradient(135deg,var(--mint),#e2e3e6);font-size:18px;font-style:normal;box-shadow:0 10px 30px rgba(197,198,201,.22);transition:transform .35s var(--ease)}
 .projects-entry-button:hover,.projects-entry-button:focus-visible{border-color:rgba(197,198,201,.66);box-shadow:inset 0 1px rgba(255,255,255,.2),0 24px 58px rgba(0,0,0,.34),0 0 34px rgba(197,198,201,.1);transform:translateY(-3px)}
 .projects-entry-button:hover>i,.projects-entry-button:focus-visible>i{transform:translate(2px,-2px)}
-.projects-entry-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.projects-entry-meta span{padding:7px 10px;color:var(--muted);border:1px solid rgba(255,255,255,.11);border-radius:999px;background:rgba(12,13,16,.28);font-size:8px;letter-spacing:.09em;text-transform:uppercase}
+.projects-entry-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.projects-entry-meta span{padding:7px 10px;color:#9da0a6;border:1px solid rgba(255,255,255,.11);border-radius:999px;background:rgba(12,13,16,.28);font-size:8px;letter-spacing:.09em;text-transform:uppercase}
 .product-wing-room .corridor-map{opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(-50px,var(--content-shift,0),var(--content-z,0)) scale(.97);transition:opacity .38s ease,visibility .38s,transform .7s var(--ease)}
 .product-wing-room.projects-open .projects-entry-panel{opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-52%) scale(.96)}
 .product-wing-room.projects-open .corridor-map{opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(var(--content-x,0),var(--content-shift,0),var(--content-z,0)) rotateY(var(--content-turn,0))}
 .product-wing-room:has(.corridor-map:target) .projects-entry-panel{opacity:0;visibility:hidden;pointer-events:none}
 .product-wing-room .corridor-map:target{opacity:1;visibility:visible;pointer-events:auto}
 .corridor-heading{position:relative}.corridor-heading p{padding-top:38px}
-.projects-close-button{position:absolute;right:0;top:0;min-height:30px;padding:0 11px;color:var(--ink-2);border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.06);cursor:pointer;font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:color .25s,border-color .25s,background .25s}
+.projects-close-button{position:absolute;right:0;top:0;min-height:30px;padding:0 11px;color:#d9dadc;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.06);cursor:pointer;font-size:8px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:color .25s,border-color .25s,background .25s}
 .projects-close-button:hover,.projects-close-button:focus-visible{color:#17181b;border-color:var(--mint);background:var(--mint)}
 
 @media (min-width:1051px) and (max-height:760px){
@@ -112,7 +112,7 @@
 /* V18 — Project floor becomes an editorial suite directory, not five empty panels. */
 .product-wing-room.projects-open .corridor-map{top:calc(98px + 10svh);bottom:auto;height:min(760px,calc(100svh - 130px));padding:22px 24px 24px!important;background:linear-gradient(145deg,rgba(35,36,42,.92),rgba(14,15,18,.88));border-color:rgba(255,255,255,.16);box-shadow:inset 0 1px rgba(255,255,255,.12),0 34px 100px rgba(0,0,0,.46);backdrop-filter:blur(24px) saturate(1.2);transform:none!important}
 .corridor-heading{grid-template-columns:minmax(0,1fr) minmax(260px,380px);padding:0 2px 17px}
-.corridor-heading>span{font-size:9px}.corridor-heading h2{font-size:clamp(34px,3.2vw,48px);letter-spacing:-.055em}.corridor-heading p{max-width:350px;padding-top:34px;color:var(--muted);font-size:10px}
+.corridor-heading>span{font-size:9px}.corridor-heading h2{font-size:clamp(34px,3.2vw,48px);letter-spacing:-.055em}.corridor-heading p{max-width:350px;padding-top:34px;color:#aeb0b6;font-size:10px}
 .office-corridor{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:repeat(2,minmax(170px,1fr));gap:12px;min-height:0;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.13);background:transparent!important}
 .office-corridor::before{inset:14px 0 0;height:auto;clip-path:none;background:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(#000,transparent);opacity:.55}
 .room-door{min-height:0;padding:0;isolation:isolate;border:1px solid rgba(255,255,255,.12)!important;border-radius:16px!important;background:linear-gradient(145deg,rgba(50,51,58,.78),rgba(24,25,30,.94))!important;box-shadow:inset 0 1px rgba(255,255,255,.1),0 18px 42px rgba(0,0,0,.2)!important;transform:none!important;transition:transform .45s var(--ease),border-color .3s,box-shadow .3s!important}
@@ -126,9 +126,9 @@
 .room-door>span{left:20px;top:18px;color:rgb(var(--door-accent));font-size:8px;letter-spacing:.15em}
 .room-door>img,.website-door-mark{left:24%;top:48%;width:66px;height:66px;border:1px solid rgba(255,255,255,.13);border-radius:15px!important;background:rgba(10,11,14,.38);box-shadow:0 18px 38px rgba(0,0,0,.34),0 0 28px rgba(var(--door-accent),.09);transform:translate(-50%,-50%)!important}
 .room-door>b{position:absolute;z-index:3;left:39%;right:18px;top:28%;font-size:clamp(21px,2vw,30px);line-height:.92;letter-spacing:-.055em}
-.room-door>p{position:absolute;z-index:3;left:39%;right:22px;top:48%;margin:0;color:var(--muted);font-size:9px;line-height:1.5}
+.room-door>p{position:absolute;z-index:3;left:39%;right:22px;top:48%;margin:0;color:#aeb0b6;font-size:9px;line-height:1.5}
 .room-door>i{position:absolute;z-index:3;left:39%;bottom:51px;margin:0;padding:6px 8px;color:rgb(var(--door-accent));border:1px solid rgba(var(--door-accent),.22);border-radius:999px;background:rgba(var(--door-accent),.07);font-size:7px;font-weight:600}
-.room-door>em{position:absolute;z-index:3;left:20px;right:20px;bottom:17px;display:flex;align-items:center;justify-content:space-between;margin:0;padding:11px 0 0;color:var(--ink-2);border-top:1px solid rgba(255,255,255,.11);font-size:8px;text-transform:uppercase;letter-spacing:.08em}
+.room-door>em{position:absolute;z-index:3;left:20px;right:20px;bottom:17px;display:flex;align-items:center;justify-content:space-between;margin:0;padding:11px 0 0;color:#d8d9dc;border-top:1px solid rgba(255,255,255,.11);font-size:8px;text-transform:uppercase;letter-spacing:.08em}
 .room-door>em u{text-decoration:none;color:rgb(var(--door-accent));font-size:13px;transition:transform .3s var(--ease)}
 .room-door:hover,.room-door:focus-visible{border-color:rgba(var(--door-accent),.52)!important;box-shadow:inset 0 1px rgba(255,255,255,.13),0 28px 58px rgba(0,0,0,.34),0 0 30px rgba(var(--door-accent),.08)!important;transform:translateY(-5px)!important}
 .room-door:hover::before,.room-door:focus-visible::before{opacity:1.35}.room-door:hover>em u,.room-door:focus-visible>em u{transform:translate(2px,-2px)}
@@ -414,7 +414,7 @@
 /* the numeral moves out of the card and sits over the render */
 .product-wing-room .projects-entry-index{
   top:auto; bottom:calc(100% - 26px); right:clamp(20px,5vw,60px);
-  color:rgba(var(--ink-rgb),0.07);
+  color:rgba(255,255,255,.07);
 }
 
 @media (max-width:720px){
@@ -489,205 +489,3 @@
     margin-top:40svh !important;
   }
 }
-
-
-/* ══ LIGHT THEME ════════════════════════════════════════════════════════════
-   The office was dark-only: no prefers-color-scheme, no [data-theme], no
-   toggle, in 106KB of CSS. A visitor reading the cream site in light mode
-   clicked one link and fell into a black tour, and the theme button they had
-   been using vanished from the header.
-
-   Dark stays the default here (this is a night building), so light is opt-in
-   via the SAME localStorage key the rest of the site uses, lyv-theme, and the
-   same data-theme attribute. Values are the site's own light tokens, mapped by
-   role exactly as the dark retint mapped them:
-
-     --white  -> #2a2013  site --text      (this token is a TEXT colour)
-     --muted  -> #6b5a3e  site --muted
-     --mint   -> #8a6a2e  site --gold-dim  eyebrows/links; --gold is too light
-                          for 9px uppercase on cream
-     --lilac  -> #8a3838  site --maroon    display serif emphasis
-     --line   -> rgba(42,32,19,.18)  site --line
-
-   The room images do NOT get light twins. They are night renders and they stay
-   that way; what flips is the scrim over them, from near-black to cream, so
-   they read as a soft architectural wash behind warm type instead of a hole.
-   Regenerating eleven rooms in daylight would have cost ~220 credits to solve
-   a problem a gradient solves. */
-
-:root[data-theme="light"]{
-  --void:#e6d8bd;
-  --surface:#f2e8d5;
-  --charcoal:#faf3e3;
-  --white:#2a2013;
-  --muted:#6b5a3e;
-  --mint:#82622a;
-  --lilac:#8a3838;
-  --line:rgba(42,32,19,.18);
-  /* the ladder the base CSS now reads instead of 47 hardcoded greys */
-  --ink-2:#4a3c28;
-  --muted2:#7d6a4a;
-  --ink-rgb:42,32,19;
-}
-
-:root[data-theme="light"] body,
-:root[data-theme="light"] .tour-room{ background:var(--surface); color:var(--white); }
-
-/* the renders keep their night, the scrim carries the theme */
-:root[data-theme="light"] .room-bg,
-:root[data-theme="light"] .product-room .room-bg,
-:root[data-theme="light"] .website-room .room-bg{
-  filter:brightness(1.02) saturate(.72) contrast(.92) !important;
-}
-
-:root[data-theme="light"] .tour-room:not(.product-room):not(.website-room):not(.product-wing-room) > .room-vignette{
-  background:
-    linear-gradient(90deg,rgba(242,232,213,.94) 0%,rgba(242,232,213,.74) 44%,rgba(242,232,213,.42) 74%),
-    linear-gradient(0deg,rgba(242,232,213,.86),rgba(242,232,213,.30) 52%);
-}
-:root[data-theme="light"] .product-wing-room > .room-vignette{
-  background:linear-gradient(180deg,
-    rgba(242,232,213,.52) 0%, rgba(242,232,213,.30) 24%,
-    rgba(242,232,213,.80) 60%, rgba(242,232,213,.97) 100%);
-}
-:root[data-theme="light"] .product-room .room-vignette.strong,
-:root[data-theme="light"] .website-room .room-vignette.strong{
-  background:
-    radial-gradient(circle at 72% 27%,rgba(var(--suite-accent),.16),transparent 30%),
-    linear-gradient(90deg,rgba(242,232,213,.88),rgba(242,232,213,.62) 48%,rgba(242,232,213,.80));
-}
-
-/* panels and chrome */
-:root[data-theme="light"] .product-suite,
-:root[data-theme="light"] .website-suite-room{
-  background:rgba(250,243,227,.90);
-  border-color:var(--line);
-  box-shadow:0 28px 80px rgba(42,32,19,.16);
-}
-:root[data-theme="light"] .tour-header{
-  background:rgba(242,232,213,.94);
-  border-bottom-color:var(--line);
-}
-:root[data-theme="light"] .walkthrough-status,
-:root[data-theme="light"] .room-sign,
-:root[data-theme="light"] .wing-map,
-:root[data-theme="light"] .corridor-map,
-:root[data-theme="light"] .speech,
-:root[data-theme="light"] .manager-label,
-:root[data-theme="light"] .room-motion-guide{
-  background:rgba(250,243,227,.92);
-  border-color:var(--line);
-  color:var(--white);
-}
-:root[data-theme="light"] .room-copy > p,
-:root[data-theme="light"] .product-story p,
-:root[data-theme="light"] .projects-entry-panel > p,
-:root[data-theme="light"] .website-copy > p{ color:var(--muted); }
-:root[data-theme="light"] .room-tags span,
-:root[data-theme="light"] .product-story li,
-:root[data-theme="light"] .projects-entry-meta span{
-  color:var(--muted); border-color:var(--line); background:rgba(250,243,227,.60);
-}
-
-/* the ghost controls read as ghosts on cream too, so they need a real fill */
-:root[data-theme="light"] .exit-link,
-:root[data-theme="light"] .room-exit-button,
-:root[data-theme="light"] .projects-entry-button,
-:root[data-theme="light"] .splash > button{
-  background:rgba(250,243,227,.92) !important;
-  border-color:var(--line) !important;
-  color:var(--white) !important;
-  box-shadow:0 10px 26px rgba(42,32,19,.12) !important;
-}
-:root[data-theme="light"] .office-button{
-  background:#2a2013 !important; color:#f5efe1 !important; border-color:transparent !important;
-}
-:root[data-theme="light"] .exit-icon{
-  background:linear-gradient(145deg,#3a2f1e,#2a2013) !important; color:#f5efe1 !important;
-}
-:root[data-theme="light"] .tour-rail a{ border-color:rgba(42,32,19,.34); }
-:root[data-theme="light"] .tour-rail a[aria-current="true"]{ border-color:var(--mint); }
-:root[data-theme="light"] .tour-rail a[aria-current="true"]::after{ background:var(--mint); }
-
-/* the splash is the first paint; it must not flash black in light mode */
-:root[data-theme="light"] .splash{ background:var(--surface); color:var(--white); }
-:root[data-theme="light"] .splash-title,
-:root[data-theme="light"] .splash-copy .wordmark{ color:var(--white); }
-
-
-/* The theme control. Sized to the 44px minimum and squared to match the
-   "architectural rather than glass-dashboard" pass the rest of the chrome got. */
-.tour-theme{
-  display:grid; place-items:center;
-  width:44px; height:44px; margin-left:auto;
-  padding:0; border:1px solid var(--line); border-radius:2px;
-  background:rgba(255,255,255,.04); color:var(--white);
-  font-size:16px; line-height:1; cursor:pointer;
-  transition:border-color .3s ease, background .3s ease;
-}
-.tour-theme:hover{ border-color:rgba(255,255,255,.28); }
-.tour-theme:focus-visible{ outline:2px solid var(--mint); outline-offset:2px; }
-:root[data-theme="light"] .tour-theme{
-  background:rgba(250,243,227,.92); border-color:var(--line); color:var(--white);
-}
-@media(max-width:720px){ .tour-theme{ width:40px; height:40px; font-size:14px; } }
-
-
-/* Light theme, round two -- fixing what the contrast sweep actually found
-   rather than what I assumed it would. */
-
-/* The story panel kept its dark card, so dark type landed on a dark ground:
-   "Medhakeli" measured 1.01:1, i.e. invisible. */
-:root[data-theme="light"] .product-story,
-:root[data-theme="light"] .website-copy,
-:root[data-theme="light"] .product-display,
-:root[data-theme="light"] .display-window{
-  background:rgba(250,243,227,.94);
-  color:var(--white);
-}
-:root[data-theme="light"] .product-story li,
-:root[data-theme="light"] .room-tags span,
-:root[data-theme="light"] .projects-entry-meta span{
-  background:rgba(242,232,213,.92);
-  border-color:var(--line);
-  color:var(--white);
-}
-:root[data-theme="light"] .product-story p,
-:root[data-theme="light"] .product-title small{ color:var(--ink-2); }
-
-/* Per-door accents are pastels chosen against near-black: mint 114,224,196 and
-   friends measured 1.33-2.16:1 on cream. Darkened toward the ink rather than
-   replaced, so each door keeps the hue that ties it to its product and its
-   room render. */
-:root[data-theme="light"] .room-door span,
-:root[data-theme="light"] .room-door i,
-:root[data-theme="light"] .room-door em,
-:root[data-theme="light"] .room-door u,
-:root[data-theme="light"] .product-status b{
-  color:color-mix(in srgb, rgb(var(--door-accent, var(--suite-accent, 138,106,46))) 34%, #231a0d);
-}
-:root[data-theme="light"] .room-door b{ color:var(--white); }
-:root[data-theme="light"] .room-door p{ color:var(--ink-2); }
-:root[data-theme="light"] .room-door{
-  background:rgba(250,243,227,.90);
-  border-color:var(--line);
-}
-
-
-/* The copy blocks kept dark panels of their own, so mapping the text tokens was
-   not enough -- "Come inside." was dark ink on a dark card at 1.57:1. These are
-   the containers the sweep named as the ground, not the ones I guessed. */
-:root[data-theme="light"] .room-copy,
-:root[data-theme="light"] .arrival-copy,
-:root[data-theme="light"] .final-copy,
-:root[data-theme="light"] .website-copy,
-:root[data-theme="light"] .corridor-heading{
-  background:rgba(250,243,227,.90);
-  color:var(--white);
-  border-color:var(--line);
-}
-:root[data-theme="light"] .room-copy > p,
-:root[data-theme="light"] .arrival-copy p,
-:root[data-theme="light"] .final-copy p{ color:var(--ink-2); }
-:root[data-theme="light"] .scroll-instruction span,
-:root[data-theme="light"] .arrival-copy span{ color:var(--ink-2); }

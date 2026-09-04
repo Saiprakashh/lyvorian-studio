@@ -14,7 +14,7 @@
      frame-ancestors is deliberately absent: it is IGNORED in a meta CSP, so
      clickjacking protection would need a real header Pages cannot send.
      If an inline script changes, its hash must be recomputed or it is blocked. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bH4UpA0K4cNbfgl1G6mYbmV8N12BIPQSTGeq1JzRGkQ=' 'sha256-rpq8+21DRUFTpqyH5VcTMDbs2QkltB+KJQIAURL6Wh4=' https://gc.zgo.at 'sha256-dkw7ue2v0iftJkGPEwjqUvmxSwYbgf9sg0hcZJagIGI=' 'sha256-x2jk2aH69OCFs7cEGOQA38pNq+gaiPwu/kQ6nlZw6vM=' 'sha256-nFhEJjnfy9TxLTFUJW8bFb3eNE/wxupfsBJ4rABvE60=' 'sha256-iN3Pxc5eyqpacl1/owi9cfPKxeNl79RhA0xNSKa8cIo='; style-src 'self' 'unsafe-inline'; img-src 'self' https://lyvorianstudio.goatcounter.com; font-src 'self'; connect-src 'self' https://formsubmit.co https://lyvorianstudio.goatcounter.com; manifest-src 'self'; worker-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-rpq8+21DRUFTpqyH5VcTMDbs2QkltB+KJQIAURL6Wh4=' https://gc.zgo.at 'sha256-dkw7ue2v0iftJkGPEwjqUvmxSwYbgf9sg0hcZJagIGI=' 'sha256-x2jk2aH69OCFs7cEGOQA38pNq+gaiPwu/kQ6nlZw6vM=' 'sha256-nFhEJjnfy9TxLTFUJW8bFb3eNE/wxupfsBJ4rABvE60=' 'sha256-iN3Pxc5eyqpacl1/owi9cfPKxeNl79RhA0xNSKa8cIo='; style-src 'self' 'unsafe-inline'; img-src 'self' https://lyvorianstudio.goatcounter.com; font-src 'self'; connect-src 'self' https://formsubmit.co https://lyvorianstudio.goatcounter.com; manifest-src 'self'; worker-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'"/>
 <!-- Clickjacking defence. The right tool is frame-ancestors, but it is IGNORED
      in a meta CSP and GitHub Pages cannot send response headers, so this is the
      available fallback.
@@ -29,14 +29,6 @@
 <noscript><style>html{display:block}</style></noscript>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#111216">
-<!-- Theme, read before first paint so the office never flashes the wrong
-     ground. Same localStorage key and same data-theme attribute as the rest
-     of the site, so a choice made on the homepage carries through the door
-     and back. With no stored choice it follows the OS, which is the case
-     that used to drop a light-mode reader straight into a black tour.
-     Inline because a deferred file would paint dark first; that is why it
-     needs its own sha256 in the CSP above. -->
-<script>(function(){var t=localStorage.getItem('lyv-theme');var l=t?t==='light':matchMedia('(prefers-color-scheme: light)').matches;document.documentElement.setAttribute('data-theme',l?'light':'dark');var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',l?'#f2e8d5':'#111216');})();</script>
   <meta name="robots" content="noindex,nofollow">
   <meta name="description" content="Enter the Lyvorian Studio project office—an immersive guided tour through the studio, its projects, and client website work.">
   <title>Project Office — LyvorianStudio</title>
@@ -67,10 +59,10 @@
   </style>
   <link rel="icon" type="image/png" href="assets/favicon.png"/>
   <link rel="manifest" href="site.webmanifest"/>
-  <link rel="stylesheet" href="products.css?v=23">
-  <link rel="stylesheet" href="product-motion.css?v=17">
-  <link rel="stylesheet" href="product-premium.css?v=12">
-  <link rel="stylesheet" href="product-quality.css?v=33">
+  <link rel="stylesheet" href="products.css?v=22">
+  <link rel="stylesheet" href="product-motion.css?v=16">
+  <link rel="stylesheet" href="product-premium.css?v=11">
+  <link rel="stylesheet" href="product-quality.css?v=28">
   <!-- No-JavaScript rendering. The splash is dismissed only by finishSplash()
        in products.js, reached by three routes that are all JavaScript, so with
        none the loading bar fills and the visitor sits behind a fixed, opaque,
@@ -112,8 +104,7 @@
   <header class="tour-header">
     <a class="tour-brand" href="index.html" aria-label="LyvorianStudio Project Office — back to home"><span class="wordmark wordmark-header"><span class="wordmark-ly">Lyvorian</span><em>Studio</em></span><span>Project Office</span></a>
     <div class="tour-status"><span data-room-number>01</span><i><b data-tour-progress></b></i><span data-room-name>Arrival</span></div>
-    <button class="tour-theme" type="button" data-theme-toggle aria-label="Switch to light theme" aria-pressed="false"><span aria-hidden="true">◐</span></button>
-      <a class="exit-link premium-exit" href="index.html#work"><span class="exit-copy"><small>End studio visit</small><b>Exit office</b></span><span class="exit-icon">↗</span></a>
+    <a class="exit-link premium-exit" href="index.html#work"><span class="exit-copy"><small>End studio visit</small><b>Exit office</b></span><span class="exit-icon">↗</span></a>
   </header>
 
   <div class="walkthrough-status" aria-hidden="true"><span>Scroll to walk</span><i><b data-walk-meter></b></i><em>Move mouse to look</em></div>
@@ -283,6 +274,6 @@
     </section>
   </main>
 
-  <script src="products.js?v=26" defer></script>
+  <script src="products.js?v=25" defer></script>
 </body>
 </html>
