@@ -113,7 +113,7 @@ body.room-view-active{overflow:hidden}.room-view-active .tour-header{z-index:140
 @media(max-width:720px){.tour-header{min-height:66px;padding:0 14px}.corridor-map{border-radius:2px}.office-corridor{gap:1px}.room-door{border-radius:0}.product-suite,.website-suite-room{border-radius:2px}}
 
 /* Consistent architectural glass for wayfinding and small information panels. */
-.tour-header,.room-sign,.speech,.manager-label,.wing-map{border-color:rgba(255,255,255,.22);background:linear-gradient(135deg,rgba(57,59,65,.58),rgba(18,19,23,.58) 62%,rgba(13,14,17,.44));box-shadow:inset 0 1px rgba(255,255,255,.16),inset 0 -1px rgba(255,255,255,.035),0 22px 60px rgba(0,0,0,.3);backdrop-filter:blur(24px) saturate(1.35)}
+.tour-header,.room-sign,.speech,.manager-label,.wing-map{border-color:rgba(255,255,255,.34);background:linear-gradient(135deg,rgba(78,80,88,.30),rgba(22,23,28,.28) 62%,rgba(12,13,17,.20));box-shadow:inset 0 1px rgba(255,255,255,.26),inset 0 -1px rgba(255,255,255,.06),0 22px 60px rgba(0,0,0,.34);backdrop-filter:blur(34px) saturate(1.45)}
 .tour-header::before,.room-sign::before,.speech::before,.manager-label::before,.wing-map::before{content:"";position:absolute;z-index:1;left:14px;right:14px;top:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.58),transparent)}
 .room-sign,.speech,.manager-label,.wing-map{overflow:visible}
 .room-sign small,.speech span,.manager-label span{color:#d8d9db;text-shadow:0 0 13px rgba(197,198,201,.18)}
