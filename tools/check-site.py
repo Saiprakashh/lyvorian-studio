@@ -20,7 +20,20 @@ import os
 import re
 import sys
 import glob
+import html
 from collections import Counter, defaultdict
+
+# Windows hands this script a cp1252 stdout, so printing any character from the
+# site's own copy — a ✕, an em dash, the ↗ on the office buttons — raised
+# UnicodeEncodeError and killed the run mid-report. The checker then exits
+# non-zero with a traceback instead of its findings, which reads like a broken
+# tool rather than a failing site. Nothing upstream guarantees the messages are
+# ASCII, because they quote the pages.
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+except (AttributeError, ValueError):
+    pass
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # --root lets the suite be pointed at a fixture directory, which is how its own
@@ -924,6 +937,99 @@ def check_media_dead():
             _mq_scan(path, m.group(1), lineno(s, m.start(1)))
 
 
+# ── 15. an aria-label must not swallow the words on the control ──────────
+def check_link_names():
+    """Two ways a link's name goes wrong, both of which happened here.
+
+    WCAG 2.5.3, Label in Name: the accessible name must CONTAIN the text shown
+    on the control, so someone driving the page by voice can say what they can
+    see. An aria-label REPLACES the name rather than adding to it, which makes
+    it easy to improve a link's wording and silently break this. Exactly that:
+    three "View project ↗" buttons were labelled "<Product> — view project" and
+    the literal arrow — a real text node, not an icon — stopped being part of
+    the name.
+
+    SYMBOLS ARE DELIBERATELY NOT STRIPPED. The first version of this comparison
+    normalised with [^a-z0-9 ] -> ' ' on both sides, which deleted the arrow
+    from the visible text and from the label alike and made the mismatch
+    unrepresentable. It passed on the links it should have caught. A test that
+    cannot express the failure always passes, and it looks exactly like a test
+    that works.
+
+    Whitespace is REMOVED from both sides rather than collapsed, because the
+    visible text is reconstructed by deleting tags: the Project Office wordmark
+    is one rendered word split across three inline elements, so any rule that
+    inserts a space at a tag boundary invents one the reader never sees, and any
+    rule that does not invents the opposite problem elsewhere. Ignoring
+    whitespace entirely is what the ACT rule does and sidesteps both.
+
+    And WCAG 2.4.4 from the other side: one name must not lead to two
+    destinations on the same page. A name repeating is fine when every link
+    carrying it goes to the same place — the product cards deliberately do that,
+    an invisible overlay and a visible button sharing one name and one href."""
+    global checked
+    tag_re = re.compile(r'<(a|button)\b([^>]*)>(.*?)</\1\s*>', re.S | re.I)
+    attr_re = re.compile(r'([\w-]+)\s*=\s*"([^"]*)"')
+    alt_re = re.compile(r'<img\b[^>]*\balt\s*=\s*"([^"]*)"', re.I)
+
+    def norm(s):
+        """Lowercase, tags gone, whitespace gone. Nothing else removed."""
+        return re.sub(r'\s+', '', html.unescape(re.sub(r'<[^>]+>', '', s))).lower()
+
+    def shown(s):
+        return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', s))).strip()
+
+    for path in pages():
+        s = strip_comments(read(path))
+        by_name = defaultdict(set)
+        first_line = {}
+        for m in tag_re.finditer(s):
+            attrs = dict(attr_re.findall(m.group(2)))
+            label = attrs.get('aria-label')
+            inner = m.group(3)
+            visible = norm(inner)
+
+            # 2.5.3 governs "labels that include text or images of text". A
+            # control whose whole visible content is a glyph — the lightbox's ✕
+            # ‹ ›, the ↑ on back-to-top — has no text label to match, and
+            # nobody speaks "‹" to activate Previous. Requiring the glyph inside
+            # the name would force "Previous ‹", which is worse for a listener
+            # and helps no one. So: skip when there is not a single letter or
+            # digit anywhere in the visible content.
+            #
+            # This is NOT the symbol-stripping mistake the docstring warns
+            # about. That one removed symbols from text that also had words, and
+            # so lost the difference under test. This decides whether 2.5.3
+            # applies at all, and where it does, the comparison stays exact —
+            # "View project ↗" has words, so its arrow is still required.
+            if label and visible and re.search(r'[^\W_]', shown(inner), re.UNICODE):
+                checked += 1
+                if visible not in norm(label):
+                    fail('link-names', path, lineno(s, m.start()),
+                         'aria-label "%s" does not contain the visible text "%s" '
+                         '(WCAG 2.5.3 Label in Name)' % (label, shown(inner)))
+
+            if m.group(1).lower() != 'a':
+                continue
+            href = attrs.get('href', '')
+            if not href or href.startswith('#'):
+                continue
+            alt = alt_re.search(inner)
+            name = norm(label) if label else (visible or norm(alt.group(1) if alt else ''))
+            if not name:
+                continue
+            checked += 1
+            by_name[name].add(href)
+            first_line.setdefault(name, lineno(s, m.start()))
+
+        for name, hrefs in sorted(by_name.items()):
+            if len(hrefs) > 1:
+                fail('link-names', path, first_line[name],
+                     'the name "%s" leads to %d different destinations (%s) — '
+                     'a links list cannot tell them apart (WCAG 2.4.4)'
+                     % (name, len(hrefs), ', '.join(sorted(hrefs))))
+
+
 CHECKS = [
     ('references', check_references, 'every local href/src/url() resolves on disk'),
     ('anchors', check_anchors, 'every #fragment matches an id on that page'),
@@ -939,6 +1045,7 @@ CHECKS = [
     ('csp', check_csp, "every inline script is hashed in its page's CSP"),
     ('framebuster', check_framebuster, 'every page carries the clickjacking defence'),
     ('media-dead', check_media_dead, 'no @media is nested inside a condition it contradicts'),
+    ('link-names', check_link_names, 'an aria-label keeps the visible words, and one name means one destination'),
 ]
 
 

@@ -39,6 +39,12 @@ GOOD_PAGE = '''<!doctype html>
   <h1>Heading</h1>
   <p>Some words here.</p>
   <a href="#target">Jump</a>
+  <a href="other.html" aria-label="Other page — open">Open</a>
+  <!-- An icon-only control. It belongs in the CLEAN fixture, not in a fault:
+       check_link_names must NOT ask a glyph to appear inside its own label, and
+       the only way to know that exclusion still works is for the good page to
+       exercise it. Delete this and the exclusion goes untested. -->
+  <button type="button" aria-label="Close">✕</button>
   <button aria-controls="panel" aria-expanded="false">Toggle</button>
   <div id="panel">Panel</div>
   <section id="target">
@@ -115,6 +121,26 @@ FAULTS = [
     # still printing "ok". It has to say so out loud.
     ('media-dead', 'unparseable CSS is reported, not skipped',
      lambda d: append(d, 'assets/descent.css', '\n.z { content: "never closed ;\n')),
+
+    # The shape of the regression this check was written for: an aria-label that
+    # reads better but no longer contains the word on the control, so a voice
+    # user saying what they can see hits nothing.
+    ('link-names', 'a label that drops the visible word',
+     lambda d: patch(d, 'index.html', 'aria-label="Other page — open"',
+                     'aria-label="Other page"')),
+
+    # And the symbol half of it specifically, because the first version of this
+    # comparison normalised symbols away on both sides and could not fail here.
+    ('link-names', 'a label that drops a trailing symbol',
+     lambda d: patch(d, 'index.html', '<a href="other.html" aria-label="Other page — open">Open</a>',
+                     '<a href="other.html" aria-label="Other page — open">Open ↗</a>')),
+
+    # One name, two destinations: indistinguishable in a screen reader's links
+    # list, which is the other half of what this check is for.
+    ('link-names', 'one name leading to two destinations',
+     lambda d: patch(d, 'index.html', '<a href="#target">Jump</a>',
+                     '<a href="#target">Jump</a>'
+                     '<a href="other.html">Same</a><a href="third.html">Same</a>')),
 ]
 
 
