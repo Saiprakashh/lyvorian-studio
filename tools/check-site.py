@@ -966,7 +966,14 @@ def check_link_names():
     And WCAG 2.4.4 from the other side: one name must not lead to two
     destinations on the same page. A name repeating is fine when every link
     carrying it goes to the same place — the product cards deliberately do that,
-    an invisible overlay and a visible button sharing one name and one href."""
+    an invisible overlay and a visible button sharing one name and one href.
+
+    KNOWN BLIND SPOT: this reads static HTML, so any control BUILT BY SCRIPT is
+    invisible to it. That is not hypothetical — products.js:126 creates five
+    room-exit buttons reading "Back to project corridor" that carried the label
+    "Return to the project corridor", and every one of them sailed past a green
+    run of this check. They were caught in the browser instead. A page that
+    passes here has not been cleared, only its markup has."""
     global checked
     tag_re = re.compile(r'<(a|button)\b([^>]*)>(.*?)</\1\s*>', re.S | re.I)
     attr_re = re.compile(r'([\w-]+)\s*=\s*"([^"]*)"')

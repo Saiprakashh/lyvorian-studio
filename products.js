@@ -123,8 +123,19 @@ roomOverlays.forEach(room => {
   const closeButton = document.createElement("button");
   closeButton.type = "button";
   closeButton.className = "room-exit-button";
-  closeButton.innerHTML = "<span>←</span> Back to project corridor";
-  closeButton.setAttribute("aria-label", "Return to the project corridor");
+  // The arrow is decoration, so it is hidden from the name rather than spoken;
+  // the words are the label and they are enough on their own.
+  closeButton.innerHTML = '<span aria-hidden="true">←</span> Back to project corridor';
+  // No aria-label. It used to say "Return to the project corridor" while the
+  // button reads "Back to project corridor", so the accessible name did not
+  // contain the visible words — WCAG 2.5.3, and a voice user saying what the
+  // button plainly says would have hit nothing. Any label here would have to
+  // repeat the visible text to be conformant, at which point it earns nothing,
+  // so the name now comes from the content.
+  //
+  // Worth knowing: check-site.py's link-names check could NOT have caught this.
+  // These buttons are built here at runtime, and the checker reads static HTML,
+  // so five of them were invisible to it and only turned up in the browser.
   closeButton.addEventListener("click", closeProductRoom);
   closeButton.dataset.roomOwner = room.id;
   document.body.append(closeButton);
