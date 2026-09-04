@@ -397,6 +397,51 @@ a.home-link{color:var(--muted)}    /* 5.47:1 light, 7.47:1 dark */
 :root[data-theme="dark"] .wrap .kicker,
 :root[data-theme="dark"] header .kicker{color:var(--gold)}
 
+/* ── the product grid, and the footer pair the earlier passes walked past ──
+   The rule above was right; the LIST was incomplete, twice. Both earlier passes
+   enumerated selectors by hand, so they fixed what they could name and left
+   everything they could not. These were found the other way — by measuring
+   every rendered element's computed colour against its fully composited
+   background and reading the failures back out — which is the only method that
+   does not depend on already knowing where to look.
+
+   .foot-mail and .foot-live are NOT products-only: they are in the shared
+   footer on fifteen pages. a.inline was already fixed above and passes at
+   4.70:1, which is exactly why they were missed — the footer's own mail link
+   never carried that class. The rest is the product grid, which only
+   products.html has.
+
+   --muted2 items move to --muted outright and need no dark override: --muted
+   passes in both themes, and --muted2 misses in both (the note above records
+   3.42 light / 4.40 dark). The --gold and --ok items are darkened for light and
+   handed their tokens back in dark, where --gold is #e8e9ec and --ok #8fe09f.
+   Every selector carries one extra type or class because products.html's own
+   <style> loads after this file — specificity, not source order. Backgrounds
+   here are --bg or lighter (cards sit on #fcf8f0), so the ratios quoted against
+   --bg are the worst case. */
+a.foot-mail{color:#856010}               /* 4.70:1 on --bg   — was 3.15 */
+span.foot-live{color:#357045}            /* 4.86:1 on --bg   — was 4.23 */
+button.pfilter{color:var(--muted)}       /* 5.47:1           — was 3.81 */
+p.pcount{color:var(--muted)}             /* 5.47:1           — was 3.42 */
+a.pcard-go{color:#856010}                /* 4.70:1 or better — was 3.62 */
+a.pcard-2nd{color:var(--muted)}          /* 5.47:1           — was 3.93 */
+span.stamp{color:#856010}                /* 4.70:1 or better — was 3.62 */
+span.pchip{color:var(--muted)}           /* 5.47:1           — was 3.93 */
+span.pchip.pchip-wip{color:#856010}      /* beats span.pchip — was 3.62 */
+p.pcard-plat > span{color:var(--muted)}  /* 5.47:1           — was 4.01 */
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) a.foot-mail{color:var(--gold)}
+  :root:not([data-theme="light"]) span.foot-live{color:var(--ok)}
+  :root:not([data-theme="light"]) a.pcard-go{color:var(--gold)}
+  :root:not([data-theme="light"]) span.stamp{color:var(--gold)}
+  :root:not([data-theme="light"]) span.pchip.pchip-wip{color:var(--gold)}
+}
+:root[data-theme="dark"] a.foot-mail{color:var(--gold)}
+:root[data-theme="dark"] span.foot-live{color:var(--ok)}
+:root[data-theme="dark"] a.pcard-go{color:var(--gold)}
+:root[data-theme="dark"] span.stamp{color:var(--gold)}
+:root[data-theme="dark"] span.pchip.pchip-wip{color:var(--gold)}
+
 /* ── "More from the studio" (product pages) ──
    Lives here rather than in each page's <style> so adding a fifth product
    means editing markup only, and every product page stays in step. */

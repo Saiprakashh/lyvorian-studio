@@ -32,7 +32,7 @@
 <meta name="description" content="Tell Lyvorian Studio what to build next. Share a feature idea, report something unclear, or suggest a product. No account needed, and an email only if you want a reply."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260902b"/>
+<link rel="stylesheet" href="assets/site.css?v=20260904a"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -279,7 +279,14 @@
         <fieldset class="fb-step" data-step="2">
           <legend class="f-label" id="fbPrompt">What would you like to share?</legend>
           <div class="field-wrap">
-            <textarea id="ideaMsg" maxlength="1200" aria-describedby="charCount fbMsgErr" required></textarea>
+            <!-- aria-labelledby, not a <label>: the legend above already asks the
+                 question on screen, and a second visible label would duplicate it.
+                 Without this the only required control in the form had no
+                 accessible name at all — every sibling field has a real <label>,
+                 this one had a placeholder, and a placeholder is gone the moment
+                 anyone types. Pointing at #fbPrompt also means the name follows
+                 the prompt when the chosen category rewrites it. -->
+            <textarea id="ideaMsg" maxlength="1200" aria-labelledby="fbPrompt" aria-describedby="charCount fbMsgErr" required></textarea>
             <span class="char-count" id="charCount">0 / 1200</span>
           </div>
           <p class="fb-err" id="fbMsgErr" hidden>Please add a little detail before continuing.</p>
