@@ -201,7 +201,15 @@
     transition:transform .25s cubic-bezier(.16,.8,.28,1)}
   .plat-play img{display:block;height:40px;width:auto}
   .plat-play:hover{transform:translateY(-2px)}
-  .plat-play:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+  /* var(--focus), not var(--gold-bright). This block is a copy of the one in
+     home.css, and home.css:814 was moved to --focus when that token was created
+     for precisely this reason — site.css:10 records it: "WCAG wants 3:1 for a
+     non-text indicator and --gold-bright manages 2.3:1". The copy here never
+     got the change, and because a page's own <style> loads after home.css the
+     stale rule is the one that wins. Measured on the live page in light: the
+     ring was #c98f22 at 2.67:1 against its surround, the only focus indicator
+     on the site still under 3:1. */
+  .plat-play:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
   @media(prefers-reduced-motion:reduce){.plat-play:hover{transform:none}}
   .pcard-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
     margin-top:auto;padding-top:6px}
