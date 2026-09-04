@@ -374,3 +374,59 @@
     min-height:100svh;
   }
 }
+
+
+/* ══ REDESIGN PROTOTYPE · image-first rooms · room 06 only ═══════════════════
+   The entry panel was a 760px card at 84% opacity, centred over the room render
+   behind a 17px backdrop blur. That is why the artwork was never visible, and
+   why commissioning new room images could not pay for itself: whatever we
+   generated ended up behind an opaque box covering most of the frame.
+   Here the card dissolves into a bottom band. The render reads across the top
+   two thirds; the gradient only darkens where type actually sits. Type scale,
+   the sans + Cormorant-italic pairing, the CTA and the tag pills are untouched
+   -- this changes where the copy lives, not how it looks.
+   Scoped to .product-wing-room so the other eleven rooms are unaffected until
+   this pattern is judged. Delete this block to revert. */
+
+.product-wing-room > .room-vignette{
+  background:linear-gradient(180deg,
+    rgba(12,13,16,.44) 0%,
+    rgba(12,13,16,.10) 24%,
+    rgba(12,13,16,.56) 60%,
+    rgba(12,13,16,.94) 100%);
+}
+
+.product-wing-room .projects-entry-panel{
+  left:0; right:0; top:auto; bottom:0;
+  width:auto; max-width:none;
+  padding:clamp(30px,4vw,58px) clamp(22px,7vw,118px) clamp(34px,5vw,70px);
+  overflow:visible;
+  border:0; border-radius:0;
+  background:none;
+  box-shadow:none;
+  backdrop-filter:none; -webkit-backdrop-filter:none;
+  transform:none;
+}
+/* the corner glow and the hairline were part of the card, not the content */
+.product-wing-room .projects-entry-panel::before,
+.product-wing-room .projects-entry-panel::after{display:none}
+
+/* keep the exit choreography, minus the centring offset it used to assume */
+.product-wing-room.projects-open .projects-entry-panel{
+  transform:translateY(18px) scale(.985);
+}
+
+/* the numeral moves out of the card and sits over the render */
+.product-wing-room .projects-entry-index{
+  top:auto; bottom:calc(100% - 26px); right:clamp(20px,5vw,60px);
+  color:rgba(255,255,255,.07);
+}
+
+@media (max-width:720px){
+  .product-wing-room .projects-entry-panel{
+    top:auto; bottom:0; width:auto;
+    padding:24px 20px 28px;
+    border-radius:0; transform:none;
+  }
+  .product-wing-room .projects-entry-index{bottom:calc(100% - 10px); right:18px}
+}
