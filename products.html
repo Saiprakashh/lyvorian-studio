@@ -160,6 +160,13 @@
     box-shadow:var(--glass-shd),inset 0 1px 0 var(--glass-hi),0 0 34px -14px rgba(201,143,34,.45)}
   .pcard.is-wip,.pcard.is-idea{border-style:dashed}
   .pcard.is-idea{cursor:default}
+    /* The idea card carries no bullet list, so on a stretched grid row all of its
+       slack pooled into one gap above the footer and it read as unfinished rather
+       than sparse. .pcard-foot already has margin-top:auto; adding a second auto
+       above the benefit makes flexbox split the free space equally between the
+       two, so the text block centres and the footer still lines up with the card
+       beside it. One declaration, no layout rewrite, no invented filler copy. */
+    .is-idea .pcard-benefit{margin-top:auto}
   .card-stretch{position:absolute;inset:0;z-index:2;border-radius:inherit}
   /* z-index on the FOOT, not just its children. `.pcard > *` above gives every
      direct child z-index:1, which makes the foot its own stacking context —
