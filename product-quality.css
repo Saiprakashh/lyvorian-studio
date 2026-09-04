@@ -546,6 +546,18 @@
   text-shadow:none !important;
 }
 
+/* The conference room seats four people across the right of the frame, and the
+   team speech bubble is 0.134 of the image wide while the widest gap between
+   their faces is about 0.09 - so at bottom:47% it always covered somebody's
+   face, and no crop of the render could avoid it. Dropping it to 37% on desktop
+   puts it on the torso and table line beneath the group: bubble y 0.50-0.60
+   against faces that end at 0.46. It stays right of the copy column (x 0.65-0.80
+   vs the column's 0.26-0.61), so nothing else moves. The phone portrait is a
+   different crop whose faces already sit above the bubble, so it is left alone. */
+@media (min-width:1051px){
+  .speech-team{bottom:37%}
+}
+
 /* Pills inside a see-through panel need a touch more body than the panel. */
 .room-tags span,.product-story li,.projects-entry-meta span,.pchip{
   background:rgba(255,255,255,.10);
