@@ -534,6 +534,18 @@
   text-shadow:0 1px 2px rgba(0,0,0,.85),0 2px 8px rgba(0,0,0,.55);
 }
 
+/* The exit button lights up on hover/focus: mint fill, dark #17181b label. The
+   glass background above is !important, so it outranked that fill while the
+   label still went dark - a focused "Back to project corridor" rendered
+   near-black on near-black, which is how it looked on the phone. Re-assert the
+   lit state. It is the one panel that deliberately stops being glass, because
+   the state has to be unmistakable to a thumb. */
+.room-exit-button:hover,.room-exit-button:focus-visible{
+  background:var(--mint) !important;
+  border-color:var(--mint) !important;
+  text-shadow:none !important;
+}
+
 /* Pills inside a see-through panel need a touch more body than the panel. */
 .room-tags span,.product-story li,.projects-entry-meta span,.pchip{
   background:rgba(255,255,255,.10);
