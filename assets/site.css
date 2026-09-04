@@ -220,6 +220,25 @@
 
 
 /* ── base typography, all pages ────────────── */
+/* The hidden attribute, made to mean what it says.
+   The UA stylesheet already says [hidden]{display:none}, and it loses to any
+   author rule that sets display on the same element — not on specificity, on
+   cascade ORIGIN, a category the author sheet always wins. products.html's
+   filter set the attribute on exactly the right cards while .pcard{display:flex}
+   kept all five on screen: the page read "Showing 1 product in research" over
+   five visible cards, with thirteen focusable controls inside the four that
+   were supposedly gone.
+   !important is load-bearing here, not a shortcut. Without it this rule is
+   (0,1,0) and every page's own <style> loads AFTER this file, so a plain
+   .pcard{display:flex} would beat it on source order alone and the guard would
+   read as protection while providing none.
+   Safe because nothing on this site tries to SHOW a hidden element: every
+   [hidden] rule in the tree sets display:none, and this simply stops each one
+   from having to. The class-scoped guards (.lb, .mm, .pcard) are left in place
+   as belt and braces — redundant now, but they cost nothing and they keep
+   working if this line is ever moved. */
+[hidden]{display:none!important}
+
 html{-webkit-text-size-adjust:100%}
 body{font:var(--t-body);letter-spacing:var(--ls-body);text-rendering:optimizeLegibility}
 /* text-wrap:pretty is inherited, so pages that set it on a wrapper would

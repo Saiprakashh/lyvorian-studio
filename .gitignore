@@ -1,0 +1,6 @@
+# Python leaves these beside tools/check-site.py every time it runs, and a
+# `git add -A` swept one into the tree. Bytecode for a script that is read far
+# more often than it is run has no business being versioned, and a stale .pyc
+# committed alongside an edited .py is actively misleading.
+__pycache__/
+*.pyc
