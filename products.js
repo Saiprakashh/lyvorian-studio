@@ -13,7 +13,6 @@ const closeProjectsButton = document.querySelector("[data-close-projects]");
 const roomNumber = document.querySelector("[data-room-number]");
 const roomName = document.querySelector("[data-room-name]");
 const tourProgress = document.querySelector("[data-tour-progress]");
-const walkMeter = document.querySelector("[data-walk-meter]");
 const tourDots = [...document.querySelectorAll("[data-tour-dot]")];
 const arrival = document.querySelector(".arrival-room");
 // .tour-header is deliberately NOT in this list. products.css raises it above
@@ -420,8 +419,6 @@ function updateTour() {
   const max = document.documentElement.scrollHeight - innerHeight;
   const progress = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
   tourProgress.style.transform = `scaleX(${progress})`;
-  if (walkMeter) walkMeter.style.transform = `scaleX(${progress})`;
-  arrival?.classList.toggle("is-entered", scrollY > innerHeight * .12);
   updateRoomCamera();
   ticking = false;
 }
