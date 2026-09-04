@@ -442,6 +442,38 @@ p.pcard-plat > span{color:var(--muted)}  /* 5.47:1           — was 4.01 */
   :root:not([data-theme="light"]) span.stamp{color:var(--gold)}
   :root:not([data-theme="light"]) span.pchip.pchip-wip{color:var(--gold)}
 }
+/* ── the fourth sweep, and the first one done by measurement alone ──
+   Every page scanned in light, every rendered element compared against its
+   composited background, nothing enumerated. That turned up four more classes
+   no previous pass had named, on eight pages:
+
+     .wrap a:not([class])  --gold  3.46:1  privacy(5) terms(6) account-deletion(2)
+                                           and every other privacy-*, which all
+                                           set a{color:var(--gold)} inline
+     p.qualifier           --muted2 3.42:1 habitaroha, medhakeli(2), fylunor
+     p.fb-eyebrow          --gold  3.62:1  share-an-idea
+     .short span.lbl       --gold  3.22:1  terms, and the privacy-* short forms
+
+   The link one is the whole lesson in miniature: those pages declare
+   `a{color:var(--gold)}` in their own <style>, a bare type selector at (0,0,1),
+   so nothing class-based in this file could ever have been the problem — it was
+   simply never written, because no one grepped for an unclassed <a>.
+   `:not([class])` is deliberate: it takes exactly the prose links that have no
+   rule of their own and leaves .foot-mail, a.inline and every other classed
+   link to the rules above, which already pass. */
+.wrap a:not([class]){color:#7d5a0e}   /* 4.76:1 on --bg2 — was 3.46 */
+p.qualifier{color:var(--muted)}       /* 5.04:1 on --bg2 — was 3.42 */
+p.fb-eyebrow{color:#7d5a0e}           /* 4.76:1 on --bg2 — was 3.62 */
+.short span.lbl{color:#7d5a0e}        /* 4.76:1 on --bg2 — was 3.22 */
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wrap a:not([class]){color:var(--gold)}
+  :root:not([data-theme="light"]) p.fb-eyebrow{color:var(--gold)}
+  :root:not([data-theme="light"]) .short span.lbl{color:var(--gold)}
+}
+:root[data-theme="dark"] .wrap a:not([class]){color:var(--gold)}
+:root[data-theme="dark"] p.fb-eyebrow{color:var(--gold)}
+:root[data-theme="dark"] .short span.lbl{color:var(--gold)}
+
 :root[data-theme="dark"] a.foot-mail{color:var(--gold)}
 :root[data-theme="dark"] span.foot-live{color:var(--ok)}
 :root[data-theme="dark"] a.pcard-go{color:var(--gold)}
