@@ -59,10 +59,10 @@
   </style>
   <link rel="icon" type="image/png" href="assets/favicon.png"/>
   <link rel="manifest" href="site.webmanifest"/>
-  <link rel="stylesheet" href="products.css?v=23">
-  <link rel="stylesheet" href="product-motion.css?v=16">
-  <link rel="stylesheet" href="product-premium.css?v=13">
-  <link rel="stylesheet" href="product-quality.css?v=28">
+  <link rel="stylesheet" href="products.css?v=24">
+  <link rel="stylesheet" href="product-motion.css?v=17">
+  <link rel="stylesheet" href="product-premium.css?v=14">
+  <link rel="stylesheet" href="product-quality.css?v=29">
   <!-- No-JavaScript rendering. The splash is dismissed only by finishSplash()
        in products.js, reached by three routes that are all JavaScript, so with
        none the loading bar fills and the visitor sits behind a fixed, opaque,
@@ -106,19 +106,7 @@
     <div class="tour-status"><span data-room-number>01</span><i><b data-tour-progress></b></i><span data-room-name>Arrival</span></div>
     <a class="exit-link premium-exit" href="index.html#work"><span class="exit-copy"><small>End studio visit</small><b>Exit office</b></span><span class="exit-icon">↗</span></a>
   </header>
-
-  <div class="walkthrough-status" aria-hidden="true"><span>Scroll to walk</span><i><b data-walk-meter></b></i><em>Move mouse to look</em></div>
   <div class="cinematic-lens" aria-hidden="true"></div>
-
-  <nav class="tour-rail" aria-label="Office rooms">
-    <a href="#arrival" aria-label="Arrival" data-tour-dot="0"><span>Arrival</span></a>
-    <a href="#reception" aria-label="Reception and café" data-tour-dot="1"><span>Reception</span></a>
-    <a href="#ceo-office" aria-label="CEO office" data-tour-dot="2"><span>CEO office</span></a>
-    <a href="#conference" aria-label="Conference room" data-tour-dot="3"><span>Conference</span></a>
-    <a href="#discussion" aria-label="Discussion room" data-tour-dot="4"><span>Discussion</span></a>
-    <a href="#product-wing" aria-label="Projects floor" data-tour-dot="5"><span>Projects floor</span></a>
-    <a href="#visit-complete" aria-label="Visit complete" data-tour-dot="6"><span>Complete</span></a>
-  </nav>
 
   <main id="office-tour" tabindex="-1">
     <!-- The splash carries the visible "Project Office" h1, but products.js
@@ -130,7 +118,7 @@
       <picture><source media="(max-width: 720px)" srcset="assets/office-building-v2-portrait.webp" width="512" height="1024"><img class="room-bg" src="assets/office-building-v2.webp" alt="The Lyvorian Studio building at night: a low dark-stone office with tall glazing, lit only by warm light spilling from a recessed central entrance" width="1536" height="1024" fetchpriority="high"></picture>
       <div class="room-vignette"></div>
       <div class="building-name"><span>Independent software studio</span><span class="wordmark wordmark-building" aria-label="LyvorianStudio"><span class="wordmark-ly">Lyvorian</span><em>Studio</em></span><i>PROJECT OFFICE</i></div>
-      <div class="entrance-door door-left" aria-hidden="true"></div><div class="entrance-door door-right" aria-hidden="true"></div>
+      
       <div class="arrival-copy room-copy">
         <small>Welcome · Visit 01</small>
         <h2>Come inside.<br><em>The work lives here.</em></h2>
@@ -274,6 +262,6 @@
     </section>
   </main>
 
-  <script src="products.js?v=25" defer></script>
+  <script src="products.js?v=26" defer></script>
 </body>
 </html>

@@ -64,9 +64,5 @@ body.splash-active{overflow:hidden}
 
 /* The entrance panels are aligned to the photographed building doorway and slide open on its track. */
 .arrival-room::after{content:"";position:absolute;z-index:3;left:45.15%;top:58.2%;width:9.7%;height:17.8%;background:radial-gradient(ellipse at 50% 42%,rgba(79,79,80,.48),rgba(8,9,12,.96) 72%);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 0 36px rgba(0,0,0,.75);opacity:.18;transition:opacity .75s ease;pointer-events:none}.arrival-room.is-entered::after{opacity:1}
-.entrance-door{z-index:4 !important;top:58.2% !important;width:4.85% !important;height:17.8% !important;border:0 !important;border-inline:1px solid rgba(255,255,255,.2) !important;background:linear-gradient(105deg,rgba(175,176,178,.09),rgba(22,25,30,.42)) !important;box-shadow:inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(1px);transition:transform 1.05s cubic-bezier(.76,0,.24,1) !important}
-.entrance-door::after{content:"";position:absolute;top:45%;width:4px;height:17px;border-radius:3px;background:rgba(210,212,219,.54);box-shadow:0 0 8px rgba(0,0,0,.5)}
-.door-left{left:45.15% !important;transform-origin:right center !important}.door-left::after{right:7px}.door-right{right:45.15% !important;transform-origin:left center !important}.door-right::after{left:7px}
-.arrival-room.is-entered .door-left{transform:translateX(-98%) !important}.arrival-room.is-entered .door-right{transform:translateX(98%) !important}
-@media(max-width:720px){.arrival-room::after,.entrance-door{top:58.2% !important;height:17.8% !important}}
+@media(max-width:720px){.arrival-room::after{top:58.2% !important;height:17.8% !important}}
 @media(max-height:820px) and (min-width:821px){.splash-stage{transform:scale(.78)}.splash-orbit{margin-bottom:-8px !important}.splash-copy p{margin-top:18px !important}}

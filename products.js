@@ -20,7 +20,7 @@ const arrival = document.querySelector(".arrival-room");
 // the open room (z-index 1400) so it stays visible, and marking it inert made
 // the "Exit office" link the visitor can plainly see do nothing at all. It
 // carries the two legitimate ways out of a room, so it stays interactive.
-const backgroundRegions = [document.querySelector(".tour-rail"), skipLink, ...rooms].filter(Boolean);
+const backgroundRegions = [skipLink, ...rooms].filter(Boolean);
 
 function finishSplash() {
   splash?.classList.add("is-done");

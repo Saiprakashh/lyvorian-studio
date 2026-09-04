@@ -206,14 +206,6 @@
    Scoped to coarse pointers: a mouse is precise, the dots carry hover labels,
    and the desktop rail's rhythm is deliberate. */
 @media (pointer: coarse) {
-  /* The dot is 8px at this size, not the 11px it is on desktop, so the pitch
-     is measured from 8: 8 + 36 = 44 exactly. */
-  .tour-rail { gap: 36px; }
-  .tour-rail a::before {
-    content: "";
-    position: absolute;
-    inset: -18px;            /* 8px dot + 36 = a 44px touch target */
-  }
   /* The wordmark is the way back out; 15px of text is not a target. */
   .tour-brand, .exit-link { min-height: 44px; align-content: center; }
   .splash [data-splash-skip] { min-height: 44px; padding-inline: 14px; }
