@@ -11,22 +11,19 @@
   transition: none !important;
 }
 
-.product-room.is-room-open .product-display,
-.website-room.is-room-open .web-lab {
+.product-room.is-room-open .product-display{
   transform: translate3d(var(--display-x,0),var(--display-y,0),var(--display-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
   transform-origin: left center;
   opacity: calc(.38 + var(--room-fade,1) * .62) !important;
   transition: none !important;
 }
 
-.product-room.is-room-open .display-window,
-.website-room.is-room-open .monitor-one {
+.product-room.is-room-open .display-window{
   transform: translate3d(var(--screen-x,0),var(--screen-y,0),var(--screen-z,0)) rotateY(var(--room-turn,0deg)) !important;
   transition: none !important;
 }
 
-.product-room.is-room-open .display-float,
-.website-room.is-room-open .monitor-two {
+.product-room.is-room-open .display-float{
   transform: translate3d(var(--float-x,0),var(--float-y,0),var(--float-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
   transition: none !important;
 }
@@ -38,23 +35,8 @@
   transition: none !important;
 }
 
-.product-room.is-room-open .icon-stage,
-.website-room.is-room-open .web-phone {
+.product-room.is-room-open .icon-stage{
   transform: translate3d(var(--float-x,0),var(--float-y,0),var(--float-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
-  transition: none !important;
-}
-
-.website-room.is-room-open .layer-wireframe {
-  transform: translate3d(var(--screen-x,0),var(--float-y,0),var(--screen-z,0)) rotateY(var(--room-turn,0deg)) !important;
-}
-
-.website-room.is-room-open .layer-tokens {
-  transform: translate3d(var(--float-x,0),var(--screen-y,0),var(--float-z,0)) rotateY(var(--room-turn-inverse,0deg)) !important;
-}
-
-.product-room.is-room-open .product-manager,
-.website-room.is-room-open .web-manager {
-  transform: translate3d(var(--manager-x,0),var(--manager-y,0),var(--manager-z,0)) !important;
   transition: none !important;
 }
 
@@ -79,8 +61,7 @@
   .website-room.is-room-open .website-copy {
     transform: translate3d(0,var(--story-y,0),var(--story-z,0)) rotateX(var(--room-turn,0deg)) !important;
   }
-  .product-room.is-room-open .product-display,
-  .website-room.is-room-open .web-lab {
+  .product-room.is-room-open .product-display{
     transform: translate3d(0,var(--display-y,0),var(--display-z,0)) rotateX(var(--room-turn-inverse,0deg)) !important;
   }
 }
@@ -100,16 +81,10 @@
   .product-room.is-room-open .product-story,
   .website-room.is-room-open .website-copy,
   .product-room.is-room-open .product-display,
-  .website-room.is-room-open .web-lab,
   .product-room.is-room-open .display-window,
-  .website-room.is-room-open .monitor-one,
   .product-room.is-room-open .display-float,
-  .website-room.is-room-open .monitor-two,
   .product-room.is-room-open .habit-board,
   .product-room.is-room-open .document-stack,
   .product-room.is-room-open .learning-wall,
-  .product-room.is-room-open .icon-stage,
-  .website-room.is-room-open .web-phone,
-  .product-room.is-room-open .product-manager,
-  .website-room.is-room-open .web-manager { transform:none !important; opacity:1 !important; }
+  .product-room.is-room-open .icon-stage{ transform:none !important; opacity:1 !important; }
 }
