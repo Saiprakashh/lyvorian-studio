@@ -499,6 +499,48 @@ p.fb-eyebrow{color:#7d5a0e}           /* 4.76:1 on --bg2 — was 3.62 */
 :root[data-theme="dark"] span.stamp{color:var(--gold)}
 :root[data-theme="dark"] span.pchip.pchip-wip{color:var(--gold)}
 
+/* ── the fifth sweep, run on the phone against the deployed site ──
+   Backgrounds came from CDP `CSS.getBackgroundColors` — the same resolution the
+   DevTools contrast readout uses — instead of a hand-rolled composite, and the
+   page list was taken from tools/check-site.py so nothing could be left out.
+
+   That last part is the finding. 404.html is named in none of the four passes
+   above and carried three of these four failures: it is the one page nobody
+   navigates to on purpose, so every enumeration by hand had missed it.
+
+     div.code              --gold   2.80:1  404
+     div.where-label       --muted2 3.04:1  404
+     div.where a span      --muted2 3.76:1  404, the three status captions
+     ol.fb-steps-list span --gold   3.52:1  share-an-idea
+
+   Type selectors, because unlike the passes above these rules live in the
+   pages' own <style> block and in home.css, both of which load AFTER this file
+   — a bare class here would tie on specificity and lose. `.where a:hover span`
+   stays (0,2,2) and still outranks `div.where a span` at (0,1,3), so the hover
+   state is untouched.
+
+   Ratios are against the background each element actually sits on: on 404 that
+   is --bg under its warm radial wash, #e9dbbf, slightly darker than --bg2, so
+   these read a little lower than the 4.76 quoted above for the same ink.
+
+   Deliberately NOT changed, both verified rather than assumed: products' ◇ is
+   aria-hidden decoration, and share-an-idea's .fb-pnum "on" numeral is dark ink
+   on a gold fill, which already passes. */
+div.code{color:#7d5a0e}                /* 4.59:1 — was 2.80 */
+div.where-label{color:var(--muted)}    /* 4.86:1 — was 3.04 */
+div.where a span{color:var(--muted)}   /* 6.02:1 — was 3.76 */
+ol.fb-steps-list span{color:#7d5a0e}   /* 5.79:1 — was 3.52 */
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) div.code{color:var(--gold)}
+  :root:not([data-theme="light"]) div.where-label{color:var(--muted2)}
+  :root:not([data-theme="light"]) div.where a span{color:var(--muted2)}
+  :root:not([data-theme="light"]) ol.fb-steps-list span{color:var(--gold)}
+}
+:root[data-theme="dark"] div.code{color:var(--gold)}
+:root[data-theme="dark"] div.where-label{color:var(--muted2)}
+:root[data-theme="dark"] div.where a span{color:var(--muted2)}
+:root[data-theme="dark"] ol.fb-steps-list span{color:var(--gold)}
+
 /* ── "More from the studio" (product pages) ──
    Lives here rather than in each page's <style> so adding a fifth product
    means editing markup only, and every product page stays in step. */
