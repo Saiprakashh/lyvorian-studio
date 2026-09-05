@@ -32,7 +32,7 @@
 <meta name="description" content="Tell Lyvorian Studio what to build next. Share a feature idea, report something unclear, or suggest a product. No account needed, and an email only if you want a reply."/>
 <meta name="theme-color" content="#f2e8d5"/>
 <script>(function(){var t=localStorage.getItem('lyv-theme');if(t)document.documentElement.setAttribute('data-theme',t);var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',d?'#191410':'#f2e8d5');})();</script>
-<link rel="stylesheet" href="assets/site.css?v=20260904d"/>
+<link rel="stylesheet" href="assets/site.css?v=20260905a"/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
 <link rel="manifest" href="site.webmanifest"/>
 <link rel="apple-touch-icon" href="assets/icon-beige-512.png"/>
@@ -376,8 +376,12 @@
   </div>
 </footer>
 
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="cursor-dot" id="cursorDot"></div>
+<!-- Start hidden. home.js only ever REMOVES `off`, on the first pointer move, so
+     without it here both elements paint at their untransformed 0,0 origin and a
+     gold dot sits clipped in the top-left corner until the visitor moves the
+     mouse. -->
+<div class="cursor-ring off" id="cursorRing"></div>
+<div class="cursor-dot off" id="cursorDot"></div>
 
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu">
   <div class="mm-head">

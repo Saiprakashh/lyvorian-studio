@@ -688,6 +688,12 @@ header.site-hdr,body > header{transition:padding var(--t-panel) var(--e-inout),
    container so it reads as a printed mark rather than a heading. */
 .site-foot{margin-top:var(--sp-9);padding:var(--sp-8) 0 var(--sp-6);
   border-top:1px solid var(--line)}
+/* The footer is one shared component, so it owns its own width. Without this it
+   inherited each page's reading column - 760px on legal pages, 680px on
+   editorial - which wrapped "Why we build this way" and "Delete your account"
+   mid-phrase and truncated the LYVORIAN watermark to "LYVORI". 1120px is the
+   width the approved products page gives it. */
+.site-foot .wrap{max-width:1120px}
 .foot-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
   gap:var(--sp-7);align-items:start}
 .foot-line{margin:0 0 var(--sp-3);color:var(--text);max-width:26ch;
