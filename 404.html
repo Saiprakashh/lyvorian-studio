@@ -68,12 +68,18 @@
   .code{font:var(--t-eyebrow);letter-spacing:var(--ls-eyebrow);color:var(--gold);margin-bottom:10px}
   h1{font:var(--t-h2);letter-spacing:var(--ls-h2);margin:0 0 14px;letter-spacing:-.012em}
   p{color:var(--muted);max-width:400px;margin:0 auto 34px;line-height:1.7}
-  a.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:11px;
-    font-size:15px;font-weight:600;text-decoration:none;color:#1a1206;
-    background:linear-gradient(160deg,var(--gold-bright),var(--gold));
-    box-shadow:0 10px 30px -10px rgba(169,122,31,.55);
-    transition:transform .25s cubic-bezier(.16,.8,.28,1),box-shadow .25s}
-  a.btn:hover{transform:translateY(-3px);box-shadow:0 16px 38px -10px rgba(169,122,31,.7)}
+  /* The house primary CTA is a ghost pill, not a filled slab: see .dsc-cta on the
+       home page - 999px radius, 1px border, uppercase at .13em tracking, no shadow.
+       This was the only filled colour block on a light surface anywhere on the site.
+       It also hardcoded a gold gradient and a gold glow, which is wrong in dark
+       theme, where the palette drops gold entirely (--gold resolves to #e8e9ec).
+       Everything here is a token, so it flips with the theme. */
+    a.btn{display:inline-flex;align-items:center;gap:9px;padding:16px 28px;border-radius:999px;
+    font:500 .74rem/1 var(--font-interface);letter-spacing:.13em;text-transform:uppercase;
+    text-decoration:none;color:var(--text);
+    border:1px solid var(--line-bright);background:transparent;
+    transition:transform .25s cubic-bezier(.16,.8,.28,1),background .25s,border-color .25s}
+  a.btn:hover{transform:translateY(-2px);border-color:var(--text);background:var(--panel)}
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
       transition-duration:.01ms!important}

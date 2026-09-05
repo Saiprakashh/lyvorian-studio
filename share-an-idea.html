@@ -148,8 +148,13 @@
 <div class="glow" id="glow"></div>
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<header>
-  <div class="hdr-inner wrap">
+<header class="site-hdr">
+  <!-- `wrap` removed: it is the body-copy container, and site.css styles content
+       links with `.wrap a:not([class])` at #7d5a0e. That selector is more specific
+       than `.site-hdr nav a`, so every unclassed nav link here rendered in the
+       current-page gold and the whole nav looked active. No other page's
+       .hdr-inner carries it. -->
+  <div class="hdr-inner">
     <div class="hdr-left">
       <div class="logo-3d">
       <a href="index.html" class="word" id="logoWord">
@@ -162,7 +167,7 @@
       <a href="products.html">Products</a>
       <a href="index.html#story">Studio</a>
       <a href="notes.html">Notes</a>
-      <a href="#ideas">Share an idea</a>
+      <a href="#ideas" aria-current="page">Share an idea</a>
       <a href="mailto:support@lyvorianstudio.co.in" data-contact aria-haspopup="dialog" aria-expanded="false">Contact</a>
     </nav>
     <div class="hdr-right">
