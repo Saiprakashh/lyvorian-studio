@@ -69,21 +69,18 @@
      stops growing at 660px while the viewport does not. */
   .final-room .final-copy h2{font-size:clamp(52px,6.4vw,96px)}
 }
-/* Her side of the frame must stay readable, so the vignette is mirrored here:
-   dark on the LEFT under the copy, clear on the right where she stands.
-
-   Scoped, because this is lighting for a specific composition: it only makes
-   sense where the copy is on the left and she is on the right. That is the
-   landscape render (13/10 is character-for-character the media query the
-   page's own <source> uses to swap assets) and the desktop layout. Left
-   unscoped it also applied to portrait phones, where she is centred -- so it
-   was dimming the left half of her face and the whole of her extended hand. */
-@media (min-aspect-ratio:13/10), (min-width:1051px){
-  .final-room .room-vignette{
-    background:linear-gradient(90deg,rgba(10,11,13,.92) 0%,rgba(10,11,13,.72) 38%,
-      rgba(10,11,13,.28) 62%,transparent 82%),
-      linear-gradient(0deg,rgba(10,11,13,.55),transparent 42%)}
-}
+/* A `.final-room .room-vignette` block used to sit here, meaning to mirror the
+   vignette for the desktop split -- dark left under the copy, clear right where
+   she stands. It never once applied. The corridor rule near the bottom of this
+   file,
+     .tour-room:not(.product-room):not(.website-room):not(.product-wing-room)
+       > .room-vignette
+   is five classes to its two and always won, so what this room has actually
+   been lit by, on every screen, is that corridor gradient. Removed rather than
+   left in place: the desktop lighting is unchanged by deleting a rule that was
+   already losing, and a dead block here sends the next reader after a gradient
+   the page never renders. The portrait override below has to carry six classes
+   for exactly this reason. */
 /* The giant LYVORIAN STUDIO watermark sat on a flat panel; over a photograph it
    reads as dirt on the lens. */
 .final-room::before{opacity:.45}
@@ -118,8 +115,18 @@
      --vignette-opacity between .72 and 1 as a room takes focus, so anything
      load-bearing on this layer goes 28% weaker exactly while the room is
      arriving. Weight at the top for the glass header to sit on, a little
-     pooling at the floor, and her face and hand left alone. */
-  .final-room .room-vignette{
+     pooling at the floor, and her face and hand left alone.
+
+     The selector is the corridor rule further down this file with .final-room
+     added, and it has to be. That rule --
+       .tour-room:not(.product-room):not(.website-room):not(.product-wing-room)
+         > .room-vignette
+     -- is five classes, so a plain `.final-room .room-vignette` (two) loses to
+     it no matter which media query it sits in. Verified on the device: the
+     first attempt at this fix computed to the corridor's 90deg left scrim,
+     not to what is written here. Six classes wins. */
+  .tour-room.final-room:not(.product-room):not(.website-room):not(.product-wing-room)
+    > .room-vignette{
     background:
       linear-gradient(180deg,rgba(8,9,12,.60),rgba(8,9,12,.18) 84px,transparent 152px),
       linear-gradient(0deg,rgba(8,9,12,.50),rgba(8,9,12,.14) 24%,transparent 44%);
