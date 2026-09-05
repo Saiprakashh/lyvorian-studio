@@ -52,6 +52,33 @@
 .final-room::before{content:"LYVORIAN STUDIO";position:absolute;left:50%;top:50%;z-index:0;color:rgba(255,255,255,.025);font:600 clamp(76px,14vw,230px)/.8 Manrope,sans-serif;letter-spacing:-.08em;white-space:nowrap;transform:translate(-50%,-50%)}
 .final-copy{padding:36px;border:1px solid rgba(255,255,255,.13);background:linear-gradient(135deg,rgba(43,45,49,.62),rgba(17,18,22,.46));backdrop-filter:blur(18px)}
 
+/* The closing room now has someone in it, standing at an open door with a hand
+   out. She occupies x 0.72-0.98 of the render, so the copy is pulled off centre
+   to the left rather than sitting on top of her - the same left-copy /
+   right-subject split the conference room uses. Every word of the panel stays;
+   only its position changes. Below 1051px there is not enough width to hold both
+   side by side, so the panel re-centres and the vignette carries the contrast. */
+@media (min-width:1051px){
+  .final-room .final-copy{margin-left:clamp(40px,6vw,110px);margin-right:auto;
+    width:min(56vw,660px);text-align:left}
+  .final-room .final-copy p{margin-left:0}
+  .final-room .final-copy>div{justify-content:flex-start}
+  /* The narrower column broke "The next room" across two lines: at 129.6px it
+     needs 765px and the column gives 586. Sized to the measured fit envelope —
+     ~4.4px of headline per px of type — with the cap at 96px because the panel
+     stops growing at 660px while the viewport does not. */
+  .final-room .final-copy h2{font-size:clamp(52px,6.4vw,96px)}
+}
+/* Her side of the frame must stay readable, so the vignette is mirrored here:
+   dark on the LEFT under the copy, clear on the right where she stands. */
+.final-room .room-vignette{
+  background:linear-gradient(90deg,rgba(10,11,13,.92) 0%,rgba(10,11,13,.72) 38%,
+    rgba(10,11,13,.28) 62%,transparent 82%),
+    linear-gradient(0deg,rgba(10,11,13,.55),transparent 42%)}
+/* The giant LYVORIAN STUDIO watermark sat on a flat panel; over a photograph it
+   reads as dirt on the lens. */
+.final-room::before{opacity:.45}
+
 /* The project floor is a deliberate destination: the corridor exists only after entry. */
 .projects-entry-panel{
   position:absolute;z-index:50;left:50%;top:50%;display:grid;width:min(760px,calc(100% - 48px));
