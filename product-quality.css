@@ -248,6 +248,32 @@
     text-underline-offset:5px;
     text-decoration-color:rgba(255,255,255,.45);
   }
+
+  /* A landscape phone is far shorter than a landscape tablet, and the emulated
+     sizes I first tested (411, 390, 430 tall) were all too generous: the real
+     S10+ reports 828x316 with Chrome's URL bar showing. At that height the copy
+     is 299px in a 316px frame, so centring it put "Tour complete" ENTIRELY
+     behind the 78px glass header and clipped the top of the headline. The
+     portrait side already had a short-frame block, but it is nested in the
+     portrait query, so landscape never saw it.
+
+     Below 520px of height the block tightens and anchors to the floor of the
+     frame, which is what guarantees it starts below the header rather than
+     hoping it is short enough to. */
+  @media (max-height:520px){
+    .final-room .final-copy{
+      align-self:end;
+      margin-bottom:max(10px,env(safe-area-inset-bottom));
+      padding:12px 18px;
+    }
+    .final-room .final-copy small{font-size:8px}
+    .final-room .final-copy h2{
+      margin:6px 0 8px;
+      font-size:min(44px,(min(60vw,540px) - 36px) / 6.2);
+    }
+    .final-room .final-copy p{max-width:52ch;font-size:12px;line-height:1.45}
+    .final-room .final-copy>div{gap:8px 14px;margin-top:10px}
+  }
 }
 
 /* The project floor is a deliberate destination: the corridor exists only after entry. */
