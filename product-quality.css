@@ -70,14 +70,178 @@
   .final-room .final-copy h2{font-size:clamp(52px,6.4vw,96px)}
 }
 /* Her side of the frame must stay readable, so the vignette is mirrored here:
-   dark on the LEFT under the copy, clear on the right where she stands. */
-.final-room .room-vignette{
-  background:linear-gradient(90deg,rgba(10,11,13,.92) 0%,rgba(10,11,13,.72) 38%,
-    rgba(10,11,13,.28) 62%,transparent 82%),
-    linear-gradient(0deg,rgba(10,11,13,.55),transparent 42%)}
+   dark on the LEFT under the copy, clear on the right where she stands.
+
+   Scoped, because this is lighting for a specific composition: it only makes
+   sense where the copy is on the left and she is on the right. That is the
+   landscape render (13/10 is character-for-character the media query the
+   page's own <source> uses to swap assets) and the desktop layout. Left
+   unscoped it also applied to portrait phones, where she is centred -- so it
+   was dimming the left half of her face and the whole of her extended hand. */
+@media (min-aspect-ratio:13/10), (min-width:1051px){
+  .final-room .room-vignette{
+    background:linear-gradient(90deg,rgba(10,11,13,.92) 0%,rgba(10,11,13,.72) 38%,
+      rgba(10,11,13,.28) 62%,transparent 82%),
+      linear-gradient(0deg,rgba(10,11,13,.55),transparent 42%)}
+}
 /* The giant LYVORIAN STUDIO watermark sat on a flat panel; over a photograph it
    reads as dirt on the lens. */
 .final-room::before{opacity:.45}
+
+/* ── The closing room in portrait ──────────────────────────────────────────
+   Everything above is the desktop split: copy left, her standing right. In
+   portrait there is no second half of the frame to put a panel in -- she is
+   centred and full height -- so the same panel landed on top of her. Measured
+   on the real phone at 411x757, its top edge sat at source fraction .295,
+   between her chin (y 181) and her shoulders (y 206): a 1px border ruled
+   straight across her throat, which is what "it's overlapping, face is gone"
+   describes. Smaller frames were worse -- .187 at 320x568 and .247 at 360x640
+   put the edge across her head and her face.
+
+   So in portrait the panel stops being a panel and the room carries the copy:
+   she keeps the top of the frame in clear air, the words stand on the floor
+   inside a fade that has no edge to cut with.
+
+   13/10 is character-for-character the media query on the page's own <source>,
+   so this block and the portrait asset switch on and off together. */
+@media (max-width:1050px) and (max-aspect-ratio:13/10){
+
+  /* Lift the crop off her head. object-fit:cover centres the slice, and the
+     deeper the crop the more it eats from the top: at 768x1024 it removed her
+     head completely (hair top at y -71) and on the phone it left her level
+     with the header. Anchoring the slice near the top keeps her whole head in
+     frame at every portrait ratio. Her shoes are what goes instead, and the
+     copy stands over that part of the floor anyway. */
+  .final-room .room-bg{object-position:50% 14%}
+
+  /* The vignette is atmosphere here, never legibility: products.js:393 drives
+     --vignette-opacity between .72 and 1 as a room takes focus, so anything
+     load-bearing on this layer goes 28% weaker exactly while the room is
+     arriving. Weight at the top for the glass header to sit on, a little
+     pooling at the floor, and her face and hand left alone. */
+  .final-room .room-vignette{
+    background:
+      linear-gradient(180deg,rgba(8,9,12,.60),rgba(8,9,12,.18) 84px,transparent 152px),
+      linear-gradient(0deg,rgba(8,9,12,.50),rgba(8,9,12,.14) 24%,transparent 44%);
+  }
+
+  /* Full-bleed and floor-anchored, with the scrim carried on the copy's OWN
+     background. That is deliberate: .final-copy is opacity-animated through
+     --content-opacity, so a scrim living here fades in step with the text and
+     can never be weaker than the words it is holding up. No border, no inset
+     highlight, no blur -- the shared glass block sets those with !important,
+     and that bright top hairline was half of what did the cutting.
+
+     The gradient's third stop is the same expression as padding-top, so the
+     fade reaches full strength exactly where the first line of type begins,
+     at any viewport height. */
+  .final-room .final-copy{
+    align-self:end;
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:clamp(92px,19svh,184px) 20px max(20px,env(safe-area-inset-bottom));
+    text-align:center;
+    border:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    background:linear-gradient(180deg,
+      transparent 0,
+      rgba(8,9,12,.40) clamp(54px,11svh,108px),
+      rgba(8,9,12,.87) clamp(92px,19svh,184px),
+      rgba(8,9,12,.95) 100%) !important;
+  }
+
+  /* Two lines at any width. "The next room" is the binding line; sized off the
+     content box (100vw minus the 20px gutters, with slack) so it never takes
+     the third line it takes today at every phone width from 320 to 480. */
+  .final-room .final-copy h2{
+    margin:14px 0 16px;
+    font-size:min(72px,(100vw - 40px) / 6.2);
+  }
+
+  .final-room .final-copy p{
+    max-width:40ch;
+    margin-inline:auto;
+    font-size:14px;
+    line-height:1.55;
+    color:#c3c5ca;
+  }
+
+  /* One row rather than a stack: the block has to be short enough to sit
+     wholly below her, and both actions still clear 44px. */
+  .final-room .final-copy>div{
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px 20px;
+    margin-top:22px;
+  }
+
+  /* products.css draws "Return home" with a border-bottom, and the coarse
+     pointer rule makes that link a 44px flex box -- so the line parks ~20px
+     under a 10px label and reads as a stray rule, especially now the two
+     actions sit side by side. The target stays 44px; the line moves onto the
+     text. */
+  .final-room .final-copy>div>a:not(.office-button){
+    border-bottom-color:transparent;
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+    text-underline-offset:5px;
+    text-decoration-color:rgba(255,255,255,.45);
+  }
+
+  /* Short frames -- a phone in landscape-ish portrait, a browser window with
+     the keyboard up. Tighten rather than let the fade climb into her face. */
+  @media (max-height:620px){
+    .final-room .final-copy{padding-top:clamp(64px,13svh,108px)}
+    .final-room .final-copy h2{margin:10px 0 12px;font-size:min(52px,(100vw - 40px) / 6.2)}
+    .final-room .final-copy p{font-size:13px}
+    .final-room .final-copy>div{margin-top:16px}
+  }
+}
+
+/* ── The closing room in landscape, below the desktop breakpoint ───────────
+   Above 13/10 the <picture> serves the landscape render, where she stands on
+   the right -- so the left scrim above is the correct lighting and stays. What
+   was missing is the desktop's left-aligned copy, which started at 1051px: on
+   a 757x411 phone the centred panel sat on her, and its top edge was behind
+   the fixed header (y 21-45 against a 78px header). */
+@media (max-width:1050px) and (min-aspect-ratio:13/10){
+  .final-room .final-copy{
+    align-self:center;
+    justify-self:start;
+    width:min(60vw,540px);
+    margin:0 auto 0 clamp(16px,5vw,52px);
+    padding:20px 22px;
+    text-align:left;
+  }
+  /* Sized off the column's real width, cap included -- 60vw alone overstates it
+     once min() clamps at 540px, which is what pushed "The next room" onto a
+     second line at 1024x768. "The next room" is the binding line at a measured
+     5.9041px of width per px of type; 6.2 keeps 5% in hand. */
+  .final-room .final-copy h2{
+    margin:10px 0 12px;
+    font-size:min(84px,(min(60vw,540px) - 44px) / 6.2);
+  }
+  .final-room .final-copy p{margin-left:0;max-width:44ch;font-size:13px;line-height:1.5}
+  .final-room .final-copy>div{
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    gap:10px 18px;
+    margin-top:16px;
+  }
+  .final-room .final-copy>div>a:not(.office-button){
+    border-bottom-color:transparent;
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+    text-underline-offset:5px;
+    text-decoration-color:rgba(255,255,255,.45);
+  }
+}
 
 /* The project floor is a deliberate destination: the corridor exists only after entry. */
 .projects-entry-panel{
